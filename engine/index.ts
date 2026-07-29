@@ -2,3 +2,4 @@
 // Deterministic by seed.
 export * from './rng';
 export * from './calendar';
+export * from './standings';
