@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": ["vitest/globals", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@engine/*": ["engine/*"],
+      "@game/*": ["game/*"],
+      "@data/*": ["data/*"],
+      "@ui/*": ["ui/*"],
+      "@app/*": ["app/*"]
+    }
+  },
+  "include": ["engine", "game", "data", "ui", "app", "vite.config.ts", "vitest.config.ts", "vitest.setup.ts", "capacitor.config.ts"]
+}
