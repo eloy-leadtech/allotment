@@ -1,0 +1,38 @@
+{
+  "name": "pcfutbol-ultimate",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Manager de futbol retro (mashup de la saga PC Futbol). Retro en la piel, moderno en los huesos.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.5",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "@eslint/js": "^9.11.1",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/node": "^22.7.4",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^9.11.1",
+    "globals": "^15.9.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.2"
+  }
+}
