@@ -1,0 +1,81 @@
+# Turno de noche 🌙
+# Cada noche coge la issue más antigua etiquetada 'ready', la implementa y abre PR.
+# Se ejecuta 3 veces por noche (una issue por ejecución) para acotar el consumo de cuota Max.
+name: Nightly Agent
+
+on:
+  schedule:
+    # UTC. Madrid en verano = UTC+2 → 23:00, 01:00 y 03:00 hora local
+    - cron: "0 21 * * *"
+    - cron: "0 23 * * *"
+    - cron: "0 1 * * *"
+  workflow_dispatch: {} # botón para lanzarlo a mano cuando quieras
+
+concurrency:
+  group: nightly-agent
+  cancel-in-progress: false
+
+jobs:
+  pick-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Elegir siguiente issue 'ready'
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ISSUE=$(gh issue list --label ready --state open \
+            --json number --jq 'sort_by(.number) | .[0].number // empty')
+          if [ -z "$ISSUE" ]; then
+            echo "No hay issues 'ready'. Buenas noches."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "issue=$ISSUE" >> "$GITHUB_OUTPUT"
+            # Marcar como en curso para que la siguiente ejecución no la repita
+            gh issue edit "$ISSUE" --remove-label ready --add-label in-progress
+          fi
+
+      - name: Implementar issue
+        if: steps.pick.outputs.found == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Eres el agente nocturno del proyecto PCFutbol Ultimate.
+            Implementa la issue #${{ steps.pick.outputs.issue }} de este repositorio.
+
+            Reglas obligatorias:
+            1. Lee primero SPEC.md y CLAUDE.md. Son la fuente de verdad.
+            2. Lee la issue completa con: gh issue view ${{ steps.pick.outputs.issue }}
+            3. Trabaja en una rama nueva: feat/issue-${{ steps.pick.outputs.issue }}
+            4. Implementa SOLO lo que pide la issue. Nada de extras.
+            5. Añade o actualiza tests. Ejecuta npm run typecheck, lint y test
+               en local antes de terminar: no abras PR con la verificación en rojo.
+            6. Abre un PR hacia main con título "feat: <resumen> (closes #${{ steps.pick.outputs.issue }})"
+               y describe qué has hecho y cómo probarlo.
+            7. Si la issue es ambigua o imposible, NO improvises: comenta tus dudas
+               en la issue, etiquétala como 'blocked' y termina.
+          claude_args: "--max-turns 50"
+
+      - name: Activar auto-merge del PR
+        if: steps.pick.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR=$(gh pr list --head "feat/issue-${{ steps.pick.outputs.issue }}" \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$PR" ]; then
+            gh pr merge "$PR" --auto --squash
+            echo "Auto-merge activado en PR #$PR (se fusionará si la CI pasa)."
+          else
+            echo "El agente no llegó a abrir PR. Revisar la issue por la mañana."
+          fi

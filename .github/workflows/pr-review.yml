@@ -1,0 +1,43 @@
+# Revisor automático: cada PR recibe una revisión de Claude antes del auto-merge.
+name: PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Revisión de Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Eres el revisor de PRs del proyecto PCFutbol Ultimate. Revisa el
+            PR #${{ github.event.pull_request.number }} y comenta EN ESPAÑOL.
+
+            Comprueba en este orden:
+            1. ¿Cumple lo que pide su issue, sin extras fuera de alcance?
+            2. ¿Respeta SPEC.md y CLAUDE.md? (arquitectura de módulos,
+               datos en /data, engine sin React, determinismo por seed)
+            3. Bugs, casos límite y errores de lógica.
+            4. TRAMPAS: tests debilitados o borrados, ts-ignore/any/eslint-disable
+               nuevos, cambios en .github/ no pedidos, assets de dudosa procedencia.
+            5. Calidad de tests: ¿prueban comportamiento real o son de adorno?
+
+            Publica tu revisión como comentario en el PR con gh. Sé concreto:
+            archivo, línea y problema. Si todo está bien, dilo brevemente.
+            Si encuentras un problema grave (punto 4, o bug que rompe el juego),
+            añade la etiqueta 'needs-human' al PR con gh: eso alertará al dueño.
+          claude_args: "--max-turns 30"
