@@ -1,8 +1,6 @@
 # Cualquier PR que toque estas rutas requiere aprobación manual del propietario.
 # Es el freno de mano del auto-merge: el agente no puede modificar sus propias reglas.
-# Sustituye TU_USUARIO por tu usuario de GitHub.
-
-/.github/       @TU_USUARIO
-/SPEC.md        @TU_USUARIO
-/CLAUDE.md      @TU_USUARIO
-/CODEOWNERS     @TU_USUARIO
+/.github/       @eloy-leadtech
+/SPEC.md        @eloy-leadtech
+/CLAUDE.md      @eloy-leadtech
+/CODEOWNERS     @eloy-leadtech
