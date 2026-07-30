@@ -20,9 +20,13 @@
     "types": ["vitest/globals", "node"],
     "baseUrl": ".",
     "paths": {
+      "@engine": ["engine/index.ts"],
       "@engine/*": ["engine/*"],
+      "@game": ["game/index.ts"],
       "@game/*": ["game/*"],
+      "@data": ["data/index.ts"],
       "@data/*": ["data/*"],
+      "@ui": ["ui/index.ts"],
       "@ui/*": ["ui/*"],
       "@app/*": ["app/*"]
     }
