@@ -9,6 +9,8 @@ import {
   loadSegunda9798,
   loadSegunda9899,
   loadSegunda9900,
+  loadEuropa9899,
+  loadEuropa9900,
 } from './loader';
 
 /** A playable season available in the new-game screen. */
@@ -57,6 +59,21 @@ export const SEGUNDA_SEASONS: readonly SeasonEntry[] = [
 /** The Segunda database for a given season label, if one exists. */
 export function getSegundaByTemporada(temporada: string): SeasonEntry | undefined {
   return SEGUNDA_SEASONS.find((s) => s.temporada === temporada);
+}
+
+/**
+ * European club databases (top clubs per season, from the late FDI packs). Not
+ * playable leagues — squad containers that feed the European competition
+ * (Champions/UEFA). Paired to a career season by `temporada`.
+ */
+export const EUROPA_SEASONS: readonly SeasonEntry[] = [
+  { id: 'europa-9899', nombre: 'Clubes de Europa 98/99', temporada: '98/99', load: loadEuropa9899 },
+  { id: 'europa-9900', nombre: 'Clubes de Europa 99/00', temporada: '99/00', load: loadEuropa9900 },
+];
+
+/** The European clubs database for a given season label, if one exists. */
+export function getEuropaByTemporada(temporada: string): SeasonEntry | undefined {
+  return EUROPA_SEASONS.find((s) => s.temporada === temporada);
 }
 
 /** The Primera season that follows a given season label, if any. */
