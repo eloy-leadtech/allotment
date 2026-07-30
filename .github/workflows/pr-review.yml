@@ -36,8 +36,13 @@ jobs:
                nuevos, cambios en .github/ no pedidos, assets de dudosa procedencia.
             5. Calidad de tests: ¿prueban comportamiento real o son de adorno?
 
+            NO revises línea a línea ficheros de datos GENERADOS (p. ej.
+            data/db/*.json) ni binarios (escudos/imágenes): dales solo un vistazo
+            de coherencia (nº de registros, formato) y céntrate en el CÓDIGO y los
+            scripts. Así no agotas los turnos en ficheros grandes.
+
             Publica tu revisión como comentario en el PR con gh. Sé concreto:
             archivo, línea y problema. Si todo está bien, dilo brevemente.
             Si encuentras un problema grave (punto 4, o bug que rompe el juego),
             añade la etiqueta 'needs-human' al PR con gh: eso alertará al dueño.
-          claude_args: "--max-turns 30"
+          claude_args: "--max-turns 60"
