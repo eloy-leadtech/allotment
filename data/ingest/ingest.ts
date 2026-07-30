@@ -9,7 +9,13 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { LeagueSchema, type League, type Player, type Position } from '../schemas';
 import { syntheticPlayerId, slugify } from './syntheticId';
-import { SOURCE_PATH, OUTPUT_RELATIVE, PRIMERA_9697, RELEGATION_SPOTS } from './config';
+import {
+  SOURCE_PATH,
+  EXTREMADURA_SOURCE,
+  OUTPUT_RELATIVE,
+  PRIMERA_9697,
+  RELEGATION_SPOTS,
+} from './config';
 
 interface SourceAttributes {
   calidad: number | null;
@@ -96,9 +102,25 @@ function transformPlayer(src: SourcePlayer, teamId: string): Player {
   };
 }
 
+/** Build a game team from a source team's name and raw players. */
+function buildTeam(nombre: string, jugadores: SourcePlayer[]): League['equipos'][number] {
+  const teamId = slugify(nombre);
+  const players = jugadores
+    .filter((p) => p.media > 0) // drop empty/placeholder rows
+    .map((p) => transformPlayer(p, teamId));
+  if (players.length < 16) {
+    console.warn(`WARN: ${nombre} only has ${players.length} usable players`);
+  }
+  return { id: teamId, nombre, jugadores: players };
+}
+
+interface ExtraTeamFile {
+  equipo: string;
+  jugadores: SourcePlayer[];
+}
+
 function main(): void {
   const source = JSON.parse(readFileSync(SOURCE_PATH, 'utf8')) as SourceFile;
-  const wanted = new Set(PRIMERA_9697);
   const byName = new Map(source.equipos.map((t) => [t.equipo, t]));
 
   const missing = PRIMERA_9697.filter((name) => !byName.has(name));
@@ -106,18 +128,16 @@ function main(): void {
     throw new Error(`Whitelisted teams not found in source: ${missing.join(', ')}`);
   }
 
-  const equipos = source.equipos
-    .filter((t) => wanted.has(t.equipo))
-    .map((t) => {
-      const teamId = slugify(t.equipo);
-      const jugadores = t.jugadores
-        .filter((p) => p.media > 0) // drop empty/placeholder rows
-        .map((p) => transformPlayer(p, teamId));
-      if (jugadores.length < 16) {
-        console.warn(`WARN: ${t.equipo} only has ${jugadores.length} usable players`);
-      }
-      return { id: teamId, nombre: t.equipo, jugadores };
-    });
+  // 21 Primera clubs from the main pack.
+  const packTeams = PRIMERA_9697.map((name) => {
+    const team = byName.get(name);
+    if (!team) throw new Error(`Team not found: ${name}`);
+    return buildTeam(name, team.jugadores);
+  });
+
+  // The 22nd Primera club (Extremadura) from the base-edition source.
+  const extra = JSON.parse(readFileSync(EXTREMADURA_SOURCE, 'utf8')) as ExtraTeamFile;
+  const equipos = [...packTeams, buildTeam(extra.equipo, extra.jugadores)];
 
   const league: League = {
     id: 'es-primera-9697',
