@@ -6,9 +6,11 @@
  * Values are whole euros. The curve is deliberately steep: a superstar is worth
  * many times a solid starter, matching how the classic games felt.
  */
+import { createRng, hashSeed } from '@engine';
 import type { Player, Position } from '@data';
-import type { CareerTeam } from './types';
-import { playerAge } from './development';
+import type { CareerState, CareerTeam } from './types';
+import { playerAge, seasonStartYear } from './development';
+import { seasonFromCareer } from './career';
 
 /** Rating above this floor is what you actually pay for; below it is nominal. */
 const RATING_FLOOR = 40;
@@ -71,4 +73,169 @@ export function formatEuros(euros: number): string {
     return `${Math.round(euros / 1_000)} k€`;
   }
   return `${euros} €`;
+}
+
+// --- Compraventa (fase de mercado, solo antes de empezar la temporada) --------
+
+/** Premium a selling club adds on top of pure market value. */
+const ASKING_PREMIUM = 1.3;
+
+/** What an AI club asks to sell one of its players. */
+export function askingPrice(player: Player, age: number | null): number {
+  return Math.round(marketValue(player, age) * ASKING_PREMIUM);
+}
+
+/** A buyable player offered by an AI club. */
+export interface TransferListing {
+  player: Player;
+  clubId: string;
+  value: number;
+  askingPrice: number;
+}
+
+/** An AI club's offer for one of your players. */
+export interface Bid {
+  playerId: string;
+  fromClubId: string;
+  amount: number;
+}
+
+export interface TransferResult {
+  career: CareerState;
+  ok: boolean;
+  reason?: 'no-encontrado' | 'presupuesto';
+}
+
+/** The market is only open in the pre-season (before any matchday is played). */
+function assertMarketOpen(career: CareerState): void {
+  if (career.season.results.length > 0) {
+    throw new Error('El mercado solo está abierto antes de empezar la temporada');
+  }
+}
+
+/** Re-derive the in-progress season after the rosters change. */
+function withDerivedSeason(career: CareerState): CareerState {
+  return { ...career, season: seasonFromCareer(career) };
+}
+
+/** Every player you could buy from the AI clubs, most valuable first. */
+export function buyableListings(career: CareerState): TransferListing[] {
+  const startYear = seasonStartYear(career.temporada);
+  const listings: TransferListing[] = [];
+  for (const team of career.teams) {
+    if (team.id === career.humanTeamId) continue;
+    for (const player of team.players) {
+      const age = playerAge(player, startYear);
+      listings.push({
+        player,
+        clubId: team.id,
+        value: marketValue(player, age),
+        askingPrice: askingPrice(player, age),
+      });
+    }
+  }
+  return listings.sort((a, b) => b.value - a.value);
+}
+
+/**
+ * Buy an AI club's player at their asking price. Soft-fails (ok:false) if the
+ * player is not on the market or you cannot afford them; throws only if the
+ * market is closed (season already under way).
+ */
+export function buyPlayer(career: CareerState, playerId: string): TransferResult {
+  assertMarketOpen(career);
+  const startYear = seasonStartYear(career.temporada);
+  let owner: CareerTeam | undefined;
+  let player: Player | undefined;
+  for (const team of career.teams) {
+    if (team.id === career.humanTeamId) continue;
+    const found = team.players.find((p) => p.id === playerId);
+    if (found) {
+      owner = team;
+      player = found;
+      break;
+    }
+  }
+  if (!owner || !player) return { career, ok: false, reason: 'no-encontrado' };
+
+  const price = askingPrice(player, playerAge(player, startYear));
+  if (career.budget < price) return { career, ok: false, reason: 'presupuesto' };
+
+  const bought = player;
+  const teams = career.teams.map((team) => {
+    if (team.id === owner.id) return { ...team, players: team.players.filter((p) => p.id !== playerId) };
+    if (team.id === career.humanTeamId) return { ...team, players: [...team.players, bought] };
+    return team;
+  });
+  return { career: withDerivedSeason({ ...career, teams, budget: career.budget - price }), ok: true };
+}
+
+/**
+ * Sell one of your players to `toClubId` for `amount`. Soft-fails if the player
+ * is not in your squad or the destination is invalid.
+ */
+export function sellPlayer(
+  career: CareerState,
+  playerId: string,
+  toClubId: string,
+  amount: number,
+): TransferResult {
+  assertMarketOpen(career);
+  const human = career.teams.find((t) => t.id === career.humanTeamId);
+  const player = human?.players.find((p) => p.id === playerId);
+  const buyer = career.teams.find((t) => t.id === toClubId);
+  if (!player || !buyer || toClubId === career.humanTeamId) {
+    return { career, ok: false, reason: 'no-encontrado' };
+  }
+  const sold = player;
+  const teams = career.teams.map((team) => {
+    if (team.id === career.humanTeamId) return { ...team, players: team.players.filter((p) => p.id !== playerId) };
+    if (team.id === toClubId) return { ...team, players: [...team.players, sold] };
+    return team;
+  });
+  return { career: withDerivedSeason({ ...career, teams, budget: career.budget + amount }), ok: true };
+}
+
+/** Accept an AI bid: sell the player to the bidding club for the offered amount. */
+export function acceptBid(career: CareerState, bid: Bid): TransferResult {
+  return sellPlayer(career, bid.playerId, bid.fromClubId, bid.amount);
+}
+
+/** How likely a player of a given rating is to attract a bid this window. */
+function bidProbability(media: number): number {
+  if (media >= 82) return 0.6;
+  if (media >= 75) return 0.35;
+  if (media >= 68) return 0.15;
+  return 0.03;
+}
+
+/**
+ * The AI clubs' offers for your players this window. Deterministic from the
+ * career seed and season number; better players attract more (and higher) bids.
+ * Players are visited in id order so the RNG stream is stable.
+ */
+export function generateBids(career: CareerState): Bid[] {
+  const human = career.teams.find((t) => t.id === career.humanTeamId);
+  const others = career.teams.filter((t) => t.id !== career.humanTeamId);
+  if (!human || others.length === 0) return [];
+
+  const rng = createRng(hashSeed(career.seed, 'bids', career.seasonNumber));
+  const startYear = seasonStartYear(career.temporada);
+  const bids: Bid[] = [];
+  const players = [...human.players].sort((a, b) => a.id.localeCompare(b.id));
+  for (const player of players) {
+    const roll = rng.next01();
+    const idxRoll = rng.int(others.length);
+    const amountRoll = rng.next01();
+    if (roll > bidProbability(player.media)) continue;
+    const club = others[idxRoll];
+    if (!club) continue;
+    const value = marketValue(player, playerAge(player, startYear));
+    bids.push({
+      playerId: player.id,
+      fromClubId: club.id,
+      amount: Math.round(value * (0.8 + amountRoll * 0.6)),
+    });
+  }
+  return bids;
 }

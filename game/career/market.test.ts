@@ -1,8 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { loadPrimera9697 } from '@data';
 import type { Attributes, Player } from '@data';
-import { marketValue, squadValue, initialBudget, formatEuros } from './market';
+import {
+  marketValue,
+  squadValue,
+  initialBudget,
+  formatEuros,
+  buyableListings,
+  buyPlayer,
+  sellPlayer,
+  acceptBid,
+  generateBids,
+} from './market';
 import { newCareer } from './career';
+import { advanceMatchday } from '../season/season';
 
 const attrs: Attributes = {
   calidad: 70,
@@ -96,5 +107,95 @@ describe('formatEuros', () => {
     expect(formatEuros(120_000_000)).toBe('120 M€');
     expect(formatEuros(850_000)).toBe('850 k€');
     expect(formatEuros(500)).toBe('500 €');
+  });
+});
+
+describe('market transactions', () => {
+  const league = loadPrimera9697();
+  const HUMAN = 'barcelona';
+  const squadOf = (career: ReturnType<typeof newCareer>, id: string) =>
+    career.teams.find((t) => t.id === id)?.players.map((p) => p.id) ?? [];
+
+  it('lists buyable AI players (not your own), most valuable first', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const listings = buyableListings(career);
+    expect(listings.length).toBeGreaterThan(0);
+    expect(listings.every((l) => l.clubId !== HUMAN)).toBe(true);
+    for (let i = 1; i < listings.length; i += 1) {
+      expect(listings[i - 1]!.value).toBeGreaterThanOrEqual(listings[i]!.value);
+    }
+    expect(listings[0]!.askingPrice).toBeGreaterThan(listings[0]!.value);
+  });
+
+  it('buys an affordable player: they join you, budget drops, seller loses them', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const cheapest = buyableListings(career).at(-1)!;
+    expect(career.budget).toBeGreaterThanOrEqual(cheapest.askingPrice);
+
+    const { career: after, ok } = buyPlayer(career, cheapest.player.id);
+    expect(ok).toBe(true);
+    expect(after.budget).toBe(career.budget - cheapest.askingPrice);
+    expect(squadOf(after, HUMAN)).toContain(cheapest.player.id);
+    expect(squadOf(after, cheapest.clubId)).not.toContain(cheapest.player.id);
+    // The derived season reflects the new roster.
+    const barcaMatch = after.season.teams.find((t) => t.id === HUMAN);
+    expect(barcaMatch?.players.some((p) => p.id === cheapest.player.id)).toBe(true);
+  });
+
+  it('refuses a purchase you cannot afford, leaving the career untouched', () => {
+    const career = { ...newCareer(league, HUMAN, 7), budget: 0 };
+    const target = buyableListings(career)[0]!;
+    const { career: after, ok, reason } = buyPlayer(career, target.player.id);
+    expect(ok).toBe(false);
+    expect(reason).toBe('presupuesto');
+    expect(after).toBe(career);
+  });
+
+  it('soft-fails on an unknown player id', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const { ok, reason } = buyPlayer(career, 'no-such-player');
+    expect(ok).toBe(false);
+    expect(reason).toBe('no-encontrado');
+  });
+
+  it('sells one of your players to another club for the agreed amount', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const mine = career.teams.find((t) => t.id === HUMAN)!.players[0]!;
+    const { career: after, ok } = sellPlayer(career, mine.id, 'real-madrid', 1_000_000);
+    expect(ok).toBe(true);
+    expect(after.budget).toBe(career.budget + 1_000_000);
+    expect(squadOf(after, HUMAN)).not.toContain(mine.id);
+    expect(squadOf(after, 'real-madrid')).toContain(mine.id);
+  });
+
+  it('generates deterministic AI bids for your players', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const a = generateBids(career);
+    const b = generateBids(career);
+    expect(a).toEqual(b);
+    expect(a.length).toBeGreaterThan(0);
+    const myIds = new Set(squadOf(career, HUMAN));
+    for (const bid of a) {
+      expect(myIds.has(bid.playerId)).toBe(true);
+      expect(bid.fromClubId).not.toBe(HUMAN);
+      expect(bid.amount).toBeGreaterThan(0);
+    }
+  });
+
+  it('accepting a bid sells the player and adds the money', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const bid = generateBids(career)[0]!;
+    const { career: after, ok } = acceptBid(career, bid);
+    expect(ok).toBe(true);
+    expect(after.budget).toBe(career.budget + bid.amount);
+    expect(squadOf(after, HUMAN)).not.toContain(bid.playerId);
+    expect(squadOf(after, bid.fromClubId)).toContain(bid.playerId);
+  });
+
+  it('is closed once the season is under way', () => {
+    const career = newCareer(league, HUMAN, 7);
+    const started = { ...career, season: advanceMatchday(career.season).state };
+    const target = buyableListings(career)[0]!;
+    expect(() => buyPlayer(started, target.player.id)).toThrow(/mercado/i);
   });
 });
