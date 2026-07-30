@@ -26,7 +26,7 @@ export interface SeasonState {
   results: MatchResult[];
 }
 
-function toMatchPlayer(p: Player): MatchPlayer {
+export function toMatchPlayer(p: Player): MatchPlayer {
   return {
     id: p.id,
     nombre: p.nombre,
@@ -41,8 +41,47 @@ function toMatchPlayer(p: Player): MatchPlayer {
   };
 }
 
-function toCompetitionTeam(team: Team): CompetitionTeam {
+export function toCompetitionTeam(team: Team): CompetitionTeam {
   return { id: team.id, nombre: team.nombre, players: team.jugadores.map(toMatchPlayer) };
+}
+
+/** Metadata a season needs beyond its teams and seed. */
+export interface SeasonMeta {
+  leagueId: string;
+  temporada: string;
+  humanTeamId: string;
+  pointsForWin: 2 | 3;
+  relegationSpots: number;
+}
+
+/**
+ * Build a fresh season from already-mapped competition teams. Shared by the
+ * single-season entry point (`newSeason`) and the career layer (which owns full
+ * player data and derives its competition teams itself).
+ */
+export function newSeasonFromTeams(
+  teams: CompetitionTeam[],
+  meta: SeasonMeta,
+  seed: number,
+): SeasonState {
+  if (!teams.some((t) => t.id === meta.humanTeamId)) {
+    throw new Error(`Human team ${meta.humanTeamId} is not in the league`);
+  }
+  const fixtures = buildCalendar(teams.map((t) => t.id), seed);
+  const totalMatchdays = fixtures.reduce((max, f) => Math.max(max, f.round), 0);
+  return {
+    leagueId: meta.leagueId,
+    temporada: meta.temporada,
+    seed,
+    humanTeamId: meta.humanTeamId,
+    pointsForWin: meta.pointsForWin,
+    relegationSpots: meta.relegationSpots,
+    teams,
+    fixtures,
+    totalMatchdays,
+    currentMatchday: 1,
+    results: [],
+  };
 }
 
 /** Start a fresh season for a league, with the human managing `humanTeamId`. */
@@ -50,25 +89,17 @@ export function newSeason(league: League, humanTeamId: string, seed: number): Se
   if (league.competicion.kind !== 'league') {
     throw new Error('newSeason currently supports league competitions only');
   }
-  const teams = league.equipos.map(toCompetitionTeam);
-  if (!teams.some((t) => t.id === humanTeamId)) {
-    throw new Error(`Human team ${humanTeamId} is not in the league`);
-  }
-  const fixtures = buildCalendar(teams.map((t) => t.id), seed);
-  const totalMatchdays = fixtures.reduce((max, f) => Math.max(max, f.round), 0);
-  return {
-    leagueId: league.id,
-    temporada: league.temporada,
+  return newSeasonFromTeams(
+    league.equipos.map(toCompetitionTeam),
+    {
+      leagueId: league.id,
+      temporada: league.temporada,
+      humanTeamId,
+      pointsForWin: league.competicion.pointsForWin,
+      relegationSpots: league.competicion.relegationSpots,
+    },
     seed,
-    humanTeamId,
-    pointsForWin: league.competicion.pointsForWin,
-    relegationSpots: league.competicion.relegationSpots,
-    teams,
-    fixtures,
-    totalMatchdays,
-    currentMatchday: 1,
-    results: [],
-  };
+  );
 }
 
 export function isSeasonOver(state: SeasonState): boolean {
