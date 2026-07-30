@@ -89,6 +89,18 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().bids.some((b) => b.playerId === bid.playerId)).toBe(false);
   });
 
+  it('watchNextMatchday advances and opens the human match live', () => {
+    useGameStore.getState().startCareer('barcelona');
+    useGameStore.getState().watchNextMatchday();
+    const s = useGameStore.getState();
+    expect(s.season?.currentMatchday).toBe(2);
+    expect(s.screen).toBe('match');
+    expect(s.viewingMatch).not.toBeNull();
+    const m = s.viewingMatch!;
+    expect(m.homeId === 'barcelona' || m.awayId === 'barcelona').toBe(true);
+    expect(s.lastResults).toHaveLength(11);
+  });
+
   it('retaining a player keeps them across the transition and clears the selection', () => {
     useGameStore.getState().startCareer('barcelona');
     const ronaldo = useGameStore

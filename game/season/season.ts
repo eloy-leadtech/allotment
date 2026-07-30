@@ -111,6 +111,13 @@ export function fixturesForMatchday(state: SeasonState, matchday: number): Fixtu
   return state.fixtures.filter((f) => f.round === matchday);
 }
 
+/** The human's fixture for the upcoming matchday, or null if the season is over. */
+export function nextHumanFixture(state: SeasonState): Fixture | null {
+  if (isSeasonOver(state)) return null;
+  const fixtures = fixturesForMatchday(state, state.currentMatchday);
+  return fixtures.find((f) => f.homeId === state.humanTeamId || f.awayId === state.humanTeamId) ?? null;
+}
+
 /** Play the current matchday; returns the updated state and the results just played. */
 export function advanceMatchday(state: SeasonState): { state: SeasonState; played: MatchResult[] } {
   if (isSeasonOver(state)) {

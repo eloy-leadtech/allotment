@@ -125,6 +125,7 @@ interface GameStore {
   randomizeSeed: () => void;
   startCareer: (teamId: string) => void;
   playNextMatchday: () => void;
+  watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
   startTournament: (tournamentId: string, nationId: string) => void;
@@ -193,6 +194,23 @@ export const useGameStore = create<GameStore>((set, get) => {
       if (!career) return;
       const step = advanceMatchday(career.season);
       set({ career: { ...career, season: step.state }, season: step.state, lastResults: step.played });
+    },
+    watchNextMatchday: () => {
+      const { career } = get();
+      if (!career) return;
+      const step = advanceMatchday(career.season);
+      // Show the human's own match live (teletype); the rest is simulated too.
+      const mine =
+        step.played.find(
+          (r) => r.homeId === career.humanTeamId || r.awayId === career.humanTeamId,
+        ) ?? null;
+      set({
+        career: { ...career, season: step.state },
+        season: step.state,
+        lastResults: step.played,
+        viewingMatch: mine,
+        screen: mine ? 'match' : 'season',
+      });
     },
     toggleRetain: (playerId) =>
       set((state) => ({
