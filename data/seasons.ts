@@ -1,5 +1,5 @@
 import type { League } from './schemas';
-import { loadPrimera9697, loadPrimera9798 } from './loader';
+import { loadPrimera9697, loadPrimera9798, loadPrimera9899 } from './loader';
 
 /** A playable season available in the new-game screen. */
 export interface SeasonEntry {
@@ -17,6 +17,7 @@ export interface SeasonEntry {
 export const SEASONS: readonly SeasonEntry[] = [
   { id: 'es-primera-9697', nombre: 'Liga española 96/97', temporada: '96/97', load: loadPrimera9697 },
   { id: 'es-primera-9798', nombre: 'Liga española 97/98', temporada: '97/98', load: loadPrimera9798 },
+  { id: 'es-primera-9899', nombre: 'Liga española 98/99', temporada: '98/99', load: loadPrimera9899 },
 ];
 
 export function getSeason(id: string): SeasonEntry | undefined {

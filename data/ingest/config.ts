@@ -68,3 +68,22 @@ export const FALLBACK_DB_9697 = 'data/db/es-primera-9697.json';
 
 /** Output, committed to the repo and consumed by the loader. */
 export const OUTPUT_RELATIVE_9798 = 'data/db/es-primera-9798.json';
+
+// --- Temporada 98/99 -------------------------------------------------------
+
+/**
+ * Real 98/99 Primera rosters, extracted from PC Fútbol 7.0 and division-verified
+ * against the game's own JORN1## calendars (38 = 20-team Primera). 16 of our fixed
+ * 22 clubs are in Primera 98/99; the other 6 (Sevilla, Sporting, Logroñés,
+ * Compostela, Rayo, Hércules) fall back to their committed 97/98 roster (one year
+ * fresher than before). The 98/99 promoted clubs (Mallorca, Villarreal, Salamanca,
+ * Alavés) are ignored while the MVP keeps the same fixed 22.
+ */
+export const SOURCE_PATH_9899 =
+  'C:/dev/pcfutbol-analysis/data/extra/primera-9899-source.json';
+
+/** Committed 97/98 database, source of the fallback rosters for the 6 absent clubs. */
+export const FALLBACK_DB_9798 = 'data/db/es-primera-9798.json';
+
+/** Output, committed to the repo and consumed by the loader. */
+export const OUTPUT_RELATIVE_9899 = 'data/db/es-primera-9899.json';

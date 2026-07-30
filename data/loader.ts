@@ -1,6 +1,7 @@
 import { LeagueSchema, type League } from './schemas';
 import primera9697 from './db/es-primera-9697.json';
 import primera9798 from './db/es-primera-9798.json';
+import primera9899 from './db/es-primera-9899.json';
 
 /**
  * Parse and validate a raw league object against the schema. Throws a clear
@@ -29,6 +30,16 @@ export function loadPrimera9798(): League {
   if (!league) {
     league = parseLeague(primera9798);
     cache.set('9798', league);
+  }
+  return league;
+}
+
+/** Load the committed Liga española 98/99 database (validated, memoized). */
+export function loadPrimera9899(): League {
+  let league = cache.get('9899');
+  if (!league) {
+    league = parseLeague(primera9899);
+    cache.set('9899', league);
   }
   return league;
 }
