@@ -3,6 +3,7 @@ import {
   SEASONS,
   getSeason,
   getSegundaByTemporada,
+  getSeasonByTemporada,
   nextSeasonByTemporada,
   loadSeleccionEuro2000,
   loadSeleccionMundial98,
@@ -23,6 +24,7 @@ import {
   buyPlayer,
   acceptBid,
   toCompetitionTeam,
+  runCareerCopa,
   runTournament,
   TOURNAMENTS,
   type CareerState,
@@ -47,6 +49,20 @@ export function nextSeasonEntry(leagueId: string): SeasonEntry | null {
   const idx = SEASONS.findIndex((s) => s.id === leagueId);
   if (idx < 0) return null;
   return SEASONS[idx + 1] ?? null;
+}
+
+/**
+ * Build this season's Copa del Rey over the whole domestic field (the human's
+ * division plus the other division for that year) and attach it to the career.
+ */
+function attachCopa(career: CareerState): CareerState {
+  const other =
+    career.division === 'primera'
+      ? getSegundaByTemporada(career.temporada)
+      : getSeasonByTemporada(career.temporada);
+  const otherTeams = other ? other.load().equipos.map(toCompetitionTeam) : [];
+  const domestic = [...career.season.teams, ...otherTeams];
+  return { ...career, copa: runCareerCopa(career.seed, career.seasonNumber, domestic) };
 }
 
 interface GameStore {
@@ -135,7 +151,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     randomizeSeed: () => set({ seed: randomSeed() }),
     startCareer: (teamId) => {
       const { league, seed } = get();
-      const career = newCareer(league, teamId, seed);
+      const career = attachCopa(newCareer(league, teamId, seed));
       set({
         career,
         season: career.season,
@@ -176,10 +192,11 @@ export const useGameStore = create<GameStore>((set, get) => {
         toDivision === 'primera' ? nextPrimera : getSegundaByTemporada(nextPrimera.temporada);
       if (!targetEntry) return; // no data for the target division that year
       const targetLeague = targetEntry.load();
-      const next =
+      const next = attachCopa(
         toDivision === career.division
           ? applyTransition(career, targetLeague, new Set(retainIds))
-          : applyDivisionChange(career, toDivision, targetLeague);
+          : applyDivisionChange(career, toDivision, targetLeague),
+      );
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
@@ -241,7 +258,7 @@ export const useGameStore = create<GameStore>((set, get) => {
       const entry = getSeason(info.save.leagueId);
       if (!entry) return;
       const league = entry.load();
-      const career = restoreCareer(info.save, league);
+      const career = attachCopa(restoreCareer(info.save, league));
       set({
         career,
         season: career.season,

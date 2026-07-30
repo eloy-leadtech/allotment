@@ -9,5 +9,6 @@ export type Screen =
   | 'squad'
   | 'tactics'
   | 'tournament'
+  | 'copa'
   | 'match'
   | 'slots';

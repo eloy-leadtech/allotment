@@ -305,6 +305,10 @@ h1 {
   color: var(--c-accent);
 }
 
+.copa-me {
+  color: var(--c-accent-2);
+}
+
 /* Stadium banner */
 .stadium {
   margin: 0 0 12px;
