@@ -35,11 +35,15 @@ export function SeasonScreen() {
       </header>
 
       {champion ? <p className="champion">🏆 Campeón: {name(champion.teamId)}</p> : null}
-      {!over ? (
+      {over ? (
+        <RetroButton variant="primary" onClick={() => goTo('seasonEnd')}>
+          Fin de temporada →
+        </RetroButton>
+      ) : (
         <RetroButton variant="primary" onClick={playNextMatchday}>
           Avanzar jornada
         </RetroButton>
-      ) : null}
+      )}
 
       <StandingsTable rows={table} teamName={name} highlightTeamId={season.humanTeamId} />
 

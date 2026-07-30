@@ -3,6 +3,7 @@ import { TitleScreen } from '@ui/screens/TitleScreen';
 import { NewGameScreen } from '@ui/screens/NewGameScreen';
 import { TeamSelectScreen } from '@ui/screens/TeamSelectScreen';
 import { SeasonScreen } from '@ui/screens/SeasonScreen';
+import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
 import { SlotsScreen } from '@ui/screens/SlotsScreen';
 
@@ -18,6 +19,8 @@ export function App() {
       return <TeamSelectScreen />;
     case 'season':
       return <SeasonScreen />;
+    case 'seasonEnd':
+      return <SeasonEndScreen />;
     case 'match':
       return <MatchScreen />;
     case 'slots':
