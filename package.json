@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "test": "vitest",
     "ingest": "tsx data/ingest/ingest.ts",
-    "ingest:9798": "tsx data/ingest/ingest9798.ts"
+    "ingest:9798": "tsx data/ingest/ingest9798.ts",
+    "ingest:9899": "tsx data/ingest/ingest9899.ts"
   },
   "dependencies": {
     "react": "^18.3.1",
