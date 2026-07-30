@@ -61,8 +61,11 @@ export const TOURNAMENTS: readonly TournamentDef[] = [
   { id: 'mundial98', nombre: 'Mundial 98', dbId: 'seleccion-mundial98', finalistIds: MUNDIAL98_FINALIST_IDS, numGroups: 8 },
 ];
 
-/** How far a team got in a finished tournament (for the summary line). */
-export function teamProgress(result: TournamentResult, teamId: string): string {
+/** How far a team got in a finished knockout (for the summary line). */
+export function teamProgress(
+  result: { championId: string; knockout: readonly KnockoutRound[] },
+  teamId: string,
+): string {
   if (result.championId === teamId) return 'Campeón';
   // In single elimination a team loses exactly once — find that round.
   for (const round of result.knockout) {
@@ -153,7 +156,12 @@ function runGroup(teamIds: string[], byId: Map<string, CompetitionTeam>, seed: n
 }
 
 /** Play one knockout tie; a level score is settled by a seeded shootout. */
-function playTie(homeId: string, awayId: string, byId: Map<string, CompetitionTeam>, seed: number): KnockoutTie {
+export function playKnockoutTie(
+  homeId: string,
+  awayId: string,
+  byId: Map<string, CompetitionTeam>,
+  seed: number,
+): KnockoutTie {
   const home = byId.get(homeId);
   const away = byId.get(awayId);
   if (!home || !away) throw new Error(`Unknown knockout team: ${homeId} vs ${awayId}`);
@@ -169,8 +177,16 @@ function playTie(homeId: string, awayId: string, byId: Map<string, CompetitionTe
   return { homeId, awayId, homeGoals: r.homeGoals, awayGoals: r.awayGoals, winnerId, onPenalties };
 }
 
-const ROUND_NAMES: Record<number, string> = { 2: 'final', 4: 'semifinales', 8: 'cuartos', 16: 'octavos' };
-const roundName = (n: number): string => ROUND_NAMES[n] ?? `ronda-${n}`;
+const ROUND_NAMES: Record<number, string> = {
+  2: 'final',
+  4: 'semifinales',
+  8: 'cuartos',
+  16: 'octavos',
+  32: 'dieciseisavos',
+  64: 'treintaidosavos',
+};
+/** Human name for a knockout round given how many teams enter it. */
+export const roundName = (n: number): string => ROUND_NAMES[n] ?? `ronda-${n}`;
 
 /**
  * Order the group qualifiers into a bracket. For the canonical 4-group format
@@ -211,7 +227,7 @@ export function runTournament(
   while (alive.length > 1) {
     const ties: KnockoutTie[] = [];
     for (let i = 0; i < alive.length; i += 2) {
-      ties.push(playTie(alive[i]!, alive[i + 1]!, byId, hashSeed(seed, 'ko', round, i)));
+      ties.push(playKnockoutTie(alive[i]!, alive[i + 1]!, byId, hashSeed(seed, 'ko', round, i)));
     }
     knockout.push({ nombre: roundName(alive.length), ties });
     alive = ties.map((t) => t.winnerId);
