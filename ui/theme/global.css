@@ -1,14 +1,200 @@
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
   color-scheme: dark;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #10121a;
-  color: #e8e8e8;
+  font-family: var(--font-ui);
+  background: var(--c-bg);
+  color: var(--c-ink);
+  -webkit-font-smoothing: none;
 }
 
-.app-shell {
-  padding: 2rem;
+.screen {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+  min-height: 100vh;
+}
+
+.screen--title {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+h1 {
+  color: var(--c-accent);
+  letter-spacing: 1px;
+  margin: 0.2em 0;
+  text-transform: uppercase;
+}
+
+.tagline {
+  color: var(--c-ink-dim);
+}
+
+/* Buttons — touch targets >= 48px */
+.retro-btn {
+  min-height: var(--tap);
+  padding: 0 18px;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--c-ink);
+  background: var(--c-bg-raised);
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.retro-btn:hover {
+  border-color: var(--c-accent);
+}
+
+.retro-btn--primary {
+  background: var(--c-accent);
+  color: #1a1400;
+  border-color: var(--c-accent);
+}
+
+.retro-panel {
+  background: var(--c-bg-panel);
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: var(--space);
+}
+
+.retro-panel__title {
+  margin: 0 0 var(--space);
+  color: var(--c-accent-2);
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+/* Team select grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+/* Season header */
+.season-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.matchday {
+  color: var(--c-ink-dim);
+}
+
+.champion {
+  color: var(--c-accent);
+  font-weight: bold;
+}
+
+/* Standings table */
+.standings-scroll {
+  overflow-x: auto;
+}
+
+.standings {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.standings th,
+.standings td {
+  padding: 6px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.standings th {
+  color: var(--c-ink-dim);
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.standings__team {
+  text-align: left;
+}
+
+.standings__pts {
+  color: var(--c-accent);
+  font-weight: bold;
+}
+
+.standings__row--me {
+  background: var(--c-me);
+}
+
+/* Results list */
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-link {
+  width: 100%;
+  min-height: var(--tap);
+  text-align: left;
+  background: var(--c-bg-raised);
+  color: var(--c-ink);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.result-link:hover {
+  border-color: var(--c-accent);
+}
+
+/* Match teletipo */
+.scoreline {
+  font-size: 20px;
+}
+
+.score {
+  color: var(--c-accent);
+}
+
+.ticker {
+  list-style: none;
+  margin: 0;
+  padding: var(--space);
+  background: var(--c-bg-panel);
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.ticker__line {
+  padding: 2px 0;
+  border-bottom: 1px dashed var(--c-border);
 }
