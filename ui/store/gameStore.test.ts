@@ -56,6 +56,18 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().screen).toBe('season');
   });
 
+  it('season income is credited to the budget on continue and exposed for the UI', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const budgetBefore = useGameStore.getState().career!.budget;
+    playToEnd();
+    useGameStore.getState().continueCareer();
+    const s = useGameStore.getState();
+    expect(s.lastIncome).not.toBeNull();
+    expect(s.lastIncome!.total).toBeGreaterThan(0);
+    // Budget carried over plus this season's income (minus nothing yet).
+    expect(s.career!.budget).toBeGreaterThan(budgetBefore);
+  });
+
   it('buys a player in the market: budget drops and the squad grows', () => {
     useGameStore.getState().startCareer('barcelona');
     playToEnd();

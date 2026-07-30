@@ -11,6 +11,7 @@ const MAX_ROWS = 40;
 export function MarketScreen() {
   const career = useGameStore((s) => s.career);
   const bids = useGameStore((s) => s.bids);
+  const lastIncome = useGameStore((s) => s.lastIncome);
   const marketMessage = useGameStore((s) => s.marketMessage);
   const buyInMarket = useGameStore((s) => s.buyInMarket);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
@@ -48,6 +49,22 @@ export function MarketScreen() {
       </header>
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
+
+      {lastIncome ? (
+        <RetroPanel title={`Ingresos de la temporada · ${formatEuros(lastIncome.total)}`}>
+          <ul className="market-list">
+            <li className="market-row"><span className="market-name">Derechos de TV</span><span className="hint">{formatEuros(lastIncome.tv)}</span></li>
+            <li className="market-row"><span className="market-name">Taquilla</span><span className="hint">{formatEuros(lastIncome.gate)}</span></li>
+            <li className="market-row"><span className="market-name">Premio de liga (posición)</span><span className="hint">{formatEuros(lastIncome.leaguePrize)}</span></li>
+            {lastIncome.copa > 0 ? (
+              <li className="market-row"><span className="market-name">Copa del Rey</span><span className="hint">{formatEuros(lastIncome.copa)}</span></li>
+            ) : null}
+            {lastIncome.europa > 0 ? (
+              <li className="market-row"><span className="market-name">Competición europea</span><span className="hint">{formatEuros(lastIncome.europa)}</span></li>
+            ) : null}
+          </ul>
+        </RetroPanel>
+      ) : null}
 
       <RetroButton variant="primary" onClick={startSeasonFromMarket}>
         Empezar temporada →

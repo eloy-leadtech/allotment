@@ -7,3 +7,4 @@ export * from './market';
 export * from './promotion';
 export * from './competitions';
 export * from './europa';
+export * from './finances';
