@@ -72,6 +72,8 @@ export const CareerSaveSchema = z.object({
   seasonNumber: z.number().int().min(1),
   pointsForWin: z.union([z.literal(2), z.literal(3)]),
   relegationSpots: z.number().int().min(0),
+  /** Human club's transfer budget; defaults to 0 for pre-market saves. */
+  budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
   history: z.array(SeasonSummarySchema),
   /** Next matchday to play in the in-progress season (1-indexed). */
@@ -104,6 +106,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     seasonNumber: career.seasonNumber,
     pointsForWin: career.pointsForWin,
     relegationSpots: career.relegationSpots,
+    budget: career.budget,
     teams,
     history,
     // The in-progress season is derived from `teams`; only its resume point is saved.
@@ -121,6 +124,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     temporada: save.temporada,
     pointsForWin: save.pointsForWin,
     relegationSpots: save.relegationSpots,
+    budget: save.budget,
     teams: save.teams,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
