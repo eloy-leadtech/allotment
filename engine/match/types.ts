@@ -16,10 +16,22 @@ export interface MatchPlayer {
   porteria: number;
 }
 
+/** Playable formations (defenders-midfielders-forwards). */
+export type Formation = '5-4-1' | '5-3-2' | '4-5-1' | '4-4-2' | '4-3-3' | '3-5-2' | '3-4-3';
+
+/** A team's tactical setup for a match. */
+export interface Tactics {
+  formation: Formation;
+  /** Explicit starting XI; when absent the best XI is auto-selected. */
+  xi?: MatchPlayer[];
+}
+
 export interface MatchTeam {
   id: string;
   nombre: string;
   players: MatchPlayer[];
+  /** Optional tactics; when absent the team plays a neutral auto-selected XI. */
+  tactics?: Tactics;
 }
 
 export interface MatchInput {

@@ -1,8 +1,9 @@
 import { createRng, type Rng } from '../rng';
 import { MATCH_CONFIG } from './config';
 import { selectStartingXI } from './lineup';
-import { computeStrength } from './strength';
-import type { Line, MatchEvent, MatchInput, MatchPlayer, MatchResult } from './types';
+import { computeStrength, type TeamStrength } from './strength';
+import { formationMods } from './formation';
+import type { Line, MatchEvent, MatchInput, MatchPlayer, MatchResult, MatchTeam } from './types';
 
 /** Roulette-wheel pick over a lineup, weighted per line. */
 function pickWeighted(
@@ -31,12 +32,28 @@ function pickWeighted(
  * Simulate one match deterministically from its seed. Produces the final score
  * and the ordered `MatchEvent[]` (the single source that feeds teletipo/viewer).
  */
+/** Starting XI for a side: the team's chosen XI, else the auto-selected best. */
+function lineupFor(team: MatchTeam): MatchPlayer[] {
+  return team.tactics?.xi ?? selectStartingXI(team.players);
+}
+
+/** Base strength scaled by the team's formation (neutral when none chosen). */
+function effectiveStrength(team: MatchTeam, xi: readonly MatchPlayer[]): TeamStrength {
+  const base = computeStrength(xi);
+  const mods = formationMods(team.tactics?.formation);
+  return {
+    attack: base.attack * mods.attack,
+    defense: base.defense * mods.defense,
+    keeper: base.keeper,
+  };
+}
+
 export function simulateMatch(input: MatchInput): MatchResult {
   const rng = createRng(input.seed);
-  const homeXI = selectStartingXI(input.home.players);
-  const awayXI = selectStartingXI(input.away.players);
-  const homeStrength = computeStrength(homeXI);
-  const awayStrength = computeStrength(awayXI);
+  const homeXI = lineupFor(input.home);
+  const awayXI = lineupFor(input.away);
+  const homeStrength = effectiveStrength(input.home, homeXI);
+  const awayStrength = effectiveStrength(input.away, awayXI);
 
   const events: MatchEvent[] = [];
   const yellowCount = new Map<string, number>();
