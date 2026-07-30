@@ -49,6 +49,24 @@ function championOf(career: CareerState): string {
   return table[0]?.teamId ?? career.humanTeamId;
 }
 
+/** The human's final league position (1-indexed) in the just-finished season. */
+function humanPosition(career: CareerState): number {
+  const table = currentStandings(career.season);
+  const idx = table.findIndex((r) => r.teamId === career.humanTeamId);
+  return idx < 0 ? table.length : idx + 1;
+}
+
+/** The finished-season history line, including the human's finish (for Europe). */
+function finishedSummary(career: CareerState, championId: string) {
+  return {
+    seasonNumber: career.seasonNumber,
+    temporada: career.temporada,
+    championId,
+    division: career.division,
+    humanPosition: humanPosition(career),
+  };
+}
+
 export interface TransitionPreview {
   temporadaActual: string;
   temporadaSiguiente: string;
@@ -155,14 +173,7 @@ export function applyTransition(
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [
-      ...career.history,
-      {
-        seasonNumber: career.seasonNumber,
-        temporada: career.temporada,
-        championId: preview.championId,
-      },
-    ],
+    history: [...career.history, finishedSummary(career, preview.championId)],
   };
 }
 
@@ -245,9 +256,6 @@ export function applyDivisionChange(
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [
-      ...career.history,
-      { seasonNumber: career.seasonNumber, temporada: career.temporada, championId: championOf(career) },
-    ],
+    history: [...career.history, finishedSummary(career, championOf(career))],
   };
 }

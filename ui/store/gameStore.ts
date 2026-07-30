@@ -4,6 +4,7 @@ import {
   getSeason,
   getSegundaByTemporada,
   getSeasonByTemporada,
+  getEuropaByTemporada,
   nextSeasonByTemporada,
   loadSeleccionEuro2000,
   loadSeleccionMundial98,
@@ -25,6 +26,8 @@ import {
   acceptBid,
   toCompetitionTeam,
   runCareerCopa,
+  runCareerEuropa,
+  europaQualification,
   runTournament,
   TOURNAMENTS,
   type CareerState,
@@ -63,6 +66,28 @@ function attachCopa(career: CareerState): CareerState {
   const otherTeams = other ? other.load().equipos.map(toCompetitionTeam) : [];
   const domestic = [...career.season.teams, ...otherTeams];
   return { ...career, copa: runCareerCopa(career.seed, career.seasonNumber, domestic) };
+}
+
+/**
+ * Build this season's European competitions (Champions + UEFA) and attach them
+ * to the career. The human is injected into whichever they qualified for by last
+ * season's league finish (`history` tail); no European data for a season (e.g.
+ * the earliest ones) simply means no continental play that year.
+ */
+function attachEuropa(career: CareerState): CareerState {
+  const entry = getEuropaByTemporada(career.temporada);
+  const humanTeam = career.season.teams.find((t) => t.id === career.humanTeamId);
+  if (!entry || !humanTeam) return career;
+  const europaClubs = entry.load().equipos.map(toCompetitionTeam);
+  const last = career.history.at(-1);
+  const comp = europaQualification(last?.division, last?.humanPosition);
+  return {
+    ...career,
+    europa: runCareerEuropa(career.seed, career.seasonNumber, career.temporada, europaClubs, {
+      team: humanTeam,
+      comp,
+    }),
+  };
 }
 
 interface GameStore {
@@ -151,7 +176,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     randomizeSeed: () => set({ seed: randomSeed() }),
     startCareer: (teamId) => {
       const { league, seed } = get();
-      const career = attachCopa(newCareer(league, teamId, seed));
+      const career = attachEuropa(attachCopa(newCareer(league, teamId, seed)));
       set({
         career,
         season: career.season,
@@ -192,10 +217,12 @@ export const useGameStore = create<GameStore>((set, get) => {
         toDivision === 'primera' ? nextPrimera : getSegundaByTemporada(nextPrimera.temporada);
       if (!targetEntry) return; // no data for the target division that year
       const targetLeague = targetEntry.load();
-      const next = attachCopa(
-        toDivision === career.division
-          ? applyTransition(career, targetLeague, new Set(retainIds))
-          : applyDivisionChange(career, toDivision, targetLeague),
+      const next = attachEuropa(
+        attachCopa(
+          toDivision === career.division
+            ? applyTransition(career, targetLeague, new Set(retainIds))
+            : applyDivisionChange(career, toDivision, targetLeague),
+        ),
       );
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
@@ -258,7 +285,7 @@ export const useGameStore = create<GameStore>((set, get) => {
       const entry = getSeason(info.save.leagueId);
       if (!entry) return;
       const league = entry.load();
-      const career = attachCopa(restoreCareer(info.save, league));
+      const career = attachEuropa(attachCopa(restoreCareer(info.save, league)));
       set({
         career,
         season: career.season,
