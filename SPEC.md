@@ -1,6 +1,6 @@
 # PCFUTBOL ULTIMATE — Documento de Diseño (SPEC v0.3)
 
-> Manager de fútbol para Android con estética retro años 90 y plantillas actuales.
+> Manager de fútbol para Android con estética retro años 90 y plantillas históricas de la saga (temporadas clásicas, p. ej. 96/97; objetivo: 93/94→actualidad).
 > **Mashup de toda la saga futbolística de Dinamic Multimedia**: PC Fútbol (1.0→2001),
 > PC Calcio, PC Premier y PC Selección — lo mejor de cada título, replicando
 > mecánicas e ideas (nunca assets, gráficos ni código originales).
@@ -14,7 +14,7 @@
 ## 1. Filosofía de diseño
 
 1. **Retro en la piel, moderno en los huesos**: estética 90s (paleta, tipografía pixelada, sonido) pero UX pensada para táctil: botones grandes, navegación por gestos, sin dobles clics ni menús profundos.
-2. **Mecánicas, no copias**: replicamos ideas de diseño documentadas en `research/`. Cero assets originales.
+2. **Mecánicas, no copias**: replicamos ideas de diseño documentadas en `research/`; el código es original. Uso de assets originales de la saga: ver `ASSETS.md` (decisión del propietario).
 3. **Motor agnóstico de competición**: aunque el MVP es la liga española, el engine se diseña desde el día 1 para cualquier liga, copa o torneo de selecciones. Añadir Italia debe ser añadir datos, no reescribir código.
 4. **Datos abiertos**: todo en `/data/*.json`, editable a mano. Actualizar temporada = editar JSON.
 5. **Siempre jugable**: cada versión se puede jugar de principio a fin de temporada.
@@ -75,7 +75,9 @@ Competition =
   | { kind: "tournament"; groups + knockout }   // v4
 
 Player { id, nombre, edad, pos: POR|DEF|MED|DEL, media,
-  atributos { velocidad, resistencia, tecnica, remate, pase, defensa, porteria },
+  atributos { calidad, agresividad, resistencia, velocidad, fisico,
+              remate, ofensivo, pase, entrada, porteria },   // 10 attrs 0-99 (de PC Futbol 5.0)
+  potencial?,   // techo por atributo (cantera/evolucion; opcional)
   forma(0-9), moral, cansancio, estado: OK|LES(sem)|SANC(part),
   clubId, ficha, valorMercado }
 
@@ -107,7 +109,7 @@ Ver `SETUP.md`. Flujo: issues `ready` → agente (Actions nocturno o night-shift
 ## 6. Épicas (full game)
 1. **E0 Research**: documentos `research/` de toda la saga (PC Fútbol 3.0-2001, Calcio, Premier, Selección)
 2. **E1 Fundaciones** (H1): scaffolding, CI, tema retro base, navegación
-3. **E2 Datos España** (H1): esquemas, db 1ª+2ª 2025/26, validador
+3. **E2 Datos España** (H1): esquemas, db 1ª+2ª de una temporada clásica (arranque: 96/97), validador
 4. **E3 Engine Liga** (H2): calendario, simulador de eventos, clasificación, ascensos/descensos
 5. **E4 Game Core** (H2): nueva partida, avance de jornada, fichajes, guardado
 6. **E5 UI Core** (H2): menús, selección de equipo, jornada, clasificación, fichas
