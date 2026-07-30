@@ -74,6 +74,13 @@ export const CareerSaveSchema = z.object({
   relegationSpots: z.number().int().min(0),
   /** Human's division; defaults to primera for pre-pyramid saves. */
   division: z.enum(['primera', 'segunda']).default('primera'),
+  /** Human's tactics; absent means neutral auto-XI. */
+  tactics: z
+    .object({
+      formation: z.enum(['5-4-1', '5-3-2', '4-5-1', '4-4-2', '3-5-2', '4-3-3', '3-4-3']),
+      xiIds: z.array(z.string()).optional(),
+    })
+    .optional(),
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
@@ -109,6 +116,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     pointsForWin: career.pointsForWin,
     relegationSpots: career.relegationSpots,
     division: career.division,
+    tactics: career.tactics,
     budget: career.budget,
     teams,
     history,
@@ -128,6 +136,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     pointsForWin: save.pointsForWin,
     relegationSpots: save.relegationSpots,
     division: save.division,
+    tactics: save.tactics,
     budget: save.budget,
     teams: save.teams,
   };

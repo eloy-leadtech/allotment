@@ -1,20 +1,38 @@
-import { hashSeed } from '@engine';
+import { hashSeed, type CompetitionTeam, type MatchPlayer, type Tactics } from '@engine';
 import type { League } from '@data';
 import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/season';
-import type { CareerState, CareerTeam } from './types';
+import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { initialBudget } from './market';
 import { seasonStartYear } from './development';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history). */
 type CareerMeta = Omit<CareerState, 'season' | 'history'>;
 
+/**
+ * Build the engine tactics for a match team from career tactics: resolve the
+ * chosen XI ids against the squad; drop the XI (auto-select) if fewer than 11
+ * resolve (e.g. a player was sold), keeping the formation either way.
+ */
+export function tacticsForSquad(
+  tactics: CareerTactics | undefined,
+  players: readonly MatchPlayer[],
+): Tactics | undefined {
+  if (!tactics) return undefined;
+  if (!tactics.xiIds) return { formation: tactics.formation };
+  const byId = new Map(players.map((p) => [p.id, p]));
+  const xi = tactics.xiIds.map((id) => byId.get(id)).filter((p): p is MatchPlayer => p !== undefined);
+  return xi.length === 11 ? { formation: tactics.formation, xi } : { formation: tactics.formation };
+}
+
 /** Derive the in-progress SeasonState from the career's full-data teams. */
 export function seasonFromCareer(meta: CareerMeta): SeasonState {
-  const teams = meta.teams.map((ct) => ({
-    id: ct.id,
-    nombre: ct.nombre,
-    players: ct.players.map(toMatchPlayer),
-  }));
+  const teams: CompetitionTeam[] = meta.teams.map((ct) => {
+    const players = ct.players.map(toMatchPlayer);
+    if (ct.id === meta.humanTeamId && meta.tactics) {
+      return { id: ct.id, nombre: ct.nombre, players, tactics: tacticsForSquad(meta.tactics, players) };
+    }
+    return { id: ct.id, nombre: ct.nombre, players };
+  });
   // Each career season gets its own deterministic seed derived from the master seed.
   const seed = hashSeed(meta.seed, 'season', meta.seasonNumber);
   return newSeasonFromTeams(
@@ -63,4 +81,16 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
 /** Resolve a team id to its display name in the career. */
 export function careerTeamName(career: CareerState, teamId: string): string {
   return career.teams.find((t) => t.id === teamId)?.nombre ?? teamId;
+}
+
+/**
+ * Set the human's tactics. Updates the in-progress season's human team in place
+ * (so it takes effect from the next matchday) WITHOUT resetting results or the
+ * current matchday — changing tactics never replays what's already been played.
+ */
+export function setCareerTactics(career: CareerState, tactics: CareerTactics): CareerState {
+  const teams = career.season.teams.map((t) =>
+    t.id === career.humanTeamId ? { ...t, tactics: tacticsForSquad(tactics, t.players) } : t,
+  );
+  return { ...career, tactics, season: { ...career.season, teams } };
 }
