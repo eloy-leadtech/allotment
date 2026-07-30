@@ -35,6 +35,11 @@ export function getSeason(id: string): SeasonEntry | undefined {
   return SEASONS.find((s) => s.id === id);
 }
 
+/** The Primera season for a given season label, if one exists. */
+export function getSeasonByTemporada(temporada: string): SeasonEntry | undefined {
+  return SEASONS.find((s) => s.temporada === temporada);
+}
+
 /**
  * Segunda División databases, keyed like SEASONS. Coverage varies by season
  * (96/97 and 97/98 are partial — 10 clubs — from the classic pack; 98/99 and

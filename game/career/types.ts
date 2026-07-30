@@ -2,6 +2,7 @@ import type { Player, TeamColors } from '@data';
 import type { Formation } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
+import type { CopaResult } from '../tournament/copa';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -43,6 +44,8 @@ export interface CareerState {
   division: Division;
   /** The human's tactics for their matches; absent means neutral auto-XI. */
   tactics?: CareerTactics;
+  /** This season's Copa del Rey (regenerated deterministically; not persisted). */
+  copa?: CopaResult;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
   teams: CareerTeam[];
