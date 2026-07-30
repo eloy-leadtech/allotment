@@ -7,8 +7,8 @@ export function TitleScreen() {
     <main className="screen screen--title">
       <h1>PCFutbol Ultimate</h1>
       <p className="tagline">Manager retro · Liga española 96/97</p>
-      <RetroButton variant="primary" onClick={() => goTo('teamSelect')}>
-        Nueva Liga
+      <RetroButton variant="primary" onClick={() => goTo('newGame')}>
+        Nueva partida
       </RetroButton>
     </main>
   );
