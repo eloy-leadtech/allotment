@@ -2,3 +2,4 @@
 export * from './schemas';
 export * from './loader';
 export * from './seasons';
+export * from './estadios';

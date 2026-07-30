@@ -1,0 +1,126 @@
+{
+  "albacete": {
+    "nombre": "Carlos Belmonte",
+    "aforo": 16500
+  },
+  "at-madrid": {
+    "nombre": "Vicente Calderón",
+    "aforo": 56500
+  },
+  "athletic": {
+    "nombre": "San Mamés",
+    "aforo": 40000
+  },
+  "badajoz": {
+    "nombre": "El Vivero",
+    "aforo": null
+  },
+  "barcelona": {
+    "nombre": "Camp Nou",
+    "aforo": 98600
+  },
+  "barcelona-b": {
+    "nombre": "Miniestadi",
+    "aforo": 5673
+  },
+  "betis": {
+    "nombre": "Benito Villamarín",
+    "aforo": null
+  },
+  "celta": {
+    "nombre": "Balaídos",
+    "aforo": 31990
+  },
+  "compostela": {
+    "nombre": "Multiusos de San Lázaro",
+    "aforo": 12000
+  },
+  "deportivo": {
+    "nombre": "Riazor",
+    "aforo": 35600
+  },
+  "eibar": {
+    "nombre": "Municipal de Ipurúa",
+    "aforo": 5200
+  },
+  "espanyol": {
+    "nombre": "Montjuïc",
+    "aforo": 55000
+  },
+  "hercules": {
+    "nombre": "José Rico Pérez",
+    "aforo": 29428
+  },
+  "lleida": {
+    "nombre": "Camp D' Esports",
+    "aforo": 13000
+  },
+  "logrones": {
+    "nombre": "Las Gaunas",
+    "aforo": 14895
+  },
+  "mallorca": {
+    "nombre": "Luis Sitjar",
+    "aforo": 19000
+  },
+  "merida": {
+    "nombre": "Romano José Fouto",
+    "aforo": 15000
+  },
+  "osasuna": {
+    "nombre": "El Sadar",
+    "aforo": 20000
+  },
+  "oviedo": {
+    "nombre": "Carlos Tartiere",
+    "aforo": 16400
+  },
+  "racing": {
+    "nombre": "El Sardinero",
+    "aforo": 22500
+  },
+  "rayo": {
+    "nombre": "Nuevo Vallecas",
+    "aforo": null
+  },
+  "real-madrid": {
+    "nombre": "Santiago Bernabéu",
+    "aforo": 87000
+  },
+  "real-madrid-b": {
+    "nombre": "Ciudad Deportiva",
+    "aforo": 5672
+  },
+  "real-sociedad": {
+    "nombre": "Anoeta",
+    "aforo": 32000
+  },
+  "sevilla": {
+    "nombre": "Ramón Sánchez Pizjuán",
+    "aforo": 43015
+  },
+  "sporting": {
+    "nombre": "El Molinón",
+    "aforo": 25885
+  },
+  "tenerife": {
+    "nombre": "Heliodoro Rodríguez López",
+    "aforo": 21236
+  },
+  "toledo": {
+    "nombre": "Salto del Caballo",
+    "aforo": 6500
+  },
+  "valencia": {
+    "nombre": "Mestalla",
+    "aforo": 54000
+  },
+  "valladolid": {
+    "nombre": "Nuevo José Zorrilla",
+    "aforo": 26512
+  },
+  "zaragoza": {
+    "nombre": "La Romareda",
+    "aforo": 34223
+  }
+}
