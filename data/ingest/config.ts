@@ -114,6 +114,16 @@ export const SELECCION_EURO2000_SOURCE =
   'C:/dev/pcfutbol-analysis/data/extra/seleccion-euro2000-source.json';
 export const OUTPUT_RELATIVE_EURO2000 = 'data/db/seleccion-euro2000.json';
 
+/**
+ * Mundial 98 national teams (contenedor 6.5). Attributes are the REAL values,
+ * de-permuted; 799/1310 players are covered, so 4 minor finalists (Arabia, Irán,
+ * Corea, Jamaica) get a per-position baseline fill at ingest so the 32-team World
+ * Cup is fully playable (documented low fidelity for those four).
+ */
+export const SELECCION_MUNDIAL98_SOURCE =
+  'C:/dev/pcfutbol-analysis/data/extra/seleccion-mundial98-source.json';
+export const OUTPUT_RELATIVE_MUNDIAL98 = 'data/db/seleccion-mundial98.json';
+
 // --- Segunda División ------------------------------------------------------
 
 /**

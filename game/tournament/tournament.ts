@@ -38,6 +38,29 @@ export const EURO2000_FINALIST_IDS: readonly string[] = [
   'r-checa',
 ];
 
+/** The 32 finalists of the 1998 World Cup, by their national-team id. */
+export const MUNDIAL98_FINALIST_IDS: readonly string[] = [
+  'brasil', 'francia', 'italia', 'alemania', 'argentina', 'holanda', 'espana', 'inglaterra',
+  'rumania', 'croacia', 'yugoslavia', 'dinamarca', 'nigeria', 'paraguay', 'mexico', 'chile',
+  'estados-unidos', 'colombia', 'marruecos', 'noruega', 'belgica', 'sudafrica', 'arabia-saudi', 'iran',
+  'japon', 'corea-del-sur', 'austria', 'escocia', 'bulgaria', 'camerun', 'tunez', 'jamaica',
+];
+
+/** A playable tournament: which national-team database, finalists and format. */
+export interface TournamentDef {
+  id: 'euro2000' | 'mundial98';
+  nombre: string;
+  /** The committed national-team database id (for the store to load). */
+  dbId: string;
+  finalistIds: readonly string[];
+  numGroups: number;
+}
+
+export const TOURNAMENTS: readonly TournamentDef[] = [
+  { id: 'euro2000', nombre: 'Eurocopa 2000', dbId: 'seleccion-euro2000', finalistIds: EURO2000_FINALIST_IDS, numGroups: 4 },
+  { id: 'mundial98', nombre: 'Mundial 98', dbId: 'seleccion-mundial98', finalistIds: MUNDIAL98_FINALIST_IDS, numGroups: 8 },
+];
+
 /** How far a team got in a finished tournament (for the summary line). */
 export function teamProgress(result: TournamentResult, teamId: string): string {
   if (result.championId === teamId) return 'Campeón';
