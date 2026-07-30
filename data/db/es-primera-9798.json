@@ -416,7 +416,7 @@
           "id": "barcelona-guillermo-amor-martinez-1967",
           "nombre": "Amor",
           "nombreCompleto": "Guillermo AMOR Martínez",
-          "posicion": "DEF",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -425,18 +425,18 @@
             6
           ],
           "atributos": {
-            "calidad": 76,
-            "agresividad": 16,
-            "resistencia": 75,
-            "velocidad": 65,
-            "fisico": 44,
-            "remate": 0,
-            "ofensivo": 19,
-            "pase": 21,
-            "entrada": 99,
-            "porteria": 15
+            "calidad": 77,
+            "agresividad": 82,
+            "resistencia": 78,
+            "velocidad": 79,
+            "fisico": 65,
+            "remate": 84,
+            "ofensivo": 81,
+            "pase": 78,
+            "entrada": 60,
+            "porteria": 17
           },
-          "media": 51,
+          "media": 76,
           "dorsal": null,
           "fechaNacimiento": "1967-12-04",
           "alturaCm": 174,
