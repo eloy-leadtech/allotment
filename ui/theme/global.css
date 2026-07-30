@@ -264,6 +264,13 @@ h1 {
   gap: 8px;
 }
 
+/* Tactics: formation picker */
+.formation-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 /* Season end: promotion/relegation notice */
 .fate {
   font-weight: 700;
