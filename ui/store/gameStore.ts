@@ -6,8 +6,12 @@ import {
   advanceMatchday,
   serializeCareer,
   restoreCareer,
+  generateBids,
+  buyPlayer,
+  acceptBid,
   type CareerState,
   type SeasonState,
+  type Bid,
 } from '@game';
 import type { MatchResult } from '@engine';
 import type { Screen } from '@app/navigation';
@@ -44,6 +48,10 @@ interface GameStore {
   viewingMatch: MatchResult | null;
   /** Current-squad player ids the human chose to RETAIN at season end. */
   retainIds: string[];
+  /** AI offers for your players this transfer window (snapshot on market entry). */
+  bids: Bid[];
+  /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
+  marketMessage: string | null;
   /** Snapshot of the save slots (for the slots screen). */
   slots: Array<SlotInfo | null>;
   goTo: (screen: Screen) => void;
@@ -54,6 +62,9 @@ interface GameStore {
   playNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   continueCareer: () => void;
+  buyInMarket: (playerId: string) => void;
+  acceptMarketBid: (bid: Bid) => void;
+  startSeasonFromMarket: () => void;
   openMatch: (result: MatchResult) => void;
   refreshSlots: () => void;
   saveToSlot: (slot: number) => void;
@@ -81,6 +92,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     lastResults: [],
     viewingMatch: null,
     retainIds: [],
+    bids: [],
+    marketMessage: null,
     slots: listSlots(),
     goTo: (screen) => set({ screen }),
     chooseSeason: (id) => {
@@ -98,6 +111,8 @@ export const useGameStore = create<GameStore>((set, get) => {
         lastResults: [],
         viewingMatch: null,
         retainIds: [],
+        bids: [],
+        marketMessage: null,
         screen: 'season',
       });
     },
@@ -120,17 +135,43 @@ export const useGameStore = create<GameStore>((set, get) => {
       if (!entry) return; // no historical data for the next season yet
       const nextWorld = entry.load();
       const next = applyTransition(career, nextWorld, new Set(retainIds));
+      // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
         season: next.season,
         seasonId: entry.id,
         league: nextWorld,
         retainIds: [],
+        bids: generateBids(next),
+        marketMessage: null,
         lastResults: [],
         viewingMatch: null,
-        screen: 'season',
+        screen: 'market',
       });
     },
+    buyInMarket: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = buyPlayer(career, playerId);
+      if (!result.ok) {
+        set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega el presupuesto.' : 'No disponible.' });
+        return;
+      }
+      set({ career: result.career, season: result.career.season, marketMessage: null });
+    },
+    acceptMarketBid: (bid) => {
+      const { career, bids } = get();
+      if (!career) return;
+      const result = acceptBid(career, bid);
+      if (!result.ok) return;
+      set({
+        career: result.career,
+        season: result.career.season,
+        bids: bids.filter((b) => b.playerId !== bid.playerId),
+        marketMessage: null,
+      });
+    },
+    startSeasonFromMarket: () => set({ screen: 'season', marketMessage: null }),
     openMatch: (result) => set({ viewingMatch: result, screen: 'match' }),
     refreshSlots: () => set({ slots: listSlots() }),
     saveToSlot: (slot) => {
@@ -154,6 +195,8 @@ export const useGameStore = create<GameStore>((set, get) => {
         lastResults: [],
         viewingMatch: null,
         retainIds: [],
+        bids: [],
+        marketMessage: null,
         screen: 'season',
       });
     },
