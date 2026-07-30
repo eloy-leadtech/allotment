@@ -1,4 +1,6 @@
 import { LeagueSchema, type League } from './schemas';
+import primera9596 from './db/es-primera-9596.json';
+import segunda9596 from './db/es-segunda-9596.json';
 import primera9697 from './db/es-primera-9697.json';
 import primera9798 from './db/es-primera-9798.json';
 import primera9899 from './db/es-primera-9899.json';
@@ -18,6 +20,16 @@ export function parseLeague(raw: unknown): League {
 }
 
 const cache = new Map<string, League>();
+
+/** Load the committed Liga española 95/96 database (validated, memoized). */
+export function loadPrimera9596(): League {
+  let league = cache.get('9596');
+  if (!league) {
+    league = parseLeague(primera9596);
+    cache.set('9596', league);
+  }
+  return league;
+}
 
 /** Load the committed Liga española 96/97 database (validated, memoized). */
 export function loadPrimera9697(): League {
@@ -59,6 +71,7 @@ function memoize(key: string, raw: unknown): League {
 }
 
 /** Load a committed Segunda División database (validated, memoized). */
+export const loadSegunda9596 = (): League => memoize('seg-9596', segunda9596);
 export const loadSegunda9697 = (): League => memoize('seg-9697', segunda9697);
 export const loadSegunda9798 = (): League => memoize('seg-9798', segunda9798);
 export const loadSegunda9899 = (): League => memoize('seg-9899', segunda9899);

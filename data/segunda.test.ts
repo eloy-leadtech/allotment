@@ -40,8 +40,8 @@ describe('Segunda División databases', () => {
   });
 
   it('pairs each Segunda season with its label', () => {
-    expect(SEGUNDA_SEASONS).toHaveLength(4);
+    expect(SEGUNDA_SEASONS).toHaveLength(5);
     expect(getSegundaByTemporada('98/99')?.id).toBe('es-segunda-9899');
-    expect(getSegundaByTemporada('95/96')).toBeUndefined();
+    expect(getSegundaByTemporada('90/91')).toBeUndefined();
   });
 });

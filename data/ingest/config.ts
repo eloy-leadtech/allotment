@@ -88,6 +88,19 @@ export const FALLBACK_DB_9798 = 'data/db/es-primera-9798.json';
 /** Output, committed to the repo and consumed by the loader. */
 export const OUTPUT_RELATIVE_9899 = 'data/db/es-primera-9899.json';
 
+// --- Temporada 95/96 (PC Fútbol 4.1) ---------------------------------------
+
+/**
+ * 95/96 (Primera 22 + Segunda 20), de PC Fútbol 4.1. Ese motor solo guardaba 4
+ * atributos crudos por jugador; los 10 del juego están SINTETIZADOS (modelo 4→10
+ * calibrado por rol contra 96/97, error ~4.5, con provenance por jugador). Es su
+ * propio conjunto real de clubes (sin fixed-22 ni fallback).
+ */
+export const SOURCE_PATH_9596_PRIMERA =
+  'C:/dev/pcfutbol-analysis/data/extra/primera-9596-source.json';
+export const SOURCE_PATH_9596_SEGUNDA =
+  'C:/dev/pcfutbol-analysis/data/extra/segunda-9596-source.json';
+
 // --- Selecciones (torneos) -------------------------------------------------
 
 /**
