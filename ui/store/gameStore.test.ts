@@ -87,8 +87,9 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().screen).toBe('season');
   });
 
-  it('nextSeasonEntry maps 96/97 -> 97/98 and stops after the last season', () => {
+  it('nextSeasonEntry chains the seasons and stops after the last', () => {
     expect(nextSeasonEntry('es-primera-9697')?.id).toBe('es-primera-9798');
-    expect(nextSeasonEntry('es-primera-9798')).toBeNull();
+    expect(nextSeasonEntry('es-primera-9798')?.id).toBe('es-primera-9899');
+    expect(nextSeasonEntry('es-primera-9899')).toBeNull();
   });
 });
