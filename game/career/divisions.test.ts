@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Attributes, League, Player } from '@data';
 import { newCareer } from './career';
-import { careerOutcome, applyDivisionChange } from './transition';
+import { careerOutcome, applyDivisionChange, applyTransition } from './transition';
 import { advanceMatchday, isSeasonOver, currentStandings } from '../season/season';
 
 const attrs: Attributes = {
@@ -116,5 +116,20 @@ describe('applyDivisionChange', () => {
     expect(next.season.currentMatchday).toBe(1);
     const step = advanceMatchday(next.season);
     expect(step.state.currentMatchday).toBe(2);
+  });
+});
+
+describe('applyTransition robustness', () => {
+  it('carries the squad when the human club is absent from the next league', () => {
+    const primera = league('pri-9596', '95/96', ['you', 'a', 'b', 'c']);
+    const career = playOut(newCareer(primera, 'you', 7));
+    const before = career.teams.find((t) => t.id === 'you')!.players.map((p) => p.id).sort();
+    // Next league does NOT contain the human club (kept up against history).
+    const nextWithoutYou = league('pri-9697', '96/97', ['a', 'b', 'c', 'd']);
+    const next = applyTransition(career, nextWithoutYou, new Set());
+    expect(next.teams.some((t) => t.id === 'you')).toBe(true);
+    expect(next.teams.find((t) => t.id === 'you')!.players.map((p) => p.id).sort()).toEqual(before);
+    expect(next.division).toBe('primera');
+    expect(next.temporada).toBe('96/97');
   });
 });

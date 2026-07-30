@@ -101,6 +101,12 @@ export function applyTransition(
   if (nextWorld.competicion.kind !== 'league') {
     throw new Error('applyTransition supports league competitions only');
   }
+  // If your club isn't in the real next league (you kept it up against history,
+  // or the season datasets don't share the same clubs), carry your whole squad
+  // in — same division — instead of losing every player as a "departure".
+  if (!nextWorld.equipos.some((t) => t.id === career.humanTeamId)) {
+    return applyDivisionChange(career, career.division, nextWorld);
+  }
   const seasonNumberNext = career.seasonNumber + 1;
   const temporadaNext = nextWorld.temporada;
   const startYear = seasonStartYear(temporadaNext);

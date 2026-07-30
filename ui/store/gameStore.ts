@@ -101,7 +101,9 @@ interface GameStore {
  * A career owns the world; `season` mirrors its in-progress season for the views.
  */
 export const useGameStore = create<GameStore>((set, get) => {
-  const first = SEASONS[0];
+  // Default to 96/97 (the flagship, full-fidelity season); 95/96 is selectable
+  // but its attributes are synthesized.
+  const first = getSeason('es-primera-9697') ?? SEASONS[0];
   if (!first) {
     throw new Error('No seasons available');
   }
