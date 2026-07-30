@@ -1,4 +1,5 @@
 import type { StandingRow } from '@engine';
+import { Crest } from './Crest';
 
 interface StandingsTableProps {
   rows: StandingRow[];
@@ -28,7 +29,12 @@ export function StandingsTable({ rows, teamName, highlightTeamId }: StandingsTab
           {rows.map((row, index) => (
             <tr key={row.teamId} className={row.teamId === highlightTeamId ? 'standings__row--me' : ''}>
               <td>{index + 1}</td>
-              <td className="standings__team">{teamName(row.teamId)}</td>
+              <td className="standings__team">
+                <span className="team-cell">
+                  <Crest teamId={row.teamId} size={18} />
+                  {teamName(row.teamId)}
+                </span>
+              </td>
               <td>{row.played}</td>
               <td>{row.won}</td>
               <td>{row.drawn}</td>

@@ -2,6 +2,7 @@ import { narrateMatch, teamName } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { Ticker } from '@ui/components/Ticker';
+import { Crest } from '@ui/components/Crest';
 
 export function MatchScreen() {
   const season = useGameStore((s) => s.season);
@@ -24,7 +25,9 @@ export function MatchScreen() {
   return (
     <main className="screen">
       <h1 className="scoreline">
-        {home} <span className="score">{match.homeGoals}-{match.awayGoals}</span> {away}
+        <Crest teamId={match.homeId} size={28} /> {home}{' '}
+        <span className="score">{match.homeGoals}-{match.awayGoals}</span>{' '}
+        {away} <Crest teamId={match.awayId} size={28} />
       </h1>
       <Ticker lines={lines} />
       <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
