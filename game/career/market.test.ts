@@ -8,6 +8,10 @@ import {
   formatEuros,
   buyableListings,
   buyPlayer,
+  negotiateBuy,
+  acceptCounter,
+  releaseClause,
+  askingPrice,
   sellPlayer,
   acceptBid,
   generateBids,
@@ -156,6 +160,82 @@ describe('market transactions', () => {
     const { ok, reason } = buyPlayer(career, 'no-such-player');
     expect(ok).toBe(false);
     expect(reason).toBe('no-encontrado');
+  });
+
+  describe('negotiateBuy', () => {
+    const richCareer = () => ({ ...newCareer(league, HUMAN, 7), budget: 5_000_000_000 });
+
+    it('accepts an offer at or above the asking price', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      const outcome = negotiateBuy(career, target.player.id, target.askingPrice);
+      expect(outcome.status).toBe('accepted');
+      if (outcome.status === 'accepted') {
+        expect(outcome.price).toBe(target.askingPrice);
+        expect(squadOf(outcome.career, HUMAN)).toContain(target.player.id);
+        expect(outcome.career.budget).toBe(career.budget - target.askingPrice);
+      }
+    });
+
+    it('caps the price at the release clause even if you offer more', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      const outcome = negotiateBuy(career, target.player.id, target.clause + 10_000_000);
+      expect(outcome.status).toBe('accepted');
+      if (outcome.status === 'accepted') expect(outcome.price).toBe(target.clause);
+    });
+
+    it('counters a slightly-low offer at the midpoint with the asking price', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      const low = Math.round(target.askingPrice * 0.9); // within the 85% floor
+      const outcome = negotiateBuy(career, target.player.id, low);
+      expect(outcome.status).toBe('countered');
+      if (outcome.status === 'countered') {
+        expect(outcome.counter).toBe(Math.round((low + target.askingPrice) / 2));
+        expect(outcome.counter).toBeLessThan(target.askingPrice);
+        expect(outcome.counter).toBeGreaterThan(low);
+      }
+    });
+
+    it('rejects an offer far below the asking price', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      const outcome = negotiateBuy(career, target.player.id, Math.round(target.askingPrice * 0.5));
+      expect(outcome.status).toBe('rejected');
+    });
+
+    it('reports no-budget when an accepted price exceeds the budget', () => {
+      const career = { ...newCareer(league, HUMAN, 7), budget: 1 };
+      const target = buyableListings(career)[0]!;
+      const outcome = negotiateBuy(career, target.player.id, target.askingPrice);
+      expect(outcome.status).toBe('no-budget');
+    });
+
+    it('acceptCounter closes the deal at the countered price', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      const low = Math.round(target.askingPrice * 0.9);
+      const counter = Math.round((low + target.askingPrice) / 2);
+      const { career: after, ok } = acceptCounter(career, target.player.id, counter);
+      expect(ok).toBe(true);
+      expect(after.budget).toBe(career.budget - counter);
+      expect(squadOf(after, HUMAN)).toContain(target.player.id);
+    });
+
+    it('acceptCounter rejects a price outside the negotiable band', () => {
+      const career = richCareer();
+      const target = buyableListings(career)[0]!;
+      // Far below the floor is not a legitimate counter.
+      const { ok } = acceptCounter(career, target.player.id, Math.round(target.askingPrice * 0.5));
+      expect(ok).toBe(false);
+    });
+
+    it('the release clause exceeds the asking price', () => {
+      const career = newCareer(league, HUMAN, 7);
+      const someone = career.teams.find((t) => t.id !== HUMAN)!.players[0]!;
+      expect(releaseClause(someone, 25)).toBeGreaterThan(askingPrice(someone, 25));
+    });
   });
 
   it('sells one of your players to another club for the agreed amount', () => {

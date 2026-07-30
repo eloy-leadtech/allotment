@@ -13,11 +13,15 @@ export function MarketScreen() {
   const bids = useGameStore((s) => s.bids);
   const lastIncome = useGameStore((s) => s.lastIncome);
   const marketMessage = useGameStore((s) => s.marketMessage);
-  const buyInMarket = useGameStore((s) => s.buyInMarket);
+  const counterOffer = useGameStore((s) => s.counterOffer);
+  const makeOffer = useGameStore((s) => s.makeOffer);
+  const acceptCounterOffer = useGameStore((s) => s.acceptCounterOffer);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
   const startSeasonFromMarket = useGameStore((s) => s.startSeasonFromMarket);
   const goTo = useGameStore((s) => s.goTo);
   const [query, setQuery] = useState('');
+  /** Draft offer amounts (in euros) keyed by player id; blank = use asking. */
+  const [offers, setOffers] = useState<Record<string, string>>({});
 
   const listings = useMemo(() => (career ? buyableListings(career) : []), [career]);
   const filtered = useMemo(() => {
@@ -98,19 +102,43 @@ export function MarketScreen() {
         />
         <ul className="market-list">
           {filtered.map((l) => {
-            const tooExpensive = career.budget < l.askingPrice;
+            const draft = offers[l.player.id] ?? '';
+            const offerEuros = draft.trim() === '' ? l.askingPrice : Math.round(Number(draft) * 1_000_000);
+            const validOffer = Number.isFinite(offerEuros) && offerEuros > 0;
+            const isCountered = counterOffer?.playerId === l.player.id;
             return (
-              <li key={l.player.id} className="market-row">
+              <li key={l.player.id} className="market-row market-negotiate">
                 <span className="market-name team-cell">
                   <Crest teamId={l.clubId} size={18} />
                   {l.player.nombre}
                 </span>
                 <span className="hint">
-                  {l.player.posicion} · media {l.player.media} · {formatEuros(l.askingPrice)}
+                  {l.player.posicion} · media {l.player.media} · pide {formatEuros(l.askingPrice)} · cláusula {formatEuros(l.clause)}
                 </span>
-                <RetroButton disabled={tooExpensive} onClick={() => buyInMarket(l.player.id)}>
-                  Fichar
-                </RetroButton>
+                <span className="market-offer">
+                  <input
+                    className="offer-input"
+                    type="number"
+                    min={0}
+                    step={0.5}
+                    placeholder={(l.askingPrice / 1_000_000).toFixed(1)}
+                    value={draft}
+                    onChange={(e) => setOffers((o) => ({ ...o, [l.player.id]: e.target.value }))}
+                    aria-label={`Oferta por ${l.player.nombre} en millones`}
+                  />
+                  <span className="hint">M€</span>
+                  <RetroButton
+                    disabled={!validOffer}
+                    onClick={() => makeOffer(l.player.id, offerEuros)}
+                  >
+                    Ofertar
+                  </RetroButton>
+                  {isCountered ? (
+                    <RetroButton variant="primary" onClick={acceptCounterOffer}>
+                      Aceptar {formatEuros(counterOffer.counter)}
+                    </RetroButton>
+                  ) : null}
+                </span>
               </li>
             );
           })}

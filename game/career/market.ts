@@ -79,10 +79,19 @@ export function formatEuros(euros: number): string {
 
 /** Premium a selling club adds on top of pure market value. */
 const ASKING_PREMIUM = 1.3;
+/** Release clause: pay it and the sale is automatic, no negotiation. */
+const CLAUSE_MULTIPLIER = 2.5;
+/** Below this fraction of the asking price, an offer is dismissed outright. */
+const OFFER_FLOOR_FRACTION = 0.85;
 
 /** What an AI club asks to sell one of its players. */
 export function askingPrice(player: Player, age: number | null): number {
   return Math.round(marketValue(player, age) * ASKING_PREMIUM);
+}
+
+/** A player's release clause: pay it and the transfer goes through instantly. */
+export function releaseClause(player: Player, age: number | null): number {
+  return Math.round(marketValue(player, age) * CLAUSE_MULTIPLIER);
 }
 
 /** A buyable player offered by an AI club. */
@@ -91,6 +100,8 @@ export interface TransferListing {
   clubId: string;
   value: number;
   askingPrice: number;
+  /** Release clause: pay it and the transfer is automatic. */
+  clause: number;
 }
 
 /** An AI club's offer for one of your players. */
@@ -131,6 +142,7 @@ export function buyableListings(career: CareerState): TransferListing[] {
         clubId: team.id,
         value: marketValue(player, age),
         askingPrice: askingPrice(player, age),
+        clause: releaseClause(player, age),
       });
     }
   }
@@ -161,13 +173,95 @@ export function buyPlayer(career: CareerState, playerId: string): TransferResult
   const price = askingPrice(player, playerAge(player, startYear));
   if (career.budget < price) return { career, ok: false, reason: 'presupuesto' };
 
-  const bought = player;
+  return { career: applyPurchase(career, owner.id, player, price), ok: true };
+}
+
+/** Move `player` from `ownerId` to the human squad and debit `price`. */
+function applyPurchase(career: CareerState, ownerId: string, player: Player, price: number): CareerState {
   const teams = career.teams.map((team) => {
-    if (team.id === owner.id) return { ...team, players: team.players.filter((p) => p.id !== playerId) };
-    if (team.id === career.humanTeamId) return { ...team, players: [...team.players, bought] };
+    if (team.id === ownerId) return { ...team, players: team.players.filter((p) => p.id !== player.id) };
+    if (team.id === career.humanTeamId) return { ...team, players: [...team.players, player] };
     return team;
   });
-  return { career: withDerivedSeason({ ...career, teams, budget: career.budget - price }), ok: true };
+  return withDerivedSeason({ ...career, teams, budget: career.budget - price });
+}
+
+/** The outcome of making an offer for an AI club's player. */
+export type NegotiationOutcome =
+  | { status: 'accepted'; career: CareerState; price: number }
+  | { status: 'countered'; counter: number }
+  | { status: 'rejected' }
+  | { status: 'no-budget'; price: number }
+  | { status: 'no-encontrado' };
+
+/**
+ * Negotiate a signing by making an OFFER (instead of paying the fixed asking
+ * price). The selling club's answer is deterministic:
+ * - offer ≥ the release clause → sold at the clause (an instant buy-out);
+ * - offer ≥ the asking price → sold at your offer;
+ * - offer ≥ 85% of the asking price → the club counters at the midpoint;
+ * - below that → the offer is rejected outright.
+ * Acceptance still requires budget. Throws only if the market is closed.
+ */
+export function negotiateBuy(career: CareerState, playerId: string, offer: number): NegotiationOutcome {
+  assertMarketOpen(career);
+  const startYear = seasonStartYear(career.temporada);
+  let owner: CareerTeam | undefined;
+  let player: Player | undefined;
+  for (const team of career.teams) {
+    if (team.id === career.humanTeamId) continue;
+    const found = team.players.find((p) => p.id === playerId);
+    if (found) {
+      owner = team;
+      player = found;
+      break;
+    }
+  }
+  if (!owner || !player) return { status: 'no-encontrado' };
+
+  const age = playerAge(player, startYear);
+  const asking = askingPrice(player, age);
+  const clause = releaseClause(player, age);
+
+  let price: number | null = null;
+  if (offer >= clause) price = clause;
+  else if (offer >= asking) price = offer;
+  else if (offer >= Math.round(asking * OFFER_FLOOR_FRACTION)) {
+    return { status: 'countered', counter: Math.round((offer + asking) / 2) };
+  } else {
+    return { status: 'rejected' };
+  }
+
+  if (career.budget < price) return { status: 'no-budget', price };
+  return { status: 'accepted', career: applyPurchase(career, owner.id, player, price), price };
+}
+
+/**
+ * Close a signing at a price the selling club COUNTERED with. Validates the
+ * price is a genuine counter (between the offer floor and the asking price) and
+ * that you can afford it, then completes the transfer. Soft-fails otherwise.
+ */
+export function acceptCounter(career: CareerState, playerId: string, counter: number): TransferResult {
+  assertMarketOpen(career);
+  const startYear = seasonStartYear(career.temporada);
+  let owner: CareerTeam | undefined;
+  let player: Player | undefined;
+  for (const team of career.teams) {
+    if (team.id === career.humanTeamId) continue;
+    const found = team.players.find((p) => p.id === playerId);
+    if (found) {
+      owner = team;
+      player = found;
+      break;
+    }
+  }
+  if (!owner || !player) return { career, ok: false, reason: 'no-encontrado' };
+
+  const asking = askingPrice(player, playerAge(player, startYear));
+  const floor = Math.round(asking * OFFER_FLOOR_FRACTION);
+  if (counter < floor || counter > asking) return { career, ok: false, reason: 'no-encontrado' };
+  if (career.budget < counter) return { career, ok: false, reason: 'presupuesto' };
+  return { career: applyPurchase(career, owner.id, player, counter), ok: true };
 }
 
 /**
