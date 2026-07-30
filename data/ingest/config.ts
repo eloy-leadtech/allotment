@@ -87,3 +87,44 @@ export const FALLBACK_DB_9798 = 'data/db/es-primera-9798.json';
 
 /** Output, committed to the repo and consumed by the loader. */
 export const OUTPUT_RELATIVE_9899 = 'data/db/es-primera-9899.json';
+
+// --- Segunda División ------------------------------------------------------
+
+/**
+ * Segunda División sources, one per season. Extracted with the same JORN2
+ * calendar method as Primera. Coverage note: 96/97 and 97/98 come from the
+ * classic 32-team pack, so only 10 of ~20-22 Segunda clubs have squads; 98/99
+ * comes from the 876-team late pack and is complete (22). This ingest takes
+ * whatever clubs the source provides (no fixed set, no fallback).
+ */
+export const SEGUNDA_SOURCES: ReadonlyArray<{
+  source: string;
+  id: string;
+  temporada: string;
+  output: string;
+}> = [
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/segunda-9697-source.json',
+    id: 'es-segunda-9697',
+    temporada: '96/97',
+    output: 'data/db/es-segunda-9697.json',
+  },
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/segunda-9798-source.json',
+    id: 'es-segunda-9798',
+    temporada: '97/98',
+    output: 'data/db/es-segunda-9798.json',
+  },
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/segunda-9899-source.json',
+    id: 'es-segunda-9899',
+    temporada: '98/99',
+    output: 'data/db/es-segunda-9899.json',
+  },
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/segunda-9900-source.json',
+    id: 'es-segunda-9900',
+    temporada: '99/00',
+    output: 'data/db/es-segunda-9900.json',
+  },
+];
