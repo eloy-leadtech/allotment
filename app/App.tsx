@@ -3,6 +3,7 @@ import { TitleScreen } from '@ui/screens/TitleScreen';
 import { NewGameScreen } from '@ui/screens/NewGameScreen';
 import { TeamSelectScreen } from '@ui/screens/TeamSelectScreen';
 import { SeasonScreen } from '@ui/screens/SeasonScreen';
+import { PrematchScreen } from '@ui/screens/PrematchScreen';
 import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
 import { SquadScreen } from '@ui/screens/SquadScreen';
@@ -25,6 +26,8 @@ export function App() {
       return <TeamSelectScreen />;
     case 'season':
       return <SeasonScreen />;
+    case 'prematch':
+      return <PrematchScreen />;
     case 'seasonEnd':
       return <SeasonEndScreen />;
     case 'market':

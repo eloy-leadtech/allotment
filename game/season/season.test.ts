@@ -6,6 +6,7 @@ import {
   currentStandings,
   isSeasonOver,
   fixturesForMatchday,
+  nextHumanFixture,
   teamName,
 } from './season';
 import { serializeSeason, restoreSeason } from '../save/save';
@@ -35,6 +36,18 @@ describe('season', () => {
     expect(state.currentMatchday).toBe(1);
     expect(state.results).toHaveLength(0);
     expect(fixturesForMatchday(state, 1)).toHaveLength(11);
+  });
+
+  it('nextHumanFixture returns the human match each matchday, then null when over', () => {
+    let state = newSeason(league, humanTeamId, 2024);
+    const first = nextHumanFixture(state);
+    expect(first).not.toBeNull();
+    expect(first!.round).toBe(1);
+    expect(first!.homeId === humanTeamId || first!.awayId === humanTeamId).toBe(true);
+    // Play the whole season; the last state is over -> no fixture.
+    for (let i = 0; i < state.totalMatchdays; i += 1) state = advanceMatchday(state).state;
+    expect(isSeasonOver(state)).toBe(true);
+    expect(nextHumanFixture(state)).toBeNull();
   });
 
   it('advances matchdays and accumulates results', () => {

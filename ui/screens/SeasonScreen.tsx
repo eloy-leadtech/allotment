@@ -44,9 +44,12 @@ export function SeasonScreen() {
           Fin de temporada →
         </RetroButton>
       ) : (
-        <RetroButton variant="primary" onClick={playNextMatchday}>
-          Avanzar jornada
-        </RetroButton>
+        <div className="season-actions">
+          <RetroButton variant="primary" onClick={() => goTo('prematch')}>
+            Jugar jornada
+          </RetroButton>
+          <RetroButton onClick={playNextMatchday}>Simular jornada</RetroButton>
+        </div>
       )}
 
       <StandingsTable rows={table} teamName={name} highlightTeamId={season.humanTeamId} />
