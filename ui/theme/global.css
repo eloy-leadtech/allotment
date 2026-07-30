@@ -264,6 +264,31 @@ h1 {
   gap: 8px;
 }
 
+/* Stadium banner */
+.stadium {
+  margin: 0 0 12px;
+}
+
+.stadium-img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  image-rendering: pixelated;
+}
+
+.stadium-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.stadium-name {
+  font-weight: 600;
+}
+
 /* Tactics: formation picker */
 .formation-row {
   display: flex;

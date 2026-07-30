@@ -8,6 +8,7 @@ import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { Crest } from '@ui/components/Crest';
+import { Stadium } from '@ui/components/Stadium';
 import { PotentialRange } from '@ui/components/PotentialRange';
 
 /** Players at or under this age get a (fallible) scouted potential range. */
@@ -49,6 +50,9 @@ export function SquadScreen() {
         </h1>
         <span className="matchday">Plantilla · {career.temporada}</span>
       </header>
+
+      <Stadium teamId={career.humanTeamId} />
+
 
       <table className="squad-table">
         <thead>
