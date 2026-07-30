@@ -66,6 +66,7 @@ export function SeasonScreen() {
 
       <div className="season-actions">
         <RetroButton onClick={() => goTo('squad')}>Plantilla</RetroButton>
+        <RetroButton onClick={() => goTo('tactics')}>Táctica</RetroButton>
         <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
         <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
       </div>

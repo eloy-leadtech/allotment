@@ -6,6 +6,7 @@ import { SeasonScreen } from '@ui/screens/SeasonScreen';
 import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
 import { SquadScreen } from '@ui/screens/SquadScreen';
+import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
 import { SlotsScreen } from '@ui/screens/SlotsScreen';
 
@@ -27,6 +28,8 @@ export function App() {
       return <MarketScreen />;
     case 'squad':
       return <SquadScreen />;
+    case 'tactics':
+      return <TacticsScreen />;
     case 'match':
       return <MatchScreen />;
     case 'slots':

@@ -7,5 +7,6 @@ export type Screen =
   | 'seasonEnd'
   | 'market'
   | 'squad'
+  | 'tactics'
   | 'match'
   | 'slots';

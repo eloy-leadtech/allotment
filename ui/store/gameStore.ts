@@ -13,6 +13,7 @@ import {
   applyDivisionChange,
   careerOutcome,
   nextDivision,
+  setCareerTactics,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -20,6 +21,7 @@ import {
   buyPlayer,
   acceptBid,
   type CareerState,
+  type CareerTactics,
   type SeasonState,
   type Bid,
 } from '@game';
@@ -71,6 +73,7 @@ interface GameStore {
   startCareer: (teamId: string) => void;
   playNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
+  setTactics: (tactics: CareerTactics) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
   acceptMarketBid: (bid: Bid) => void;
@@ -138,6 +141,12 @@ export const useGameStore = create<GameStore>((set, get) => {
           ? state.retainIds.filter((id) => id !== playerId)
           : [...state.retainIds, playerId],
       })),
+    setTactics: (tactics) => {
+      const { career } = get();
+      if (!career) return;
+      const next = setCareerTactics(career, tactics);
+      set({ career: next, season: next.season });
+    },
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;

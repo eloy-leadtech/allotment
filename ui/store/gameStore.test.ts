@@ -123,6 +123,14 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().screen).toBe('season');
   });
 
+  it('setTactics stores the human formation and applies it to the live season', () => {
+    useGameStore.getState().startCareer('barcelona');
+    useGameStore.getState().setTactics({ formation: '4-3-3' });
+    const s = useGameStore.getState();
+    expect(s.career?.tactics?.formation).toBe('4-3-3');
+    expect(s.season?.teams.find((t) => t.id === 'barcelona')?.tactics?.formation).toBe('4-3-3');
+  });
+
   it('nextSeasonEntry chains the seasons and stops after the last', () => {
     expect(nextSeasonEntry('es-primera-9697')?.id).toBe('es-primera-9798');
     expect(nextSeasonEntry('es-primera-9798')?.id).toBe('es-primera-9899');
