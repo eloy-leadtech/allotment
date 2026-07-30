@@ -131,6 +131,23 @@ describe('gameStore career loop', () => {
     expect(copa!.knockout.at(-1)?.nombre).toBe('final');
   });
 
+  it('attaches the European competitions in a season that has European data (98/99)', () => {
+    useGameStore.getState().chooseSeason('es-primera-9899');
+    useGameStore.getState().startCareer('barcelona');
+    const europa = useGameStore.getState().career?.europa;
+    expect(europa).toBeDefined();
+    expect(europa!.champions.groups).toHaveLength(4);
+    expect(europa!.uefa.championId).not.toBe('');
+    // Season 1 has no previous league finish, so the human is a spectator.
+    expect(europa!.humanComp).toBeNull();
+  });
+
+  it('does not attach Europe in a season without European data (96/97)', () => {
+    useGameStore.getState().chooseSeason('es-primera-9697');
+    useGameStore.getState().startCareer('barcelona');
+    expect(useGameStore.getState().career?.europa).toBeUndefined();
+  });
+
   it('setTactics stores the human formation and applies it to the live season', () => {
     useGameStore.getState().startCareer('barcelona');
     useGameStore.getState().setTactics({ formation: '4-3-3' });

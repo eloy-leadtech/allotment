@@ -3,6 +3,7 @@ import type { Formation } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { CopaResult } from '../tournament/copa';
+import type { EuropaResult } from './europa';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -24,6 +25,10 @@ export interface SeasonSummary {
   seasonNumber: number;
   temporada: string;
   championId: string;
+  /** The division the human competed in that season (for Europe qualification). */
+  division?: Division;
+  /** The human's final league position that season, 1-indexed (for Europe qualification). */
+  humanPosition?: number;
 }
 
 /**
@@ -46,6 +51,8 @@ export interface CareerState {
   tactics?: CareerTactics;
   /** This season's Copa del Rey (regenerated deterministically; not persisted). */
   copa?: CopaResult;
+  /** This season's European competition (regenerated deterministically; not persisted). */
+  europa?: EuropaResult;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
   teams: CareerTeam[];

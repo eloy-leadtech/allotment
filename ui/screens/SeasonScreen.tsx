@@ -7,6 +7,7 @@ import { StandingsTable } from '@ui/components/StandingsTable';
 export function SeasonScreen() {
   const season = useGameStore((s) => s.season);
   const division = useGameStore((s) => s.career?.division ?? 'primera');
+  const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const openMatch = useGameStore((s) => s.openMatch);
@@ -68,6 +69,7 @@ export function SeasonScreen() {
         <RetroButton onClick={() => goTo('squad')}>Plantilla</RetroButton>
         <RetroButton onClick={() => goTo('tactics')}>Táctica</RetroButton>
         <RetroButton onClick={() => goTo('copa')}>Copa</RetroButton>
+        {hasEuropa ? <RetroButton onClick={() => goTo('europa')}>Europa</RetroButton> : null}
         <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
         <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
       </div>

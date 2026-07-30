@@ -10,5 +10,6 @@ export type Screen =
   | 'tactics'
   | 'tournament'
   | 'copa'
+  | 'europa'
   | 'match'
   | 'slots';
