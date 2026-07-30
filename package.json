@@ -15,7 +15,8 @@
     "ingest:9798": "tsx data/ingest/ingest9798.ts",
     "ingest:9899": "tsx data/ingest/ingest9899.ts",
     "ingest:segunda": "tsx data/ingest/ingestSegunda.ts",
-    "ingest:selecciones": "tsx data/ingest/ingestSelecciones.ts"
+    "ingest:selecciones": "tsx data/ingest/ingestSelecciones.ts",
+    "ingest:mundial98": "tsx data/ingest/ingestMundial98.ts"
   },
   "dependencies": {
     "react": "^18.3.1",

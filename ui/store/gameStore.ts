@@ -5,6 +5,7 @@ import {
   getSegundaByTemporada,
   nextSeasonByTemporada,
   loadSeleccionEuro2000,
+  loadSeleccionMundial98,
   type League,
   type SeasonEntry,
 } from '@data';
@@ -23,7 +24,7 @@ import {
   acceptBid,
   toCompetitionTeam,
   runTournament,
-  EURO2000_FINALIST_IDS,
+  TOURNAMENTS,
   type CareerState,
   type CareerTactics,
   type SeasonState,
@@ -69,6 +70,8 @@ interface GameStore {
   tournament: TournamentResult | null;
   /** The nation the human picked for the tournament. */
   tournamentNationId: string | null;
+  /** Which tournament was played ('euro2000' | 'mundial98'). */
+  tournamentId: string | null;
   /** AI offers for your players this transfer window (snapshot on market entry). */
   bids: Bid[];
   /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
@@ -83,7 +86,7 @@ interface GameStore {
   playNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
-  startTournament: (nationId: string) => void;
+  startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
   acceptMarketBid: (bid: Bid) => void;
@@ -119,6 +122,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     retainIds: [],
     tournament: null,
     tournamentNationId: null,
+    tournamentId: null,
     bids: [],
     marketMessage: null,
     slots: listSlots(),
@@ -213,13 +217,15 @@ export const useGameStore = create<GameStore>((set, get) => {
       });
     },
     startSeasonFromMarket: () => set({ screen: 'season', marketMessage: null }),
-    startTournament: (nationId) => {
-      const league = loadSeleccionEuro2000();
+    startTournament: (tournamentId, nationId) => {
+      const def = TOURNAMENTS.find((t) => t.id === tournamentId);
+      if (!def) return;
+      const league = def.dbId === 'seleccion-mundial98' ? loadSeleccionMundial98() : loadSeleccionEuro2000();
       const teams = league.equipos
-        .filter((t) => EURO2000_FINALIST_IDS.includes(t.id))
+        .filter((t) => def.finalistIds.includes(t.id))
         .map(toCompetitionTeam);
-      const tournament = runTournament(teams, get().seed);
-      set({ tournament, tournamentNationId: nationId, screen: 'tournament' });
+      const tournament = runTournament(teams, get().seed, def.numGroups);
+      set({ tournament, tournamentNationId: nationId, tournamentId, screen: 'tournament' });
     },
     openMatch: (result) => set({ viewingMatch: result, screen: 'match' }),
     refreshSlots: () => set({ slots: listSlots() }),

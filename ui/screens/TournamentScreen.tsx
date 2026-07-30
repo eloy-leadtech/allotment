@@ -1,43 +1,56 @@
 import { useMemo, useState } from 'react';
-import { loadSeleccionEuro2000 } from '@data';
-import { EURO2000_FINALIST_IDS, teamProgress } from '@game';
+import { loadSeleccionEuro2000, loadSeleccionMundial98 } from '@data';
+import { TOURNAMENTS, teamProgress } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { StandingsTable } from '@ui/components/StandingsTable';
 
+type Def = (typeof TOURNAMENTS)[number];
+
+const loadDb = (dbId: string) =>
+  dbId === 'seleccion-mundial98' ? loadSeleccionMundial98() : loadSeleccionEuro2000();
+
 export function TournamentScreen() {
   const tournament = useGameStore((s) => s.tournament);
   const nationId = useGameStore((s) => s.tournamentNationId);
+  const tournamentId = useGameStore((s) => s.tournamentId);
   const startTournament = useGameStore((s) => s.startTournament);
   const goTo = useGameStore((s) => s.goTo);
-  const [picking, setPicking] = useState(false);
 
-  // Nation id -> display name, from the committed Euro 2000 database.
+  // Picker flow: 'tournament' -> 'nation' -> null (show the played result).
+  const [phase, setPhase] = useState<'tournament' | 'nation' | null>(null);
+  const [chosenDef, setChosenDef] = useState<Def | null>(null);
+
+  const activeDef: Def =
+    chosenDef ?? TOURNAMENTS.find((t) => t.id === tournamentId) ?? TOURNAMENTS[0]!;
+
   const nameById = useMemo(() => {
     const map = new Map<string, string>();
-    for (const t of loadSeleccionEuro2000().equipos) map.set(t.id, t.nombre);
+    for (const t of loadDb(activeDef.dbId).equipos) map.set(t.id, t.nombre);
     return map;
-  }, []);
+  }, [activeDef]);
   const name = (id: string): string => nameById.get(id) ?? id;
 
   const finalists = useMemo(
-    () => [...EURO2000_FINALIST_IDS].sort((a, b) => (nameById.get(a) ?? a).localeCompare(nameById.get(b) ?? b)),
-    [nameById],
+    () => [...activeDef.finalistIds].sort((a, b) => (nameById.get(a) ?? a).localeCompare(nameById.get(b) ?? b)),
+    [activeDef, nameById],
   );
 
-  // Picker: no tournament yet, or the user asked to play another.
-  if (!tournament || picking) {
+  const showResult = tournament !== null && phase === null;
+
+  // Step 1: choose the tournament.
+  if (!showResult && phase !== 'nation') {
     return (
       <main className="screen">
         <header className="season-head">
-          <h1>Eurocopa 2000</h1>
-          <span className="matchday">Elige tu selección</span>
+          <h1>Torneos de selecciones</h1>
+          <span className="matchday">Elige competición</span>
         </header>
         <div className="team-grid">
-          {finalists.map((id) => (
-            <RetroButton key={id} onClick={() => { setPicking(false); startTournament(id); }}>
-              {name(id)}
+          {TOURNAMENTS.map((def) => (
+            <RetroButton key={def.id} variant="primary" onClick={() => { setChosenDef(def); setPhase('nation'); }}>
+              {def.nombre}
             </RetroButton>
           ))}
         </div>
@@ -46,13 +59,35 @@ export function TournamentScreen() {
     );
   }
 
-  const yourRun = nationId ? teamProgress(tournament, nationId) : null;
+  // Step 2: choose your nation.
+  if (!showResult) {
+    return (
+      <main className="screen">
+        <header className="season-head">
+          <h1>{activeDef.nombre}</h1>
+          <span className="matchday">Elige tu selección</span>
+        </header>
+        <div className="team-grid">
+          {finalists.map((id) => (
+            <RetroButton key={id} onClick={() => { startTournament(activeDef.id, id); setChosenDef(null); setPhase(null); }}>
+              {name(id)}
+            </RetroButton>
+          ))}
+        </div>
+        <RetroButton onClick={() => setPhase('tournament')}>Atrás</RetroButton>
+      </main>
+    );
+  }
+
+  // Result view.
+  const played = tournament!;
+  const yourRun = nationId ? teamProgress(played, nationId) : null;
 
   return (
     <main className="screen">
       <header className="season-head">
-        <h1>Eurocopa 2000</h1>
-        <span className="matchday">🏆 {name(tournament.championId)}</span>
+        <h1>{activeDef.nombre}</h1>
+        <span className="matchday">🏆 {name(played.championId)}</span>
       </header>
 
       {nationId ? (
@@ -63,7 +98,7 @@ export function TournamentScreen() {
 
       <RetroPanel title="Fase de grupos">
         <div className="groups-grid">
-          {tournament.groups.map((g, i) => (
+          {played.groups.map((g, i) => (
             <div key={i} className="group">
               <h3>Grupo {String.fromCharCode(65 + i)}</h3>
               <StandingsTable rows={g.standings} teamName={name} highlightTeamId={nationId ?? undefined} />
@@ -73,7 +108,7 @@ export function TournamentScreen() {
       </RetroPanel>
 
       <RetroPanel title="Eliminatorias">
-        {tournament.knockout.map((round) => (
+        {played.knockout.map((round) => (
           <div key={round.nombre} className="ko-round">
             <h3>{round.nombre}</h3>
             <ul className="market-list">
@@ -93,7 +128,7 @@ export function TournamentScreen() {
       </RetroPanel>
 
       <div className="season-actions">
-        <RetroButton variant="primary" onClick={() => setPicking(true)}>
+        <RetroButton variant="primary" onClick={() => setPhase('tournament')}>
           Jugar otro
         </RetroButton>
         <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
