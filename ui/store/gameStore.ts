@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { SEASONS, getSeason, type League } from '@data';
-import { newSeason, advanceMatchday, type SeasonState } from '@game';
+import { newSeason, advanceMatchday, serializeSeason, restoreSeason, type SeasonState } from '@game';
 import type { MatchResult } from '@engine';
 import type { Screen } from '@app/navigation';
+import { listSlots, readSlot, writeSlot, deleteSlot, type SlotInfo } from '@ui/persistence/saveSlots';
 
 /** A fresh 32-bit seed from the browser CSPRNG (kept in /ui, not the engine). */
 function randomSeed(): number {
@@ -23,6 +24,8 @@ interface GameStore {
   /** Results of the most recently played matchday (for the season screen list). */
   lastResults: MatchResult[];
   viewingMatch: MatchResult | null;
+  /** Snapshot of the save slots (for the slots screen). */
+  slots: Array<SlotInfo | null>;
   goTo: (screen: Screen) => void;
   chooseSeason: (id: string) => void;
   setSeed: (seed: number) => void;
@@ -30,6 +33,10 @@ interface GameStore {
   startSeason: (teamId: string) => void;
   playNextMatchday: () => void;
   openMatch: (result: MatchResult) => void;
+  refreshSlots: () => void;
+  saveToSlot: (slot: number) => void;
+  loadFromSlot: (slot: number) => void;
+  deleteSlotAt: (slot: number) => void;
 }
 
 /**
@@ -49,6 +56,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     season: null,
     lastResults: [],
     viewingMatch: null,
+    slots: listSlots(),
     goTo: (screen) => set({ screen }),
     chooseSeason: (id) => {
       const entry = getSeason(id);
@@ -68,5 +76,25 @@ export const useGameStore = create<GameStore>((set, get) => {
       set({ season: step.state, lastResults: step.played });
     },
     openMatch: (result) => set({ viewingMatch: result, screen: 'match' }),
+    refreshSlots: () => set({ slots: listSlots() }),
+    saveToSlot: (slot) => {
+      const { season } = get();
+      if (!season) return;
+      writeSlot(slot, serializeSeason(season), Date.now());
+      set({ slots: listSlots() });
+    },
+    loadFromSlot: (slot) => {
+      const info = readSlot(slot);
+      if (!info) return;
+      const entry = getSeason(info.save.leagueId);
+      if (!entry) return;
+      const league = entry.load();
+      const season = restoreSeason(info.save, league);
+      set({ season, seasonId: entry.id, league, lastResults: [], viewingMatch: null, screen: 'season' });
+    },
+    deleteSlotAt: (slot) => {
+      deleteSlot(slot);
+      set({ slots: listSlots() });
+    },
   };
 });

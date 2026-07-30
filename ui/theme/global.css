@@ -223,3 +223,24 @@ h1 {
   color: var(--c-ink-dim);
   font-size: 13px;
 }
+
+/* Save slots */
+.slot-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.slot-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.season-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
