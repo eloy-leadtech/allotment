@@ -123,6 +123,14 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().screen).toBe('season');
   });
 
+  it('startCareer generates the season Copa del Rey over the domestic field', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const copa = useGameStore.getState().career?.copa;
+    expect(copa).toBeDefined();
+    expect(copa!.championId).not.toBe('');
+    expect(copa!.knockout.at(-1)?.nombre).toBe('final');
+  });
+
   it('setTactics stores the human formation and applies it to the live season', () => {
     useGameStore.getState().startCareer('barcelona');
     useGameStore.getState().setTactics({ formation: '4-3-3' });
