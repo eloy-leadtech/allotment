@@ -4,3 +4,4 @@ export * from './rng';
 export * from './calendar';
 export * from './standings';
 export * from './match';
+export * from './competition';
