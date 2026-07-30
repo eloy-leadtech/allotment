@@ -53,6 +53,7 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     temporada: league.temporada,
     pointsForWin: league.competicion.pointsForWin,
     relegationSpots: league.competicion.relegationSpots,
+    division: 'primera',
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
   };
