@@ -298,3 +298,56 @@ h1 {
 .retain-row .retain-name {
   font-weight: 600;
 }
+
+/* Squad screen + scouted potential range */
+.squad-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.squad-table th,
+.squad-table td {
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.squad-table th {
+  color: var(--c-ink-dim);
+  font-weight: 600;
+}
+
+.squad-name {
+  font-weight: 600;
+}
+
+.potrange {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.potrange-track {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 8px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.potrange-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--c-accent);
+  opacity: 0.75;
+}
+
+.potrange-label {
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink-dim);
+}
