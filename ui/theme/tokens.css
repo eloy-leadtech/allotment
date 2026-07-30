@@ -1,0 +1,19 @@
+/* Retro theme tokens. A pixel/bitmap font is a licensed asset for later;
+   for now we use a crisp monospace stack that fits the 90s look. */
+:root {
+  --c-bg: #0b0e17;
+  --c-bg-panel: #161b2e;
+  --c-bg-raised: #1f2740;
+  --c-ink: #e6e9f0;
+  --c-ink-dim: #9aa3bd;
+  --c-accent: #ffcc00; /* amber */
+  --c-accent-2: #2ecc71; /* pitch green */
+  --c-danger: #ff5964;
+  --c-border: #33406b;
+  --c-me: #34406e;
+
+  --font-ui: 'Courier New', 'Consolas', ui-monospace, monospace;
+  --radius: 4px;
+  --tap: 48px; /* minimum touch target */
+  --space: 12px;
+}
