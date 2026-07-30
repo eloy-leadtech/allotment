@@ -8,3 +8,6 @@ coverage
 .vscode
 android
 ios
+
+# Agent worktrees (not part of the project)
+.claude/worktrees/

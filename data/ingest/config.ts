@@ -88,6 +88,19 @@ export const FALLBACK_DB_9798 = 'data/db/es-primera-9798.json';
 /** Output, committed to the repo and consumed by the loader. */
 export const OUTPUT_RELATIVE_9899 = 'data/db/es-primera-9899.json';
 
+// --- Selecciones (torneos) -------------------------------------------------
+
+/**
+ * Euro 2000 national teams (52), from the FDI late format so the full 10
+ * attributes are present. Euro 96 and Mundial 98 are NOT ingested yet (those
+ * editions store no usable attributes — parked until the attribute mapping is
+ * cracked). Stored in a League container; its `competicion` is a placeholder,
+ * the real bracket lives in the tournament layer, not the data.
+ */
+export const SELECCION_EURO2000_SOURCE =
+  'C:/dev/pcfutbol-analysis/data/extra/seleccion-euro2000-source.json';
+export const OUTPUT_RELATIVE_EURO2000 = 'data/db/seleccion-euro2000.json';
+
 // --- Segunda División ------------------------------------------------------
 
 /**

@@ -7,6 +7,8 @@ export default mergeConfig(
   defineConfig({
     test: {
       globals: true,
+      // Never scan node_modules, the build output, or agent worktrees under .claude.
+      exclude: ['**/node_modules/**', 'dist/**', '.claude/**'],
       environment: 'node',
       environmentMatchGlobs: [
         ['ui/**', 'jsdom'],
