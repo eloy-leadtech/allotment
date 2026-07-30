@@ -1,4 +1,4 @@
-import type { MatchPlayer } from '../match';
+import type { MatchPlayer, Tactics } from '../match';
 import type { Fixture } from '../calendar';
 import type { MatchResult } from '../match';
 import type { StandingRow } from '../standings';
@@ -7,6 +7,8 @@ export interface CompetitionTeam {
   id: string;
   nombre: string;
   players: MatchPlayer[];
+  /** Optional tactics; the match engine reads this straight from the team. */
+  tactics?: Tactics;
 }
 
 export interface LeagueRunConfig {

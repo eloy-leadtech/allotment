@@ -1,6 +1,14 @@
 import type { Player, TeamColors } from '@data';
+import type { Formation } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
+
+/** The human's chosen tactics, stored by player id so it survives evolution. */
+export interface CareerTactics {
+  formation: Formation;
+  /** Chosen starting XI as player ids; when absent the best XI is auto-picked. */
+  xiIds?: string[];
+}
 
 /** A team as it lives across a career: full player data that evolves season to season. */
 export interface CareerTeam {
@@ -33,6 +41,8 @@ export interface CareerState {
   relegationSpots: number;
   /** Which division the human currently competes in. */
   division: Division;
+  /** The human's tactics for their matches; absent means neutral auto-XI. */
+  tactics?: CareerTactics;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
   teams: CareerTeam[];
