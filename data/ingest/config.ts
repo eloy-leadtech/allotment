@@ -124,6 +124,29 @@ export const SELECCION_MUNDIAL98_SOURCE =
   'C:/dev/pcfutbol-analysis/data/extra/seleccion-mundial98-source.json';
 export const OUTPUT_RELATIVE_MUNDIAL98 = 'data/db/seleccion-mundial98.json';
 
+// --- Clubes europeos (Champions/UEFA) --------------------------------------
+
+/**
+ * Top European clubs per season (from the late FDI packs, 10 attributes). Used
+ * for the European competition. Stored in League containers (competicion is a
+ * placeholder). Identified by stable EQ id (resolving parse noise / stadium-name
+ * aliases at extraction time).
+ */
+export const EUROPA_SOURCES: ReadonlyArray<{ source: string; id: string; temporada: string; output: string }> = [
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/europa-9899-source.json',
+    id: 'europa-9899',
+    temporada: '98/99',
+    output: 'data/db/europa-9899.json',
+  },
+  {
+    source: 'C:/dev/pcfutbol-analysis/data/extra/europa-9900-source.json',
+    id: 'europa-9900',
+    temporada: '99/00',
+    output: 'data/db/europa-9900.json',
+  },
+];
+
 // --- Segunda División ------------------------------------------------------
 
 /**

@@ -10,6 +10,8 @@ import segunda9899 from './db/es-segunda-9899.json';
 import segunda9900 from './db/es-segunda-9900.json';
 import seleccionEuro2000 from './db/seleccion-euro2000.json';
 import seleccionMundial98 from './db/seleccion-mundial98.json';
+import europa9899 from './db/europa-9899.json';
+import europa9900 from './db/europa-9900.json';
 
 /**
  * Parse and validate a raw league object against the schema. Throws a clear
@@ -83,3 +85,7 @@ export const loadSeleccionEuro2000 = (): League => memoize('sel-euro2000', selec
 
 /** Load the Mundial 98 national teams (a squad container, not a real league). */
 export const loadSeleccionMundial98 = (): League => memoize('sel-mundial98', seleccionMundial98);
+
+/** Load a European clubs database (a squad container for Champions/UEFA). */
+export const loadEuropa9899 = (): League => memoize('europa-9899', europa9899);
+export const loadEuropa9900 = (): League => memoize('europa-9900', europa9900);
