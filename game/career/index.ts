@@ -4,3 +4,4 @@ export * from './development';
 export * from './transition';
 export * from './scouting';
 export * from './market';
+export * from './promotion';
