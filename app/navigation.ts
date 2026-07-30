@@ -5,5 +5,6 @@ export type Screen =
   | 'teamSelect'
   | 'season'
   | 'seasonEnd'
+  | 'squad'
   | 'match'
   | 'slots';
