@@ -4,6 +4,7 @@ import { NewGameScreen } from '@ui/screens/NewGameScreen';
 import { TeamSelectScreen } from '@ui/screens/TeamSelectScreen';
 import { SeasonScreen } from '@ui/screens/SeasonScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
+import { SlotsScreen } from '@ui/screens/SlotsScreen';
 
 /** Root shell: renders the current screen from the store. */
 export function App() {
@@ -19,5 +20,7 @@ export function App() {
       return <SeasonScreen />;
     case 'match':
       return <MatchScreen />;
+    case 'slots':
+      return <SlotsScreen />;
   }
 }

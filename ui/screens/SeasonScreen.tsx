@@ -57,7 +57,10 @@ export function SeasonScreen() {
         </RetroPanel>
       ) : null}
 
-      <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
+      <div className="season-actions">
+        <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
+        <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
+      </div>
     </main>
   );
 }
