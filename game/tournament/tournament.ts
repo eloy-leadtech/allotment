@@ -18,6 +18,39 @@ import {
   type StandingRow,
 } from '@engine';
 
+/** The 16 finalists of Euro 2000, by their national-team id in the database. */
+export const EURO2000_FINALIST_IDS: readonly string[] = [
+  'alemania',
+  'rumania',
+  'portugal',
+  'inglaterra',
+  'belgica',
+  'suecia',
+  'italia',
+  'turquia',
+  'espana',
+  'noruega',
+  'yugoslavia',
+  'eslovenia',
+  'francia',
+  'dinamarca',
+  'holanda',
+  'r-checa',
+];
+
+/** How far a team got in a finished tournament (for the summary line). */
+export function teamProgress(result: TournamentResult, teamId: string): string {
+  if (result.championId === teamId) return 'Campeón';
+  // In single elimination a team loses exactly once — find that round.
+  for (const round of result.knockout) {
+    const tie = round.ties.find((t) => t.homeId === teamId || t.awayId === teamId);
+    if (tie && tie.winnerId !== teamId) {
+      return round.nombre === 'final' ? 'Subcampeón' : `Eliminado en ${round.nombre}`;
+    }
+  }
+  return 'Fase de grupos';
+}
+
 const toScoreline = (r: MatchResult) => ({
   homeId: r.homeId,
   awayId: r.awayId,

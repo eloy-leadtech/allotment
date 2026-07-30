@@ -264,6 +264,47 @@ h1 {
   gap: 8px;
 }
 
+/* Tournament: groups + knockout */
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.group h3,
+.ko-round h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: var(--c-ink-dim);
+}
+
+.ko-round {
+  margin-bottom: 10px;
+}
+
+.ko-tie {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.ko-tie > span:first-child {
+  text-align: right;
+}
+
+.ko-score {
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink-dim);
+  white-space: nowrap;
+}
+
+.ko-win {
+  font-weight: 700;
+  color: var(--c-accent);
+}
+
 /* Stadium banner */
 .stadium {
   margin: 0 0 12px;
