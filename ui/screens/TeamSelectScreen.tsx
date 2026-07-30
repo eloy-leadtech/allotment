@@ -1,5 +1,6 @@
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
+import { Crest } from '@ui/components/Crest';
 
 export function TeamSelectScreen() {
   const league = useGameStore((s) => s.league);
@@ -13,7 +14,10 @@ export function TeamSelectScreen() {
       <div className="team-grid">
         {teams.map((team) => (
           <RetroButton key={team.id} onClick={() => startSeason(team.id)}>
-            {team.nombre}
+            <span className="team-cell">
+              <Crest teamId={team.id} size={22} />
+              {team.nombre}
+            </span>
           </RetroButton>
         ))}
       </div>
