@@ -1,5 +1,6 @@
 import type { Player, TeamColors } from '@data';
 import type { SeasonState } from '../season/season';
+import type { Division } from './promotion';
 
 /** A team as it lives across a career: full player data that evolves season to season. */
 export interface CareerTeam {
@@ -30,6 +31,8 @@ export interface CareerState {
   temporada: string;
   pointsForWin: 2 | 3;
   relegationSpots: number;
+  /** Which division the human currently competes in. */
+  division: Division;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
   teams: CareerTeam[];

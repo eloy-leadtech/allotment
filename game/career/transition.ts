@@ -16,6 +16,8 @@ import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { seasonFromCareer } from './career';
 import { developPlayer, seasonStartYear } from './development';
+import { currentStandings } from '../season/season';
+import { humanFate, type Division, type PromotionOutcome } from './promotion';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -137,6 +139,8 @@ export function applyTransition(
     temporada: temporadaNext,
     pointsForWin: nextWorld.competicion.pointsForWin,
     relegationSpots: nextWorld.competicion.relegationSpots,
+    // Same-division advance keeps the human where they were.
+    division: career.division,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
     teams,
@@ -152,6 +156,92 @@ export function applyTransition(
         temporada: career.temporada,
         championId: preview.championId,
       },
+    ],
+  };
+}
+
+// --- Promotion / relegation (two-division career) --------------------------
+
+/** Standard promotion and relegation places for the career pyramid. */
+export const RELEGATION_PLACES = 3;
+export const PROMOTION_PLACES = 3;
+
+/** The human's promotion/relegation outcome from their division's final table. */
+export function careerOutcome(career: CareerState): PromotionOutcome {
+  return humanFate({
+    division: career.division,
+    standings: currentStandings(career.season),
+    humanTeamId: career.humanTeamId,
+    relegationSpots: RELEGATION_PLACES,
+    promotionSpots: PROMOTION_PLACES,
+  });
+}
+
+/**
+ * Advance the career when the human CHANGES division (promoted or relegated).
+ * The whole squad moves with you — aged one season, retirees dropped — into the
+ * real target division; the other clubs there are the real ones for that year.
+ * There is no KEEP/RELEASE diff: you keep your team, you only change division.
+ * Your players are removed from any real club history put them in (no dupes).
+ */
+export function applyDivisionChange(
+  career: CareerState,
+  targetDivision: Division,
+  targetLeague: League,
+): CareerState {
+  if (targetLeague.competicion.kind !== 'league') {
+    throw new Error('applyDivisionChange supports league competitions only');
+  }
+  const seasonNumberNext = career.seasonNumber + 1;
+  const temporadaNext = targetLeague.temporada;
+  const startYear = seasonStartYear(temporadaNext);
+
+  const humanTeam = career.teams.find((t) => t.id === career.humanTeamId);
+  const current = humanTeam?.players ?? [];
+  const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
+
+  // The whole squad moves with you, aged one season; retirees drop out.
+  const aged: Player[] = [];
+  for (const player of current) {
+    const result = developPlayer(player, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      seasonStartYear: startYear,
+    });
+    if (!result.retired) aged.push(result.player);
+  }
+  const humanKeys = new Set(current.map(personKey));
+
+  let humanPresent = false;
+  const teams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
+    if (team.id === career.humanTeamId) {
+      humanPresent = true;
+      return { ...team, players: aged };
+    }
+    return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
+  });
+  if (!humanPresent) {
+    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: aged });
+  }
+
+  const meta = {
+    seed: career.seed,
+    leagueId: targetLeague.id,
+    humanTeamId: career.humanTeamId,
+    seasonNumber: seasonNumberNext,
+    temporada: temporadaNext,
+    pointsForWin: targetLeague.competicion.pointsForWin,
+    relegationSpots: targetLeague.competicion.relegationSpots,
+    division: targetDivision,
+    budget: career.budget,
+    teams,
+  };
+  return {
+    ...meta,
+    season: seasonFromCareer(meta),
+    history: [
+      ...career.history,
+      { seasonNumber: career.seasonNumber, temporada: career.temporada, championId: championOf(career) },
     ],
   };
 }
