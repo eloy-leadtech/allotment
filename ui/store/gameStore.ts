@@ -1,8 +1,18 @@
 import { create } from 'zustand';
-import { SEASONS, getSeason, type League, type SeasonEntry } from '@data';
+import {
+  SEASONS,
+  getSeason,
+  getSegundaByTemporada,
+  nextSeasonByTemporada,
+  type League,
+  type SeasonEntry,
+} from '@data';
 import {
   newCareer,
   applyTransition,
+  applyDivisionChange,
+  careerOutcome,
+  nextDivision,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -131,16 +141,24 @@ export const useGameStore = create<GameStore>((set, get) => {
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;
-      const entry = nextSeasonEntry(career.leagueId);
-      if (!entry) return; // no historical data for the next season yet
-      const nextWorld = entry.load();
-      const next = applyTransition(career, nextWorld, new Set(retainIds));
+      // Seasons advance by year; the human's division depends on their result.
+      const nextPrimera = nextSeasonByTemporada(career.temporada);
+      if (!nextPrimera) return; // no more seasons available yet
+      const toDivision = nextDivision(career.division, careerOutcome(career));
+      const targetEntry =
+        toDivision === 'primera' ? nextPrimera : getSegundaByTemporada(nextPrimera.temporada);
+      if (!targetEntry) return; // no data for the target division that year
+      const targetLeague = targetEntry.load();
+      const next =
+        toDivision === career.division
+          ? applyTransition(career, targetLeague, new Set(retainIds))
+          : applyDivisionChange(career, toDivision, targetLeague);
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
         season: next.season,
-        seasonId: entry.id,
-        league: nextWorld,
+        seasonId: targetEntry.id,
+        league: targetLeague,
         retainIds: [],
         bids: generateBids(next),
         marketMessage: null,

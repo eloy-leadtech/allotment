@@ -49,3 +49,9 @@ export const SEGUNDA_SEASONS: readonly SeasonEntry[] = [
 export function getSegundaByTemporada(temporada: string): SeasonEntry | undefined {
   return SEGUNDA_SEASONS.find((s) => s.temporada === temporada);
 }
+
+/** The Primera season that follows a given season label, if any. */
+export function nextSeasonByTemporada(temporada: string): SeasonEntry | undefined {
+  const idx = SEASONS.findIndex((s) => s.temporada === temporada);
+  return idx < 0 ? undefined : SEASONS[idx + 1];
+}

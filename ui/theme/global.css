@@ -264,6 +264,21 @@ h1 {
   gap: 8px;
 }
 
+/* Season end: promotion/relegation notice */
+.fate {
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+}
+.fate--up {
+  color: var(--c-bg);
+  background: var(--c-accent);
+}
+.fate--down {
+  color: var(--c-ink);
+  border: 1px solid var(--c-accent);
+}
+
 /* Season end: palmarés + retention */
 .palmares {
   list-style: none;
