@@ -7,8 +7,8 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
-import { LeagueSchema, type League, type Player, type Position } from '../schemas';
-import { syntheticPlayerId, slugify } from './syntheticId';
+import { LeagueSchema, type League } from '../schemas';
+import { buildTeam, type SourceTeam, type ExtraTeamFile } from './transform';
 import {
   SOURCE_PATH,
   EXTREMADURA_SOURCE,
@@ -17,106 +17,10 @@ import {
   RELEGATION_SPOTS,
 } from './config';
 
-interface SourceAttributes {
-  calidad: number | null;
-  agresividad: number;
-  resistencia: number;
-  velocidad: number;
-  fisico: number;
-  remate: number;
-  ofensivo: number;
-  pase: number;
-  entrada: number;
-  porteria: number;
-}
-
-interface SourcePlayer {
-  nombre: string;
-  nombre_completo: string;
-  es_portero: boolean;
-  demarcaciones: number[];
-  media: number;
-  atributos: SourceAttributes;
-  anho_nacimiento: number | null;
-  fecha_nacimiento: string | null;
-  altura_cm: number | null;
-  peso_kg: number | null;
-  nacionalidad: string | null;
-  club_anterior: string | null;
-}
-
-interface SourceTeam {
-  indice_pkf: number;
-  equipo: string;
-  jugadores: SourcePlayer[];
-}
-
 interface SourceFile {
   titulo: string;
   temporada: string;
   equipos: SourceTeam[];
-}
-
-/** DD/MM/YYYY -> ISO YYYY-MM-DD; null when unparseable. */
-function toIsoDate(ddmmyyyy: string | null): string | null {
-  if (!ddmmyyyy) return null;
-  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(ddmmyyyy);
-  if (!match) return null;
-  const [, dd, mm, yyyy] = match;
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-/**
- * Derive the coarse pitch line from attributes (the source demarcation codes are
- * not yet decoded). Goalkeepers are flagged directly; outfielders are classified
- * by which attribute group dominates.
- */
-function derivePosition(p: SourcePlayer): Position {
-  if (p.es_portero) return 'POR';
-  const a = p.atributos;
-  const attack = a.remate * 0.6 + a.ofensivo * 0.4;
-  const midfield = a.pase * 0.6 + a.ofensivo * 0.4;
-  const defense = a.entrada;
-  const best = Math.max(attack, midfield, defense);
-  if (best === defense) return 'DEF';
-  if (best === attack) return 'DEL';
-  return 'MED';
-}
-
-function transformPlayer(src: SourcePlayer, teamId: string): Player {
-  return {
-    id: syntheticPlayerId(src.nombre_completo, src.anho_nacimiento, teamId),
-    nombre: src.nombre,
-    nombreCompleto: src.nombre_completo,
-    posicion: derivePosition(src),
-    esPortero: src.es_portero,
-    demarcaciones: src.demarcaciones,
-    atributos: { ...src.atributos },
-    media: src.media,
-    dorsal: null,
-    fechaNacimiento: toIsoDate(src.fecha_nacimiento),
-    alturaCm: src.altura_cm,
-    pesoKg: src.peso_kg,
-    nacionalidad: src.nacionalidad === '0' ? null : src.nacionalidad,
-    clubAnterior: src.club_anterior,
-  };
-}
-
-/** Build a game team from a source team's name and raw players. */
-function buildTeam(nombre: string, jugadores: SourcePlayer[]): League['equipos'][number] {
-  const teamId = slugify(nombre);
-  const players = jugadores
-    .filter((p) => p.media > 0) // drop empty/placeholder rows
-    .map((p) => transformPlayer(p, teamId));
-  if (players.length < 16) {
-    console.warn(`WARN: ${nombre} only has ${players.length} usable players`);
-  }
-  return { id: teamId, nombre, jugadores: players };
-}
-
-interface ExtraTeamFile {
-  equipo: string;
-  jugadores: SourcePlayer[];
 }
 
 function main(): void {

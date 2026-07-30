@@ -49,3 +49,22 @@ export const PRIMERA_9697: readonly string[] = [
 
 /** Bottom N relegated (info only for now; 2ª is not yet in the database). */
 export const RELEGATION_SPOTS = 4;
+
+// --- Temporada 97/98 -------------------------------------------------------
+
+/**
+ * Real 97/98 Primera rosters (17 of our fixed 22 clubs), extracted from PC Fútbol
+ * 6.0 and division-verified against the game's own JORN1## calendars. The other 5
+ * of our 22 were relegated for 97/98 (Sevilla, Logroñés, Rayo, Hércules,
+ * Extremadura); the MVP keeps the same 22 clubs (no promotion/relegation yet), so
+ * those 5 fall back to their committed 96/97 roster — aging is handled later by
+ * the career layer, not at ingest time.
+ */
+export const SOURCE_PATH_9798 =
+  'C:/dev/pcfutbol-analysis/data/extra/primera-9798-source.json';
+
+/** Committed 96/97 database, source of the fallback rosters for the 5 relegated clubs. */
+export const FALLBACK_DB_9697 = 'data/db/es-primera-9697.json';
+
+/** Output, committed to the repo and consumed by the loader. */
+export const OUTPUT_RELATIVE_9798 = 'data/db/es-primera-9798.json';
