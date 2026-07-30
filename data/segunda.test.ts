@@ -9,8 +9,8 @@ import { SEGUNDA_SEASONS, getSegundaByTemporada } from './seasons';
 
 describe('Segunda División databases', () => {
   const cases = [
-    { load: loadSegunda9697, temporada: '96/97', teams: 10 },
-    { load: loadSegunda9798, temporada: '97/98', teams: 10 },
+    { load: loadSegunda9697, temporada: '96/97', teams: 12 },
+    { load: loadSegunda9798, temporada: '97/98', teams: 12 },
     { load: loadSegunda9899, temporada: '98/99', teams: 22 },
     { load: loadSegunda9900, temporada: '99/00', teams: 22 },
   ] as const;

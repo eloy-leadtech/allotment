@@ -7373,6 +7373,1430 @@
           "clubAnterior": "Real Madrid B (96)"
         }
       ]
+    },
+    {
+      "id": "leganes",
+      "nombre": "Leganés",
+      "jugadores": [
+        {
+          "id": "leganes-manuel-rubio-velasco-1975",
+          "nombre": "Rubio",
+          "nombreCompleto": "Manuel RUBIO Velasco",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 55,
+            "agresividad": 61,
+            "resistencia": 20,
+            "velocidad": 52,
+            "fisico": 19,
+            "remate": 19,
+            "ofensivo": 9,
+            "pase": 12,
+            "entrada": 14,
+            "porteria": 52
+          },
+          "media": 49,
+          "dorsal": null,
+          "fechaNacimiento": "1975-05-18",
+          "alturaCm": 183,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (96)"
+        },
+        {
+          "id": "leganes-jesus-unanua-becerril-1969",
+          "nombre": "Unanua",
+          "nombreCompleto": "Jesús UNANUA Becerril",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 69,
+            "agresividad": 58,
+            "resistencia": 63,
+            "velocidad": 66,
+            "fisico": 11,
+            "remate": 1,
+            "ofensivo": 16,
+            "pase": 27,
+            "entrada": 26,
+            "porteria": 65
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": "1969-06-23",
+          "alturaCm": 180,
+          "pesoKg": 81,
+          "nacionalidad": null,
+          "clubAnterior": "Osasuna (96)"
+        },
+        {
+          "id": "leganes-julio-jose-iglesias-rouget-1972",
+          "nombre": "Julio Iglesias",
+          "nombreCompleto": "JULIO José IGLESIAS Rouget",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 53,
+            "resistencia": 55,
+            "velocidad": 63,
+            "fisico": 9,
+            "remate": 9,
+            "ofensivo": 10,
+            "pase": 7,
+            "entrada": 12,
+            "porteria": 62
+          },
+          "media": 60,
+          "dorsal": null,
+          "fechaNacimiento": "1972-09-26",
+          "alturaCm": 181,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": "Almería (96)"
+        },
+        {
+          "id": "leganes-angel-gonzalez-gallego-lopez-angelin-1966",
+          "nombre": "Angelín",
+          "nombreCompleto": "Angel González-Gallego López, ANGELIN",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2,
+            4,
+            10,
+            17
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 57,
+            "resistencia": 52,
+            "velocidad": 51,
+            "fisico": 7,
+            "remate": 54,
+            "ofensivo": 56,
+            "pase": 51,
+            "entrada": 63,
+            "porteria": 5
+          },
+          "media": 50,
+          "dorsal": null,
+          "fechaNacimiento": "1966-06-23",
+          "alturaCm": 179,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": "Aranjuez C.F. (95)"
+        },
+        {
+          "id": "leganes-imanol-franco-barrena-manu-1973",
+          "nombre": "Manu",
+          "nombreCompleto": "Imanol Franco Barrena, \"MANU\"",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            3
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 62,
+            "resistencia": 54,
+            "velocidad": 57,
+            "fisico": 51,
+            "remate": 51,
+            "ofensivo": 56,
+            "pase": 53,
+            "entrada": 59,
+            "porteria": 3
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": "1973-01-19",
+          "alturaCm": 179,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": "Sestao (96)"
+        },
+        {
+          "id": "leganes-pedro-largo-carazo-1972",
+          "nombre": "Pedro",
+          "nombreCompleto": "PEDRO Largo Carazo",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            5,
+            3,
+            1
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 42,
+            "resistencia": 46,
+            "velocidad": 56,
+            "fisico": 39,
+            "remate": 44,
+            "ofensivo": 52,
+            "pase": 40,
+            "entrada": 66,
+            "porteria": 5
+          },
+          "media": 50,
+          "dorsal": null,
+          "fechaNacimiento": "1972-06-11",
+          "alturaCm": 176,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": "Getafe (96)"
+        },
+        {
+          "id": "leganes-eduardo-villoria-coronel-1972",
+          "nombre": "Villoria",
+          "nombreCompleto": "Eduardo VILLORIA Coronel",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 50,
+            "resistencia": 58,
+            "velocidad": 53,
+            "fisico": 46,
+            "remate": 53,
+            "ofensivo": 50,
+            "pase": 46,
+            "entrada": 63,
+            "porteria": 6
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1972-04-23",
+          "alturaCm": 177,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Real Madrid B (95)"
+        },
+        {
+          "id": "leganes-jose-jesus-mesas-puerta-1968",
+          "nombre": "Mesas",
+          "nombreCompleto": "José Jesús MESAS Puerta",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            4,
+            3
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 51,
+            "resistencia": 52,
+            "velocidad": 59,
+            "fisico": 47,
+            "remate": 55,
+            "ofensivo": 59,
+            "pase": 48,
+            "entrada": 68,
+            "porteria": 4
+          },
+          "media": 56,
+          "dorsal": null,
+          "fechaNacimiento": "1968-12-24",
+          "alturaCm": 180,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": "Real Madrid B (92)"
+        },
+        {
+          "id": "leganes-miguel-angel-garcia-escudero-tocho-1974",
+          "nombre": "Tocho",
+          "nombreCompleto": "Miguel Angel García Escudero, TOCHO",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            5,
+            14
+          ],
+          "atributos": {
+            "calidad": 54,
+            "agresividad": 52,
+            "resistencia": 56,
+            "velocidad": 52,
+            "fisico": 53,
+            "remate": 48,
+            "ofensivo": 51,
+            "pase": 49,
+            "entrada": 58,
+            "porteria": 9
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1974-01-03",
+          "alturaCm": 182,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (94)"
+        },
+        {
+          "id": "leganes-oscar-f-fernandez-moraleda-1971",
+          "nombre": "Oscar",
+          "nombreCompleto": "OSCAR F. Fernández Moraleda",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            6
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 80,
+            "resistencia": 59,
+            "velocidad": 55,
+            "fisico": 38,
+            "remate": 53,
+            "ofensivo": 55,
+            "pase": 38,
+            "entrada": 63,
+            "porteria": 0
+          },
+          "media": 56,
+          "dorsal": null,
+          "fechaNacimiento": "1971-06-17",
+          "alturaCm": 172,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (94)"
+        },
+        {
+          "id": "leganes-luis-moyan0-1973",
+          "nombre": "Moyano",
+          "nombreCompleto": "Luis MOYAN0",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 57,
+            "resistencia": 50,
+            "velocidad": 60,
+            "fisico": 52,
+            "remate": 59,
+            "ofensivo": 63,
+            "pase": 57,
+            "entrada": 53,
+            "porteria": 7
+          },
+          "media": 57,
+          "dorsal": null,
+          "fechaNacimiento": "1973-05-17",
+          "alturaCm": 181,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": "Atacama (Chile)"
+        },
+        {
+          "id": "leganes-juan-jose-fernandez-jimenez-1974",
+          "nombre": "Juanjo",
+          "nombreCompleto": "JUAN JOse Fernández Jiménez",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            2
+          ],
+          "atributos": {
+            "calidad": 57,
+            "agresividad": 60,
+            "resistencia": 67,
+            "velocidad": 53,
+            "fisico": 44,
+            "remate": 52,
+            "ofensivo": 54,
+            "pase": 38,
+            "entrada": 54,
+            "porteria": 5
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1974-12-03",
+          "alturaCm": 170,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (96)"
+        },
+        {
+          "id": "leganes-francisco-jose-navarro-giron-1971",
+          "nombre": "Francis",
+          "nombreCompleto": "FRANCISco José Navarro Girón",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            12
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 63,
+            "resistencia": 49,
+            "velocidad": 58,
+            "fisico": 58,
+            "remate": 57,
+            "ofensivo": 54,
+            "pase": 48,
+            "entrada": 12,
+            "porteria": 3
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": "1971-11-21",
+          "alturaCm": 178,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (96)"
+        },
+        {
+          "id": "leganes-jaime-ramos-hernandez-1973",
+          "nombre": "Jaime",
+          "nombreCompleto": "JAIME Ramos Hernández",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            9,
+            17
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 59,
+            "resistencia": 56,
+            "velocidad": 57,
+            "fisico": 43,
+            "remate": 53,
+            "ofensivo": 61,
+            "pase": 48,
+            "entrada": 58,
+            "porteria": 10
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": "1973-01-09",
+          "alturaCm": 185,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": "Getafe (96)"
+        },
+        {
+          "id": "leganes-javier-olaeta-alvarez-1971",
+          "nombre": "Olaeta",
+          "nombreCompleto": "Javier OLAETA Alvarez",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            7
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 59,
+            "resistencia": 50,
+            "velocidad": 63,
+            "fisico": 52,
+            "remate": 61,
+            "ofensivo": 66,
+            "pase": 54,
+            "entrada": 47,
+            "porteria": 11
+          },
+          "media": 57,
+          "dorsal": null,
+          "fechaNacimiento": "1971-04-04",
+          "alturaCm": 177,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": "Sestao (96)"
+        },
+        {
+          "id": "leganes-gabriel-vidal-nova-1969",
+          "nombre": "Vidal",
+          "nombreCompleto": "Gabriel VIDAL Nova",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            9,
+            15,
+            11
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 58,
+            "resistencia": 48,
+            "velocidad": 65,
+            "fisico": 52,
+            "remate": 63,
+            "ofensivo": 69,
+            "pase": 56,
+            "entrada": 7,
+            "porteria": 3
+          },
+          "media": 54,
+          "dorsal": null,
+          "fechaNacimiento": "1969-01-05",
+          "alturaCm": 171,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": "Mallorca (96)"
+        },
+        {
+          "id": "leganes-alfredo-sanchez-benito-1972",
+          "nombre": "Alfredo",
+          "nombreCompleto": "ALFREDO Sánchez Benito",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            9,
+            15
+          ],
+          "atributos": {
+            "calidad": 69,
+            "agresividad": 58,
+            "resistencia": 54,
+            "velocidad": 68,
+            "fisico": 59,
+            "remate": 62,
+            "ofensivo": 59,
+            "pase": 58,
+            "entrada": 5,
+            "porteria": 3
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": "1972-12-03",
+          "alturaCm": 168,
+          "pesoKg": 58,
+          "nacionalidad": null,
+          "clubAnterior": "Leganés B (93)"
+        },
+        {
+          "id": "leganes-miguel-melgar-rodriguez-1972",
+          "nombre": "Melgar",
+          "nombreCompleto": "Miguel MELGAR Rodríguez",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            10,
+            12
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 59,
+            "resistencia": 66,
+            "velocidad": 62,
+            "fisico": 47,
+            "remate": 56,
+            "ofensivo": 62,
+            "pase": 49,
+            "entrada": 54,
+            "porteria": 3
+          },
+          "media": 57,
+          "dorsal": null,
+          "fechaNacimiento": "1972-05-12",
+          "alturaCm": 179,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": "Hércules (95)"
+        },
+        {
+          "id": "leganes-javier-artero-lopez-1975",
+          "nombre": "Artero",
+          "nombreCompleto": "Javier ARTERO López",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            15
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 59,
+            "resistencia": 51,
+            "velocidad": 62,
+            "fisico": 59,
+            "remate": 62,
+            "ofensivo": 64,
+            "pase": 59,
+            "entrada": 19,
+            "porteria": 3
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": "1975-04-16",
+          "alturaCm": 186,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": "Real Madrid C (96)"
+        },
+        {
+          "id": "leganes-gorka-gonzalez-garay-1973",
+          "nombre": "Gorka",
+          "nombreCompleto": "GORKA González Garay",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            8
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 54,
+            "resistencia": 51,
+            "velocidad": 59,
+            "fisico": 49,
+            "remate": 60,
+            "ofensivo": 59,
+            "pase": 41,
+            "entrada": 23,
+            "porteria": 4
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": "1973-11-25",
+          "alturaCm": 173,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Sestao (96)"
+        },
+        {
+          "id": "leganes-ricardo-fraga-roger-ricky-1973",
+          "nombre": "Ricky",
+          "nombreCompleto": "Ricardo Fraga Roger, RICKY",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            16,
+            10
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 60,
+            "resistencia": 57,
+            "velocidad": 59,
+            "fisico": 58,
+            "remate": 55,
+            "ofensivo": 53,
+            "pase": 62,
+            "entrada": 18,
+            "porteria": 3
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1973-05-24",
+          "alturaCm": 181,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": "Villarreal (96)"
+        },
+        {
+          "id": "leganes-moises-garcia-leon-1971",
+          "nombre": "Moisés",
+          "nombreCompleto": "MOISES García León",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 66,
+            "resistencia": 60,
+            "velocidad": 67,
+            "fisico": 70,
+            "remate": 55,
+            "ofensivo": 56,
+            "pase": 68,
+            "entrada": 20,
+            "porteria": 6
+          },
+          "media": 59,
+          "dorsal": null,
+          "fechaNacimiento": "1971-07-10",
+          "alturaCm": 185,
+          "pesoKg": 84,
+          "nacionalidad": null,
+          "clubAnterior": "Osasuna (96)"
+        },
+        {
+          "id": "leganes-jorge-alberto-rajado-martin-1969",
+          "nombre": "Rajado",
+          "nombreCompleto": "Jorge Alberto RAJADO Martín",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            12,
+            13,
+            16
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 54,
+            "resistencia": 52,
+            "velocidad": 61,
+            "fisico": 54,
+            "remate": 61,
+            "ofensivo": 63,
+            "pase": 50,
+            "entrada": 11,
+            "porteria": 4
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1969-06-01",
+          "alturaCm": 175,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Almería (96)"
+        },
+        {
+          "id": "leganes-miguel-angel-munoz-benitez-1970",
+          "nombre": "Miguel Angel",
+          "nombreCompleto": "MIGUEL ANGEL Muñoz Benítez",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            12,
+            10,
+            16
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 68,
+            "resistencia": 59,
+            "velocidad": 64,
+            "fisico": 59,
+            "remate": 63,
+            "ofensivo": 63,
+            "pase": 59,
+            "entrada": 4,
+            "porteria": 6
+          },
+          "media": 56,
+          "dorsal": null,
+          "fechaNacimiento": "1970-02-22",
+          "alturaCm": 172,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": "Villarrobledo (91)"
+        },
+        {
+          "id": "leganes-francisco-j-fernandez-martinez-paquito-1970",
+          "nombre": "Paquito",
+          "nombreCompleto": "Francisco J. Fernández Martínez, PAQUITO",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            11,
+            15
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 60,
+            "resistencia": 50,
+            "velocidad": 59,
+            "fisico": 57,
+            "remate": 62,
+            "ofensivo": 59,
+            "pase": 45,
+            "entrada": 15,
+            "porteria": 3
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1970-07-11",
+          "alturaCm": 172,
+          "pesoKg": 64,
+          "nacionalidad": null,
+          "clubAnterior": "Santa Ana (95)"
+        }
+      ]
+    },
+    {
+      "id": "ourense",
+      "nombre": "Ourense",
+      "jugadores": [
+        {
+          "id": "ourense-ramon-ruiz-fernandez-1973",
+          "nombre": "Ramón",
+          "nombreCompleto": "RAMON Ruiz Fernández",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 67,
+            "resistencia": 66,
+            "velocidad": 68,
+            "fisico": 12,
+            "remate": 19,
+            "ofensivo": 22,
+            "pase": 24,
+            "entrada": 5,
+            "porteria": 68
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1973-05-15",
+          "alturaCm": 173,
+          "pesoKg": 71,
+          "nacionalidad": null,
+          "clubAnterior": "Sporting de Gijón (96)"
+        },
+        {
+          "id": "ourense-manuel-alfonso-ares-fernandez-1965",
+          "nombre": "Ares",
+          "nombreCompleto": "Manuel Alfonso ARES Fernández",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 46,
+            "resistencia": 45,
+            "velocidad": 59,
+            "fisico": 19,
+            "remate": 17,
+            "ofensivo": 20,
+            "pase": 7,
+            "entrada": 19,
+            "porteria": 14
+          },
+          "media": 40,
+          "dorsal": null,
+          "fechaNacimiento": "1965-01-01",
+          "alturaCm": 190,
+          "pesoKg": 87,
+          "nacionalidad": null,
+          "clubAnterior": "Atlético Orense (83)"
+        },
+        {
+          "id": "ourense-jose-antonio-rodriguez-querella-1974",
+          "nombre": "Querella",
+          "nombreCompleto": "José Antonio Rodríguez QUERELLA",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 46,
+            "resistencia": 49,
+            "velocidad": 55,
+            "fisico": 2,
+            "remate": 19,
+            "ofensivo": 6,
+            "pase": 2,
+            "entrada": 2,
+            "porteria": 53
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1974-02-03",
+          "alturaCm": 179,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": "Atlético Orense (93)"
+        },
+        {
+          "id": "ourense-javier-seoane-novelhe-1978",
+          "nombre": "Seoane",
+          "nombreCompleto": "Javier SEOANE Novelhe",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 52,
+            "agresividad": 67,
+            "resistencia": 67,
+            "velocidad": 50,
+            "fisico": 35,
+            "remate": 50,
+            "ofensivo": 49,
+            "pase": 39,
+            "entrada": 53,
+            "porteria": 19
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": "1978-02-23",
+          "alturaCm": 178,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": "Pabellón (96)"
+        },
+        {
+          "id": "ourense-francisco-m-cainzos-palmero-1973",
+          "nombre": "Fran Caínzos",
+          "nombreCompleto": "FRANcisco M. CAÍNZOS Palmero",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 70,
+            "resistencia": 57,
+            "velocidad": 56,
+            "fisico": 19,
+            "remate": 56,
+            "ofensivo": 53,
+            "pase": 41,
+            "entrada": 57,
+            "porteria": 14
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1973-07-12",
+          "alturaCm": 174,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Racing de Ferrol (96)"
+        },
+        {
+          "id": "ourense-rodolfo-condado-rodriguez-1965",
+          "nombre": "R. Condado",
+          "nombreCompleto": "RODOLFO Condado Rodríguez",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            3
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 74,
+            "resistencia": 75,
+            "velocidad": 61,
+            "fisico": 51,
+            "remate": 47,
+            "ofensivo": 56,
+            "pase": 34,
+            "entrada": 59,
+            "porteria": 6
+          },
+          "media": 58,
+          "dorsal": null,
+          "fechaNacimiento": "1965-02-24",
+          "alturaCm": 178,
+          "pesoKg": 71,
+          "nacionalidad": null,
+          "clubAnterior": "Salamanca (96)"
+        },
+        {
+          "id": "ourense-xabier-guruzeta-aizpun-1970",
+          "nombre": "Guruzeta",
+          "nombreCompleto": "Xabier GURUZETA Aizpún",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            4
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 72,
+            "resistencia": 73,
+            "velocidad": 53,
+            "fisico": 11,
+            "remate": 52,
+            "ofensivo": 52,
+            "pase": 19,
+            "entrada": 59,
+            "porteria": 4
+          },
+          "media": 50,
+          "dorsal": null,
+          "fechaNacimiento": "1970-03-15",
+          "alturaCm": 181,
+          "pesoKg": 71,
+          "nacionalidad": null,
+          "clubAnterior": "Alavés (96)"
+        },
+        {
+          "id": "ourense-modesto-lopez-novoa-1965",
+          "nombre": "Modesto",
+          "nombreCompleto": "MODESTO López Novoa",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            5
+          ],
+          "atributos": {
+            "calidad": 55,
+            "agresividad": 67,
+            "resistencia": 89,
+            "velocidad": 51,
+            "fisico": 20,
+            "remate": 47,
+            "ofensivo": 50,
+            "pase": 10,
+            "entrada": 58,
+            "porteria": 4
+          },
+          "media": 50,
+          "dorsal": null,
+          "fechaNacimiento": "1965-01-21",
+          "alturaCm": 180,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": "Compostela (95)"
+        },
+        {
+          "id": "ourense-rodolfo-dapena-dapena-1960",
+          "nombre": "Rodolfo",
+          "nombreCompleto": "RODOLFO Dapena Dapena",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 57,
+            "agresividad": 59,
+            "resistencia": 77,
+            "velocidad": 51,
+            "fisico": 48,
+            "remate": 47,
+            "ofensivo": 51,
+            "pase": 51,
+            "entrada": 59,
+            "porteria": 10
+          },
+          "media": 56,
+          "dorsal": null,
+          "fechaNacimiento": "1960-05-04",
+          "alturaCm": 175,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": "Betis (92)"
+        },
+        {
+          "id": "ourense-adolfo-dominguez-cendon-1971",
+          "nombre": "Adolfo",
+          "nombreCompleto": "ADOLFO Domínguez Cendón",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            10,
+            2
+          ],
+          "atributos": {
+            "calidad": 57,
+            "agresividad": 68,
+            "resistencia": 60,
+            "velocidad": 50,
+            "fisico": 26,
+            "remate": 46,
+            "ofensivo": 45,
+            "pase": 31,
+            "entrada": 58,
+            "porteria": 1
+          },
+          "media": 49,
+          "dorsal": null,
+          "fechaNacimiento": "1971-11-03",
+          "alturaCm": 176,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": "Atco. Orense (90)"
+        },
+        {
+          "id": "ourense-ragoslar-cakic-1965",
+          "nombre": "Cakic",
+          "nombreCompleto": "Ragoslar CAKIC",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            7
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 57,
+            "resistencia": 44,
+            "velocidad": 65,
+            "fisico": 53,
+            "remate": 58,
+            "ofensivo": 65,
+            "pase": 54,
+            "entrada": 23,
+            "porteria": 5
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1965-02-15",
+          "alturaCm": 184,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": "San Fernando (96)"
+        },
+        {
+          "id": "ourense-javier-couceiro-garcia-pataco-1976",
+          "nombre": "Javi Pataco",
+          "nombreCompleto": "JAVIer Couceiro García PATACO",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            7,
+            15
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 57,
+            "resistencia": 67,
+            "velocidad": 56,
+            "fisico": 39,
+            "remate": 56,
+            "ofensivo": 55,
+            "pase": 43,
+            "entrada": 24,
+            "porteria": 9
+          },
+          "media": 50,
+          "dorsal": null,
+          "fechaNacimiento": "1976-01-07",
+          "alturaCm": 170,
+          "pesoKg": 67,
+          "nacionalidad": null,
+          "clubAnterior": "Orense Atlético (95)"
+        },
+        {
+          "id": "ourense-agustin-ruiz-galnares-1973",
+          "nombre": "Agustín",
+          "nombreCompleto": "AGUSTÍN Ruíz Galnares",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 60,
+            "resistencia": 43,
+            "velocidad": 55,
+            "fisico": 38,
+            "remate": 53,
+            "ofensivo": 56,
+            "pase": 48,
+            "entrada": 30,
+            "porteria": 11
+          },
+          "media": 49,
+          "dorsal": null,
+          "fechaNacimiento": "1973-12-06",
+          "alturaCm": 180,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": "Athletic de Bilbao B (96)"
+        },
+        {
+          "id": "ourense-francisco-javier-alvarez-cudeiro-1976",
+          "nombre": "Fran",
+          "nombreCompleto": "FRANcisco Javier Álvarez Cudeiro",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            7
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 63,
+            "resistencia": 67,
+            "velocidad": 50,
+            "fisico": 41,
+            "remate": 46,
+            "ofensivo": 50,
+            "pase": 44,
+            "entrada": 55,
+            "porteria": 7
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1976-04-05",
+          "alturaCm": 173,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": "At. Orense (94)"
+        },
+        {
+          "id": "ourense-victor-manuel-arias-casares-1967",
+          "nombre": "Víctor",
+          "nombreCompleto": "VICTOR Manuel Arias Casares",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            6
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 63,
+            "resistencia": 59,
+            "velocidad": 58,
+            "fisico": 46,
+            "remate": 55,
+            "ofensivo": 54,
+            "pase": 20,
+            "entrada": 58,
+            "porteria": 6
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1967-06-28",
+          "alturaCm": 182,
+          "pesoKg": 82,
+          "nacionalidad": null,
+          "clubAnterior": "Alavés (96)"
+        },
+        {
+          "id": "ourense-jose-carlos-rodriguez-alonso-pichi-1968",
+          "nombre": "Pichi",
+          "nombreCompleto": "José Carlos Rodríguez Alonso, PICHI",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            16,
+            10,
+            9
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 59,
+            "resistencia": 42,
+            "velocidad": 65,
+            "fisico": 50,
+            "remate": 62,
+            "ofensivo": 64,
+            "pase": 58,
+            "entrada": 6,
+            "porteria": 2
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": "1968-12-15",
+          "alturaCm": 175,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": "Atco. Orense (91)"
+        },
+        {
+          "id": "ourense-eduardo-caamano-novoa-nando-1966",
+          "nombre": "Nando",
+          "nombreCompleto": "Eduardo Caamaño Novoa, NANDO",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 53,
+            "agresividad": 55,
+            "resistencia": 40,
+            "velocidad": 62,
+            "fisico": 40,
+            "remate": 59,
+            "ofensivo": 62,
+            "pase": 49,
+            "entrada": 5,
+            "porteria": 2
+          },
+          "media": 47,
+          "dorsal": null,
+          "fechaNacimiento": "1966-02-02",
+          "alturaCm": 172,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": "Atco. Orense (83)"
+        },
+        {
+          "id": "ourense-carlos-fernandez-bericat-1965",
+          "nombre": "Bericat",
+          "nombreCompleto": "Carlos Fernández BERICAT",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14
+          ],
+          "atributos": {
+            "calidad": 53,
+            "agresividad": 68,
+            "resistencia": 68,
+            "velocidad": 47,
+            "fisico": 40,
+            "remate": 37,
+            "ofensivo": 48,
+            "pase": 42,
+            "entrada": 57,
+            "porteria": 11
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": "1965-03-30",
+          "alturaCm": 186,
+          "pesoKg": 82,
+          "nacionalidad": null,
+          "clubAnterior": "Atco. Orense (86)"
+        },
+        {
+          "id": "ourense-dejan-batrovic-1971",
+          "nombre": "Batrovic",
+          "nombreCompleto": "Dejan BATROVIC",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            11,
+            12
+          ],
+          "atributos": {
+            "calidad": 69,
+            "agresividad": 70,
+            "resistencia": 45,
+            "velocidad": 62,
+            "fisico": 64,
+            "remate": 59,
+            "ofensivo": 56,
+            "pase": 59,
+            "entrada": 13,
+            "porteria": 4
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": "1971-10-25",
+          "alturaCm": 185,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": "Getafe (96)"
+        },
+        {
+          "id": "ourense-festus-agu-1975",
+          "nombre": "Festus",
+          "nombreCompleto": "FESTUS Agu",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 70,
+            "resistencia": 59,
+            "velocidad": 64,
+            "fisico": 67,
+            "remate": 65,
+            "ofensivo": 58,
+            "pase": 68,
+            "entrada": 49,
+            "porteria": 4
+          },
+          "media": 63,
+          "dorsal": null,
+          "fechaNacimiento": "1975-03-13",
+          "alturaCm": 185,
+          "pesoKg": 82,
+          "nacionalidad": null,
+          "clubAnterior": "Compostela (96)"
+        },
+        {
+          "id": "ourense-luis-alberto-blanco-muguerza-1964",
+          "nombre": "Mugüerza",
+          "nombreCompleto": "Luis Alberto Blanco MUGÜERZA",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            13,
+            16
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 59,
+            "resistencia": 47,
+            "velocidad": 59,
+            "fisico": 59,
+            "remate": 58,
+            "ofensivo": 58,
+            "pase": 37,
+            "entrada": 46,
+            "porteria": 6
+          },
+          "media": 53,
+          "dorsal": null,
+          "fechaNacimiento": "1964-12-05",
+          "alturaCm": 180,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": "Atco. Orense (83)"
+        },
+        {
+          "id": "ourense-santiago-fernandez-torres-1968",
+          "nombre": "Santi",
+          "nombreCompleto": "SANTIago Fernández Torres",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 55,
+            "resistencia": 45,
+            "velocidad": 54,
+            "fisico": 58,
+            "remate": 52,
+            "ofensivo": 53,
+            "pase": 56,
+            "entrada": 29,
+            "porteria": 8
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": "1968-02-07",
+          "alturaCm": 178,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": "Carballiño (93)"
+        }
+      ]
     }
   ]
 }
