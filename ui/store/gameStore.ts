@@ -23,7 +23,10 @@ import {
   restoreCareer,
   generateBids,
   buyPlayer,
+  negotiateBuy,
+  acceptCounter,
   acceptBid,
+  formatEuros,
   toCompetitionTeam,
   runCareerCopa,
   runCareerEuropa,
@@ -119,6 +122,8 @@ interface GameStore {
   bids: Bid[];
   /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
   marketMessage: string | null;
+  /** A pending counter-offer from a selling club: {playerId, counter} euros. */
+  counterOffer: { playerId: string; counter: number } | null;
   /** Income breakdown from the season just finished (shown on the market screen). */
   lastIncome: SeasonIncome | null;
   /** Snapshot of the save slots (for the slots screen). */
@@ -135,6 +140,9 @@ interface GameStore {
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
+  makeOffer: (playerId: string, amount: number) => void;
+  acceptCounterOffer: () => void;
+  dismissCounter: () => void;
   acceptMarketBid: (bid: Bid) => void;
   startSeasonFromMarket: () => void;
   openMatch: (result: MatchResult) => void;
@@ -171,6 +179,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     tournamentId: null,
     bids: [],
     marketMessage: null,
+    counterOffer: null,
     lastIncome: null,
     slots: listSlots(),
     goTo: (screen) => set({ screen }),
@@ -260,6 +269,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         retainIds: [],
         bids: generateBids(next),
         marketMessage: null,
+        counterOffer: null,
         lastIncome: income,
         lastResults: [],
         viewingMatch: null,
@@ -276,6 +286,51 @@ export const useGameStore = create<GameStore>((set, get) => {
       }
       set({ career: result.career, season: result.career.season, marketMessage: null });
     },
+    makeOffer: (playerId, amount) => {
+      const { career } = get();
+      if (!career) return;
+      const outcome = negotiateBuy(career, playerId, amount);
+      switch (outcome.status) {
+        case 'accepted':
+          set({
+            career: outcome.career,
+            season: outcome.career.season,
+            marketMessage: `Fichaje cerrado por ${formatEuros(outcome.price)}.`,
+            counterOffer: null,
+          });
+          return;
+        case 'countered':
+          set({
+            marketMessage: `El club rechaza tu oferta pero acepta ${formatEuros(outcome.counter)}.`,
+            counterOffer: { playerId, counter: outcome.counter },
+          });
+          return;
+        case 'no-budget':
+          set({ marketMessage: 'No te llega el presupuesto para esa cifra.', counterOffer: null });
+          return;
+        case 'rejected':
+          set({ marketMessage: 'Oferta demasiado baja: el club la rechaza.', counterOffer: null });
+          return;
+        default:
+          set({ marketMessage: 'Jugador no disponible.', counterOffer: null });
+      }
+    },
+    acceptCounterOffer: () => {
+      const { career, counterOffer } = get();
+      if (!career || !counterOffer) return;
+      const result = acceptCounter(career, counterOffer.playerId, counterOffer.counter);
+      if (!result.ok) {
+        set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega el presupuesto.' : 'No disponible.' });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: `Fichaje cerrado por ${formatEuros(counterOffer.counter)}.`,
+        counterOffer: null,
+      });
+    },
+    dismissCounter: () => set({ counterOffer: null, marketMessage: null }),
     acceptMarketBid: (bid) => {
       const { career, bids } = get();
       if (!career) return;

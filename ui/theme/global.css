@@ -485,6 +485,19 @@ h1 {
   font-weight: 600;
 }
 
+.market-offer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.offer-input {
+  width: 5.5em;
+  padding: 4px 6px;
+  font: inherit;
+  text-align: right;
+}
+
 .retro-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
