@@ -8,5 +8,6 @@ export type Screen =
   | 'market'
   | 'squad'
   | 'tactics'
+  | 'tournament'
   | 'match'
   | 'slots';

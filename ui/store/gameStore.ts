@@ -4,6 +4,7 @@ import {
   getSeason,
   getSegundaByTemporada,
   nextSeasonByTemporada,
+  loadSeleccionEuro2000,
   type League,
   type SeasonEntry,
 } from '@data';
@@ -20,9 +21,13 @@ import {
   generateBids,
   buyPlayer,
   acceptBid,
+  toCompetitionTeam,
+  runTournament,
+  EURO2000_FINALIST_IDS,
   type CareerState,
   type CareerTactics,
   type SeasonState,
+  type TournamentResult,
   type Bid,
 } from '@game';
 import type { MatchResult } from '@engine';
@@ -60,6 +65,10 @@ interface GameStore {
   viewingMatch: MatchResult | null;
   /** Current-squad player ids the human chose to RETAIN at season end. */
   retainIds: string[];
+  /** A finished national-team tournament (Euro 2000), if one was played. */
+  tournament: TournamentResult | null;
+  /** The nation the human picked for the tournament. */
+  tournamentNationId: string | null;
   /** AI offers for your players this transfer window (snapshot on market entry). */
   bids: Bid[];
   /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
@@ -74,6 +83,7 @@ interface GameStore {
   playNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
+  startTournament: (nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
   acceptMarketBid: (bid: Bid) => void;
@@ -105,6 +115,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     lastResults: [],
     viewingMatch: null,
     retainIds: [],
+    tournament: null,
+    tournamentNationId: null,
     bids: [],
     marketMessage: null,
     slots: listSlots(),
@@ -199,6 +211,14 @@ export const useGameStore = create<GameStore>((set, get) => {
       });
     },
     startSeasonFromMarket: () => set({ screen: 'season', marketMessage: null }),
+    startTournament: (nationId) => {
+      const league = loadSeleccionEuro2000();
+      const teams = league.equipos
+        .filter((t) => EURO2000_FINALIST_IDS.includes(t.id))
+        .map(toCompetitionTeam);
+      const tournament = runTournament(teams, get().seed);
+      set({ tournament, tournamentNationId: nationId, screen: 'tournament' });
+    },
     openMatch: (result) => set({ viewingMatch: result, screen: 'match' }),
     refreshSlots: () => set({ slots: listSlots() }),
     saveToSlot: (slot) => {

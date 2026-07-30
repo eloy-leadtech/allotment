@@ -10,6 +10,7 @@ export function TitleScreen() {
       <RetroButton variant="primary" onClick={() => goTo('newGame')}>
         Nueva partida
       </RetroButton>
+      <RetroButton onClick={() => goTo('tournament')}>Torneo · Euro 2000</RetroButton>
       <RetroButton onClick={() => goTo('slots')}>Partidas guardadas</RetroButton>
     </main>
   );
