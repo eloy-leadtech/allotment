@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { loadPrimera9697, parseLeague } from './loader';
+import { loadPrimera9697, loadPrimera9798, parseLeague } from './loader';
 
 describe('loadPrimera9697', () => {
   const league = loadPrimera9697();
@@ -33,6 +33,44 @@ describe('loadPrimera9697', () => {
   it('contains recognizable 96/97 stars', () => {
     const names = league.equipos.flatMap((t) => t.jugadores.map((p) => p.nombre));
     expect(names).toContain('Ronaldo');
+  });
+});
+
+describe('loadPrimera9798', () => {
+  const league9697 = loadPrimera9697();
+  const league = loadPrimera9798();
+
+  it('loads a valid 22-team Primera 97/98', () => {
+    expect(league.temporada).toBe('97/98');
+    expect(league.competicion.kind).toBe('league');
+    expect(league.equipos).toHaveLength(22);
+  });
+
+  it('keeps the same 22 club ids as 96/97 (fixed set, no promotion/relegation yet)', () => {
+    const ids97 = league.equipos.map((t) => t.id).sort();
+    const ids96 = league9697.equipos.map((t) => t.id).sort();
+    expect(ids97).toEqual(ids96);
+  });
+
+  it('every team fields a usable squad and all attributes are in range', () => {
+    for (const team of league.equipos) {
+      expect(team.jugadores.length).toBeGreaterThanOrEqual(16);
+      for (const p of team.jugadores) {
+        for (const value of Object.values(p.atributos)) {
+          if (value === null) continue;
+          expect(value).toBeGreaterThanOrEqual(0);
+          expect(value).toBeLessThanOrEqual(99);
+        }
+      }
+    }
+  });
+
+  it('reflects real 97/98 transfers (Ronaldo left Barça for Inter)', () => {
+    const barca = league.equipos.find((t) => t.id === 'barcelona');
+    expect(barca).toBeDefined();
+    const barcaNames = barca?.jugadores.map((p) => p.nombre) ?? [];
+    expect(barcaNames).toContain('Rivaldo');
+    expect(barcaNames).not.toContain('Ronaldo');
   });
 });
 
