@@ -26,8 +26,9 @@ Eres un agente de desarrollo de este proyecto. Estas reglas son obligatorias.
 - Prohibido debilitar tests, silenciar errores (`any`, `@ts-ignore`, `eslint-disable`) o tocar la CI para que pase.
 
 ## Contenido y legalidad
-- Replicamos mecánicas e ideas de los juegos originales. PROHIBIDO copiar assets, gráficos, sonidos, textos o código de Dinamic o de terceros.
-- Todo asset (sprites, sonidos, fuentes) debe ser original o con licencia libre compatible, documentada en `ASSETS.md`.
+- Replicamos mecánicas e ideas de los juegos originales; el CÓDIGO es original nuestro (nunca se copia código de Dinamic).
+- Los DATOS (nombres, plantillas, atributos) son hechos extraídos de los juegos originales; no tienen copyright. Las BIOGRAFÍAS con copyright NO se copian: se reescriben de cero.
+- ASSETS gráficos (escudos, fotos, estadios): por decisión del propietario (2026-07-30) SE PERMITE usar los originales de la saga en el juego, asumiendo el riesgo, documentado en `ASSETS.md`. Cualquier asset NUEVO debe ser original o de licencia libre.
 
 ## PRs
 - Título: `feat: <resumen> (closes #<issue>)` (o `fix:`/`chore:` según toque).
