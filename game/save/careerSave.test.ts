@@ -36,6 +36,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     temporada: base.temporada,
     pointsForWin: base.pointsForWin,
     relegationSpots: base.relegationSpots,
+    budget: base.budget,
     teams,
   };
   let season = seasonFromCareer(meta);

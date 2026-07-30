@@ -137,6 +137,8 @@ export function applyTransition(
     temporada: temporadaNext,
     pointsForWin: nextWorld.competicion.pointsForWin,
     relegationSpots: nextWorld.competicion.relegationSpots,
+    // Budget carries over untouched; the market phase is what moves it.
+    budget: career.budget,
     teams,
   };
 

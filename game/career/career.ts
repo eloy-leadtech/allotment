@@ -2,6 +2,8 @@ import { hashSeed } from '@engine';
 import type { League } from '@data';
 import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/season';
 import type { CareerState, CareerTeam } from './types';
+import { initialBudget } from './market';
+import { seasonStartYear } from './development';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history). */
 type CareerMeta = Omit<CareerState, 'season' | 'history'>;
@@ -39,7 +41,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     colores: t.colores,
     players: t.jugadores,
   }));
-  if (!teams.some((t) => t.id === humanTeamId)) {
+  const humanTeam = teams.find((t) => t.id === humanTeamId);
+  if (!humanTeam) {
     throw new Error(`Human team ${humanTeamId} is not in the league`);
   }
   const meta: CareerMeta = {
@@ -50,6 +53,7 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     temporada: league.temporada,
     pointsForWin: league.competicion.pointsForWin,
     relegationSpots: league.competicion.relegationSpots,
+    budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
   };
   return { ...meta, season: seasonFromCareer(meta), history: [] };

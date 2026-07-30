@@ -30,6 +30,8 @@ export interface CareerState {
   temporada: string;
   pointsForWin: 2 | 3;
   relegationSpots: number;
+  /** The human club's transfer budget, in whole euros. */
+  budget: number;
   teams: CareerTeam[];
   season: SeasonState;
   history: SeasonSummary[];
