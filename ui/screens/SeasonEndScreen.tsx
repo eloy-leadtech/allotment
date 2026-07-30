@@ -1,8 +1,12 @@
-import { previewTransition, careerTeamName } from '@game';
-import { useGameStore, nextSeasonEntry } from '@ui/store/gameStore';
+import { previewTransition, careerTeamName, careerOutcome, nextDivision, currentStandings } from '@game';
+import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
+import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+
+const divisionName = (d: 'primera' | 'segunda'): string =>
+  d === 'primera' ? 'Primera División' : 'Segunda División';
 
 export function SeasonEndScreen() {
   const career = useGameStore((s) => s.career);
@@ -20,19 +24,38 @@ export function SeasonEndScreen() {
     );
   }
 
-  const nextEntry = nextSeasonEntry(career.leagueId);
-  const nextWorld = nextEntry?.load() ?? null;
-  const preview = nextWorld ? previewTransition(career, nextWorld) : null;
   const name = (id: string): string => careerTeamName(career, id);
-  const champion = preview?.championId ?? career.season.humanTeamId;
+  const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
+
+  const outcome = careerOutcome(career);
+  const toDivision = nextDivision(career.division, outcome);
+  const changing = toDivision !== career.division;
+
+  const nextPrimera = nextSeasonByTemporada(career.temporada);
+  const targetEntry = nextPrimera
+    ? toDivision === 'primera'
+      ? nextPrimera
+      : getSegundaByTemporada(nextPrimera.temporada)
+    : undefined;
+  // Same-division advance keeps the historical KEEP/RELEASE flow.
+  const sameLeague = targetEntry && !changing ? targetEntry.load() : null;
+  const preview = sameLeague ? previewTransition(career, sameLeague) : null;
 
   return (
     <main className="screen">
       <header className="season-head">
         <h1>Fin de temporada {career.temporada}</h1>
+        <span className="matchday">{divisionName(career.division)}</span>
       </header>
 
       <p className="champion">🏆 Campeón: {name(champion)}</p>
+
+      {outcome === 'relegated' ? (
+        <p className="fate fate--down">⬇️ Desciendes a Segunda División. Tu equipo baja contigo.</p>
+      ) : null}
+      {outcome === 'promoted' ? (
+        <p className="fate fate--up">⬆️ ¡Asciendes a Primera División! Subes con tu equipo.</p>
+      ) : null}
 
       {career.history.length > 0 ? (
         <RetroPanel title="Palmarés">
@@ -46,60 +69,46 @@ export function SeasonEndScreen() {
         </RetroPanel>
       ) : null}
 
-      {preview && nextEntry ? (
-        <>
-          {preview.departures.length > 0 ? (
-            <RetroPanel title={`La historia se llevaría a estos jugadores (${nextEntry.temporada})`}>
-              <p className="hint">Marca a quién quieres RETENER en tu equipo.</p>
-              <ul className="retain-list">
-                {preview.departures.map((p) => (
-                  <li key={p.id} className="retain-row">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={retainIds.includes(p.id)}
-                        onChange={() => toggleRetain(p.id)}
-                      />
-                      <span className="retain-name">{p.nombre}</span>
-                      <span className="hint">
-                        {p.posicion} · media {p.media}
-                      </span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </RetroPanel>
-          ) : (
-            <p className="hint">La historia no se lleva a ningún jugador de tu plantilla.</p>
-          )}
+      {preview && targetEntry ? (
+        preview.departures.length > 0 ? (
+          <RetroPanel title={`La historia se llevaría a estos jugadores (${targetEntry.temporada})`}>
+            <p className="hint">Marca a quién quieres RETENER en tu equipo.</p>
+            <ul className="retain-list">
+              {preview.departures.map((p) => (
+                <li key={p.id} className="retain-row">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={retainIds.includes(p.id)}
+                      onChange={() => toggleRetain(p.id)}
+                    />
+                    <span className="retain-name">{p.nombre}</span>
+                    <span className="hint">
+                      {p.posicion} · media {p.media}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </RetroPanel>
+        ) : (
+          <p className="hint">La historia no se lleva a ningún jugador de tu plantilla.</p>
+        )
+      ) : null}
 
-          {preview.arrivals.length > 0 ? (
-            <RetroPanel title={`Altas históricas en tu club (${nextEntry.temporada})`}>
-              <ul className="results">
-                {preview.arrivals.map((p) => (
-                  <li key={p.id}>
-                    {p.nombre} <span className="hint">· {p.posicion} · media {p.media}</span>
-                  </li>
-                ))}
-              </ul>
-            </RetroPanel>
-          ) : null}
-
-          <div className="season-actions">
-            <RetroButton variant="primary" onClick={continueCareer}>
-              <span className="team-cell">
-                <Crest teamId={career.humanTeamId} size={20} />
-                Continuar a {nextEntry.temporada} →
-              </span>
-            </RetroButton>
-            <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
-          </div>
-        </>
+      {targetEntry ? (
+        <div className="season-actions">
+          <RetroButton variant="primary" onClick={continueCareer}>
+            <span className="team-cell">
+              <Crest teamId={career.humanTeamId} size={20} />
+              Continuar a {targetEntry.temporada} ({divisionName(toDivision)}) →
+            </span>
+          </RetroButton>
+          <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
+        </div>
       ) : (
         <>
-          <p className="hint">
-            No hay datos de la temporada siguiente todavía: has llegado al final de la carrera disponible.
-          </p>
+          <p className="hint">No hay datos de la temporada siguiente: fin de la carrera disponible.</p>
           <div className="season-actions">
             <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
             <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>

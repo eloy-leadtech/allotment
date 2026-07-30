@@ -6,6 +6,7 @@ import { StandingsTable } from '@ui/components/StandingsTable';
 
 export function SeasonScreen() {
   const season = useGameStore((s) => s.season);
+  const division = useGameStore((s) => s.career?.division ?? 'primera');
   const lastResults = useGameStore((s) => s.lastResults);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const openMatch = useGameStore((s) => s.openMatch);
@@ -28,7 +29,9 @@ export function SeasonScreen() {
   return (
     <main className="screen">
       <header className="season-head">
-        <h1>Liga {season.temporada}</h1>
+        <h1>
+          {division === 'segunda' ? 'Segunda' : 'Primera'} {season.temporada}
+        </h1>
         <span className="matchday">
           {over ? 'Temporada terminada' : `Jornada ${season.currentMatchday} / ${season.totalMatchdays}`}
         </span>
