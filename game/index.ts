@@ -2,5 +2,6 @@
 // save/load and narration.
 export * from './season/season';
 export * from './career/index';
+export * from './tournament/index';
 export * from './save/save';
 export * from './narration/narrate';
