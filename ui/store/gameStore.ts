@@ -28,8 +28,10 @@ import {
   runCareerCopa,
   runCareerEuropa,
   europaQualification,
+  seasonIncome,
   runTournament,
   TOURNAMENTS,
+  type SeasonIncome,
   type CareerState,
   type CareerTactics,
   type SeasonState,
@@ -117,6 +119,8 @@ interface GameStore {
   bids: Bid[];
   /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
   marketMessage: string | null;
+  /** Income breakdown from the season just finished (shown on the market screen). */
+  lastIncome: SeasonIncome | null;
   /** Snapshot of the save slots (for the slots screen). */
   slots: Array<SlotInfo | null>;
   goTo: (screen: Screen) => void;
@@ -167,6 +171,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     tournamentId: null,
     bids: [],
     marketMessage: null,
+    lastIncome: null,
     slots: listSlots(),
     goTo: (screen) => set({ screen }),
     chooseSeason: (id) => {
@@ -235,13 +240,17 @@ export const useGameStore = create<GameStore>((set, get) => {
         toDivision === 'primera' ? nextPrimera : getSegundaByTemporada(nextPrimera.temporada);
       if (!targetEntry) return; // no data for the target division that year
       const targetLeague = targetEntry.load();
-      const next = attachEuropa(
+      // The finished season pays out: TV, gate, league prize and cup/European
+      // bonuses, added to the budget carried into the transfer window.
+      const income = seasonIncome(career);
+      const transitioned = attachEuropa(
         attachCopa(
           toDivision === career.division
             ? applyTransition(career, targetLeague, new Set(retainIds))
             : applyDivisionChange(career, toDivision, targetLeague),
         ),
       );
+      const next = { ...transitioned, budget: transitioned.budget + income.total };
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
@@ -251,6 +260,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         retainIds: [],
         bids: generateBids(next),
         marketMessage: null,
+        lastIncome: income,
         lastResults: [],
         viewingMatch: null,
         screen: 'market',
