@@ -1,5 +1,6 @@
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
+import { Trophy } from '@ui/components/Trophy';
 
 export function TitleScreen() {
   const goTo = useGameStore((s) => s.goTo);
@@ -9,6 +10,7 @@ export function TitleScreen() {
         <h1>PCFutbol Ultimate</h1>
       </div>
       <p className="tagline">Manager retro · Liga española 96/97</p>
+      <Trophy />
       <div className="title-menu">
         <RetroButton variant="primary" onClick={() => goTo('newGame')}>
           Nueva partida
