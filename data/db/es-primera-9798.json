@@ -416,7 +416,7 @@
           "id": "barcelona-guillermo-amor-martinez-1967",
           "nombre": "Amor",
           "nombreCompleto": "Guillermo AMOR Martínez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -425,24 +425,25 @@
             6
           ],
           "atributos": {
-            "calidad": 77,
-            "agresividad": 82,
+            "calidad": 76,
+            "agresividad": 80,
             "resistencia": 78,
             "velocidad": 79,
-            "fisico": 65,
-            "remate": 84,
-            "ofensivo": 81,
-            "pase": 78,
-            "entrada": 60,
-            "porteria": 17
+            "fisico": 60,
+            "remate": 50,
+            "ofensivo": 75,
+            "pase": 70,
+            "entrada": 55,
+            "porteria": 25
           },
-          "media": 76,
+          "media": 69,
           "dorsal": null,
           "fechaNacimiento": "1967-12-04",
           "alturaCm": 174,
           "pesoKg": 73,
-          "nacionalidad": "30",
-          "clubAnterior": "Barcelona B (88)"
+          "nacionalidad": "21",
+          "clubAnterior": "Barcelona B (88)",
+          "provenance": "atributos cruzados de 96/97: ficha 97/98 corrupta por desalineado de extraccion"
         },
         {
           "id": "barcelona-josep-guardiola-sala-1971",
