@@ -24,10 +24,18 @@ export function MatchScreen() {
 
   return (
     <main className="screen">
-      <h1 className="scoreline">
-        <Crest teamId={match.homeId} size={28} /> {home}{' '}
-        <span className="score">{match.homeGoals}-{match.awayGoals}</span>{' '}
-        {away} <Crest teamId={match.awayId} size={28} />
+      <h1 className="scoreboard">
+        <span className="scoreboard__side">
+          <Crest teamId={match.homeId} size={36} />
+          <span className="scoreboard__team">{home}</span>
+        </span>
+        <span className="scoreboard__score">
+          {match.homeGoals}-{match.awayGoals}
+        </span>
+        <span className="scoreboard__side scoreboard__side--away">
+          <span className="scoreboard__team">{away}</span>
+          <Crest teamId={match.awayId} size={36} />
+        </span>
       </h1>
       <Ticker lines={lines} />
       <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
