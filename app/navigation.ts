@@ -4,6 +4,7 @@ export type Screen =
   | 'newGame'
   | 'teamSelect'
   | 'season'
+  | 'standings'
   | 'prematch'
   | 'seasonEnd'
   | 'market'
