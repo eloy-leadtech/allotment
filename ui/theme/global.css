@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './pcf7-calco.css';
 
 * {
   box-sizing: border-box;
@@ -922,17 +923,26 @@ h1 {
 .screen--title7 {
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  max-width: none;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  background: #05050f;
+  overflow: hidden;
 }
 
+/* Bienvenida a pantalla completa: el logo real de PC Fútbol 7 escala a 4:3. */
 .pcf7title {
   position: relative;
-  width: min(96vw, 720px);
+  width: min(100vw, 133.333vh);
+  max-width: 100vw;
+  aspect-ratio: 640 / 480;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  border: 2px solid var(--c-border);
-  border-radius: 4px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  border: 0;
+  user-select: none;
 }
 
 /* Menú sobre la zona derecha (donde el original ponía el texto del instalador). */
@@ -946,31 +956,42 @@ h1 {
   gap: 10px;
 }
 
+/* Oculto visualmente (calco limpio) pero accesible/testable. */
 .pcf7title__caption {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-ink-dim);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* --- Despacho (hub) sobre scr_032.png --- */
 .screen--despacho {
   align-items: center;
   justify-content: center;
-  max-width: 100%;
+  max-width: none;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  background: #05050f;
+  overflow: hidden;
 }
 
+/* Calco a pantalla completa: el bitmap 640x480 escala tan grande como quepa
+   manteniendo su proporcion 4:3, tanto en ancho como en alto (dinamico). */
 .despacho7 {
   position: relative;
-  width: min(96vw, 760px);
-  max-width: 100%;
+  width: min(100vw, 133.333vh);
+  max-width: 100vw;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  border: 2px solid var(--c-border);
-  border-radius: 4px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  border: 0;
   user-select: none;
 }
 

@@ -56,7 +56,7 @@ const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
   { label: 'Calendario', to: 'standings' },
   { label: 'Finanzas', to: 'market' },
   { label: 'Prensa', to: null },
-  { label: 'Directiva', to: null },
+  { label: 'Directiva', to: 'directiva' },
   { label: 'Fichajes', to: 'market' },
 ];
 

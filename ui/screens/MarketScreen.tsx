@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 import { buyableListings, formatEuros, careerTeamName } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
-import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { Pcf7Console } from '@ui/components/Pcf7Frame';
 
 /** How many buy candidates to show at once (the pool is the whole league). */
 const MAX_ROWS = 40;
@@ -46,78 +46,87 @@ export function MarketScreen() {
   const name = (id: string): string => careerTeamName(career, id);
 
   return (
-    <main className="screen">
-      <header className="season-head">
-        <h1>Mercado de fichajes · {career.temporada}</h1>
-        <span className="matchday">Presupuesto: {formatEuros(career.budget)}</span>
-      </header>
-
-      {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
+    <Pcf7Console
+      title={`Mercado · ${career.temporada}`}
+      status={`Presupuesto: ${formatEuros(career.budget)}`}
+      footer={
+        <>
+          <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={startSeasonFromMarket}>
+            Empezar temporada →
+          </button>
+          <button type="button" className="pcf7flatbtn" onClick={() => goTo('season')}>
+            Despacho
+          </button>
+        </>
+      }
+    >
+      {marketMessage ? <p className="pcf7data-ovl" style={{ position: 'static', color: 'var(--c-accent)', margin: 0 }}>{marketMessage}</p> : null}
 
       {lastIncome ? (
-        <RetroPanel title={`Ingresos de la temporada · ${formatEuros(lastIncome.total)}`}>
-          <ul className="market-list">
-            <li className="market-row"><span className="market-name">Derechos de TV</span><span className="hint">{formatEuros(lastIncome.tv)}</span></li>
-            <li className="market-row"><span className="market-name">Taquilla</span><span className="hint">{formatEuros(lastIncome.gate)}</span></li>
-            <li className="market-row"><span className="market-name">Premio de liga (posición)</span><span className="hint">{formatEuros(lastIncome.leaguePrize)}</span></li>
+        <section className="pcf7card">
+          <div className="pcf7card__head">Ingresos de la temporada · {formatEuros(lastIncome.total)}</div>
+          <ul className="pcf7list">
+            <li><span className="pcf7list__grow">Derechos de TV</span><span className="pcf7list__dim">{formatEuros(lastIncome.tv)}</span></li>
+            <li><span className="pcf7list__grow">Taquilla</span><span className="pcf7list__dim">{formatEuros(lastIncome.gate)}</span></li>
+            <li><span className="pcf7list__grow">Premio de liga (posición)</span><span className="pcf7list__dim">{formatEuros(lastIncome.leaguePrize)}</span></li>
             {lastIncome.copa > 0 ? (
-              <li className="market-row"><span className="market-name">Copa del Rey</span><span className="hint">{formatEuros(lastIncome.copa)}</span></li>
+              <li><span className="pcf7list__grow">Copa del Rey</span><span className="pcf7list__dim">{formatEuros(lastIncome.copa)}</span></li>
             ) : null}
             {lastIncome.europa > 0 ? (
-              <li className="market-row"><span className="market-name">Competición europea</span><span className="hint">{formatEuros(lastIncome.europa)}</span></li>
+              <li><span className="pcf7list__grow">Competición europea</span><span className="pcf7list__dim">{formatEuros(lastIncome.europa)}</span></li>
             ) : null}
           </ul>
-        </RetroPanel>
+        </section>
       ) : null}
 
-      <RetroButton variant="primary" onClick={startSeasonFromMarket}>
-        Empezar temporada →
-      </RetroButton>
-
-      <RetroPanel title={`Ofertas por tus jugadores (${openBids.length})`}>
+      <section className="pcf7card">
+        <div className="pcf7card__head">Ofertas por tus jugadores ({openBids.length})</div>
         {openBids.length === 0 ? (
-          <p className="hint">Nadie puja por tus jugadores este mercado.</p>
+          <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', padding: '0.5em 0.7em', margin: 0 }}>
+            Nadie puja por tus jugadores este mercado.
+          </p>
         ) : (
-          <ul className="market-list">
+          <ul className="pcf7list">
             {openBids.map((bid) => (
-              <li key={bid.playerId} className="market-row">
-                <span className="market-name">{nameById.get(bid.playerId)}</span>
-                <span className="hint">
-                  {name(bid.fromClubId)} · {formatEuros(bid.amount)}
-                </span>
-                <RetroButton onClick={() => acceptMarketBid(bid)}>Vender</RetroButton>
+              <li key={bid.playerId}>
+                <span className="pcf7list__grow">{nameById.get(bid.playerId)}</span>
+                <span className="pcf7list__dim">{name(bid.fromClubId)} · {formatEuros(bid.amount)}</span>
+                <button type="button" className="pcf7formchip" onClick={() => acceptMarketBid(bid)}>Vender</button>
               </li>
             ))}
           </ul>
         )}
-      </RetroPanel>
+      </section>
 
-      <RetroPanel title="Fichar">
-        <input
-          className="market-search"
-          type="search"
-          placeholder="Buscar jugador…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <ul className="market-list">
+      <section className="pcf7card">
+        <div className="pcf7card__head">Fichar</div>
+        <div style={{ padding: '0.5em 0.7em' }}>
+          <input
+            className="pcf7input"
+            type="search"
+            placeholder="Buscar jugador…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <ul className="pcf7list">
           {filtered.map((l) => {
             const draft = offers[l.player.id] ?? '';
             const offerEuros = draft.trim() === '' ? l.askingPrice : Math.round(Number(draft) * 1_000_000);
             const validOffer = Number.isFinite(offerEuros) && offerEuros > 0;
             const isCountered = counterOffer?.playerId === l.player.id;
             return (
-              <li key={l.player.id} className="market-row market-negotiate">
-                <span className="market-name team-cell">
+              <li key={l.player.id} style={{ flexWrap: 'wrap' }}>
+                <span className="pcf7list__grow" style={{ display: 'flex', alignItems: 'center', gap: '0.4em' }}>
                   <Crest teamId={l.clubId} size={18} />
                   {l.player.nombre}
                 </span>
-                <span className="hint">
+                <span className="pcf7list__dim">
                   {l.player.posicion} · media {l.player.media} · pide {formatEuros(l.askingPrice)} · cláusula {formatEuros(l.clause)}
                 </span>
-                <span className="market-offer">
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.35em' }}>
                   <input
-                    className="offer-input"
+                    className="pcf7num"
                     type="number"
                     min={0}
                     step={0.5}
@@ -126,17 +135,19 @@ export function MarketScreen() {
                     onChange={(e) => setOffers((o) => ({ ...o, [l.player.id]: e.target.value }))}
                     aria-label={`Oferta por ${l.player.nombre} en millones`}
                   />
-                  <span className="hint">M€</span>
-                  <RetroButton
+                  <span className="pcf7list__dim">M€</span>
+                  <button
+                    type="button"
+                    className="pcf7formchip"
                     disabled={!validOffer}
                     onClick={() => makeOffer(l.player.id, offerEuros)}
                   >
                     Ofertar
-                  </RetroButton>
+                  </button>
                   {isCountered ? (
-                    <RetroButton variant="primary" onClick={acceptCounterOffer}>
+                    <button type="button" className="pcf7formchip pcf7formchip--on" onClick={acceptCounterOffer}>
                       Aceptar {formatEuros(counterOffer.counter)}
-                    </RetroButton>
+                    </button>
                   ) : null}
                 </span>
               </li>
@@ -144,15 +155,11 @@ export function MarketScreen() {
           })}
         </ul>
         {listings.length > filtered.length ? (
-          <p className="hint">Mostrando {filtered.length} de {listings.length}. Busca por nombre para afinar.</p>
+          <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', padding: '0.4em 0.7em', margin: 0 }}>
+            Mostrando {filtered.length} de {listings.length}. Busca por nombre para afinar.
+          </p>
         ) : null}
-      </RetroPanel>
-
-      <div className="season-actions">
-        <RetroButton variant="primary" onClick={startSeasonFromMarket}>
-          Empezar temporada →
-        </RetroButton>
-      </div>
-    </main>
+      </section>
+    </Pcf7Console>
   );
 }

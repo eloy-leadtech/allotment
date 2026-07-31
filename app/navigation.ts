@@ -10,6 +10,7 @@ export type Screen =
   | 'market'
   | 'squad'
   | 'tactics'
+  | 'directiva'
   | 'tournament'
   | 'copa'
   | 'europa'

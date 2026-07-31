@@ -2,8 +2,8 @@ import { previewTransition, careerTeamName, careerOutcome, nextDivision, current
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
-import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { Pcf7Console } from '@ui/components/Pcf7Frame';
 
 const divisionName = (d: 'primera' | 'segunda'): string =>
   d === 'primera' ? 'Primera División' : 'Segunda División';
@@ -41,80 +41,81 @@ export function SeasonEndScreen() {
   const sameLeague = targetEntry && !changing ? targetEntry.load() : null;
   const preview = sameLeague ? previewTransition(career, sameLeague) : null;
 
-  return (
-    <main className="screen">
-      <header className="season-head">
-        <h1>Fin de temporada {career.temporada}</h1>
-        <span className="matchday">{divisionName(career.division)}</span>
-      </header>
+  const footer = targetEntry ? (
+    <>
+      <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={continueCareer}>
+        Continuar a {targetEntry.temporada} ({divisionName(toDivision)}) →
+      </button>
+      <button type="button" className="pcf7flatbtn" onClick={() => goTo('season')}>Atrás</button>
+    </>
+  ) : (
+    <>
+      <button type="button" className="pcf7flatbtn" onClick={() => goTo('slots')}>Guardar / Cargar</button>
+      <button type="button" className="pcf7flatbtn" onClick={() => goTo('title')}>Menú</button>
+    </>
+  );
 
-      <p className="champion">🏆 Campeón: {name(champion)}</p>
+  return (
+    <Pcf7Console title={`Fin de temporada ${career.temporada}`} status={divisionName(career.division)} footer={footer}>
+      <p className="pcf7ovl pcf7title-ovl" style={{ position: 'static', justifyContent: 'flex-start', whiteSpace: 'normal', margin: 0 }}>
+        🏆 Campeón: {name(champion)}
+      </p>
 
       {outcome === 'relegated' ? (
-        <p className="fate fate--down">⬇️ Desciendes a Segunda División. Tu equipo baja contigo.</p>
+        <p className="pcf7data-ovl" style={{ position: 'static', color: '#ff8a8a', margin: 0 }}>⬇️ Desciendes a Segunda División. Tu equipo baja contigo.</p>
       ) : null}
       {outcome === 'promoted' ? (
-        <p className="fate fate--up">⬆️ ¡Asciendes a Primera División! Subes con tu equipo.</p>
+        <p className="pcf7data-ovl" style={{ position: 'static', color: '#8affa0', margin: 0 }}>⬆️ ¡Asciendes a Primera División! Subes con tu equipo.</p>
       ) : null}
 
       {career.history.length > 0 ? (
-        <RetroPanel title="Palmarés">
-          <ul className="palmares">
+        <section className="pcf7card">
+          <div className="pcf7card__head">Palmarés</div>
+          <ul className="pcf7list">
             {career.history.map((h) => (
               <li key={h.seasonNumber}>
-                {h.temporada}: <strong>{name(h.championId)}</strong>
+                <span className="pcf7list__grow">{h.temporada}</span>
+                <strong>{name(h.championId)}</strong>
               </li>
             ))}
           </ul>
-        </RetroPanel>
+        </section>
       ) : null}
 
       {preview && targetEntry ? (
         preview.departures.length > 0 ? (
-          <RetroPanel title={`La historia se llevaría a estos jugadores (${targetEntry.temporada})`}>
-            <p className="hint">Marca a quién quieres RETENER en tu equipo.</p>
-            <ul className="retain-list">
+          <section className="pcf7card">
+            <div className="pcf7card__head">La historia se llevaría a estos jugadores ({targetEntry.temporada})</div>
+            <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', padding: '0.4em 0.7em', margin: 0 }}>
+              Marca a quién quieres RETENER en tu equipo.
+            </p>
+            <ul className="pcf7list">
               {preview.departures.map((p) => (
-                <li key={p.id} className="retain-row">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={retainIds.includes(p.id)}
-                      onChange={() => toggleRetain(p.id)}
-                    />
-                    <span className="retain-name">{p.nombre}</span>
-                    <span className="hint">
-                      {p.posicion} · media {p.media}
-                    </span>
+                <li key={p.id}>
+                  <label className="pcf7list__grow" style={{ display: 'flex', alignItems: 'center', gap: '0.4em' }}>
+                    <input type="checkbox" checked={retainIds.includes(p.id)} onChange={() => toggleRetain(p.id)} />
+                    <span>{p.nombre}</span>
                   </label>
+                  <span className="pcf7list__dim">{p.posicion} · media {p.media}</span>
                 </li>
               ))}
             </ul>
-          </RetroPanel>
+          </section>
         ) : (
-          <p className="hint">La historia no se lleva a ningún jugador de tu plantilla.</p>
+          <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', margin: 0 }}>La historia no se lleva a ningún jugador de tu plantilla.</p>
         )
       ) : null}
 
-      {targetEntry ? (
-        <div className="season-actions">
-          <RetroButton variant="primary" onClick={continueCareer}>
-            <span className="team-cell">
-              <Crest teamId={career.humanTeamId} size={20} />
-              Continuar a {targetEntry.temporada} ({divisionName(toDivision)}) →
-            </span>
-          </RetroButton>
-          <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
-        </div>
+      {!targetEntry ? (
+        <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', margin: 0 }}>
+          No hay datos de la temporada siguiente: fin de la carrera disponible.
+        </p>
       ) : (
-        <>
-          <p className="hint">No hay datos de la temporada siguiente: fin de la carrera disponible.</p>
-          <div className="season-actions">
-            <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
-            <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
-          </div>
-        </>
+        <span className="team-cell" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}>
+          <Crest teamId={career.humanTeamId} size={20} />
+          <span className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)' }}>Continúas con tu equipo.</span>
+        </span>
       )}
-    </main>
+    </Pcf7Console>
   );
 }
