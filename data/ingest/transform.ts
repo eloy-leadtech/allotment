@@ -25,12 +25,14 @@ export interface SourcePlayer {
   demarcaciones: number[];
   media: number;
   atributos: SourceAttributes;
-  anho_nacimiento: number | null;
-  fecha_nacimiento: string | null;
-  altura_cm: number | null;
-  peso_kg: number | null;
-  nacionalidad: string | null;
-  club_anterior: string | null;
+  // Bio fields are optional: the earliest packs (e.g. 93/94) store no birth
+  // year, birth date, height or weight. Absent => treated as unknown (null).
+  anho_nacimiento?: number | null;
+  fecha_nacimiento?: string | null;
+  altura_cm?: number | null;
+  peso_kg?: number | null;
+  nacionalidad?: string | null;
+  club_anterior?: string | null;
 }
 
 export interface SourceTeam {
@@ -76,44 +78,59 @@ export function derivePosition(p: SourcePlayer): Position {
  * always in range, so a clamp only ever fires on an isolated corrupt/misaligned
  * byte in the extraction; when it does we warn (and count it) rather than crash
  * the whole ingest. Clean seasons pass through untouched.
+ *
+ * `baseline` (the player's overall media, clamped) fills any attribute the
+ * source left absent or non-finite — a rare partial-decode row in the earliest
+ * packs (e.g. a single 94/95 player with only 4 of the 10 attributes decoded).
+ * Keeping the player with a neutral estimate is preferable to dropping him.
  */
-function sanitizeAttributes(src: SourceAttributes, who: string): SourceAttributes {
-  const fix = (key: keyof SourceAttributes, value: number | null): number | null => {
-    if (value === null || (value >= 0 && value <= 99)) return value;
+function sanitizeAttributes(src: SourceAttributes, who: string, baseline: number): SourceAttributes {
+  const fix = (key: keyof SourceAttributes, value: number | null | undefined): number | null => {
+    if (value === null) return null;
+    if (value === undefined || !Number.isFinite(value)) {
+      console.warn(`WARN: ${who} atributo ${key} ausente -> ${baseline}`);
+      return baseline;
+    }
+    if (value >= 0 && value <= 99) return value;
     const clamped = Math.max(0, Math.min(99, value));
     console.warn(`WARN: ${who} atributo ${key}=${value} fuera de rango -> ${clamped}`);
     return clamped;
   };
   return {
     calidad: fix('calidad', src.calidad),
-    agresividad: fix('agresividad', src.agresividad) ?? 0,
-    resistencia: fix('resistencia', src.resistencia) ?? 0,
-    velocidad: fix('velocidad', src.velocidad) ?? 0,
-    fisico: fix('fisico', src.fisico) ?? 0,
-    remate: fix('remate', src.remate) ?? 0,
-    ofensivo: fix('ofensivo', src.ofensivo) ?? 0,
-    pase: fix('pase', src.pase) ?? 0,
-    entrada: fix('entrada', src.entrada) ?? 0,
-    porteria: fix('porteria', src.porteria) ?? 0,
+    agresividad: fix('agresividad', src.agresividad) ?? baseline,
+    resistencia: fix('resistencia', src.resistencia) ?? baseline,
+    velocidad: fix('velocidad', src.velocidad) ?? baseline,
+    fisico: fix('fisico', src.fisico) ?? baseline,
+    remate: fix('remate', src.remate) ?? baseline,
+    ofensivo: fix('ofensivo', src.ofensivo) ?? baseline,
+    pase: fix('pase', src.pase) ?? baseline,
+    entrada: fix('entrada', src.entrada) ?? baseline,
+    porteria: fix('porteria', src.porteria) ?? baseline,
   };
 }
 
 export function transformPlayer(src: SourcePlayer, teamId: string): Player {
+  const nacionalidad = src.nacionalidad ?? null;
+  // Synthetic squad-fillers in the earliest packs carry no full name; fall back
+  // to the short name so the id stays unique and the schema (min length 1) holds.
+  const nombreCompleto = (src.nombre_completo ?? '').trim() || src.nombre;
+  const baseline = Math.max(0, Math.min(99, Math.round(src.media)));
   return {
-    id: syntheticPlayerId(src.nombre_completo, src.anho_nacimiento, teamId),
+    id: syntheticPlayerId(nombreCompleto, src.anho_nacimiento ?? null, teamId),
     nombre: src.nombre,
-    nombreCompleto: src.nombre_completo,
+    nombreCompleto,
     posicion: derivePosition(src),
     esPortero: src.es_portero,
     demarcaciones: src.demarcaciones,
-    atributos: sanitizeAttributes(src.atributos, `${teamId}/${src.nombre}`),
+    atributos: sanitizeAttributes(src.atributos, `${teamId}/${src.nombre}`, baseline),
     media: src.media,
     dorsal: null,
-    fechaNacimiento: toIsoDate(src.fecha_nacimiento),
-    alturaCm: src.altura_cm,
-    pesoKg: src.peso_kg,
-    nacionalidad: src.nacionalidad === '0' ? null : src.nacionalidad,
-    clubAnterior: src.club_anterior,
+    fechaNacimiento: toIsoDate(src.fecha_nacimiento ?? null),
+    alturaCm: src.altura_cm ?? null,
+    pesoKg: src.peso_kg ?? null,
+    nacionalidad: nacionalidad === '0' ? null : nacionalidad,
+    clubAnterior: src.club_anterior ?? null,
   };
 }
 

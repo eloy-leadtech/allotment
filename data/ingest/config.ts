@@ -101,6 +101,23 @@ export const SOURCE_PATH_9596_PRIMERA =
 export const SOURCE_PATH_9596_SEGUNDA =
   'C:/dev/pcfutbol-analysis/data/extra/segunda-9596-source.json';
 
+// --- Temporadas 93/94 y 94/95 (arranque de la carrera) ---------------------
+
+/**
+ * 93/94 y 94/95, extraídas y completadas en el taller. 93/94 es SOLO Primera
+ * (no hay Segunda 93/94; un descendido de 93/94 juega la Segunda 94/95, que sí
+ * existe). Cada temporada es su propio conjunto real de clubes (sin fixed-22 ni
+ * fallback). Los JSON traen bloques y campos extra (sin_identificar_*, fuente,
+ * provenance, atributos_crudos, …) que el ingest IGNORA: sólo lee
+ * `equipos[].jugadores` y se queda con las claves canónicas del jugador.
+ */
+export const SOURCE_PATH_9394_PRIMERA =
+  'C:/dev/pcfutbol-analysis/data/extra/primera-9394-source.json';
+export const SOURCE_PATH_9495_PRIMERA =
+  'C:/dev/pcfutbol-analysis/data/extra/primera-9495-source.json';
+export const SOURCE_PATH_9495_SEGUNDA =
+  'C:/dev/pcfutbol-analysis/data/extra/segunda-9495-source.json';
+
 // --- Selecciones (torneos) -------------------------------------------------
 
 /**
