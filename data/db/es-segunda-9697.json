@@ -8797,6 +8797,5715 @@
           "clubAnterior": "Carballiño (93)"
         }
       ]
+    },
+    {
+      "id": "almeria",
+      "nombre": "Almería",
+      "jugadores": [
+        {
+          "id": "almeria-julio-jose-iglesias-rouget-na",
+          "nombre": "lesias",
+          "nombreCompleto": "JULIO José IGLESIAS Rouget",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 53,
+            "resistencia": 55,
+            "velocidad": 63,
+            "fisico": 9,
+            "remate": 9,
+            "ofensivo": 10,
+            "pase": 7,
+            "entrada": 12,
+            "porteria": 62
+          },
+          "media": 60,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-juan-ignacio-garcia-sendin-inaki-na",
+          "nombre": "Iñaki",
+          "nombreCompleto": "Juan Ignacio García Sendín, IÑAKI",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 24,
+            "remate": 24,
+            "ofensivo": 28,
+            "pase": 27,
+            "entrada": 34,
+            "porteria": 71
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-francisco-javier-cuaresma-gallego-na",
+          "nombre": "Cuaresma",
+          "nombreCompleto": "Francisco Javier CUARESMA Gallego",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-julio-garcia-fernandez-na",
+          "nombre": "Julio",
+          "nombreCompleto": "JULIO García Fernández",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-juan-marrero-roig-na",
+          "nombre": "Marrero",
+          "nombreCompleto": "Juan MARRERO Roig",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-gonzalo-sanchez-moreno-na",
+          "nombre": "Gonzalo",
+          "nombreCompleto": "GONZALO Sánchez Moreno",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-antonio-lima-sala-na",
+          "nombre": "Lima",
+          "nombreCompleto": "Antonio LIMA Sala",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-ranko-popovic-na",
+          "nombre": "Popovic",
+          "nombreCompleto": "Ranko POPOVIC",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jose-maria-cidoncha-molina-na",
+          "nombre": "Cidoncha",
+          "nombreCompleto": "José María CIDONCHA Molina",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jose-puche-vicente-puche-i-na",
+          "nombre": "Puche I",
+          "nombreCompleto": "José Puche Vicente, PUCHE I",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-andres-lucero-gonzalez-na",
+          "nombre": "Andrés",
+          "nombreCompleto": "ANDRES Lucero González",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-juan-carlos-portillo-gonzalez-na",
+          "nombre": "Portillo",
+          "nombreCompleto": "Juan Carlos PORTILLO González",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-diego-lopez-santos-na",
+          "nombre": "Diego",
+          "nombreCompleto": "DIEGO López Santos",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 70,
+            "resistencia": 69,
+            "velocidad": 70,
+            "fisico": 60,
+            "remate": 62,
+            "ofensivo": 62,
+            "pase": 56,
+            "entrada": 53,
+            "porteria": 24
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jorge-peralta-fernandez-de-cordoba-na",
+          "nombre": "Peralta",
+          "nombreCompleto": "Jorge PERALTA Fernández de Córdoba",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-nikola-milinkovic-na",
+          "nombre": "Milinkovic",
+          "nombreCompleto": "Nikola MILINKOVIC",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-baricoivica-barbari-na",
+          "nombre": "iBa",
+          "nombreCompleto": "baricoIvica BARBARI",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 24,
+            "remate": 24,
+            "ofensivo": 28,
+            "pase": 27,
+            "entrada": 34,
+            "porteria": 71
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jon-uribarrena-diez-na",
+          "nombre": "Uribarrena",
+          "nombreCompleto": "Jon URIBARRENA Díez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            16
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-roberto-martinez-celigueta-na",
+          "nombre": "berto Martínez",
+          "nombreCompleto": "ROBERTO MARTINEZ Celigueta",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-francisco-javier-aguilera-blanco-luna-na",
+          "nombre": "Luna",
+          "nombreCompleto": "Francisco Javier Aguilera Blanco, LUNA",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 77,
+            "agresividad": 78,
+            "resistencia": 78,
+            "velocidad": 77,
+            "fisico": 75,
+            "remate": 65,
+            "ofensivo": 70,
+            "pase": 75,
+            "entrada": 52,
+            "porteria": 20
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jorge-alberto-rajado-martin-na",
+          "nombre": "Rajado",
+          "nombreCompleto": "Jorge Alberto RAJADO Martín",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "almeria-jon-bakero-escudero-na",
+          "nombre": "Bakero",
+          "nombreCompleto": "Jon BAKERO Escudero",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            12
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 55,
+            "resistencia": 59,
+            "velocidad": 57,
+            "fisico": 55,
+            "remate": 48,
+            "ofensivo": 50,
+            "pase": 57,
+            "entrada": 24,
+            "porteria": 7
+          },
+          "media": 51,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "at-madrid-b",
+      "nombre": "At. Madrid B",
+      "jugadores": [
+        {
+          "id": "at-madrid-b-luis-garcia-tevenet-1974",
+          "nombre": "Tevenet",
+          "nombreCompleto": "Luis García TEVENET",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            8,
+            11
+          ],
+          "atributos": {
+            "calidad": 76,
+            "agresividad": 70,
+            "resistencia": 74,
+            "velocidad": 75,
+            "fisico": 74,
+            "remate": 74,
+            "ofensivo": 75,
+            "pase": 81,
+            "entrada": 44,
+            "porteria": 26
+          },
+          "media": 81,
+          "dorsal": null,
+          "fechaNacimiento": "1974-05-08",
+          "alturaCm": 178,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-ramon-gonzalez-exposito-1974",
+          "nombre": "Ramón",
+          "nombreCompleto": "RAMON González Expósito",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            4,
+            5,
+            2,
+            14,
+            1
+          ],
+          "atributos": {
+            "calidad": 75,
+            "agresividad": 68,
+            "resistencia": 77,
+            "velocidad": 73,
+            "fisico": 58,
+            "remate": 55,
+            "ofensivo": 46,
+            "pase": 54,
+            "entrada": 73,
+            "porteria": 11
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1974-11-25",
+          "alturaCm": 182,
+          "pesoKg": 81,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-ruben-baraja-vegas-1975",
+          "nombre": "Baraja",
+          "nombreCompleto": "Rubén BARAJA Vegas",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7,
+            12,
+            9,
+            14
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 61,
+            "resistencia": 55,
+            "velocidad": 73,
+            "fisico": 74,
+            "remate": 58,
+            "ofensivo": 66,
+            "pase": 59,
+            "entrada": 50,
+            "porteria": 23
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1975-07-11",
+          "alturaCm": 180,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-quinton-fortune-1977",
+          "nombre": "Fortune",
+          "nombreCompleto": "Quinton FORTUNE",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            15,
+            10,
+            16
+          ],
+          "atributos": {
+            "calidad": 78,
+            "agresividad": 73,
+            "resistencia": 72,
+            "velocidad": 76,
+            "fisico": 67,
+            "remate": 70,
+            "ofensivo": 70,
+            "pase": 68,
+            "entrada": 38,
+            "porteria": 23
+          },
+          "media": 78,
+          "dorsal": null,
+          "fechaNacimiento": "1977-05-21",
+          "alturaCm": 185,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-manuel-rubio-velasco-1975",
+          "nombre": "Rubio",
+          "nombreCompleto": "Manuel RUBIO Velasco",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0,
+            0
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 66,
+            "resistencia": 62,
+            "velocidad": 68,
+            "fisico": 19,
+            "remate": 19,
+            "ofensivo": 9,
+            "pase": 12,
+            "entrada": 14,
+            "porteria": 74
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1975-07-18",
+          "alturaCm": 178,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-gustavo-de-la-parra-navarro-1975",
+          "nombre": "Gustavo",
+          "nombreCompleto": "GUSTAVO de La Parra Navarro",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2,
+            4,
+            2
+          ],
+          "atributos": {
+            "calidad": 51,
+            "agresividad": 63,
+            "resistencia": 74,
+            "velocidad": 49,
+            "fisico": 44,
+            "remate": 49,
+            "ofensivo": 51,
+            "pase": 49,
+            "entrada": 61,
+            "porteria": 12
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1975-12-19",
+          "alturaCm": 182,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-marcos-sequeiros-estevez-1973",
+          "nombre": "Sequeiros",
+          "nombreCompleto": "Marcos SEQUEIROS Estévez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8,
+            8
+          ],
+          "atributos": {
+            "calidad": 77,
+            "agresividad": 70,
+            "resistencia": 66,
+            "velocidad": 74,
+            "fisico": 79,
+            "remate": 57,
+            "ofensivo": 57,
+            "pase": 72,
+            "entrada": 46,
+            "porteria": 12
+          },
+          "media": 79,
+          "dorsal": null,
+          "fechaNacimiento": "1973-12-12",
+          "alturaCm": 181,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-mario-cabanillas-plaza-1975",
+          "nombre": "Cabanillas",
+          "nombreCompleto": "Mario CABANILLAS Plaza",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            16,
+            0,
+            3,
+            14,
+            1
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 62,
+            "resistencia": 60,
+            "velocidad": 71,
+            "fisico": 56,
+            "remate": 61,
+            "ofensivo": 68,
+            "pase": 54,
+            "entrada": 58,
+            "porteria": 12
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1975-04-06",
+          "alturaCm": 175,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-david-charcos-gaston-1975",
+          "nombre": "Charcos",
+          "nombreCompleto": "David CHARCOS Gastón",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            11,
+            0,
+            3,
+            5
+          ],
+          "atributos": {
+            "calidad": 56,
+            "agresividad": 57,
+            "resistencia": 51,
+            "velocidad": 53,
+            "fisico": 58,
+            "remate": 57,
+            "ofensivo": 59,
+            "pase": 61,
+            "entrada": 62,
+            "porteria": 20
+          },
+          "media": 62,
+          "dorsal": null,
+          "fechaNacimiento": "1975-05-09",
+          "alturaCm": 185,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-jiri-rosicky-1976",
+          "nombre": "Rosicky",
+          "nombreCompleto": "Jiri ROSICKY",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            17,
+            9,
+            7,
+            17
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 70,
+            "resistencia": 63,
+            "velocidad": 56,
+            "fisico": 58,
+            "remate": 56,
+            "ofensivo": 56,
+            "pase": 61,
+            "entrada": 64,
+            "porteria": 14
+          },
+          "media": 70,
+          "dorsal": null,
+          "fechaNacimiento": "1976-11-11",
+          "alturaCm": 184,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-lorenzo-del-pino-morales-loren-1974",
+          "nombre": "Loren",
+          "nombreCompleto": "Lorenzo del Pino Morales, LOREN",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            3,
+            8
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 70,
+            "resistencia": 64,
+            "velocidad": 74,
+            "fisico": 68,
+            "remate": 62,
+            "ofensivo": 62,
+            "pase": 64,
+            "entrada": 56,
+            "porteria": 27
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1974-06-17",
+          "alturaCm": 182,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-jose-juan-luque-jimenez-luque-1977",
+          "nombre": "Luque",
+          "nombreCompleto": "José Juan Luque Jiménez, LUQUE",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            3,
+            12,
+            8,
+            16
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 65,
+            "resistencia": 62,
+            "velocidad": 66,
+            "fisico": 60,
+            "remate": 59,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 54,
+            "porteria": 23
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1977-10-16",
+          "alturaCm": 173,
+          "pesoKg": 66,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-juan-carlos-carcedo-mardones-1973",
+          "nombre": "Carcedo",
+          "nombreCompleto": "Juan Carlos CARCEDO Mardones",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            14,
+            9
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 70,
+            "resistencia": 66,
+            "velocidad": 64,
+            "fisico": 50,
+            "remate": 60,
+            "ofensivo": 60,
+            "pase": 59,
+            "entrada": 57,
+            "porteria": 18
+          },
+          "media": 70,
+          "dorsal": null,
+          "fechaNacimiento": "1973-08-19",
+          "alturaCm": 178,
+          "pesoKg": 66,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-juan-carlos-arroyo-villar-1975",
+          "nombre": "Arroyo",
+          "nombreCompleto": "Juan Carlos ARROYO Villar",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            19,
+            3,
+            12,
+            8
+          ],
+          "atributos": {
+            "calidad": 36,
+            "agresividad": 45,
+            "resistencia": 39,
+            "velocidad": 50,
+            "fisico": 38,
+            "remate": 57,
+            "ofensivo": 45,
+            "pase": 41,
+            "entrada": 32,
+            "porteria": 3
+          },
+          "media": 57,
+          "dorsal": null,
+          "fechaNacimiento": "1975-08-01",
+          "alturaCm": 168,
+          "pesoKg": 60,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-mario-javier-maiorani-1978",
+          "nombre": "Maiorani",
+          "nombreCompleto": "Mario Javier MAIORANI",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            12,
+            0,
+            0
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 54,
+            "resistencia": 55,
+            "velocidad": 60,
+            "fisico": 23,
+            "remate": 22,
+            "ofensivo": 15,
+            "pase": 25,
+            "entrada": 25,
+            "porteria": 66
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1978-02-28",
+          "alturaCm": 187,
+          "pesoKg": 85,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-cesar-de-la-loma-atienza-1975",
+          "nombre": "César",
+          "nombreCompleto": "CÉSAR De la Loma Atienza",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            15,
+            16,
+            11,
+            13,
+            6,
+            10
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 63,
+            "resistencia": 62,
+            "velocidad": 59,
+            "fisico": 61,
+            "remate": 63,
+            "ofensivo": 61,
+            "pase": 62,
+            "entrada": 51,
+            "porteria": 15
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1975-07-14",
+          "alturaCm": 175,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-avass-m-lawal-na",
+          "nombre": "Lawal",
+          "nombreCompleto": "Avass M. LAWAL",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            25,
+            15,
+            6,
+            11
+          ],
+          "atributos": {
+            "calidad": 77,
+            "agresividad": 71,
+            "resistencia": 68,
+            "velocidad": 74,
+            "fisico": 66,
+            "remate": 76,
+            "ofensivo": 70,
+            "pase": 72,
+            "entrada": 69,
+            "porteria": 13
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-pepe-domingo-suarez-ramiro-1977",
+          "nombre": "Pepe Domingo",
+          "nombreCompleto": "PEPE DOMINGO Suárez Ramiro",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            13,
+            16,
+            10,
+            11,
+            6
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 68,
+            "resistencia": 71,
+            "velocidad": 68,
+            "fisico": 72,
+            "remate": 66,
+            "ofensivo": 69,
+            "pase": 74,
+            "entrada": 71,
+            "porteria": 19
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1977-07-09",
+          "alturaCm": 174,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-francisco-jose-atienza-garcia-1978",
+          "nombre": "Atienza",
+          "nombreCompleto": "Francisco José ATIENZA García",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            0,
+            1
+          ],
+          "atributos": {
+            "calidad": 59,
+            "agresividad": 63,
+            "resistencia": 62,
+            "velocidad": 60,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 55,
+            "pase": 61,
+            "entrada": 59,
+            "porteria": 19
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1978-05-31",
+          "alturaCm": 174,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-jean-dika-1979",
+          "nombre": "Dika",
+          "nombreCompleto": "Jean DIKA",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            21,
+            0,
+            1,
+            5
+          ],
+          "atributos": {
+            "calidad": 70,
+            "agresividad": 63,
+            "resistencia": 59,
+            "velocidad": 68,
+            "fisico": 64,
+            "remate": 68,
+            "ofensivo": 59,
+            "pase": 63,
+            "entrada": 55,
+            "porteria": 19
+          },
+          "media": 70,
+          "dorsal": null,
+          "fechaNacimiento": "1979-06-04",
+          "alturaCm": 178,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-gaspar-gavez-burgos-1979",
+          "nombre": "Gaspar",
+          "nombreCompleto": "GASPAR Gávez Burgos",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            3,
+            1,
+            3,
+            5,
+            1
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 67,
+            "resistencia": 65,
+            "velocidad": 69,
+            "fisico": 59,
+            "remate": 66,
+            "ofensivo": 72,
+            "pase": 63,
+            "entrada": 59,
+            "porteria": 19
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": "1979-07-07",
+          "alturaCm": 182,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-victor-cortes-sainz-1978",
+          "nombre": "Cortés",
+          "nombreCompleto": "Víctor CORTES Sainz",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            20,
+            3,
+            15,
+            12,
+            11
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 70,
+            "resistencia": 59,
+            "velocidad": 67,
+            "fisico": 57,
+            "remate": 60,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 72,
+            "porteria": 19
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": "1978-03-26",
+          "alturaCm": 184,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-zvonimir-vukic-1979",
+          "nombre": "Vukic",
+          "nombreCompleto": "Zvonimir VUKIC",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            0,
+            12,
+            9,
+            17,
+            7
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 61,
+            "resistencia": 65,
+            "velocidad": 69,
+            "fisico": 66,
+            "remate": 62,
+            "ofensivo": 64,
+            "pase": 68,
+            "entrada": 67,
+            "porteria": 19
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": "1979-07-19",
+          "alturaCm": 182,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-miguel-falcon-garcia-ramos-1979",
+          "nombre": "Falcón",
+          "nombreCompleto": "Miguel FALCÓN García-Ramos",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            22,
+            1,
+            5,
+            4,
+            1
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 60,
+            "resistencia": 56,
+            "velocidad": 65,
+            "fisico": 52,
+            "remate": 58,
+            "ofensivo": 54,
+            "pase": 58,
+            "entrada": 54,
+            "porteria": 19
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": "1979-04-24",
+          "alturaCm": 183,
+          "pesoKg": 66,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-david-garcia-cubillo-1978",
+          "nombre": "Cubillo",
+          "nombreCompleto": "David Garcia CUBILLO",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            20,
+            1,
+            9,
+            17,
+            14,
+            7
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 68,
+            "resistencia": 64,
+            "velocidad": 68,
+            "fisico": 61,
+            "remate": 56,
+            "ofensivo": 63,
+            "pase": 59,
+            "entrada": 60,
+            "porteria": 19
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1978-01-06",
+          "alturaCm": 173,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-matias-esteban-cenci-1978",
+          "nombre": "Cenci",
+          "nombreCompleto": "Matías Esteban CENCI",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            19,
+            0,
+            8,
+            13,
+            11
+          ],
+          "atributos": {
+            "calidad": 55,
+            "agresividad": 68,
+            "resistencia": 66,
+            "velocidad": 54,
+            "fisico": 62,
+            "remate": 68,
+            "ofensivo": 58,
+            "pase": 66,
+            "entrada": 59,
+            "porteria": 18
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1978-02-12",
+          "alturaCm": 186,
+          "pesoKg": 84,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-pablo-gabriel-garcia-perez-1977",
+          "nombre": "Pablo García",
+          "nombreCompleto": "PABLO Gabriel GARCIA Pérez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            18,
+            9,
+            17
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 75,
+            "resistencia": 67,
+            "velocidad": 75,
+            "fisico": 66,
+            "remate": 64,
+            "ofensivo": 74,
+            "pase": 76,
+            "entrada": 60,
+            "porteria": 12
+          },
+          "media": 76,
+          "dorsal": null,
+          "fechaNacimiento": "1977-05-11",
+          "alturaCm": 187,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "at-madrid-b-oscar-sanchez-fuentes-1979",
+          "nombre": "Oscar Sánchez",
+          "nombreCompleto": "ÓSCAR SÁNCHEZ Fuentes",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            29,
+            1,
+            1,
+            2
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 65,
+            "resistencia": 60,
+            "velocidad": 63,
+            "fisico": 57,
+            "remate": 59,
+            "ofensivo": 63,
+            "pase": 61,
+            "entrada": 59,
+            "porteria": 7
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1979-12-19",
+          "alturaCm": 177,
+          "pesoKg": 66,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "alaves",
+      "nombre": "Alavés",
+      "jugadores": [
+        {
+          "id": "alaves-alfonso-subero-calvo-tito-na",
+          "nombre": "Tito",
+          "nombreCompleto": "Alfonso Subero Calvo, TITO",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 68,
+            "resistencia": 66,
+            "velocidad": 66,
+            "fisico": 15,
+            "remate": 10,
+            "ofensivo": 25,
+            "pase": 17,
+            "entrada": 24,
+            "porteria": 66
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-armando-ribeiro-molda-na",
+          "nombre": "Armando",
+          "nombreCompleto": "ARMANDO Ribeiro Moldá",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 24,
+            "remate": 24,
+            "ofensivo": 28,
+            "pase": 27,
+            "entrada": 34,
+            "porteria": 71
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-pedro-maria-matxon-franco-na",
+          "nombre": "Matxon",
+          "nombreCompleto": "Pedro María MATXON Franco",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 65,
+            "resistencia": 64,
+            "velocidad": 61,
+            "fisico": 62,
+            "remate": 59,
+            "ofensivo": 58,
+            "pase": 58,
+            "entrada": 63,
+            "porteria": 8
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-antonio-gorriaran-laza-na",
+          "nombre": "Gorriarán",
+          "nombreCompleto": "Antonio GORRIARAN Laza",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-ivan-campo-ramos-na",
+          "nombre": "Iván Campo",
+          "nombreCompleto": "IVAN CAMPO Ramos",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 77,
+            "agresividad": 76,
+            "resistencia": 78,
+            "velocidad": 72,
+            "fisico": 57,
+            "remate": 48,
+            "ofensivo": 56,
+            "pase": 56,
+            "entrada": 71,
+            "porteria": 29
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-aitor-arregui-artano-na",
+          "nombre": "Aitor Arregui",
+          "nombreCompleto": "AITOR ARREGUI Artano",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 67,
+            "resistencia": 62,
+            "velocidad": 60,
+            "fisico": 54,
+            "remate": 54,
+            "ofensivo": 54,
+            "pase": 53,
+            "entrada": 56,
+            "porteria": 2
+          },
+          "media": 58,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-isidro-villanova-abadia-na",
+          "nombre": "Villanova",
+          "nombreCompleto": "Isidro VILLANOVA Abadía",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-javier-menendez-sierra-cudi-na",
+          "nombre": "Cudi",
+          "nombreCompleto": "Javier Menéndez Sierra, CUDI",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-eloy-perez-garcia-na",
+          "nombre": "Eloy",
+          "nombreCompleto": "ELOY Pérez García",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-albert-albesa-gasulla-na",
+          "nombre": "Albesa",
+          "nombreCompleto": "Albert ALBESA Gasulla",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-xabier-guruzeta-aizpun-na",
+          "nombre": "Guruzeta",
+          "nombreCompleto": "Xabier GURUZETA Aizpún",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 64,
+            "resistencia": 69,
+            "velocidad": 63,
+            "fisico": 56,
+            "remate": 52,
+            "ofensivo": 52,
+            "pase": 56,
+            "entrada": 59,
+            "porteria": 6
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-ricardo-enrique-moreno-abad-na",
+          "nombre": "Moreno",
+          "nombreCompleto": "Ricardo Enrique MORENO Abad",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-victor-manuel-arias-casares-na",
+          "nombre": "Víctor",
+          "nombreCompleto": "VICTOR Manuel Arias Casares",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 65,
+            "resistencia": 61,
+            "velocidad": 60,
+            "fisico": 46,
+            "remate": 55,
+            "ofensivo": 54,
+            "pase": 20,
+            "entrada": 58,
+            "porteria": 6
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-joseba-aguirre-lopez-na",
+          "nombre": "Joseba Aguirre",
+          "nombreCompleto": "JOSEBA AGUIRRE López",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-eladio-perez-elizaga-na",
+          "nombre": "Eladio",
+          "nombreCompleto": "ELADIO Pérez Elizaga",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-oscar-luis-arias-suarez-na",
+          "nombre": "Oscar",
+          "nombreCompleto": "OSCAR Luis Arias Suárez",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 81,
+            "resistencia": 71,
+            "velocidad": 61,
+            "fisico": 53,
+            "remate": 52,
+            "ofensivo": 54,
+            "pase": 54,
+            "entrada": 61,
+            "porteria": 4
+          },
+          "media": 61,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-pablo-gomez-ortiz-de-guzman-na",
+          "nombre": "Pablo",
+          "nombreCompleto": "PABLO Gómez Ortiz de Guzmán",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 75,
+            "agresividad": 74,
+            "resistencia": 75,
+            "velocidad": 76,
+            "fisico": 69,
+            "remate": 76,
+            "ofensivo": 77,
+            "pase": 77,
+            "entrada": 49,
+            "porteria": 10
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-dimitri-kuznetsov-na",
+          "nombre": "Kuznetsov",
+          "nombreCompleto": "Dimitri KUZNETSOV",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 66,
+            "resistencia": 75,
+            "velocidad": 73,
+            "fisico": 55,
+            "remate": 59,
+            "ofensivo": 68,
+            "pase": 55,
+            "entrada": 60,
+            "porteria": 14
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-lluis-codina-codina-na",
+          "nombre": "Codina",
+          "nombreCompleto": "Lluis CODINA Codina",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            11
+          ],
+          "atributos": {
+            "calidad": 70,
+            "agresividad": 58,
+            "resistencia": 55,
+            "velocidad": 69,
+            "fisico": 81,
+            "remate": 84,
+            "ofensivo": 60,
+            "pase": 88,
+            "entrada": 60,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-manuel-serrano-pulido-na",
+          "nombre": "Serrano",
+          "nombreCompleto": "Manuel SERRANO Pulido",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 75,
+            "agresividad": 68,
+            "resistencia": 65,
+            "velocidad": 74,
+            "fisico": 86,
+            "remate": 82,
+            "ofensivo": 60,
+            "pase": 89,
+            "entrada": 60,
+            "porteria": 9
+          },
+          "media": 89,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "alaves-michel-pineda-ozaeta-na",
+          "nombre": "Pineda",
+          "nombreCompleto": "Michel PINEDA Ozaeta",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "ecija",
+      "nombre": "Écija",
+      "jugadores": [
+        {
+          "id": "ecija-juan-barbero-fernandez-na",
+          "nombre": "Barbero",
+          "nombreCompleto": "Juan BARBERO Fernández",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 24,
+            "remate": 24,
+            "ofensivo": 28,
+            "pase": 27,
+            "entrada": 34,
+            "porteria": 71
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-copado-cebrian-na",
+          "nombre": "Copado",
+          "nombreCompleto": "Juan COPADO Cebrián",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 24,
+            "remate": 24,
+            "ofensivo": 28,
+            "pase": 27,
+            "entrada": 34,
+            "porteria": 71
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-antonio-casado-ruiz-na",
+          "nombre": "Casado",
+          "nombreCompleto": "Antonio CASADO Ruiz",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-aguilar-rodriguez-na",
+          "nombre": "Aguilar",
+          "nombreCompleto": "Juan AGUILAR Rodríguez",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-quintero-japon-na",
+          "nombre": "Quintero",
+          "nombreCompleto": "Juan QUINTERO Japón",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-ramon-martin-pastor-na",
+          "nombre": "Juan Ramón",
+          "nombreCompleto": "JUAN RAMON Martín Pastor",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4
+          ],
+          "atributos": {
+            "calidad": 55,
+            "agresividad": 58,
+            "resistencia": 62,
+            "velocidad": 55,
+            "fisico": 32,
+            "remate": 47,
+            "ofensivo": 52,
+            "pase": 27,
+            "entrada": 57,
+            "porteria": 5
+          },
+          "media": 49,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-villena-corcobado-na",
+          "nombre": "Villena",
+          "nombreCompleto": "Juan VILLENA Corcobado",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-lozano-corvin-na",
+          "nombre": "Lozano",
+          "nombreCompleto": "Juan LOZANO Corvín",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-federico-jurado-prieto-na",
+          "nombre": "Fede",
+          "nombreCompleto": "FEDErico Jurado Prieto",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-ignacio-lopez-murga-na",
+          "nombre": "López Murga",
+          "nombreCompleto": "Ignacio LOPEZ MURGA",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            12
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-manuel-zuniga-fernandez-na",
+          "nombre": "Zúñiga",
+          "nombreCompleto": "Manuel ZUÑIGA Fernández",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-pedro-morilla-pineda-na",
+          "nombre": "Morilla",
+          "nombreCompleto": "Pedro MORILLA Pineda",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-pedro-garcia-prieto-na",
+          "nombre": "Pedro",
+          "nombreCompleto": "PEDRO García Prieto",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            17
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-jose-francisco-mendez-garcia-na",
+          "nombre": "Méndez",
+          "nombreCompleto": "José Francisco MENDEZ García",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-gonzalo-fernandez-cordoba-na",
+          "nombre": "Gonzalo",
+          "nombreCompleto": "GONZALO Fernández Córdoba",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-rafael-gordillo-vazquez-na",
+          "nombre": "Gordillo",
+          "nombreCompleto": "Rafael GORDILLO Vázquez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-sandro-markovic-na",
+          "nombre": "Markovic",
+          "nombreCompleto": "Sandro MARKOVIC",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            12
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-joaquin-coronilla-roja-quino-na",
+          "nombre": "Quino",
+          "nombreCompleto": "Joaquín Coronilla Roja, QUINO",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-alberto-saavedra-brazo-na",
+          "nombre": "Alberto",
+          "nombreCompleto": "ALBERTO Saavedra Brazo",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            13
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 53,
+            "resistencia": 51,
+            "velocidad": 58,
+            "fisico": 63,
+            "remate": 58,
+            "ofensivo": 59,
+            "pase": 56,
+            "entrada": 42,
+            "porteria": 7
+          },
+          "media": 55,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-jon-igoa-garcia-na",
+          "nombre": "Igoa",
+          "nombreCompleto": "Jon IGOA García",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-juan-carlos-cordero-sanchez-na",
+          "nombre": "Cordero",
+          "nombreCompleto": "Juan Carlos CORDERO Sánchez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "ecija-manuel-pardal-castilla-boli-na",
+          "nombre": "Boli",
+          "nombreCompleto": "Manuel Pardal Castilla, BOLI",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "las-palmas",
+      "nombre": "Las Palmas",
+      "jugadores": [
+        {
+          "id": "las-palmas-juan-garrido-canales-1966",
+          "nombre": "Canales",
+          "nombreCompleto": "Juan Garrido CANALES",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            21,
+            0
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 66,
+            "resistencia": 65,
+            "velocidad": 67,
+            "fisico": 11,
+            "remate": 11,
+            "ofensivo": 5,
+            "pase": 8,
+            "entrada": 35,
+            "porteria": 76
+          },
+          "media": 76,
+          "dorsal": null,
+          "fechaNacimiento": "1966-11-24",
+          "alturaCm": 180,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-francisco-veza-fragoso-paqui-1970",
+          "nombre": "Paqui",
+          "nombreCompleto": "Francisco Veza Fragoso, PAQUI",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2,
+            2,
+            10
+          ],
+          "atributos": {
+            "calidad": 76,
+            "agresividad": 76,
+            "resistencia": 77,
+            "velocidad": 69,
+            "fisico": 62,
+            "remate": 68,
+            "ofensivo": 66,
+            "pase": 61,
+            "entrada": 68,
+            "porteria": 23
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1970-12-06",
+          "alturaCm": 179,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-oscar-luis-celada-1966",
+          "nombre": "Óscar",
+          "nombreCompleto": "ÓSCAR Luis Celada",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            14,
+            9,
+            5,
+            4
+          ],
+          "atributos": {
+            "calidad": 79,
+            "agresividad": 75,
+            "resistencia": 78,
+            "velocidad": 76,
+            "fisico": 61,
+            "remate": 57,
+            "ofensivo": 62,
+            "pase": 63,
+            "entrada": 64,
+            "porteria": 26
+          },
+          "media": 79,
+          "dorsal": null,
+          "fechaNacimiento": "1966-03-09",
+          "alturaCm": 183,
+          "pesoKg": 81,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-antonio-segura-robaina-1974",
+          "nombre": "Robaina",
+          "nombreCompleto": "Antonio Segura ROBAINA",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            17,
+            3,
+            12,
+            16
+          ],
+          "atributos": {
+            "calidad": 83,
+            "agresividad": 77,
+            "resistencia": 75,
+            "velocidad": 84,
+            "fisico": 75,
+            "remate": 76,
+            "ofensivo": 78,
+            "pase": 77,
+            "entrada": 43,
+            "porteria": 8
+          },
+          "media": 84,
+          "dorsal": null,
+          "fechaNacimiento": "1974-11-30",
+          "alturaCm": 176,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-nenad-bjelica-1971",
+          "nombre": "Bjeliça",
+          "nombreCompleto": "Nenad BJELIÇA",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            20,
+            16,
+            17,
+            12,
+            15,
+            7
+          ],
+          "atributos": {
+            "calidad": 81,
+            "agresividad": 77,
+            "resistencia": 75,
+            "velocidad": 87,
+            "fisico": 83,
+            "remate": 70,
+            "ofensivo": 80,
+            "pase": 77,
+            "entrada": 56,
+            "porteria": 9
+          },
+          "media": 87,
+          "dorsal": null,
+          "fechaNacimiento": "1971-08-20",
+          "alturaCm": 181,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-angel-miguel-merino-torres-1966",
+          "nombre": "Merino",
+          "nombreCompleto": "Ángel Miguel MERINO Torres",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7,
+            7,
+            1,
+            9,
+            12
+          ],
+          "atributos": {
+            "calidad": 78,
+            "agresividad": 74,
+            "resistencia": 72,
+            "velocidad": 76,
+            "fisico": 67,
+            "remate": 66,
+            "ofensivo": 67,
+            "pase": 71,
+            "entrada": 52,
+            "porteria": 33
+          },
+          "media": 78,
+          "dorsal": null,
+          "fechaNacimiento": "1966-10-02",
+          "alturaCm": 180,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-sebastian-herrera-zamora-1969",
+          "nombre": "Herrera",
+          "nombreCompleto": "Sebastián HERRERA Zamora",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3,
+            5,
+            3,
+            4
+          ],
+          "atributos": {
+            "calidad": 80,
+            "agresividad": 78,
+            "resistencia": 79,
+            "velocidad": 74,
+            "fisico": 69,
+            "remate": 46,
+            "ofensivo": 59,
+            "pase": 59,
+            "entrada": 75,
+            "porteria": 26
+          },
+          "media": 80,
+          "dorsal": null,
+          "fechaNacimiento": "1969-04-22",
+          "alturaCm": 185,
+          "pesoKg": 84,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-wojciech-kowalczyk-1972",
+          "nombre": "Kowalczyk",
+          "nombreCompleto": "Wojciech KOWALCZYK",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            15,
+            3,
+            8,
+            11,
+            13
+          ],
+          "atributos": {
+            "calidad": 85,
+            "agresividad": 78,
+            "resistencia": 77,
+            "velocidad": 82,
+            "fisico": 81,
+            "remate": 82,
+            "ofensivo": 77,
+            "pase": 79,
+            "entrada": 45,
+            "porteria": 23
+          },
+          "media": 85,
+          "dorsal": null,
+          "fechaNacimiento": "1972-04-04",
+          "alturaCm": 182,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-koldo-sarasua-gamazo-1972",
+          "nombre": "Sarasúa",
+          "nombreCompleto": "Koldo SARASÚA Gamazo",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            14,
+            3,
+            4,
+            5
+          ],
+          "atributos": {
+            "calidad": 57,
+            "agresividad": 59,
+            "resistencia": 55,
+            "velocidad": 54,
+            "fisico": 30,
+            "remate": 47,
+            "ofensivo": 50,
+            "pase": 30,
+            "entrada": 64,
+            "porteria": 3
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": "1972-03-18",
+          "alturaCm": 182,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-victor-manuel-alfonso-mateo-1971",
+          "nombre": "Víctor",
+          "nombreCompleto": "VÍCTOR Manuel Alfonso Mateo",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            19,
+            4,
+            5,
+            3
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 61,
+            "resistencia": 60,
+            "velocidad": 63,
+            "fisico": 49,
+            "remate": 56,
+            "ofensivo": 60,
+            "pase": 48,
+            "entrada": 66,
+            "porteria": 7
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1971-08-27",
+          "alturaCm": 183,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-francisco-ortiz-rivas-paquito-1969",
+          "nombre": "Paquito",
+          "nombreCompleto": "Francisco Ortiz Rivas, \"PAQUITO\"",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            1,
+            6,
+            7
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 68,
+            "resistencia": 65,
+            "velocidad": 64,
+            "fisico": 59,
+            "remate": 58,
+            "ofensivo": 59,
+            "pase": 53,
+            "entrada": 56,
+            "porteria": 7
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1969-08-12",
+          "alturaCm": 178,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-juan-carlos-socorro-vera-1972",
+          "nombre": "Socorro",
+          "nombreCompleto": "Juan Carlos SOCORRO Vera",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            10,
+            9,
+            17
+          ],
+          "atributos": {
+            "calidad": 74,
+            "agresividad": 69,
+            "resistencia": 69,
+            "velocidad": 80,
+            "fisico": 71,
+            "remate": 75,
+            "ofensivo": 75,
+            "pase": 80,
+            "entrada": 42,
+            "porteria": 9
+          },
+          "media": 80,
+          "dorsal": null,
+          "fechaNacimiento": "1972-05-13",
+          "alturaCm": 176,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-orlando-suarez-azofra-1972",
+          "nombre": "Orlando",
+          "nombreCompleto": "ORLANDO Suárez Azofra",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            8
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 66,
+            "resistencia": 67,
+            "velocidad": 68,
+            "fisico": 69,
+            "remate": 71,
+            "ofensivo": 69,
+            "pase": 66,
+            "entrada": 36,
+            "porteria": 19
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1972-11-21",
+          "alturaCm": 175,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-jose-joaquin-moreno-verdu-josico-1975",
+          "nombre": "Josico",
+          "nombreCompleto": "José Joaquín Moreno Verdú, JOSICO",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            0,
+            9,
+            6,
+            7,
+            15
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 61,
+            "resistencia": 60,
+            "velocidad": 63,
+            "fisico": 55,
+            "remate": 56,
+            "ofensivo": 60,
+            "pase": 57,
+            "entrada": 50,
+            "porteria": 40
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": "1975-01-06",
+          "alturaCm": 177,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-alejandro-omar-simionato-1971",
+          "nombre": "Simionato",
+          "nombreCompleto": "Alejandro Omar SIMIONATO",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3,
+            3,
+            5,
+            4,
+            3
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 57,
+            "resistencia": 56,
+            "velocidad": 53,
+            "fisico": 52,
+            "remate": 54,
+            "ofensivo": 54,
+            "pase": 63,
+            "entrada": 62,
+            "porteria": 7
+          },
+          "media": 63,
+          "dorsal": null,
+          "fechaNacimiento": "1971-08-05",
+          "alturaCm": 186,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-jose-eloy-jimenez-moreno-1971",
+          "nombre": "Eloy",
+          "nombreCompleto": "José ELOY Jiménez Moreno",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            0,
+            8,
+            11
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 57,
+            "resistencia": 55,
+            "velocidad": 71,
+            "fisico": 67,
+            "remate": 66,
+            "ofensivo": 64,
+            "pase": 66,
+            "entrada": 52,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1971-06-14",
+          "alturaCm": 173,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-ignacio-carlos-gonzalez-1971",
+          "nombre": "Nacho González",
+          "nombreCompleto": "Ignacio Carlos GONZÁLEZ",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            11,
+            0,
+            0
+          ],
+          "atributos": {
+            "calidad": 80,
+            "agresividad": 82,
+            "resistencia": 85,
+            "velocidad": 83,
+            "fisico": 8,
+            "remate": 18,
+            "ofensivo": 15,
+            "pase": 16,
+            "entrada": 15,
+            "porteria": 80
+          },
+          "media": 85,
+          "dorsal": null,
+          "fechaNacimiento": "1971-12-17",
+          "alturaCm": 190,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-renaldo-lopes-da-cruz-1970",
+          "nombre": "Renaldo",
+          "nombreCompleto": "RENALDO Lopes da Cruz",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            8,
+            3,
+            8
+          ],
+          "atributos": {
+            "calidad": 83,
+            "agresividad": 75,
+            "resistencia": 73,
+            "velocidad": 79,
+            "fisico": 75,
+            "remate": 71,
+            "ofensivo": 69,
+            "pase": 70,
+            "entrada": 41,
+            "porteria": 25
+          },
+          "media": 83,
+          "dorsal": null,
+          "fechaNacimiento": "1970-03-19",
+          "alturaCm": 174,
+          "pesoKg": 65,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-zeljko-cicovic-1970",
+          "nombre": "Cicovic",
+          "nombreCompleto": "Zeljko CICOVIC",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0,
+            0
+          ],
+          "atributos": {
+            "calidad": 79,
+            "agresividad": 74,
+            "resistencia": 71,
+            "velocidad": 81,
+            "fisico": 6,
+            "remate": 13,
+            "ofensivo": 9,
+            "pase": 12,
+            "entrada": 69,
+            "porteria": 73
+          },
+          "media": 81,
+          "dorsal": null,
+          "fechaNacimiento": "1970-09-16",
+          "alturaCm": 192,
+          "pesoKg": 84,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-emilio-martin-hidalgo-conde-1976",
+          "nombre": "Martín Hidalgo",
+          "nombreCompleto": "Emilio MARTIN HIDALGO Conde",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            2,
+            10
+          ],
+          "atributos": {
+            "calidad": 54,
+            "agresividad": 56,
+            "resistencia": 56,
+            "velocidad": 59,
+            "fisico": 53,
+            "remate": 52,
+            "ofensivo": 49,
+            "pase": 56,
+            "entrada": 59,
+            "porteria": 15
+          },
+          "media": 59,
+          "dorsal": null,
+          "fechaNacimiento": "1976-01-25",
+          "alturaCm": 180,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-vincent-samways-1968",
+          "nombre": "Samways",
+          "nombreCompleto": "Vincent SAMWAYS",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            7,
+            17,
+            14,
+            9
+          ],
+          "atributos": {
+            "calidad": 51,
+            "agresividad": 59,
+            "resistencia": 65,
+            "velocidad": 51,
+            "fisico": 52,
+            "remate": 50,
+            "ofensivo": 47,
+            "pase": 51,
+            "entrada": 55,
+            "porteria": 14
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": "1968-10-17",
+          "alturaCm": 174,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-marco-haber-1971",
+          "nombre": "Haber",
+          "nombreCompleto": "Marco HABER",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            18,
+            0,
+            6,
+            7
+          ],
+          "atributos": {
+            "calidad": 78,
+            "agresividad": 75,
+            "resistencia": 77,
+            "velocidad": 79,
+            "fisico": 70,
+            "remate": 75,
+            "ofensivo": 74,
+            "pase": 75,
+            "entrada": 65,
+            "porteria": 10
+          },
+          "media": 79,
+          "dorsal": null,
+          "fechaNacimiento": "1971-09-21",
+          "alturaCm": 182,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-hernan-diego-ceferino-franco-1974",
+          "nombre": "Franco",
+          "nombreCompleto": "Hernán Diego Ceferino FRANCO",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            22,
+            0,
+            14,
+            4,
+            9
+          ],
+          "atributos": {
+            "calidad": 76,
+            "agresividad": 79,
+            "resistencia": 80,
+            "velocidad": 78,
+            "fisico": 68,
+            "remate": 81,
+            "ofensivo": 88,
+            "pase": 66,
+            "entrada": 63,
+            "porteria": 13
+          },
+          "media": 88,
+          "dorsal": null,
+          "fechaNacimiento": "1974-01-26",
+          "alturaCm": 190,
+          "pesoKg": 83,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-ricardo-ferreira-lima-1975",
+          "nombre": "Lima",
+          "nombreCompleto": "Ricardo Ferreira LIMA",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            16,
+            3,
+            9,
+            7,
+            17
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 65,
+            "resistencia": 70,
+            "velocidad": 63,
+            "fisico": 59,
+            "remate": 61,
+            "ofensivo": 61,
+            "pase": 58,
+            "entrada": 55,
+            "porteria": 13
+          },
+          "media": 70,
+          "dorsal": null,
+          "fechaNacimiento": "1975-02-21",
+          "alturaCm": 175,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "las-palmas-alejandro-castro-alex-1974",
+          "nombre": "Alex",
+          "nombreCompleto": "Alejandro Castro, ALEX",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            23,
+            1,
+            7,
+            6
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 57,
+            "resistencia": 59,
+            "velocidad": 64,
+            "fisico": 66,
+            "remate": 68,
+            "ofensivo": 72,
+            "pase": 67,
+            "entrada": 67,
+            "porteria": 19
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": "1974-12-20",
+          "alturaCm": 173,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "levante",
+      "nombre": "Levante",
+      "jugadores": [
+        {
+          "id": "levante-albert-tomas-sobrepera-1970",
+          "nombre": "Tomás",
+          "nombreCompleto": "Albert TOMÁS Sobrepera",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            19,
+            0,
+            4,
+            5
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 68,
+            "resistencia": 63,
+            "velocidad": 56,
+            "fisico": 56,
+            "remate": 46,
+            "ofensivo": 52,
+            "pase": 50,
+            "entrada": 60,
+            "porteria": 4
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1970-11-19",
+          "alturaCm": 180,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-fernando-giner-gil-1964",
+          "nombre": "Giner",
+          "nombreCompleto": "Fernando GINER Gil",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3,
+            4,
+            5
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 73,
+            "resistencia": 68,
+            "velocidad": 69,
+            "fisico": 63,
+            "remate": 55,
+            "ofensivo": 60,
+            "pase": 64,
+            "entrada": 76,
+            "porteria": 9
+          },
+          "media": 76,
+          "dorsal": null,
+          "fechaNacimiento": "1964-12-31",
+          "alturaCm": 182,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-gartzen-telletxea-goienetxea-1972",
+          "nombre": "Gartzen",
+          "nombreCompleto": "GARTZEN Telletxea Goienetxea",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2,
+            2,
+            4,
+            10
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 64,
+            "resistencia": 64,
+            "velocidad": 58,
+            "fisico": 61,
+            "remate": 51,
+            "ofensivo": 54,
+            "pase": 59,
+            "entrada": 71,
+            "porteria": 12
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1972-07-03",
+          "alturaCm": 177,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-francisco-garcia-ruiz-salillas-1967",
+          "nombre": "Salillas",
+          "nombreCompleto": "Francisco García Ruiz, SALILLAS",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8,
+            8,
+            12
+          ],
+          "atributos": {
+            "calidad": 74,
+            "agresividad": 69,
+            "resistencia": 68,
+            "velocidad": 70,
+            "fisico": 72,
+            "remate": 68,
+            "ofensivo": 65,
+            "pase": 71,
+            "entrada": 37,
+            "porteria": 10
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1967-01-07",
+          "alturaCm": 169,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-luis-miguel-lopez-beltran-1975",
+          "nombre": "Luis López",
+          "nombreCompleto": "LUIS Miguel LÓPEZ Beltrán",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            5,
+            1,
+            3
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 69,
+            "resistencia": 64,
+            "velocidad": 70,
+            "fisico": 68,
+            "remate": 52,
+            "ofensivo": 67,
+            "pase": 62,
+            "entrada": 65,
+            "porteria": 9
+          },
+          "media": 70,
+          "dorsal": null,
+          "fechaNacimiento": "1975-01-11",
+          "alturaCm": 183,
+          "pesoKg": 77,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-luciano-martin-toscano-luci-1972",
+          "nombre": "Luci",
+          "nombreCompleto": "Luciano Martín Toscano, LUCI",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            16,
+            0,
+            4,
+            3
+          ],
+          "atributos": {
+            "calidad": 62,
+            "agresividad": 63,
+            "resistencia": 62,
+            "velocidad": 60,
+            "fisico": 67,
+            "remate": 57,
+            "ofensivo": 66,
+            "pase": 63,
+            "entrada": 58,
+            "porteria": 9
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1972-08-17",
+          "alturaCm": 192,
+          "pesoKg": 87,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-jose-jesus-lanza-morilla-1978",
+          "nombre": "Lanza",
+          "nombreCompleto": "José Jesús LANZA Morilla",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            0,
+            10
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 71,
+            "resistencia": 59,
+            "velocidad": 73,
+            "fisico": 54,
+            "remate": 56,
+            "ofensivo": 67,
+            "pase": 63,
+            "entrada": 52,
+            "porteria": 12
+          },
+          "media": 73,
+          "dorsal": null,
+          "fechaNacimiento": "1978-08-10",
+          "alturaCm": 174,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-jose-francisco-ruano-capilla-francis-1975",
+          "nombre": "Francis",
+          "nombreCompleto": "José Francisco Ruano Capilla, FRANCIS",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            20,
+            0,
+            16,
+            13,
+            2,
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 66,
+            "resistencia": 65,
+            "velocidad": 60,
+            "fisico": 64,
+            "remate": 65,
+            "ofensivo": 63,
+            "pase": 64,
+            "entrada": 54,
+            "porteria": 21
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": "1975-01-10",
+          "alturaCm": 168,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-carlos-rodriguez-pena-chicha-1976",
+          "nombre": "Chicha",
+          "nombreCompleto": "Carlos Rodríguez Peña, CHICHA",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            15,
+            7,
+            6,
+            17
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 54,
+            "resistencia": 57,
+            "velocidad": 66,
+            "fisico": 58,
+            "remate": 71,
+            "ofensivo": 63,
+            "pase": 65,
+            "entrada": 48,
+            "porteria": 21
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1976-03-13",
+          "alturaCm": 169,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-felix-dja-ettien-1979",
+          "nombre": "Ettien",
+          "nombreCompleto": "Félix Dja ETTIEN",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            1,
+            6
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 65,
+            "resistencia": 63,
+            "velocidad": 66,
+            "fisico": 62,
+            "remate": 57,
+            "ofensivo": 67,
+            "pase": 56,
+            "entrada": 47,
+            "porteria": 15
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1979-09-26",
+          "alturaCm": 184,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-israel-gonzalez-mourino-1972",
+          "nombre": "Israel",
+          "nombreCompleto": "ISRAEL González Mouriño",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            23,
+            0,
+            8,
+            11,
+            13,
+            16,
+            15
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 63,
+            "resistencia": 58,
+            "velocidad": 67,
+            "fisico": 56,
+            "remate": 63,
+            "ofensivo": 59,
+            "pase": 61,
+            "entrada": 54,
+            "porteria": 2
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1972-08-28",
+          "alturaCm": 185,
+          "pesoKg": 82,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-raul-chilet-gimeno-1974",
+          "nombre": "Chilet",
+          "nombreCompleto": "Raúl CHILET Gimeno",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            11,
+            0
+          ],
+          "atributos": {
+            "calidad": 44,
+            "agresividad": 63,
+            "resistencia": 31,
+            "velocidad": 70,
+            "fisico": 15,
+            "remate": 18,
+            "ofensivo": 11,
+            "pase": 16,
+            "entrada": 37,
+            "porteria": 77
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1974-08-23",
+          "alturaCm": 185,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-jesus-sanchez-japon-1974",
+          "nombre": "Jesús",
+          "nombreCompleto": "JESÚS Sánchez Japón",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            9,
+            7
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 64,
+            "resistencia": 57,
+            "velocidad": 67,
+            "fisico": 65,
+            "remate": 61,
+            "ofensivo": 63,
+            "pase": 66,
+            "entrada": 64,
+            "porteria": 16
+          },
+          "media": 67,
+          "dorsal": null,
+          "fechaNacimiento": "1974-11-26",
+          "alturaCm": 182,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-mario-gibanel-raluy-1975",
+          "nombre": "Gibanel",
+          "nombreCompleto": "Mario GIBANEL Raluy",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7,
+            10,
+            16
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 66,
+            "resistencia": 61,
+            "velocidad": 65,
+            "fisico": 64,
+            "remate": 60,
+            "ofensivo": 61,
+            "pase": 65,
+            "entrada": 58,
+            "porteria": 10
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1975-08-27",
+          "alturaCm": 185,
+          "pesoKg": 85,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-jose-miguel-figueira-dominguez-1974",
+          "nombre": "Miguel",
+          "nombreCompleto": "José MIGUEL Figueira Domínguez",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            14,
+            9,
+            5,
+            4
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 65,
+            "resistencia": 59,
+            "velocidad": 63,
+            "fisico": 53,
+            "remate": 47,
+            "ofensivo": 63,
+            "pase": 56,
+            "entrada": 61,
+            "porteria": 6
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1974-04-16",
+          "alturaCm": 180,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-fernando-sales-de-los-cobos-1977",
+          "nombre": "Fernando Sales",
+          "nombreCompleto": "FERNANDO SALES de los Cobos",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            17,
+            9,
+            7
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 61,
+            "resistencia": 63,
+            "velocidad": 62,
+            "fisico": 64,
+            "remate": 54,
+            "ofensivo": 59,
+            "pase": 64,
+            "entrada": 59,
+            "porteria": 6
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": "1977-09-12",
+          "alturaCm": 171,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-vicente-rodriguez-guillen-1981",
+          "nombre": "Vicente",
+          "nombreCompleto": "VICENTE Rodríguez Guillén",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            8
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 53,
+            "resistencia": 56,
+            "velocidad": 61,
+            "fisico": 62,
+            "remate": 57,
+            "ofensivo": 60,
+            "pase": 67,
+            "entrada": 59,
+            "porteria": 5
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1981-07-16",
+          "alturaCm": 175,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-francisco-j-pena-romero-1978",
+          "nombre": "Peña",
+          "nombreCompleto": "Francisco J. PEÑA Romero",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            15,
+            2,
+            10,
+            4
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 60,
+            "resistencia": 64,
+            "velocidad": 60,
+            "fisico": 62,
+            "remate": 57,
+            "ofensivo": 66,
+            "pase": 69,
+            "entrada": 55,
+            "porteria": 7
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": "1978-07-25",
+          "alturaCm": 170,
+          "pesoKg": 64,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-raul-garcia-vivero-1976",
+          "nombre": "Raúl",
+          "nombreCompleto": "RAÚL García Vivero",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            22,
+            0,
+            9
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 60,
+            "resistencia": 59,
+            "velocidad": 62,
+            "fisico": 59,
+            "remate": 55,
+            "ofensivo": 55,
+            "pase": 60,
+            "entrada": 59,
+            "porteria": 14
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": "1976-12-04",
+          "alturaCm": 173,
+          "pesoKg": 72,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-juvencio-correia-juba-1974",
+          "nombre": "Juba",
+          "nombreCompleto": "Juvencio Correia, JUBA",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            17,
+            7,
+            9
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 71,
+            "resistencia": 60,
+            "velocidad": 71,
+            "fisico": 64,
+            "remate": 69,
+            "ofensivo": 75,
+            "pase": 67,
+            "entrada": 56,
+            "porteria": 12
+          },
+          "media": 75,
+          "dorsal": null,
+          "fechaNacimiento": "1974-11-29",
+          "alturaCm": 178,
+          "pesoKg": 83,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-andres-pato-bemal-1980",
+          "nombre": "Pato",
+          "nombreCompleto": "Andrés PATO Bemal",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            0,
+            1,
+            6
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 72,
+            "resistencia": 69,
+            "velocidad": 66,
+            "fisico": 72,
+            "remate": 65,
+            "ofensivo": 68,
+            "pase": 55,
+            "entrada": 71,
+            "porteria": 5
+          },
+          "media": 72,
+          "dorsal": null,
+          "fechaNacimiento": "1980-05-27",
+          "alturaCm": 165,
+          "pesoKg": 65,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-rafael-fernandez-rodriguez-rafa-fernandez-1977",
+          "nombre": "Rafa Fernández",
+          "nombreCompleto": "Rafael Fernández Rodríguez, RAFA FERNÁNDEZ",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            18,
+            0,
+            7,
+            15,
+            12
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 61,
+            "resistencia": 59,
+            "velocidad": 64,
+            "fisico": 52,
+            "remate": 56,
+            "ofensivo": 61,
+            "pase": 58,
+            "entrada": 59,
+            "porteria": 9
+          },
+          "media": 68,
+          "dorsal": null,
+          "fechaNacimiento": "1977-06-03",
+          "alturaCm": 177,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "levante-constantino-roberto-santos-jardim-1967",
+          "nombre": "Constantino",
+          "nombreCompleto": "CONSTANTINO Roberto Santos Jardim",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            21,
+            8
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 67,
+            "resistencia": 63,
+            "velocidad": 67,
+            "fisico": 77,
+            "remate": 73,
+            "ofensivo": 71,
+            "pase": 77,
+            "entrada": 66,
+            "porteria": 7
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1967-11-15",
+          "alturaCm": 170,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "salamanca",
+      "nombre": "Salamanca",
+      "jugadores": [
+        {
+          "id": "salamanca-julio-llorente-gento-1966",
+          "nombre": "Llorente",
+          "nombreCompleto": "Julio LLORENTE Gento",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1,
+            0,
+            1,
+            5,
+            14
+          ],
+          "atributos": {
+            "calidad": 69,
+            "agresividad": 70,
+            "resistencia": 66,
+            "velocidad": 67,
+            "fisico": 74,
+            "remate": 65,
+            "ofensivo": 69,
+            "pase": 72,
+            "entrada": 75,
+            "porteria": 12
+          },
+          "media": 75,
+          "dorsal": null,
+          "fechaNacimiento": "1966-06-14",
+          "alturaCm": 180,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-jesus-enrique-velasco-munoz-1972",
+          "nombre": "Velasco",
+          "nombreCompleto": "Jesús Enrique VELASCO Muñoz",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            12,
+            0,
+            1,
+            6
+          ],
+          "atributos": {
+            "calidad": 69,
+            "agresividad": 71,
+            "resistencia": 65,
+            "velocidad": 71,
+            "fisico": 59,
+            "remate": 63,
+            "ofensivo": 69,
+            "pase": 67,
+            "entrada": 64,
+            "porteria": 9
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1972-01-16",
+          "alturaCm": 174,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-lorenzo-moron-vizcaino-loren-1970",
+          "nombre": "Loren",
+          "nombreCompleto": "Lorenzo Morón Vizcaíno, LOREN",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            4,
+            4,
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 74,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 69,
+            "remate": 62,
+            "ofensivo": 64,
+            "pase": 63,
+            "entrada": 73,
+            "porteria": 9
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1970-02-16",
+          "alturaCm": 182,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-enrique-martin-sanchez-quique-martin-1972",
+          "nombre": "Quique Martín",
+          "nombreCompleto": "Enrique Martín Sánchez, QUIQUE MARTÍN",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6,
+            0,
+            16,
+            10,
+            13,
+            15
+          ],
+          "atributos": {
+            "calidad": 82,
+            "agresividad": 77,
+            "resistencia": 75,
+            "velocidad": 79,
+            "fisico": 78,
+            "remate": 70,
+            "ofensivo": 74,
+            "pase": 79,
+            "entrada": 42,
+            "porteria": 8
+          },
+          "media": 82,
+          "dorsal": null,
+          "fechaNacimiento": "1972-12-29",
+          "alturaCm": 170,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-jose-ignacio-aizpurua-alzaga-1970",
+          "nombre": "Aizpurúa",
+          "nombreCompleto": "José Ignacio AIZPURÚA Alzaga",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            11,
+            0
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 64,
+            "resistencia": 63,
+            "velocidad": 65,
+            "fisico": 14,
+            "remate": 10,
+            "ofensivo": 11,
+            "pase": 14,
+            "entrada": 10,
+            "porteria": 73
+          },
+          "media": 73,
+          "dorsal": null,
+          "fechaNacimiento": "1970-05-05",
+          "alturaCm": 189,
+          "pesoKg": 83,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-joan-barbara-mata-1966",
+          "nombre": "Barbará",
+          "nombreCompleto": "Joan BARBARÁ Mata",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7,
+            8,
+            15,
+            12,
+            11
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 66,
+            "resistencia": 64,
+            "velocidad": 68,
+            "fisico": 75,
+            "remate": 73,
+            "ofensivo": 74,
+            "pase": 74,
+            "entrada": 49,
+            "porteria": 10
+          },
+          "media": 75,
+          "dorsal": null,
+          "fechaNacimiento": "1966-07-23",
+          "alturaCm": 172,
+          "pesoKg": 68,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-dubravko-pavlicic-1967",
+          "nombre": "Pavlicic",
+          "nombreCompleto": "Dubravko PAVLICIC",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3,
+            5,
+            4,
+            3,
+            14
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 71,
+            "resistencia": 63,
+            "velocidad": 68,
+            "fisico": 65,
+            "remate": 59,
+            "ofensivo": 69,
+            "pase": 61,
+            "entrada": 65,
+            "porteria": 10
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1967-11-28",
+          "alturaCm": 185,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-pablo-cesar-zegarra-zamora-1973",
+          "nombre": "Zegarra",
+          "nombreCompleto": "Pablo César ZEGARRA Zamora",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            10,
+            12,
+            15,
+            16
+          ],
+          "atributos": {
+            "calidad": 68,
+            "agresividad": 63,
+            "resistencia": 59,
+            "velocidad": 63,
+            "fisico": 64,
+            "remate": 72,
+            "ofensivo": 77,
+            "pase": 69,
+            "entrada": 60,
+            "porteria": 11
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1973-04-01",
+          "alturaCm": 178,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-francisco-m-cainzos-palmero-fran-cainzos-1973",
+          "nombre": "Fran Caínzos",
+          "nombreCompleto": "Francisco M. Caínzos Palmero, FRAN CAÍNZOS",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            2,
+            0,
+            2,
+            10
+          ],
+          "atributos": {
+            "calidad": 70,
+            "agresividad": 74,
+            "resistencia": 70,
+            "velocidad": 69,
+            "fisico": 68,
+            "remate": 70,
+            "ofensivo": 73,
+            "pase": 67,
+            "entrada": 70,
+            "porteria": 10
+          },
+          "media": 74,
+          "dorsal": null,
+          "fechaNacimiento": "1973-07-12",
+          "alturaCm": 174,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-gregorz-mielcarski-1973",
+          "nombre": "Mielcarski",
+          "nombreCompleto": "Gregorz MIELCARSKI",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            8,
+            0,
+            8
+          ],
+          "atributos": {
+            "calidad": 64,
+            "agresividad": 73,
+            "resistencia": 78,
+            "velocidad": 71,
+            "fisico": 75,
+            "remate": 65,
+            "ofensivo": 73,
+            "pase": 81,
+            "entrada": 80,
+            "porteria": 8
+          },
+          "media": 81,
+          "dorsal": null,
+          "fechaNacimiento": "1973-03-19",
+          "alturaCm": 188,
+          "pesoKg": 84,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-bogdan-stelea-1967",
+          "nombre": "Stelea",
+          "nombreCompleto": "Bogdan STELEA",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0,
+            0
+          ],
+          "atributos": {
+            "calidad": 76,
+            "agresividad": 74,
+            "resistencia": 72,
+            "velocidad": 76,
+            "fisico": 5,
+            "remate": 9,
+            "ofensivo": 12,
+            "pase": 8,
+            "entrada": 13,
+            "porteria": 76
+          },
+          "media": 76,
+          "dorsal": null,
+          "fechaNacimiento": "1967-12-05",
+          "alturaCm": 182,
+          "pesoKg": 81,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-marcos-redero-hernandez-1976",
+          "nombre": "Redero",
+          "nombreCompleto": "Marcos REDERO Hernández",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            19,
+            1,
+            14,
+            4,
+            2
+          ],
+          "atributos": {
+            "calidad": 58,
+            "agresividad": 56,
+            "resistencia": 57,
+            "velocidad": 58,
+            "fisico": 38,
+            "remate": 54,
+            "ofensivo": 53,
+            "pase": 25,
+            "entrada": 58,
+            "porteria": 13
+          },
+          "media": 58,
+          "dorsal": null,
+          "fechaNacimiento": "1976-01-23",
+          "alturaCm": 183,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-jose-americo-taira-da-costa-pereira-1968",
+          "nombre": "Taira",
+          "nombreCompleto": "José Américo TAIRA da Costa Pereira",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            5,
+            9,
+            14
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 76,
+            "resistencia": 72,
+            "velocidad": 71,
+            "fisico": 48,
+            "remate": 70,
+            "ofensivo": 76,
+            "pase": 76,
+            "entrada": 55,
+            "porteria": 8
+          },
+          "media": 76,
+          "dorsal": null,
+          "fechaNacimiento": "1968-11-18",
+          "alturaCm": 180,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-cesar-fernandez-de-las-heras-caneda-1978",
+          "nombre": "César",
+          "nombreCompleto": "CÉSAR Fernández de las Heras Caneda",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            16,
+            3,
+            4,
+            5,
+            1
+          ],
+          "atributos": {
+            "calidad": 60,
+            "agresividad": 58,
+            "resistencia": 53,
+            "velocidad": 60,
+            "fisico": 57,
+            "remate": 47,
+            "ofensivo": 55,
+            "pase": 51,
+            "entrada": 71,
+            "porteria": 12
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1978-05-10",
+          "alturaCm": 177,
+          "pesoKg": 76,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-walter-gustavo-silvani-rios-1971",
+          "nombre": "Silvani",
+          "nombreCompleto": "Walter Gustavo SILVANI Ríos",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            15,
+            8
+          ],
+          "atributos": {
+            "calidad": 74,
+            "agresividad": 76,
+            "resistencia": 74,
+            "velocidad": 76,
+            "fisico": 78,
+            "remate": 72,
+            "ofensivo": 59,
+            "pase": 77,
+            "entrada": 40,
+            "porteria": 9
+          },
+          "media": 78,
+          "dorsal": null,
+          "fechaNacimiento": "1971-05-11",
+          "alturaCm": 185,
+          "pesoKg": 78,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-sandro-miguel-laranjeira-mendes-1977",
+          "nombre": "Sandro",
+          "nombreCompleto": "SANDRO Miguel Laranjeira Mendes",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            14,
+            0,
+            7,
+            9,
+            17
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 63,
+            "remate": 74,
+            "ofensivo": 77,
+            "pase": 73,
+            "entrada": 61,
+            "porteria": 10
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1977-02-04",
+          "alturaCm": 180,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-rogerio-paulo-felisberto-brito-1976",
+          "nombre": "Rogerio",
+          "nombreCompleto": "ROGERIO Paulo Felisberto Brito",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            9,
+            14,
+            9,
+            7
+          ],
+          "atributos": {
+            "calidad": 67,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 67,
+            "fisico": 67,
+            "remate": 70,
+            "ofensivo": 75,
+            "pase": 69,
+            "entrada": 64,
+            "porteria": 9
+          },
+          "media": 75,
+          "dorsal": null,
+          "fechaNacimiento": "1976-03-01",
+          "alturaCm": 177,
+          "pesoKg": 79,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-nuno-jose-goncalves-luis-1975",
+          "nombre": "Nuno Luis",
+          "nombreCompleto": "NUNO José Gonçalves LUIS",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            18,
+            1,
+            5
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 60,
+            "resistencia": 55,
+            "velocidad": 60,
+            "fisico": 61,
+            "remate": 62,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 69,
+            "porteria": 8
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": "1975-01-15",
+          "alturaCm": 176,
+          "pesoKg": 74,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-catalin-munteanu-1979",
+          "nombre": "Munteanu",
+          "nombreCompleto": "Catalin MUNTEANU",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            13,
+            16,
+            17,
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 64,
+            "resistencia": 53,
+            "velocidad": 77,
+            "fisico": 65,
+            "remate": 74,
+            "ofensivo": 76,
+            "pase": 69,
+            "entrada": 40,
+            "porteria": 8
+          },
+          "media": 77,
+          "dorsal": null,
+          "fechaNacimiento": "1979-01-26",
+          "alturaCm": 172,
+          "pesoKg": 69,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-tomas-jimenez-alvarez-1979",
+          "nombre": "Tomás",
+          "nombreCompleto": "TOMÁS Jiménez Álvarez",
+          "posicion": "DEL",
+          "esPortero": false,
+          "demarcaciones": [
+            20,
+            9,
+            17,
+            14
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 61,
+            "resistencia": 59,
+            "velocidad": 60,
+            "fisico": 61,
+            "remate": 66,
+            "ofensivo": 65,
+            "pase": 62,
+            "entrada": 45,
+            "porteria": 8
+          },
+          "media": 66,
+          "dorsal": null,
+          "fechaNacimiento": "1979-05-11",
+          "alturaCm": 186,
+          "pesoKg": 75,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-ricardo-gabriel-lunari-federico-1970",
+          "nombre": "Lunari",
+          "nombreCompleto": "Ricardo Gabriel LUNARI Federico",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            21,
+            7,
+            6,
+            9,
+            15,
+            12
+          ],
+          "atributos": {
+            "calidad": 65,
+            "agresividad": 69,
+            "resistencia": 67,
+            "velocidad": 71,
+            "fisico": 66,
+            "remate": 66,
+            "ofensivo": 70,
+            "pase": 71,
+            "entrada": 57,
+            "porteria": 6
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": "1970-02-06",
+          "alturaCm": 175,
+          "pesoKg": 73,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-cristian-omar-lupidio-fernandez-1976",
+          "nombre": "Lupidio",
+          "nombreCompleto": "Cristian Omar LUPIDIO Fernández",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            17,
+            3,
+            2,
+            10
+          ],
+          "atributos": {
+            "calidad": 66,
+            "agresividad": 64,
+            "resistencia": 63,
+            "velocidad": 62,
+            "fisico": 65,
+            "remate": 67,
+            "ofensivo": 66,
+            "pase": 62,
+            "entrada": 69,
+            "porteria": 8
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": "1976-09-07",
+          "alturaCm": 175,
+          "pesoKg": 70,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "salamanca-angel-caamano-mulas-tom-1978",
+          "nombre": "Tom",
+          "nombreCompleto": "Ángel Caamaño Mulas, TOM",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            22,
+            0
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 67,
+            "resistencia": 62,
+            "velocidad": 68,
+            "fisico": 7,
+            "remate": 9,
+            "ofensivo": 13,
+            "pase": 13,
+            "entrada": 16,
+            "porteria": 69
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": "1978-01-25",
+          "alturaCm": 189,
+          "pesoKg": 80,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
+    },
+    {
+      "id": "villarreal",
+      "nombre": "Villarreal",
+      "jugadores": [
+        {
+          "id": "villarreal-javier-sanchez-broto-na",
+          "nombre": "Sánchez Broto",
+          "nombreCompleto": "Javier SANCHEZ BROTO",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 63,
+            "agresividad": 45,
+            "resistencia": 45,
+            "velocidad": 64,
+            "fisico": 14,
+            "remate": 13,
+            "ofensivo": 16,
+            "pase": 13,
+            "entrada": 25,
+            "porteria": 60
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-luis-pascual-tarrega-na",
+          "nombre": "Luis Pascual",
+          "nombreCompleto": "LUIS PASCUAL Tárrega",
+          "posicion": "POR",
+          "esPortero": true,
+          "demarcaciones": [
+            0
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 64,
+            "resistencia": 46,
+            "velocidad": 60,
+            "fisico": 17,
+            "remate": 10,
+            "ofensivo": 9,
+            "pase": 27,
+            "entrada": 16,
+            "porteria": 70
+          },
+          "media": 64,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-francisco-javier-lopez-castro-na",
+          "nombre": "Javi",
+          "nombreCompleto": "Francisco JAVIer López Castro",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-fernando-maestre-bolinches-na",
+          "nombre": "Maestre",
+          "nombreCompleto": "Fernando MAESTRE Bolinches",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            2
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-antonio-manuel-dasi-chardi-na",
+          "nombre": "Dasí",
+          "nombreCompleto": "Antonio Manuel DASI Chardi",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            5
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-juan-carlos-justes-arbiol-na",
+          "nombre": "Juan Carlos",
+          "nombreCompleto": "JUAN CARLOS Justes Arbiol",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            3
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-alberto-martinez-tablado-na",
+          "nombre": "Alberto",
+          "nombreCompleto": "ALBERTO Martínez Tablado",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-pascual-donat-llopis-na",
+          "nombre": "Pascual",
+          "nombreCompleto": "PASCUAL Donat Llopis",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            1
+          ],
+          "atributos": {
+            "calidad": 61,
+            "agresividad": 64,
+            "resistencia": 56,
+            "velocidad": 59,
+            "fisico": 13,
+            "remate": 48,
+            "ofensivo": 53,
+            "pase": 51,
+            "entrada": 59,
+            "porteria": 5
+          },
+          "media": 52,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-alberto-solaeta-bonet-na",
+          "nombre": "Solaeta",
+          "nombreCompleto": "Alberto SOLAETA Bonet",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-francisco-javier-cornago-redrado-na",
+          "nombre": "Cornago",
+          "nombreCompleto": "Francisco Javier CORNAGO Redrado",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            6
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-jose-luis-zandio-echaide-na",
+          "nombre": "Zandio",
+          "nombreCompleto": "José Luis ZANDIO Echaide",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-jordi-vinyals-martori-na",
+          "nombre": "Vinyals",
+          "nombreCompleto": "Jordi VINYALS Martorí",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            9
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-arnaldo-javier-claut-na",
+          "nombre": "Claut",
+          "nombreCompleto": "Arnaldo Javier CLAUT",
+          "posicion": "DEF",
+          "esPortero": false,
+          "demarcaciones": [
+            14
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 72,
+            "resistencia": 71,
+            "velocidad": 70,
+            "fisico": 59,
+            "remate": 60,
+            "ofensivo": 62,
+            "pase": 61,
+            "entrada": 66,
+            "porteria": 16
+          },
+          "media": 69,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-roberto-fernandez-bonillo-na",
+          "nombre": "Roberto",
+          "nombreCompleto": "ROBERTO Fernández Bonillo",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            7
+          ],
+          "atributos": {
+            "calidad": 71,
+            "agresividad": 74,
+            "resistencia": 67,
+            "velocidad": 77,
+            "fisico": 59,
+            "remate": 56,
+            "ofensivo": 68,
+            "pase": 60,
+            "entrada": 54,
+            "porteria": 6
+          },
+          "media": 65,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-samuel-barrio-gonzalez-na",
+          "nombre": "Samuel",
+          "nombreCompleto": "SAMUEL Barrio González",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-ivan-parra-alvarez-na",
+          "nombre": "Parra",
+          "nombreCompleto": "Iván PARRA Alvarez",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            10
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-jesus-vicente-garcia-pitarch-na",
+          "nombre": "García Pitarch",
+          "nombreCompleto": "Jesús Vicente GARCIA PITARCH",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-ricardo-fraga-roger-ricky-na",
+          "nombre": "Ricky",
+          "nombreCompleto": "Ricardo Fraga Roger, RICKY",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            13
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-raul-ricardo-dos-santos-gonzalez-na",
+          "nombre": "Dos Santos",
+          "nombreCompleto": "Raúl Ricardo DOS SANTOS González",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-antonio-puche-vicente-puche-ii-na",
+          "nombre": "Puche II",
+          "nombreCompleto": "Antonio Puche Vicente, PUCHE II",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            11
+          ],
+          "atributos": {
+            "calidad": 73,
+            "agresividad": 71,
+            "resistencia": 69,
+            "velocidad": 73,
+            "fisico": 64,
+            "remate": 67,
+            "ofensivo": 68,
+            "pase": 68,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-alexandre-jose-de-oliveira-na",
+          "nombre": "Alexandre",
+          "nombreCompleto": "ALEXANDRE José de Oliveira",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        },
+        {
+          "id": "villarreal-david-chumillas-villalba-na",
+          "nombre": "Chumillas",
+          "nombreCompleto": "David CHUMILLAS Villalba",
+          "posicion": "MED",
+          "esPortero": false,
+          "demarcaciones": [
+            8
+          ],
+          "atributos": {
+            "calidad": 72,
+            "agresividad": 70,
+            "resistencia": 68,
+            "velocidad": 71,
+            "fisico": 65,
+            "remate": 66,
+            "ofensivo": 66,
+            "pase": 67,
+            "entrada": 50,
+            "porteria": 15
+          },
+          "media": 71,
+          "dorsal": null,
+          "fechaNacimiento": null,
+          "alturaCm": null,
+          "pesoKg": null,
+          "nacionalidad": null,
+          "clubAnterior": null
+        }
+      ]
     }
   ]
 }
