@@ -39,10 +39,16 @@ export function PrematchScreen() {
       </header>
 
       <RetroPanel title="Tu partido">
-        <h1 className="scoreline">
-          <Crest teamId={fixture.homeId} size={28} /> {name(fixture.homeId)}
-          <span className="score"> vs </span>
-          {name(fixture.awayId)} <Crest teamId={fixture.awayId} size={28} />
+        <h1 className="scoreboard">
+          <span className="scoreboard__side">
+            <Crest teamId={fixture.homeId} size={36} />
+            <span className="scoreboard__team">{name(fixture.homeId)}</span>
+          </span>
+          <span className="scoreboard__score scoreboard__score--vs">vs</span>
+          <span className="scoreboard__side scoreboard__side--away">
+            <span className="scoreboard__team">{name(fixture.awayId)}</span>
+            <Crest teamId={fixture.awayId} size={36} />
+          </span>
         </h1>
         <p className="champion">
           Rival: <strong>{name(rivalId)}</strong> · Tu formación:{' '}
