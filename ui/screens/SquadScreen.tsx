@@ -7,6 +7,7 @@ import {
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
+import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
 import { Stadium } from '@ui/components/Stadium';
 import { PotentialRange } from '@ui/components/PotentialRange';
@@ -41,53 +42,56 @@ export function SquadScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>
-          <span className="team-cell">
-            <Crest teamId={career.humanTeamId} size={24} />
-            {team?.nombre ?? career.humanTeamId}
-          </span>
-        </h1>
-        <span className="matchday">Plantilla · {career.temporada}</span>
-      </header>
+      <section className="squad-card">
+        <div className="squad-card__crest crest-frame">
+          <Crest teamId={career.humanTeamId} size={72} />
+        </div>
+        <div className="squad-card__meta">
+          <h1>{team?.nombre ?? career.humanTeamId}</h1>
+          <span className="matchday">Plantilla · {career.temporada}</span>
+        </div>
+      </section>
 
       <Stadium teamId={career.humanTeamId} />
 
-
-      <table className="squad-table">
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Jugador</th>
-            <th>Edad</th>
-            <th>Media</th>
-            <th>Potencial ojeado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map((p) => {
-            const age = playerAge(p, startYear);
-            const isYouth = age !== null && age <= YOUTH_MAX_AGE;
-            const range = isYouth
-              ? scoutEstimate(p, synthesizePotential(p, career.seed), observedSeasons, career.seed)
-              : null;
-            return (
-              <tr key={p.id}>
-                <td>{p.posicion}</td>
-                <td className="squad-name">{p.nombre}</td>
-                <td>{age ?? '—'}</td>
-                <td>{p.media}</td>
-                <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
+      <RetroPanel title="Plantilla">
+        <div className="squad-scroll">
+          <table className="squad-table">
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th>Jugador</th>
+                <th>Edad</th>
+                <th>Media</th>
+                <th>Potencial ojeado</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {players.map((p) => {
+                const age = playerAge(p, startYear);
+                const isYouth = age !== null && age <= YOUTH_MAX_AGE;
+                const range = isYouth
+                  ? scoutEstimate(p, synthesizePotential(p, career.seed), observedSeasons, career.seed)
+                  : null;
+                return (
+                  <tr key={p.id}>
+                    <td>{p.posicion}</td>
+                    <td className="squad-name">{p.nombre}</td>
+                    <td>{age ?? '—'}</td>
+                    <td className="squad-media">{p.media}</td>
+                    <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
 
-      <p className="hint">
-        El ojeo es falible: el rango puede no contener el valor real y se estrecha (que no acierta más) con
-        el tiempo.
-      </p>
+        <p className="hint">
+          El ojeo es falible: el rango puede no contener el valor real y se estrecha (que no acierta más) con
+          el tiempo.
+        </p>
+      </RetroPanel>
 
       <div className="season-actions">
         <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>

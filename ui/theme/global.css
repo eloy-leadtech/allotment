@@ -214,18 +214,23 @@ h1 {
   transform: translateY(1px);
 }
 
-/* Marco biselado de 2px alrededor del escudo (findings/09 §4 "marcos de icono"). */
+/* Marco biselado de 2px alrededor del escudo (findings/09 §4 "marcos de icono").
+   Base reutilizable; cada uso fija su tamaño. */
+.crest-frame,
 .team-tile__crest {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
   background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
   border-top: 2px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
   box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+}
+
+.team-tile__crest {
+  width: 60px;
+  height: 60px;
 }
 
 .team-tile__name {
@@ -656,12 +661,54 @@ h1 {
   font-weight: 600;
 }
 
+/* Ficha de plantilla: placa de acero con escudo enmarcado + nombre en Futura
+   (findings/09 §6 "Ficha de jugador"). */
+.squad-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  padding: var(--space);
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.squad-card__crest {
+  flex: none;
+  width: 92px;
+  height: 92px;
+}
+
+.squad-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.squad-card__meta h1 {
+  margin: 0;
+}
+
 /* Squad screen + scouted potential range */
+.squad-scroll {
+  overflow-x: auto;
+}
+
 .squad-table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-data);
   font-size: 14px;
+}
+
+/* Media en tabular-nums condensada, con el acento frío para destacar el dato. */
+.squad-media {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--c-accent);
 }
 
 .squad-table tbody tr:nth-child(even) {
