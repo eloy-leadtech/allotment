@@ -40,8 +40,11 @@ describe('Segunda División databases', () => {
   });
 
   it('pairs each Segunda season with its label', () => {
-    expect(SEGUNDA_SEASONS).toHaveLength(5);
+    expect(SEGUNDA_SEASONS).toHaveLength(6);
+    expect(getSegundaByTemporada('94/95')?.id).toBe('es-segunda-9495');
     expect(getSegundaByTemporada('98/99')?.id).toBe('es-segunda-9899');
     expect(getSegundaByTemporada('90/91')).toBeUndefined();
+    // 93/94 is Primera-only: no Segunda 93/94 exists.
+    expect(getSegundaByTemporada('93/94')).toBeUndefined();
   });
 });

@@ -1,9 +1,12 @@
 import type { League } from './schemas';
 import {
+  loadPrimera9394,
+  loadPrimera9495,
   loadPrimera9596,
   loadPrimera9697,
   loadPrimera9798,
   loadPrimera9899,
+  loadSegunda9495,
   loadSegunda9596,
   loadSegunda9697,
   loadSegunda9798,
@@ -23,10 +26,14 @@ export interface SeasonEntry {
 }
 
 /**
- * Registry of available seasons. Extensible: adding a season = adding an entry
- * (and its committed JSON), no engine changes. For now only Liga 96/97 exists.
+ * Registry of available seasons, oldest first. Extensible: adding a season =
+ * adding an entry (and its committed JSON), no engine changes. The career can
+ * start at the oldest (93/94) and chains forward:
+ * 93/94 → 94/95 → 95/96 → 96/97 → 97/98 → 98/99.
  */
 export const SEASONS: readonly SeasonEntry[] = [
+  { id: 'es-primera-9394', nombre: 'Liga española 93/94 (atributos aprox.)', temporada: '93/94', load: loadPrimera9394 },
+  { id: 'es-primera-9495', nombre: 'Liga española 94/95 (atributos aprox.)', temporada: '94/95', load: loadPrimera9495 },
   { id: 'es-primera-9596', nombre: 'Liga española 95/96 (atributos aprox.)', temporada: '95/96', load: loadPrimera9596 },
   { id: 'es-primera-9697', nombre: 'Liga española 96/97', temporada: '96/97', load: loadPrimera9697 },
   { id: 'es-primera-9798', nombre: 'Liga española 97/98', temporada: '97/98', load: loadPrimera9798 },
@@ -49,6 +56,7 @@ export function getSeasonByTemporada(temporada: string): SeasonEntry | undefined
  * its Segunda by `temporada`.
  */
 export const SEGUNDA_SEASONS: readonly SeasonEntry[] = [
+  { id: 'es-segunda-9495', nombre: 'Segunda 94/95', temporada: '94/95', load: loadSegunda9495 },
   { id: 'es-segunda-9596', nombre: 'Segunda 95/96', temporada: '95/96', load: loadSegunda9596 },
   { id: 'es-segunda-9697', nombre: 'Segunda 96/97', temporada: '96/97', load: loadSegunda9697 },
   { id: 'es-segunda-9798', nombre: 'Segunda 97/98', temporada: '97/98', load: loadSegunda9798 },
