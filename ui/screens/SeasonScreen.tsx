@@ -68,14 +68,34 @@ export function SeasonScreen() {
         </RetroPanel>
       ) : null}
 
-      <div className="season-actions">
-        <RetroButton onClick={() => goTo('squad')}>Plantilla</RetroButton>
-        <RetroButton onClick={() => goTo('tactics')}>Táctica</RetroButton>
-        <RetroButton onClick={() => goTo('copa')}>Copa</RetroButton>
-        {hasEuropa ? <RetroButton onClick={() => goTo('europa')}>Europa</RetroButton> : null}
-        <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
-        <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
-      </div>
+      <nav className="despacho-nav" aria-label="Secciones">
+        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('squad')}>
+          <span className="despacho-tile__icon" aria-hidden="true">👥</span>
+          <span className="despacho-tile__label">Plantilla</span>
+        </button>
+        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
+          <span className="despacho-tile__icon" aria-hidden="true">📋</span>
+          <span className="despacho-tile__label">Táctica</span>
+        </button>
+        <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🏆</span>
+          <span className="despacho-tile__label">Copa</span>
+        </button>
+        {hasEuropa ? (
+          <button type="button" className="despacho-tile" onClick={() => goTo('europa')}>
+            <span className="despacho-tile__icon" aria-hidden="true">🌍</span>
+            <span className="despacho-tile__label">Europa</span>
+          </button>
+        ) : null}
+        <button type="button" className="despacho-tile" onClick={() => goTo('slots')}>
+          <span className="despacho-tile__icon" aria-hidden="true">💾</span>
+          <span className="despacho-tile__label">Guardar</span>
+        </button>
+        <button type="button" className="despacho-tile" onClick={() => goTo('title')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🏠</span>
+          <span className="despacho-tile__label">Menú</span>
+        </button>
+      </nav>
     </main>
   );
 }
