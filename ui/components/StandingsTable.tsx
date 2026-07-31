@@ -28,7 +28,9 @@ export function StandingsTable({ rows, teamName, highlightTeamId }: StandingsTab
         <tbody>
           {rows.map((row, index) => (
             <tr key={row.teamId} className={row.teamId === highlightTeamId ? 'standings__row--me' : ''}>
-              <td>{index + 1}</td>
+              <td className="standings__pos-cell">
+                <span className="standings__pos">{index + 1}</span>
+              </td>
               <td className="standings__team">
                 <span className="team-cell">
                   <Crest teamId={row.teamId} size={18} />
