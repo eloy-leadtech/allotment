@@ -173,11 +173,68 @@ h1 {
   padding-left: 8px;
 }
 
+/* Cabecera centrada con placa de título (píldora central del PCF7). */
+.head-center {
+  display: flex;
+  justify-content: center;
+}
+
 /* Team select grid */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 8px;
+}
+
+/* Placa-equipo: escudo HD enmarcado en metal + nombre condensado (rejilla de
+   selección de equipo, estilo icono-foto del despacho PCF7). */
+.team-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 108px;
+  padding: 12px 8px;
+  cursor: pointer;
+  color: var(--c-ink);
+  background: var(--bevel);
+  border: none;
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+  transition: filter 0.12s ease, transform 0.05s ease;
+}
+
+.team-tile:hover {
+  filter: brightness(1.18);
+}
+
+.team-tile:active {
+  transform: translateY(1px);
+}
+
+/* Marco biselado de 2px alrededor del escudo (findings/09 §4 "marcos de icono"). */
+.team-tile__crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
+  border-top: 2px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+}
+
+.team-tile__name {
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-align: center;
+  line-height: 1.15;
 }
 
 /* Season header */

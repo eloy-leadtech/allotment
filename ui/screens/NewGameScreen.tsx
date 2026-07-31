@@ -13,7 +13,11 @@ export function NewGameScreen() {
 
   return (
     <main className="screen">
-      <h1>Nueva partida</h1>
+      <div className="head-center">
+        <div className="title-plate">
+          <h1>Nueva partida</h1>
+        </div>
+      </div>
 
       <RetroPanel title="Temporada">
         <div className="team-grid">

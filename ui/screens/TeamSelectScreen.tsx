@@ -10,15 +10,19 @@ export function TeamSelectScreen() {
 
   return (
     <main className="screen">
-      <h1>Elige tu equipo</h1>
+      <div className="head-center">
+        <div className="title-plate">
+          <h1>Elige tu equipo</h1>
+        </div>
+      </div>
       <div className="team-grid">
         {teams.map((team) => (
-          <RetroButton key={team.id} onClick={() => startCareer(team.id)}>
-            <span className="team-cell">
-              <Crest teamId={team.id} size={22} />
-              {team.nombre}
+          <button key={team.id} type="button" className="team-tile" onClick={() => startCareer(team.id)}>
+            <span className="team-tile__crest">
+              <Crest teamId={team.id} size={44} />
             </span>
-          </RetroButton>
+            <span className="team-tile__name">{team.nombre}</span>
+          </button>
         ))}
       </div>
       <RetroButton onClick={() => goTo('title')}>Atrás</RetroButton>
