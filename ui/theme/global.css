@@ -197,38 +197,83 @@ h1 {
   font-weight: bold;
 }
 
-/* Standings table */
+/* Standings table — filas-cápsula metálicas del PCF7 (scr_026): cada equipo es
+   una píldora biselada con rayado alterno; la posición va en un casquillo plateado
+   y la fila del equipo humano se resalta con el acento rojo (estado activo). */
 .standings-scroll {
   overflow-x: auto;
 }
 
 .standings {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 5px;
   font-family: var(--font-data);
   font-size: 15px;
   white-space: nowrap;
 }
 
-.standings tbody tr:nth-child(even) {
-  background: rgba(127, 159, 255, 0.06);
-}
-
-.standings th,
-.standings td {
-  padding: 6px 8px;
-  text-align: right;
-  border-bottom: 1px solid var(--c-border);
-}
-
 .standings th {
+  padding: 2px 8px;
+  text-align: right;
   color: var(--c-ink-dim);
   text-transform: uppercase;
   font-size: 12px;
+  letter-spacing: 0.3px;
 }
 
 .standings__team {
   text-align: left;
+}
+
+/* Cuerpo de fila: cápsula de acero abombada (bisel claro arriba, oscuro abajo). */
+.standings tbody tr {
+  background: var(--bevel);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
+    0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+/* Rayado alterno: cápsula un punto más clara para legibilidad. */
+.standings tbody tr:nth-child(even) {
+  background: linear-gradient(180deg, #6c8ec0 0%, #24407a 55%, #16264a 100%);
+}
+
+.standings tbody td {
+  padding: 7px 8px;
+  text-align: right;
+  border: none;
+}
+
+/* Extremos redondeados: primer y último td cierran la cápsula. */
+.standings tbody td:first-child {
+  border-top-left-radius: var(--radius-pill);
+  border-bottom-left-radius: var(--radius-pill);
+  padding-left: 6px;
+}
+
+.standings tbody td:last-child {
+  border-top-right-radius: var(--radius-pill);
+  border-bottom-right-radius: var(--radius-pill);
+  padding-right: 14px;
+}
+
+/* Casquillo de posición: número en pastilla metálica plateada. */
+.standings__pos-cell {
+  width: 1%;
+}
+
+.standings__pos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  color: #10142a;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .standings__pts {
@@ -236,8 +281,17 @@ h1 {
   font-weight: bold;
 }
 
+/* Fila del equipo humano: casquillo rojo del PCF7 (mismo acento que el botón
+   primario), para leer de un vistazo "este eres tú". */
 .standings__row--me {
-  background: var(--c-me);
+  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  box-shadow: inset 0 1px 0 #ff9c9c, inset 0 -2px 3px #5a0c0c,
+    0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.standings__row--me .standings__pts {
+  color: var(--c-ink);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 /* Results list */
