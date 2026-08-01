@@ -3,11 +3,14 @@ import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective, type BoardState } from '../career/board';
+import { DEFAULT_CONFIANZA, type ConfianzaState } from '../career/confianza';
 import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import { DEFAULT_SPONSOR } from '../career/sponsors';
+import { DEFAULT_CREDIT } from '../career/credit';
+import { DEFAULT_LOANS } from '../career/loans';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
@@ -103,6 +106,22 @@ const ContractSchema = z.object({
   yearsLeft: z.number().int().min(1),
 });
 
+/** A player away on loan: his snapshot + set-aside deal, the club and season. */
+const LoanedOutSchema = z.object({
+  player: PlayerSchema,
+  contract: ContractSchema,
+  toClubId: z.string().min(1),
+  seasonNumber: z.number().int().min(1),
+});
+
+/** The club's loan book; defaults to empty for pre-cesiones saves. */
+const LoansStateSchema = z
+  .object({
+    out: z.array(LoanedOutSchema).default([]),
+    in: z.array(z.string()).default([]),
+  })
+  .default({ out: [], in: [] });
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -131,6 +150,12 @@ const BoardStateSchema = z.object({
     .optional(),
 });
 
+/** The two institutional confidence meters; defaults to 50/50 for pre-confianza saves. */
+const ConfianzaSchema = z.object({
+  directiva: z.number().int().min(0).max(100),
+  aficion: z.number().int().min(0).max(100),
+});
+
 /** One press-conference decision: the matchday, question and chosen option. */
 const PressAnswerSchema = z.object({
   matchday: z.number().int().min(1),
@@ -156,6 +181,8 @@ export const CareerSaveSchema = z.object({
   division: z.enum(['primera', 'segunda']).default('primera'),
   /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
   board: BoardStateSchema.optional(),
+  /** Institutional confidence meters; absent in pre-confianza saves (defaults 50/50 on load). */
+  confianza: ConfianzaSchema.optional(),
   /** Press-conference decisions this season; defaults to none for pre-rueda saves. */
   press: PressStateSchema.default({ answers: [] }),
   /** Human's tactics; absent means neutral auto-XI. */
@@ -179,6 +206,15 @@ export const CareerSaveSchema = z.object({
   sponsor: z
     .object({ sponsorId: z.enum(['basico', 'estandar', 'ambicioso', 'premium']) })
     .default({ ...DEFAULT_SPONSOR }),
+  /** Human club's bank/board credit and debt; defaults to debt-free for pre-crédito saves. */
+  credit: z
+    .object({
+      loan: z.number().int().min(0),
+      seasonsOverLimit: z.number().int().min(0),
+    })
+    .default({ ...DEFAULT_CREDIT }),
+  /** Loan book (out/in); defaults to empty for pre-cesiones saves. */
+  loans: LoansStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -222,12 +258,15 @@ export function serializeCareer(career: CareerState): CareerSave {
     relegationSpots: career.relegationSpots,
     division: career.division,
     board: career.board,
+    confianza: career.confianza ?? DEFAULT_CONFIANZA,
     press: career.press ?? { answers: [] },
     tactics: career.tactics,
     training: career.training,
     budget: career.budget,
     stadium: career.stadium,
     sponsor: career.sponsor ?? DEFAULT_SPONSOR,
+    credit: career.credit ?? DEFAULT_CREDIT,
+    loans: career.loans ?? DEFAULT_LOANS,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -259,6 +298,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
       ? save.contracts
       : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
   const press: PressState = save.press ?? { answers: [] };
+  // Pre-confianza saves have no meters persisted: default to a neutral 50/50.
+  const confianza: ConfianzaState = save.confianza ?? DEFAULT_CONFIANZA;
   const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -269,6 +310,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     relegationSpots: save.relegationSpots,
     division: save.division,
     board,
+    confianza,
     press,
     tactics: save.tactics,
     // Pre-training saves default to a balanced focus so training is always present.
@@ -278,6 +320,10 @@ function restoreCareerV2(save: CareerSave): CareerState {
     stadium: save.stadium ?? DEFAULT_STADIUM,
     // Pre-patrocinios saves default to the basic sponsor so it is always present.
     sponsor: save.sponsor ?? DEFAULT_SPONSOR,
+    // Pre-crédito saves default to debt-free so the credit state is always present.
+    credit: save.credit ?? DEFAULT_CREDIT,
+    // Pre-cesiones saves have no loan book: default to empty (schema default).
+    loans: save.loans,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,

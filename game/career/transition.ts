@@ -21,12 +21,19 @@ import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
 import { titlesWonThisSeason } from './palmares';
+import { returnLoans, DEFAULT_LOANS } from './loans';
 import {
   computeSeasonObjective,
   evaluateObjective,
   type BoardState,
   type ObjectiveEvaluation,
 } from './board';
+import {
+  applyConfianza,
+  confianzaProvocaCese,
+  DEFAULT_CONFIANZA,
+  type ConfianzaState,
+} from './confianza';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -205,9 +212,21 @@ export function applyTransition(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
   });
-  const teams: CareerTeam[] = rawTeams.map((team) =>
+  const rebuiltTeams: CareerTeam[] = rawTeams.map((team) =>
     team.id === career.humanTeamId ? { ...team, players: advance.players } : team,
   );
+
+  // Players you loaned out come home now — aged a season, deal restored — while
+  // players brought in on loan are dropped by the real-world rebuild above. With
+  // an empty loan book this is a no-op.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -220,6 +239,8 @@ export function applyTransition(
     // Same-division advance keeps the human where they were.
     division: career.division,
     board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
@@ -228,8 +249,13 @@ export function applyTransition(
     stadium: career.stadium,
     // The sponsor tier you signed carries forward (you can change it each season).
     sponsor: career.sponsor,
+    // The bank/board credit and debt carry forward; the liquidation settles them.
+    credit: career.credit,
+    // Loans are settled by this transition (returnees folded in, loanees dropped):
+    // the next season starts with an empty loan book.
+    loans: DEFAULT_LOANS,
     teams,
-    contracts: advance.contracts,
+    contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,
@@ -267,6 +293,38 @@ export function endOfSeasonEvaluation(career: CareerState): ObjectiveEvaluation 
     career.board.objective,
     humanPosition(career),
     careerOutcome(career),
+  );
+}
+
+/**
+ * The confianza meters the career would carry into the NEXT season: the running
+ * meters folded with the just-finished season's verdict (objective satisfaction,
+ * shortfall, promotion/relegation and whether the human won their league).
+ *
+ * This is the single source of truth for the evolved value — the season
+ * transition stores exactly this, and the UI/continue logic reads it to decide
+ * the soft cese and to show where the meters are heading. Pure and deterministic.
+ */
+export function endOfSeasonConfianza(career: CareerState): ConfianzaState {
+  const evaluation = endOfSeasonEvaluation(career);
+  return applyConfianza(career.confianza ?? DEFAULT_CONFIANZA, {
+    satisfaction: evaluation.satisfaction,
+    shortfall: evaluation.shortfall,
+    outcome: careerOutcome(career),
+    championLeague: championOf(career) === career.humanTeamId,
+  });
+}
+
+/**
+ * Whether the manager is dismissed at the end of the in-progress season. Two
+ * routes, both faithful to the classic game: the board's HARD verdict on the
+ * objective (relegation or a big shortfall — see `evaluateObjective`), or the
+ * directiva confianza meter collapsing to the sack line after this season.
+ */
+export function isManagerDismissed(career: CareerState): boolean {
+  return (
+    endOfSeasonEvaluation(career).dismissed ||
+    confianzaProvocaCese(endOfSeasonConfianza(career))
   );
 }
 
@@ -326,7 +384,7 @@ export function applyDivisionChange(
   });
 
   let humanPresent = false;
-  const teams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
+  const rebuiltTeams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
     if (team.id === career.humanTeamId) {
       humanPresent = true;
       return { ...team, players: advance.players };
@@ -334,8 +392,19 @@ export function applyDivisionChange(
     return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
   });
   if (!humanPresent) {
-    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
+    rebuiltTeams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
   }
+
+  // Loanees return (aged, deal restored) even across a division change; players
+  // brought in on loan are dropped by the rebuild. No-op with an empty loan book.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -347,6 +416,8 @@ export function applyDivisionChange(
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
     board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     budget: career.budget,
@@ -354,8 +425,12 @@ export function applyDivisionChange(
     stadium: career.stadium,
     // The sponsor tier you signed carries forward across divisions too.
     sponsor: career.sponsor,
+    // The bank/board credit and debt move with you across divisions.
+    credit: career.credit,
+    // The loan book is settled by the transition; start clean.
+    loans: DEFAULT_LOANS,
     teams,
-    contracts: advance.contracts,
+    contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,

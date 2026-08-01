@@ -1,5 +1,17 @@
 import { useMemo, useState } from 'react';
-import { buyableListings, formatEuros, careerTeamName, squadWageBill, playerScoutReport } from '@game';
+import {
+  buyableListings,
+  formatEuros,
+  careerTeamName,
+  squadWageBill,
+  playerScoutReport,
+  totalDebt,
+  creditLimit,
+  creditAvailable,
+  loanOutCandidates,
+  loanOffers,
+  careerLoans,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -15,12 +27,16 @@ export function MarketScreen() {
   const bids = useGameStore((s) => s.bids);
   const lastIncome = useGameStore((s) => s.lastIncome);
   const lastWageBill = useGameStore((s) => s.lastWageBill);
+  const lastInterest = useGameStore((s) => s.lastInterest);
   const marketMessage = useGameStore((s) => s.marketMessage);
   const counterOffer = useGameStore((s) => s.counterOffer);
   const makeOffer = useGameStore((s) => s.makeOffer);
   const acceptCounterOffer = useGameStore((s) => s.acceptCounterOffer);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
+  const requestCredit = useGameStore((s) => s.requestCredit);
   const scoutPlayer = useGameStore((s) => s.scoutPlayer);
+  const loanOut = useGameStore((s) => s.loanOut);
+  const loanIn = useGameStore((s) => s.loanIn);
   const startSeasonFromMarket = useGameStore((s) => s.startSeasonFromMarket);
   const goTo = useGameStore((s) => s.goTo);
   const [query, setQuery] = useState('');
@@ -33,6 +49,10 @@ export function MarketScreen() {
     const pool = q ? listings.filter((l) => l.player.nombre.toLowerCase().includes(q)) : listings;
     return pool.slice(0, MAX_ROWS);
   }, [listings, query]);
+  const outCandidates = useMemo(() => (career ? loanOutCandidates(career) : []), [career]);
+  const inOffers = useMemo(() => (career ? loanOffers(career).slice(0, MAX_ROWS) : []), [career]);
+  const loanedInIds = useMemo(() => new Set(career ? careerLoans(career).in : []), [career]);
+  const loanedOut = useMemo(() => (career ? careerLoans(career).out : []), [career]);
 
   if (!career) {
     return (
@@ -51,6 +71,16 @@ export function MarketScreen() {
   const openBids = bids.filter((b) => nameById.has(b.playerId));
   const name = (id: string): string => careerTeamName(career, id);
 
+  // Bank/board credit and debt ("números rojos"): the budget can be negative.
+  const debt = totalDebt(career);
+  const inTheRed = career.budget < 0;
+  const limit = creditLimit(career);
+  const available = creditAvailable(career);
+  const seasonsOverLimit = career.credit?.seasonsOverLimit ?? 0;
+  const budgetChip = career.budget < 0
+    ? { label: 'Presupuesto', value: `−${formatEuros(-career.budget)}`, tone: 'danger' as const }
+    : { label: 'Presupuesto', value: formatEuros(career.budget) };
+
   return (
     <main className="screen">
       <GestHeader
@@ -58,12 +88,53 @@ export function MarketScreen() {
         title="Mercado de fichajes"
         subtitle={`Temporada ${career.temporada}`}
         chips={[
-          { label: 'Presupuesto', value: formatEuros(career.budget) },
+          budgetChip,
           { label: 'Masa salarial', value: `${formatEuros(currentWages)}/año`, tone: 'danger' },
         ]}
       />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
+
+      <RetroPanel title="Crédito y deuda">
+        <ul className="mkt-ledger">
+          {debt > 0 ? (
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Deuda actual</span>
+              <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(debt)}</span>
+            </li>
+          ) : (
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Deuda actual</span>
+              <span className="mkt-ledger__value">Sin deuda</span>
+            </li>
+          )}
+          <li className="mkt-ledger__row">
+            <span className="mkt-ledger__label">Límite de crédito de la directiva</span>
+            <span className="mkt-ledger__value">{formatEuros(limit)}</span>
+          </li>
+          <li className="mkt-ledger__row">
+            <span className="mkt-ledger__label">Crédito disponible</span>
+            <span className="mkt-ledger__value">{formatEuros(available)}</span>
+          </li>
+        </ul>
+        {inTheRed ? (
+          <p className="fate fate--down">
+            🔴 Estás en números rojos. La directiva te cobrará intereses cada temporada
+            {seasonsOverLimit > 0
+              ? ` y llevas ${seasonsOverLimit} temporada(s) por encima del límite: si sigues así, te destituirá.`
+              : '.'}
+          </p>
+        ) : null}
+        {available > 0 ? (
+          <div className="season-actions">
+            <RetroButton onClick={() => requestCredit(available)}>
+              Pedir crédito ({formatEuros(available)})
+            </RetroButton>
+          </div>
+        ) : (
+          <p className="hint">La directiva no te concede más crédito por ahora.</p>
+        )}
+      </RetroPanel>
 
       {lastIncome ? (
         <RetroPanel title={`Ingresos de la temporada · ${formatEuros(lastIncome.total)}`}>
@@ -104,10 +175,18 @@ export function MarketScreen() {
                 <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(lastWageBill)}</span>
               </li>
             ) : null}
+            {lastInterest != null && lastInterest > 0 ? (
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Intereses de la deuda</span>
+                <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(lastInterest)}</span>
+              </li>
+            ) : null}
             {lastWageBill != null ? (
               <li className="mkt-ledger__row mkt-ledger__row--balance">
                 <span className="mkt-ledger__label">Balance</span>
-                <span className="mkt-ledger__value">{formatEuros(lastIncome.total - lastWageBill)}</span>
+                <span className="mkt-ledger__value">
+                  {formatEuros(lastIncome.total - lastWageBill - (lastInterest ?? 0))}
+                </span>
               </li>
             ) : null}
           </ul>
@@ -229,6 +308,111 @@ export function MarketScreen() {
         {listings.length > filtered.length ? (
           <p className="hint">Mostrando {filtered.length} de {listings.length}. Busca por nombre para afinar.</p>
         ) : null}
+      </RetroPanel>
+
+      <RetroPanel title="Cesiones">
+        <p className="hint">
+          Cede a un jugador una temporada (te ahorras su ficha y cobras una comisión; vuelve la
+          próxima) o incorpora a un cedido, más barato que fichar, hasta final de temporada.
+        </p>
+
+        {loanedOut.length > 0 ? (
+          <ul className="mkt-list">
+            {loanedOut.map((lo) => (
+              <li key={lo.player.id} className="mkt-signing mkt-signing--muted">
+                <div className="mkt-signing__head">
+                  <span className={`pos-badge pos-badge--${lo.player.posicion}`}>
+                    {lo.player.posicion}
+                  </span>
+                  <span className="mkt-signing__name team-cell">
+                    <Crest teamId={lo.toClubId} size={22} />
+                    {lo.player.nombre}
+                  </span>
+                  <span className="mkt-term">
+                    <em>Cedido a</em>
+                    <strong>{name(lo.toClubId)}</strong>
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <h4 className="mkt-subhead">Ceder de tu plantilla</h4>
+        {outCandidates.length === 0 ? (
+          <p className="hint">No tienes jugadores disponibles para ceder.</p>
+        ) : (
+          <ul className="mkt-list">
+            {outCandidates.slice(0, MAX_ROWS).map((c) => (
+              <li key={c.player.id} className="mkt-signing">
+                <div className="mkt-signing__head">
+                  <span className={`pos-badge pos-badge--${c.player.posicion}`}>
+                    {c.player.posicion}
+                  </span>
+                  <span className="mkt-signing__name">{c.player.nombre}</span>
+                  <span className="mkt-media">
+                    {c.player.media}
+                    <small>media</small>
+                  </span>
+                </div>
+                <div className="mkt-signing__actions">
+                  <span className="mkt-term">
+                    <em>Comisión</em>
+                    <strong>{formatEuros(c.commission)}</strong>
+                  </span>
+                  <RetroButton onClick={() => loanOut(c.player.id)}>Ceder</RetroButton>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <h4 className="mkt-subhead">Incorporar cedidos</h4>
+        {inOffers.length === 0 ? (
+          <p className="hint">No hay jugadores ofrecidos en cesión este mercado.</p>
+        ) : (
+          <ul className="mkt-list">
+            {inOffers.map((o) => {
+              const already = loanedInIds.has(o.player.id);
+              return (
+                <li key={o.player.id} className="mkt-signing">
+                  <div className="mkt-signing__head">
+                    <span className={`pos-badge pos-badge--${o.player.posicion}`}>
+                      {o.player.posicion}
+                    </span>
+                    <span className="mkt-signing__name team-cell">
+                      <Crest teamId={o.clubId} size={22} />
+                      {o.player.nombre}
+                    </span>
+                    <span className="mkt-media">
+                      {o.player.media}
+                      <small>media</small>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__terms">
+                    <span className="mkt-term">
+                      <em>Cesión</em>
+                      <strong>{formatEuros(o.fee)}</strong>
+                    </span>
+                    <span className="mkt-term">
+                      <em>Ficha</em>
+                      <strong>{formatEuros(o.wage)}/año</strong>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__actions">
+                    <RetroButton
+                      variant="primary"
+                      disabled={already}
+                      onClick={() => loanIn(o.player.id)}
+                    >
+                      {already ? 'Cedido ✓' : 'Incorporar'}
+                    </RetroButton>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </RetroPanel>
 
       <div className="season-actions">

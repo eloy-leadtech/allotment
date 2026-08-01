@@ -3,12 +3,15 @@ import type { Formation, Pichichi, Zamora } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { BoardState } from './board';
+import type { ConfianzaState } from './confianza';
 import type { Contract } from './contracts';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
 import type { StadiumState } from './stadium';
 import type { SponsorState } from './sponsors';
+import type { CreditState } from './credit';
+import type { LoansState } from './loans';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -127,6 +130,14 @@ export interface CareerState {
   /** The board relationship: this season's objective and last season's verdict. */
   board: BoardState;
   /**
+   * The two institutional confidence meters (directiva + afición), an EVOLVING
+   * value that accumulates across seasons. Optional so pre-confianza saves and the
+   * many places that build a career meta stay valid; absent means the neutral
+   * default (see DEFAULT_CONFIANZA). Never re-derived inside `seasonFromCareer`:
+   * it is updated at each season transition and carried forward.
+   */
+  confianza?: ConfianzaState;
+  /**
    * This season's press-conference decisions. Optional so pre-rueda saves and the
    * many places that build a career meta stay valid; absent means "no answers yet".
    */
@@ -149,6 +160,21 @@ export interface CareerState {
    * meta stay valid; absent means the basic sponsor (see DEFAULT_SPONSOR).
    */
   sponsor?: SponsorState;
+  /**
+   * The club's bank/board CREDIT and DEUDA state (loan owed + seasons over the
+   * credit limit). A negative `budget` above is the visible "números rojos"; this
+   * tracks the loan on top and the sacking counter. Optional so pre-crédito saves
+   * and every place that builds a career meta stay valid; absent means debt-free
+   * (see DEFAULT_CREDIT). Persisted in save v2.
+   */
+  credit?: CreditState;
+  /**
+   * The club's loan book: players sent OUT on loan (returning next season) and
+   * players brought IN on loan this season. A player DECISION → persisted in save
+   * v2. Optional so pre-cesiones saves and the many places that build a career
+   * meta stay valid; absent means an empty loan book (see DEFAULT_LOANS).
+   */
+  loans?: LoansState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human

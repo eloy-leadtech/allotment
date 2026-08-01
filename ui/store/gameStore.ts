@@ -16,7 +16,11 @@ import {
   applyTransition,
   applyDivisionChange,
   careerOutcome,
-  endOfSeasonEvaluation,
+  economicDismissal,
+  liquidateSeason,
+  creditLimit,
+  requestCredit,
+  isManagerDismissed,
   nextDivision,
   setCareerTactics,
   setCareerTraining,
@@ -36,6 +40,8 @@ import {
   observePlayer,
   renewContract,
   chooseSponsor,
+  loanOutPlayer,
+  loanInPlayer,
   wageBill,
   formatEuros,
   toCompetitionTeam,
@@ -144,6 +150,8 @@ interface GameStore {
   lastIncome: SeasonIncome | null;
   /** Masa salarial charged for the season just finished (shown on the market screen). */
   lastWageBill: number | null;
+  /** Interest charged on the club's debt at the last liquidation (shown on the market screen). */
+  lastInterest: number | null;
   /** Snapshot of the save slots (for the slots screen). */
   slots: Array<SlotInfo | null>;
   /** Player whose rich card (ficha) is open, if any. */
@@ -166,6 +174,7 @@ interface GameStore {
   scoutPlayer: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
   chooseSponsor: (sponsorId: SponsorId) => void;
+  requestCredit: (amount: number) => void;
   expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
@@ -174,6 +183,8 @@ interface GameStore {
   acceptCounterOffer: () => void;
   dismissCounter: () => void;
   acceptMarketBid: (bid: Bid) => void;
+  loanOut: (playerId: string) => void;
+  loanIn: (playerId: string) => void;
   startSeasonFromMarket: () => void;
   openMatch: (result: MatchResult) => void;
   refreshSlots: () => void;
@@ -212,6 +223,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     counterOffer: null,
     lastIncome: null,
     lastWageBill: null,
+    lastInterest: null,
     slots: listSlots(),
     selectedPlayerId: null,
     goTo: (screen) => set({ screen }),
@@ -340,6 +352,25 @@ export const useGameStore = create<GameStore>((set, get) => {
       const next = chooseSponsor(career, sponsorId);
       set({ career: next, marketMessage: null });
     },
+    requestCredit: (amount) => {
+      const { career } = get();
+      if (!career) return;
+      const result = requestCredit(career, amount);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'limite'
+              ? 'La directiva no te concede más crédito: has llegado a tu límite.'
+              : 'Introduce una cantidad de crédito válida.',
+        });
+        return;
+      }
+      // Credit moves only the budget and the loan; the squad and season stay put.
+      set({
+        career: result.career,
+        marketMessage: `La directiva te concede un crédito de ${formatEuros(result.granted)}.`,
+      });
+    },
     expandStadium: () => {
       const { career } = get();
       if (!career) return;
@@ -359,8 +390,9 @@ export const useGameStore = create<GameStore>((set, get) => {
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;
-      // A sacked manager cannot carry on: the board ended their tenure.
-      if (endOfSeasonEvaluation(career).dismissed) return;
+      // A sacked manager cannot carry on: the board ended their tenure — by a hard
+      // objective miss, the directiva confianza meter collapsing, or ruinous debt.
+      if (isManagerDismissed(career) || economicDismissal(career)) return;
       // Seasons advance by year; the human's division depends on their result.
       const nextPrimera = nextSeasonByTemporada(career.temporada);
       if (!nextPrimera) return; // no more seasons available yet
@@ -381,10 +413,18 @@ export const useGameStore = create<GameStore>((set, get) => {
             : applyDivisionChange(career, toDivision, targetLeague),
         ),
       );
-      const next = {
-        ...transitioned,
-        budget: Math.max(0, transitioned.budget + income.total - wages),
-      };
+      // Liquidate the finished season: income and wages settle, interest is charged
+      // on any carried debt, and the budget may end NEGATIVE ("números rojos") — the
+      // clamp-to-zero is gone, so real debt shows and the credit counter updates.
+      const liq = liquidateSeason({
+        budget: transitioned.budget,
+        loan: transitioned.credit?.loan ?? 0,
+        income: income.total,
+        wages,
+        creditLimit: creditLimit(transitioned),
+        seasonsOverLimit: transitioned.credit?.seasonsOverLimit ?? 0,
+      });
+      const next = { ...transitioned, budget: liq.budget, credit: liq.credit };
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
@@ -397,6 +437,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         counterOffer: null,
         lastIncome: income,
         lastWageBill: wages,
+        lastInterest: liq.interest,
         lastResults: [],
         viewingMatch: null,
         screen: 'market',
@@ -467,6 +508,44 @@ export const useGameStore = create<GameStore>((set, get) => {
         season: result.career.season,
         bids: bids.filter((b) => b.playerId !== bid.playerId),
         marketMessage: null,
+      });
+    },
+    loanOut: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = loanOutPlayer(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'ya-cedido'
+              ? 'Ese jugador ya está en tu plantilla como cedido.'
+              : 'No se puede ceder a ese jugador.',
+        });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: 'Jugador cedido: te ahorras su ficha esta temporada.',
+      });
+    },
+    loanIn: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = loanInPlayer(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'presupuesto'
+              ? 'No te llega para la cesión.'
+              : 'Ese jugador no está disponible en cesión.',
+        });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: 'Cedido incorporado hasta final de temporada.',
       });
     },
     startSeasonFromMarket: () => set({ screen: 'season', marketMessage: null }),

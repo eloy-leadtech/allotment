@@ -11,6 +11,8 @@ import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { StandingsTable } from '@ui/components/StandingsTable';
 import { Crest } from '@ui/components/Crest';
+import { ConfianzaMeters } from '@ui/components/ConfianzaMeters';
+import { DEFAULT_CONFIANZA } from '@game';
 import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 export function SeasonScreen() {
@@ -102,6 +104,12 @@ export function SeasonScreen() {
               <span className="hint">(temporada anterior)</span>
             </p>
           ) : null}
+        </RetroPanel>
+      ) : null}
+
+      {career ? (
+        <RetroPanel title="Junta directiva">
+          <ConfianzaMeters confianza={career.confianza ?? DEFAULT_CONFIANZA} />
         </RetroPanel>
       ) : null}
 

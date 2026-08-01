@@ -1059,6 +1059,72 @@ h1 {
   opacity: 0.85;
 }
 
+/* Confianza de la directiva y ánimo de la afición: dos medidores 0-100 con
+   banda de color (verde sano / ámbar preocupante / rojo crítico) y su aviso. */
+.confianza-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.confianza-meter {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-accent-2-hi);
+}
+.confianza-meter--ok {
+  color: var(--c-accent-2-hi);
+}
+.confianza-meter--warning {
+  color: #d8901f;
+}
+.confianza-meter--critical {
+  color: var(--c-danger-hi);
+}
+.confianza-meter__label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  color: var(--c-ink-dim);
+}
+.confianza-bar {
+  display: inline-block;
+  width: 120px;
+  height: 10px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 5px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.confianza-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.9;
+  transition: width 0.2s ease;
+}
+.confianza-meter__value {
+  min-width: 28px;
+  text-align: right;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: currentColor;
+}
+.confianza-alert {
+  margin: 4px 0 0;
+  font-family: var(--font-data);
+  font-size: 13px;
+}
+.confianza-alert--warning {
+  color: #d8901f;
+}
+.confianza-alert--sack {
+  color: var(--c-danger-hi);
+  font-weight: 700;
+}
+
 /* Estado físico (fatiga): barra que se llena y se "calienta" con el desgaste;
    fresco = verde, cansado = ámbar, reventado = rojo. */
 .fatigue-bar {
@@ -1927,6 +1993,20 @@ h1 {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+/* Cesiones: a section subheading and the "already lent out" muted row. */
+.mkt-subhead {
+  margin: 14px 0 6px;
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-muted, #9fb2d8);
+}
+
+.mkt-signing--muted {
+  opacity: 0.72;
 }
 
 .mkt-signing__name {

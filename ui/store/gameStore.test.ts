@@ -85,6 +85,32 @@ describe('gameStore career loop', () => {
     expect(s.career!.budget - budgetBefore).toBeLessThan(s.lastIncome!.total);
   });
 
+  it('lets the budget go into the red on continue (no clamp) and charges interest', () => {
+    useGameStore.getState().startCareer('barcelona');
+    playToEnd();
+    // Force a deeply overdrawn finish so income can't cover it: the club stays red.
+    const finished = useGameStore.getState().career!;
+    useGameStore.setState({ career: { ...finished, budget: -1_000_000_000 } });
+    useGameStore.getState().continueCareer();
+    const s = useGameStore.getState();
+    // The clamp-to-zero is gone: the club carries real debt into the new season.
+    expect(s.career!.budget).toBeLessThan(0);
+    // Interest was charged on the carried debt and surfaced for the market screen.
+    expect(s.lastInterest).not.toBeNull();
+    expect(s.lastInterest!).toBeGreaterThan(0);
+    // Sitting far past the credit limit starts the economic-sacking counter.
+    expect(s.career!.credit!.seasonsOverLimit).toBeGreaterThan(0);
+  });
+
+  it('requestCredit advances cash into the budget and books the loan', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const before = useGameStore.getState().career!;
+    useGameStore.getState().requestCredit(1_000_000);
+    const after = useGameStore.getState().career!;
+    expect(after.budget).toBe(before.budget + 1_000_000);
+    expect(after.credit!.loan).toBe((before.credit?.loan ?? 0) + 1_000_000);
+  });
+
   it('renewPlayer resets a contract term, raises the wage and debits the budget', () => {
     useGameStore.getState().startCareer('barcelona');
     const career = useGameStore.getState().career!;
