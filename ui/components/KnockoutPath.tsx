@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { narrateMatch, type HumanKnockoutStep } from '@game';
+import { type HumanKnockoutStep } from '@game';
 import { RetroPanel } from './RetroPanel';
 import { RetroButton } from './RetroButton';
-import { Ticker } from './Ticker';
+import { Ticker, buildMatchBeats } from './Ticker';
 
 interface KnockoutPathProps {
   /** The human's knockout run, round by round (empty when they didn't play). */
@@ -57,7 +57,7 @@ export function KnockoutPath({ steps, me, name, title = 'Tu recorrido' }: Knocko
                     </span>
                     <span className="scoreboard__team">{away}</span>
                   </p>
-                  <Ticker lines={narrateMatch(m, home, away)} />
+                  <Ticker items={buildMatchBeats(m, home, away, m.derby ?? false)} />
                 </div>
               ) : null}
             </li>
