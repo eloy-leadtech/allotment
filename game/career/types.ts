@@ -1,5 +1,5 @@
 import type { Player, TeamColors } from '@data';
-import type { Formation } from '@engine';
+import type { Formation, Pichichi, Zamora } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { BoardState } from './board';
@@ -45,6 +45,10 @@ export interface SeasonSummary {
   division?: Division;
   /** The human's final league position that season, 1-indexed (for Europe qualification). */
   humanPosition?: number;
+  /** Season top scorer (Pichichi). Absent in pre-trophies saves/seasons. */
+  pichichi?: Pichichi;
+  /** Season least-conceded keeper (Zamora). Absent in pre-trophies saves/seasons. */
+  zamora?: Zamora;
 }
 
 /**
