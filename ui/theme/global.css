@@ -1714,3 +1714,408 @@ h1 {
   filter: brightness(1.2);
   text-decoration-color: var(--c-accent);
 }
+
+/* ============================================================
+   GESTIÓN (scoped .gest-* / .table-* / .mkt-*) — pulido de las
+   pantallas de gestión: cabeceras uniformes de acero, tablas más
+   nítidas y legibles, y el mercado como fichas ordenadas. Todo
+   aditivo: no toca las clases del tema/despacho/partido.
+   ============================================================ */
+
+/* --- Cabecera uniforme de pantalla de gestión --------------- */
+/* Placa de acero: escudo/icono enmarcado + título + chips de dato,
+   el mismo lenguaje que la cabecera del despacho. */
+.gest-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: var(--space);
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.gest-head__crest {
+  flex: none;
+  width: 62px;
+  height: 62px;
+}
+
+/* Icono de sección en tesela de acero (cuando no hay escudo). */
+.gest-head__icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  font-size: 32px;
+  line-height: 1;
+  background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
+  border-top: 2px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.gest-head__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.gest-head__identity h1 {
+  margin: 0;
+  font-size: clamp(19px, 4.6vw, 27px);
+}
+
+.gest-head__sub {
+  color: var(--c-ink-dim);
+  font-family: var(--font-data);
+  letter-spacing: 0.3px;
+}
+
+.gest-head__chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Chip de dato: casquillo empotrado oscuro (igual que head-chip). */
+.gest-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 96px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.gest-chip__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.gest-chip__value {
+  font-family: var(--font-data);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.gest-chip--danger .gest-chip__value {
+  color: #ff8a8a;
+}
+
+.gest-chip--good .gest-chip__value {
+  color: #4fd07f;
+}
+
+/* --- Tabla de acero: capa de pulido sobre .squad-table -------- */
+/* Contenedor redondeado con cabecera de acero, cebra legible y filas
+   con realce al pasar el ratón. Se aplica junto a .squad-table. */
+.table-steel {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 0 0 1px var(--c-border);
+}
+
+.table-steel thead th {
+  background: linear-gradient(180deg, var(--c-panel-top) 0%, #24407a 60%, #16264a 100%);
+  color: var(--c-ink);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 9px 8px;
+  border-bottom: 2px solid var(--c-edge-dark);
+  box-shadow: inset 0 1px 0 var(--c-edge-light);
+  white-space: nowrap;
+}
+
+.table-steel tbody td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(58, 84, 144, 0.5);
+  vertical-align: middle;
+}
+
+.table-steel tbody tr:nth-child(odd) {
+  background: rgba(10, 10, 40, 0.22);
+}
+
+.table-steel tbody tr:nth-child(even) {
+  background: rgba(127, 159, 255, 0.07);
+}
+
+.table-steel tbody tr:hover {
+  background: rgba(127, 159, 255, 0.16);
+}
+
+.table-steel tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Fila "de baja" (lesionado/sancionado): atenuada pero legible. */
+.table-steel tbody tr.squad-row--out {
+  background: rgba(200, 30, 30, 0.1);
+}
+
+/* Casquillo de posición del jugador (POR/DEF/MED/DEL) en la tabla. */
+.pos-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 2px 8px;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #10142a;
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Tinte por línea, sutil, para leer la posición de un vistazo. */
+.pos-badge--POR { background: linear-gradient(180deg, #e6c05a, #b8901f); }
+.pos-badge--DEF { background: linear-gradient(180deg, #7fa8e0, #3a5fa0); color: #f0f4ff; }
+.pos-badge--MED { background: linear-gradient(180deg, #6fd08f, #2a7d4a); color: #f0fff4; }
+.pos-badge--DEL { background: linear-gradient(180deg, #e88a6a, #b8471f); color: #fff2ee; }
+
+/* --- Mercado: fichas de fichaje ------------------------------ */
+/* Cada objetivo es una ficha de acero con tres bloques: identidad,
+   condiciones (pide/cláusula/potencial) y controles de oferta. */
+.mkt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mkt-signing {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(92, 126, 174, 0.16), rgba(20, 32, 63, 0.35));
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(127, 159, 255, 0.25), 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.mkt-signing__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mkt-signing__name {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 15px;
+  min-width: 0;
+}
+
+/* Media (o rango de media) en casquillo empotrado a la derecha. */
+.mkt-media {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 3px 10px;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--c-accent);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.mkt-media small {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+
+/* Condiciones económicas como pares etiqueta/valor en línea. */
+.mkt-signing__terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-family: var(--font-data);
+  font-size: 13px;
+}
+
+.mkt-term {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+.mkt-term em {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.mkt-term strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-signing__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mkt-signing__actions .offer-input {
+  min-height: 40px;
+}
+
+/* Separador fino entre la línea de datos y los controles. */
+.mkt-signing__terms + .mkt-signing__actions {
+  padding-top: 8px;
+  border-top: 1px dashed var(--c-border);
+}
+
+/* --- Mercado: libro de ingresos (ledger) --------------------- */
+.mkt-ledger {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mkt-ledger__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 2px;
+  border-bottom: 1px dashed var(--c-border);
+  font-family: var(--font-data);
+}
+
+.mkt-ledger__row:last-child {
+  border-bottom: none;
+}
+
+.mkt-ledger__label {
+  color: var(--c-ink-dim);
+}
+
+.mkt-ledger__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.mkt-ledger__value--neg {
+  color: #ff8a8a;
+}
+
+/* Fila de balance: casquillo resaltado que cierra el desglose. */
+.mkt-ledger__row--balance {
+  margin-top: 6px;
+  padding: 9px 12px;
+  border-bottom: none;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.mkt-ledger__row--balance .mkt-ledger__label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink);
+}
+
+.mkt-ledger__row--balance .mkt-ledger__value {
+  font-size: 18px;
+}
+
+/* --- Fila destacada (nivel/oferta activa) -------------------- */
+/* Estadio y patrocinio: la opción vigente se marca con casquillo rojo. */
+.market-row--active {
+  background: linear-gradient(180deg, rgba(226, 75, 75, 0.22), rgba(143, 20, 20, 0.28));
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 156, 156, 0.4);
+}
+
+.market-row--active .market-name {
+  color: var(--c-ink);
+}
+
+/* --- Estilos que faltaban a clases ya usadas en el JSX ------- */
+/* .market-negotiate: separación clara entre bloques de una fila. */
+.market-negotiate {
+  gap: 6px 10px;
+}
+
+/* .press-notice: aviso de la rueda de prensa pendiente. */
+.press-notice {
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--c-accent);
+}
+
+/* .palmares-count: recuento grande de títulos de un grupo. */
+.palmares-count {
+  margin: 0 0 8px;
+  font-family: var(--font-data);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-accent);
+  text-shadow: 0 0 10px rgba(127, 159, 255, 0.4);
+}
+
+/* Palmarés: temporadas como pastillas de acero en línea. */
+.palmares--chips {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.palmares--chips li {
+  padding: 4px 12px;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+

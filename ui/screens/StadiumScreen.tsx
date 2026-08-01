@@ -12,6 +12,7 @@ import { getEstadio } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
+import { GestHeader } from '@ui/components/GestHeader';
 
 /** Flat per-division base gate (mirrors finances.ts) to project the taquilla. */
 const BASE_GATE = { primera: 12_000_000, segunda: 3_000_000 } as const;
@@ -50,10 +51,15 @@ export function StadiumScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>Estadio · {info?.nombre ?? 'Instalaciones'}</h1>
-        <span className="matchday">Presupuesto: {formatEuros(career.budget)}</span>
-      </header>
+      <GestHeader
+        icon="🏟️"
+        title="Estadio"
+        subtitle={info?.nombre ?? 'Instalaciones'}
+        chips={[
+          { label: 'Aforo', value: aforo.toLocaleString('es-ES') },
+          { label: 'Presupuesto', value: formatEuros(career.budget) },
+        ]}
+      />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
@@ -99,7 +105,7 @@ export function StadiumScreen() {
           {STADIUM_TIERS.map((tier, i) => {
             const on = i === stadium.capacityLevel;
             return (
-              <li key={i} className="market-row">
+              <li key={i} className={`market-row${on ? ' market-row--active' : ''}`}>
                 <span className="market-name">
                   {on ? '➡️ ' : ''}
                   {tier.label}

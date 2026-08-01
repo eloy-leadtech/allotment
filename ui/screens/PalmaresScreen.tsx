@@ -8,7 +8,7 @@ import {
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
-import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 
 /** Stable display order of the competitions in the palmarés. */
 const COMPETITION_ORDER: readonly PalmaresTitle['competition'][] = [
@@ -70,17 +70,12 @@ export function PalmaresScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>
-          <span className="team-cell">
-            <Crest teamId={career.humanTeamId} size={24} />
-            Palmarés · {clubName}
-          </span>
-        </h1>
-        <span className="matchday">
-          {total === 1 ? '1 título' : `${total} títulos`}
-        </span>
-      </header>
+      <GestHeader
+        crestTeamId={career.humanTeamId}
+        title="Palmarés"
+        subtitle={clubName}
+        chips={[{ label: 'Títulos', value: `${total}`, tone: total > 0 ? 'good' : undefined }]}
+      />
 
       {total === 0 ? (
         <p className="hint">
@@ -93,7 +88,7 @@ export function PalmaresScreen() {
             <p className="palmares-count">
               {group.icon} {group.temporadas.length}
             </p>
-            <ul className="palmares">
+            <ul className="palmares palmares--chips">
               {group.temporadas.map((temporada, i) => (
                 <li key={`${temporada}-${i}`}>{temporada}</li>
               ))}

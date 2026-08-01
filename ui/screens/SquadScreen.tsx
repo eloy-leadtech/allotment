@@ -13,7 +13,7 @@ import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
-import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 import { Stadium } from '@ui/components/Stadium';
 import { PotentialRange } from '@ui/components/PotentialRange';
 
@@ -119,23 +119,24 @@ export function SquadScreen() {
   const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
   const vestuario = squadMorale(seasonPlayers);
 
+  const vestuarioTier = scoreTier(vestuario);
+
   return (
     <main className="screen">
-      <section className="squad-card">
-        <div className="squad-card__crest crest-frame">
-          <Crest teamId={career.humanTeamId} size={72} />
-        </div>
-        <div className="squad-card__meta">
-          <h1>{team?.nombre ?? career.humanTeamId}</h1>
-          <span className="matchday">Plantilla · {career.temporada}</span>
-          <span className={`vestuario ${tierClass(scoreTier(vestuario))}`}>
-            Moral del vestuario: <strong>{vestuario}</strong>/100
-          </span>
-          <span className="matchday">
-            Masa salarial: <strong>{formatEuros(masaSalarial)}</strong>/año · Presupuesto: {formatEuros(career.budget)}
-          </span>
-        </div>
-      </section>
+      <GestHeader
+        crestTeamId={career.humanTeamId}
+        title={team?.nombre ?? career.humanTeamId}
+        subtitle={`Plantilla · ${career.temporada}`}
+        chips={[
+          {
+            label: 'Moral vestuario',
+            value: `${vestuario}`,
+            tone: vestuarioTier > 0 ? 'good' : vestuarioTier < 0 ? 'danger' : undefined,
+          },
+          { label: 'Masa salarial', value: `${formatEuros(masaSalarial)}/año`, tone: 'danger' },
+          { label: 'Presupuesto', value: formatEuros(career.budget) },
+        ]}
+      />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
@@ -143,7 +144,7 @@ export function SquadScreen() {
 
       <RetroPanel title="Plantilla">
         <div className="squad-scroll">
-          <table className="squad-table">
+          <table className="squad-table table-steel">
             <thead>
               <tr>
                 <th>Pos</th>
@@ -176,7 +177,7 @@ export function SquadScreen() {
                 const lastYear = contract?.yearsLeft === 1;
                 return (
                   <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
-                    <td>{p.posicion}</td>
+                    <td><span className={`pos-badge pos-badge--${p.posicion}`}>{p.posicion}</span></td>
                     <td className="squad-name">
                       <button type="button" className="player-link" onClick={() => openPlayer(p.id)}>
                         {p.nombre}

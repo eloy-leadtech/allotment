@@ -3,7 +3,7 @@ import type { Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
-import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 import { PotentialRange } from '@ui/components/PotentialRange';
 
 const POSITION_ORDER: Record<Position, number> = { POR: 0, DEF: 1, MED: 2, DEL: 3 };
@@ -32,22 +32,19 @@ export function YouthScreen() {
 
   return (
     <main className="screen">
-      <section className="squad-card">
-        <div className="squad-card__crest crest-frame">
-          <Crest teamId={career.humanTeamId} size={72} />
-        </div>
-        <div className="squad-card__meta">
-          <h1>{team?.nombre ?? career.humanTeamId}</h1>
-          <span className="matchday">Cantera · {career.temporada}</span>
-        </div>
-      </section>
+      <GestHeader
+        icon="🌱"
+        title="Cantera"
+        subtitle={`${team?.nombre ?? career.humanTeamId} · ${career.temporada}`}
+        chips={[{ label: 'Juveniles', value: `${prospects.length}` }]}
+      />
 
       <RetroPanel title="Juveniles">
         {prospects.length === 0 ? (
           <p className="hint">No hay juveniles en la cantera. La próxima pretemporada llegará una nueva hornada.</p>
         ) : (
           <div className="squad-scroll">
-            <table className="squad-table">
+            <table className="squad-table table-steel">
               <thead>
                 <tr>
                   <th>Pos</th>
@@ -65,7 +62,7 @@ export function YouthScreen() {
                   const range = prospectScoutRange(prospect, career.seed, career.seasonNumber);
                   return (
                     <tr key={p.id}>
-                      <td>{p.posicion}</td>
+                      <td><span className={`pos-badge pos-badge--${p.posicion}`}>{p.posicion}</span></td>
                       <td className="squad-name">{p.nombre}</td>
                       <td>{age ?? '—'}</td>
                       <td className="squad-media">{p.media}</td>
