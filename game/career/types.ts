@@ -7,6 +7,7 @@ import type { Contract } from './contracts';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
+import type { StadiumState } from './stadium';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -75,6 +76,8 @@ export interface CareerState {
   europa?: EuropaResult;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
+  /** The human club's stadium: its aforo/expansion level (drives gate income). */
+  stadium: StadiumState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human

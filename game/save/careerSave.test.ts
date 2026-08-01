@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective } from '../career/board';
+import { DEFAULT_STADIUM } from '../career/stadium';
 import { advanceMatchday, currentStandings, newSeason } from '../season/season';
 import type { CareerState, SeasonSummary } from '../career/types';
 import {
@@ -47,6 +48,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
       }),
     },
     budget: base.budget,
+    stadium: DEFAULT_STADIUM,
     teams,
     contracts: base.contracts,
     youthProspects: base.youthProspects,
@@ -161,6 +163,20 @@ describe('career save v2 (snapshot)', () => {
     expect(() => CareerSaveSchema.parse({ ...good, teams: 'not-an-array' })).toThrow();
     expect(() => CareerSaveSchema.parse({ ...good, seasonNumber: 0 })).toThrow();
     expect(() => CareerSaveSchema.parse({ ...good, version: 1 })).toThrow();
+  });
+
+  it('round-trips the stadium expansion level', () => {
+    const career = { ...evolvedCareer(4), stadium: { capacityLevel: 3 } };
+    const restored = restoreCareer(serializeCareer(career), league);
+    expect(restored.stadium).toEqual({ capacityLevel: 3 });
+  });
+
+  it('defaults the stadium to the base ground for a pre-estadio save', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { stadium?: unknown }).stadium;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.stadium).toEqual(DEFAULT_STADIUM);
   });
 
   it('round-trips the board objective and last verdict', () => {

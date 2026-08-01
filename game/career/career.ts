@@ -4,6 +4,7 @@ import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/s
 import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
 import { initialBudget } from './market';
+import { DEFAULT_STADIUM } from './stadium';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
@@ -88,6 +89,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     // A fresh career trains with a balanced focus until the manager changes it.
     training: { focus: DEFAULT_TRAINING_FOCUS },
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
+    // A fresh career starts with the base ground; enlarge it to grow the taquilla.
+    stadium: DEFAULT_STADIUM,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),

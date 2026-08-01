@@ -6,6 +6,7 @@ import { computeSeasonObjective, type BoardState } from '../career/board';
 import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
+import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
@@ -121,6 +122,10 @@ export const CareerSaveSchema = z.object({
     .optional(),
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
+  /** Human club's stadium; defaults to the base ground for pre-estadio saves. */
+  stadium: z
+    .object({ capacityLevel: z.number().int().min(0).max(MAX_STADIUM_LEVEL) })
+    .default({ ...DEFAULT_STADIUM }),
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -162,6 +167,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     tactics: career.tactics,
     training: career.training,
     budget: career.budget,
+    stadium: career.stadium,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -204,6 +210,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     // Pre-training saves default to a balanced focus so training is always present.
     training: save.training ?? { focus: DEFAULT_TRAINING_FOCUS },
     budget: save.budget,
+    // Pre-estadio saves default to the base ground so the stadium is always present.
+    stadium: save.stadium ?? DEFAULT_STADIUM,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,

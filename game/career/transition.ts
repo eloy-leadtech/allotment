@@ -218,6 +218,8 @@ export function applyTransition(
     training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
+    // The stadium you built stays yours into the next season.
+    stadium: career.stadium,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -336,6 +338,8 @@ export function applyDivisionChange(
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     budget: career.budget,
+    // The stadium you built moves with you across divisions.
+    stadium: career.stadium,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.

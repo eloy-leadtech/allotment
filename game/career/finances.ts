@@ -10,11 +10,12 @@
 import { currentStandings } from '../season/season';
 import type { CareerState } from './types';
 import type { KnockoutRound } from '../tournament/tournament';
+import { gateMultiplier } from './stadium';
 
 export interface SeasonIncome {
   /** TV rights (flat per division). */
   tv: number;
-  /** Gate receipts across the home matches (flat per division). */
+  /** Gate receipts across the home matches (per division, scaled by the aforo). */
   gate: number;
   /** League prize money, scaled by final position. */
   leaguePrize: number;
@@ -78,7 +79,9 @@ export function seasonIncome(career: CareerState): SeasonIncome {
   const rankFromBottom = table.length - position + 1; // 1 = last, N = first
 
   const tv = TV[division];
-  const gate = GATE[division];
+  // The taquilla scales with the stadium's aforo: a bigger ground you invested in
+  // brings in more gate money every season (see stadium.ts).
+  const gate = Math.round(GATE[division] * gateMultiplier(career.stadium));
   const leaguePrize = rankFromBottom * PRIZE_PER_RANK[division];
   const copa = copaIncome(career);
   const europa = europaIncome(career);

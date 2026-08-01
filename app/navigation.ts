@@ -11,6 +11,7 @@ export type Screen =
   | 'youth'
   | 'tactics'
   | 'training'
+  | 'stadium'
   | 'tournament'
   | 'copa'
   | 'europa'
