@@ -7,6 +7,7 @@ import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
+import { DEFAULT_SPONSOR } from '../career/sponsors';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
@@ -174,6 +175,10 @@ export const CareerSaveSchema = z.object({
   stadium: z
     .object({ capacityLevel: z.number().int().min(0).max(MAX_STADIUM_LEVEL) })
     .default({ ...DEFAULT_STADIUM }),
+  /** Human club's chosen sponsor; defaults to the basic tier for pre-patrocinios saves. */
+  sponsor: z
+    .object({ sponsorId: z.enum(['basico', 'estandar', 'ambicioso', 'premium']) })
+    .default({ ...DEFAULT_SPONSOR }),
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -222,6 +227,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     training: career.training,
     budget: career.budget,
     stadium: career.stadium,
+    sponsor: career.sponsor ?? DEFAULT_SPONSOR,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -270,6 +276,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     budget: save.budget,
     // Pre-estadio saves default to the base ground so the stadium is always present.
     stadium: save.stadium ?? DEFAULT_STADIUM,
+    // Pre-patrocinios saves default to the basic sponsor so it is always present.
+    sponsor: save.sponsor ?? DEFAULT_SPONSOR,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,

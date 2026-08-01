@@ -13,6 +13,7 @@ export type Screen =
   | 'tactics'
   | 'training'
   | 'stadium'
+  | 'sponsors'
   | 'tournament'
   | 'copa'
   | 'europa'

@@ -35,6 +35,7 @@ import {
   discardProspect,
   observePlayer,
   renewContract,
+  chooseSponsor,
   wageBill,
   formatEuros,
   toCompetitionTeam,
@@ -45,6 +46,7 @@ import {
   runTournament,
   TOURNAMENTS,
   type SeasonIncome,
+  type SponsorId,
   type CareerState,
   type CareerTactics,
   type TrainingState,
@@ -156,6 +158,7 @@ interface GameStore {
   discardYouth: (playerId: string) => void;
   scoutPlayer: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
+  chooseSponsor: (sponsorId: SponsorId) => void;
   expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
@@ -319,6 +322,14 @@ export const useGameStore = create<GameStore>((set, get) => {
       }
       // The squad is unchanged (only the wage book + budget), so keep the season.
       set({ career: result.career, marketMessage: null });
+    },
+    chooseSponsor: (sponsorId) => {
+      const { career } = get();
+      if (!career) return;
+      // Picking a sponsor is a pure decision: it changes no rosters and the money
+      // only lands at season end, so the in-progress season stays exactly as-is.
+      const next = chooseSponsor(career, sponsorId);
+      set({ career: next, marketMessage: null });
     },
     expandStadium: () => {
       const { career } = get();

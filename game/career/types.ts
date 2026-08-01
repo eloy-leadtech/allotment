@@ -8,6 +8,7 @@ import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
 import type { StadiumState } from './stadium';
+import type { SponsorState } from './sponsors';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -142,6 +143,12 @@ export interface CareerState {
   budget: number;
   /** The human club's stadium: its aforo/expansion level (drives gate income). */
   stadium: StadiumState;
+  /**
+   * The club's chosen main sponsor (a player DECISION → persisted in save v2).
+   * Optional so pre-patrocinios saves and the many places that build a career
+   * meta stay valid; absent means the basic sponsor (see DEFAULT_SPONSOR).
+   */
+  sponsor?: SponsorState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human
