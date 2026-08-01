@@ -145,6 +145,23 @@ describe('career save v2 (snapshot)', () => {
     expect(forms(restoredHuman)).toEqual(forms(human));
   });
 
+  it('reproduces fatigue exactly across a save/load round-trip (never persisted)', () => {
+    const career = evolvedCareer(8);
+    // The human XI has genuinely tired by now (the mechanic is live).
+    const human = career.season.teams.find((t) => t.id === humanTeamId);
+    expect(human?.players.some((p) => (p.fatigue ?? 0) > 0)).toBe(true);
+    // Fatigue is NOT part of the persisted payload (only teams + resume point).
+    const save = serializeCareer(career);
+    expect(JSON.stringify(save)).not.toMatch(/fatigue/);
+
+    const restored = restoreCareer(save, league);
+    const restoredHuman = restored.season.teams.find((t) => t.id === humanTeamId);
+    const fatigues = (team?: { players: { id: string; fatigue?: number }[] }) =>
+      (team?.players ?? []).map((p) => `${p.id}:${p.fatigue ?? 0}`).sort();
+    // Re-derived from a fresh start by replaying the season — reconstructed identically.
+    expect(fatigues(restoredHuman)).toEqual(fatigues(human));
+  });
+
   it('migrates a v1 season save into a season-1 career', () => {
     let state = newSeason(league, humanTeamId, 2024);
     for (let i = 0; i < 4; i += 1) state = advanceMatchday(state).state;

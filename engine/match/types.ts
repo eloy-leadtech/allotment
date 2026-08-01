@@ -49,6 +49,12 @@ export interface MatchPlayer {
   form?: number;
   /** Player morale (0-100, 50 neutral): medium-term, moved by results and minutes. */
   morale?: number;
+  /**
+   * Physical fatigue (0-100, 0 fresh): rises with minutes played, recovers with
+   * rest. Optional so existing fixtures stay valid; absent means fresh (no effect
+   * on the pitch). Feeds a small penalty multiplier into the effective ratings.
+   */
+  fatigue?: number;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */
