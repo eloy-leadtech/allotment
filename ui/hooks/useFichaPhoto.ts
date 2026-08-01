@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * Where the portrait images live (must end in `/`). Defaults to the standalone
+ * `pcfutbol-fotos` repo served by GitHub Pages, so fichas show real photos both
+ * in local dev and on the deployed web. When we package the native
+ * Windows/Android app, set `VITE_PHOTO_BASE` to a bundled local folder so it
+ * reads images off disk instead of hitting the network.
+ */
+const PHOTO_BASE =
+  (import.meta.env.VITE_PHOTO_BASE as string | undefined) ??
+  'https://eloy-leadtech.github.io/pcfutbol-fotos/';
+
 /** One player's photo record from the ficha-photo map. */
 export interface FichaPhotoEntry {
   /** BDFutbol player id; also the folder holding the images. */
@@ -59,5 +70,5 @@ export function useFichaPhoto(temporada: string, playerId: string | null): Ficha
   const entry = map[temporada]?.[playerId];
   const file = entry?.fotos[0];
   if (!entry || !file) return null;
-  return { src: `${import.meta.env.BASE_URL}fotos-bdf/${entry.bdf_id}/${file}`, entry };
+  return { src: `${PHOTO_BASE}${entry.bdf_id}/${file}`, entry };
 }
