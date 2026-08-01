@@ -67,7 +67,7 @@ export function TrainingScreen() {
         <RetroButton variant="primary" onClick={save}>
           Guardar entrenamiento
         </RetroButton>
-        <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
+        <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
       </div>
     </main>
   );

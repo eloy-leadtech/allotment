@@ -92,6 +92,7 @@ function FatigueBar({ fatigue }: { fatigue: number }) {
 export function SquadScreen() {
   const career = useGameStore((s) => s.career);
   const goTo = useGameStore((s) => s.goTo);
+  const openPlayer = useGameStore((s) => s.openPlayer);
   const renewPlayer = useGameStore((s) => s.renewPlayer);
   const marketMessage = useGameStore((s) => s.marketMessage);
 
@@ -176,7 +177,11 @@ export function SquadScreen() {
                 return (
                   <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
                     <td>{p.posicion}</td>
-                    <td className="squad-name">{p.nombre}</td>
+                    <td className="squad-name">
+                      <button type="button" className="player-link" onClick={() => openPlayer(p.id)}>
+                        {p.nombre}
+                      </button>
+                    </td>
                     <td>{age ?? '—'}</td>
                     <td className="squad-media">{p.media}</td>
                     <td>
@@ -213,8 +218,8 @@ export function SquadScreen() {
         </div>
 
         <p className="hint">
-          El ojeo es falible: el rango puede no contener el valor real y se estrecha (que no acierta más) con
-          el tiempo.
+          Pulsa el nombre de un jugador para ver su ficha completa. El ojeo es falible: el rango puede no
+          contener el valor real y se estrecha (que no acierta más) con el tiempo.
         </p>
       </RetroPanel>
 

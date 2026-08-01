@@ -282,6 +282,20 @@ h1 {
   font-weight: bold;
 }
 
+/* Derbi: banda roja de tensión antes del partido y sobre el marcador. */
+.derby-banner {
+  margin: 8px 0;
+  padding: 8px 14px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--c-danger);
+  border: 2px solid var(--c-ink);
+  border-radius: 6px;
+}
+
 /* Standings table — filas-cápsula metálicas del PCF7 (scr_026): cada equipo es
    una píldora biselada con rayado alterno; la posición va en un casquillo plateado
    y la fila del equipo humano se resalta con el acento rojo (estado activo). */
@@ -1181,4 +1195,352 @@ h1 {
 .stat-table th.standings__team,
 .stat-table td.standings__team {
   text-align: left;
+}
+
+/* ============================================================
+   DESPACHO — cabecera de club + rejilla de secciones agrupadas
+   ============================================================ */
+
+/* Cabecera del despacho: escudo enmarcado + identidad del club + chips de datos
+   (jornada, presupuesto) en placa de acero, para leer el estado de un vistazo. */
+.despacho-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: var(--space);
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.despacho-head__crest {
+  flex: none;
+  width: 68px;
+  height: 68px;
+}
+
+.despacho-head__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.despacho-head__identity h1 {
+  margin: 0;
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+.despacho-head__stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Chip de dato: casquillo empotrado oscuro con rótulo tenue + valor en acento. */
+.head-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 84px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.head-chip__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.head-chip__value {
+  font-family: var(--font-data);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+/* Secciones del despacho agrupadas por tema (equipo / competición / club…). */
+.despacho-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+.despacho-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Rótulo de grupo: tipografía de datos con casquillo rojo a la izquierda,
+   igual que los títulos de panel, para que todo lea como un sistema. */
+.despacho-group__label {
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  border-left: 4px solid var(--c-danger);
+  padding-left: 8px;
+}
+
+/* ============================================================
+   FICHA DE JUGADOR — cabecera, barras de atributos y estado
+   ============================================================ */
+
+/* Cabecera de ficha: escudo + identidad + gran media en casquillo. */
+.player-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: var(--space);
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.player-hero__crest {
+  flex: none;
+  width: 84px;
+  height: 84px;
+}
+
+.player-hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.player-hero__meta h1 {
+  margin: 0;
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+/* Media global en casquillo empotrado, como el marcador. */
+.player-hero__media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  min-width: 76px;
+  padding: 8px 14px;
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.player-hero__media-value {
+  font-family: var(--font-data);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  text-shadow: 0 0 10px rgba(127, 159, 255, 0.45);
+}
+
+.player-hero__media-label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+/* Rejilla de atributos: dos columnas en pantallas anchas, una en móvil. */
+.attr-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .attr-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+}
+
+.attr-row {
+  display: grid;
+  grid-template-columns: 88px 1fr 28px;
+  align-items: center;
+  gap: 8px;
+}
+
+.attr-label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  color: var(--c-ink-dim);
+}
+
+/* Carril empotrado + relleno con acento; el color lo fija el tier del atributo. */
+.attr-track {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.attr-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  transition: width 0.2s ease;
+}
+
+.attr-val {
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--c-ink);
+}
+
+/* Tiers de atributo (fijan currentColor para el relleno). */
+.attr--elite {
+  color: #3fbf6a;
+}
+.attr--good {
+  color: var(--c-accent);
+}
+.attr--avg {
+  color: #b7c24a;
+}
+.attr--low {
+  color: #d8901f;
+}
+.attr--na {
+  color: var(--c-ink-dim);
+}
+
+/* Bloque de estado: forma / moral / físico como barras con caption. */
+.vital-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vital-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.vital-label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.vital-track {
+  position: relative;
+  height: 12px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.vital-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  opacity: 0.9;
+  box-shadow: 0 0 8px currentColor;
+  transition: width 0.2s ease;
+}
+
+.vital-caption {
+  font-family: var(--font-data);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+/* Ficha de contrato/potencial en pares dato-valor. */
+.player-facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-fact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--c-border);
+}
+
+.player-fact:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.player-fact dt {
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.player-fact dd {
+  margin: 0;
+  text-align: right;
+}
+
+/* Enlace de nombre de jugador en la plantilla: abre su ficha. */
+.player-link {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--c-accent);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 159, 255, 0.4);
+  text-underline-offset: 2px;
+}
+
+.player-link:hover {
+  filter: brightness(1.2);
+  text-decoration-color: var(--c-accent);
 }

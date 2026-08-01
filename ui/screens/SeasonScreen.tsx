@@ -1,8 +1,16 @@
-import { currentStandings, isSeasonOver, teamName, latestHeadlines, selectPressQuestion } from '@game';
+import {
+  currentStandings,
+  isSeasonOver,
+  teamName,
+  latestHeadlines,
+  selectPressQuestion,
+  formatEuros,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { StandingsTable } from '@ui/components/StandingsTable';
+import { Crest } from '@ui/components/Crest';
 import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 export function SeasonScreen() {
@@ -34,13 +42,28 @@ export function SeasonScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>
-          {division === 'segunda' ? 'Segunda' : 'Primera'} {season.temporada}
-        </h1>
-        <span className="matchday">
-          {over ? 'Temporada terminada' : `Jornada ${season.currentMatchday} / ${season.totalMatchdays}`}
-        </span>
+      <header className="despacho-head">
+        <div className="despacho-head__crest crest-frame">
+          <Crest teamId={season.humanTeamId} size={56} />
+        </div>
+        <div className="despacho-head__identity">
+          <h1>{name(season.humanTeamId)}</h1>
+          <span className="matchday">
+            {division === 'segunda' ? 'Segunda División' : 'Primera División'} · {season.temporada}
+          </span>
+        </div>
+        <div className="despacho-head__stats">
+          <div className="head-chip">
+            <span className="head-chip__label">Jornada</span>
+            <span className="head-chip__value">
+              {over ? 'Fin' : `${season.currentMatchday}/${season.totalMatchdays}`}
+            </span>
+          </div>
+          <div className="head-chip">
+            <span className="head-chip__label">Presupuesto</span>
+            <span className="head-chip__value">{formatEuros(career?.budget ?? 0)}</span>
+          </div>
+        </div>
       </header>
 
       {champion ? <p className="champion">🏆 Campeón: {name(champion.teamId)}</p> : null}
@@ -110,66 +133,89 @@ export function SeasonScreen() {
         </RetroPanel>
       ) : null}
 
-      <nav className="despacho-nav" aria-label="Secciones">
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('squad')}>
-          <span className="despacho-tile__icon" aria-hidden="true">👥</span>
-          <span className="despacho-tile__label">Plantilla</span>
-        </button>
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
-          <span className="despacho-tile__label">Cantera</span>
-        </button>
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('ojeo')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
-          <span className="despacho-tile__label">Ojeo</span>
-        </button>
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
-          <span className="despacho-tile__icon" aria-hidden="true">📋</span>
-          <span className="despacho-tile__label">Táctica</span>
-        </button>
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('training')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
-          <span className="despacho-tile__label">Entrenamiento</span>
-        </button>
-        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('stadium')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🏟️</span>
-          <span className="despacho-tile__label">Estadio</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('sponsors')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🤝</span>
-          <span className="despacho-tile__label">Patrocinio</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('press')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🎙️</span>
-          <span className="despacho-tile__label">Prensa</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🏆</span>
-          <span className="despacho-tile__label">Copa</span>
-        </button>
-        {hasEuropa ? (
-          <button type="button" className="despacho-tile" onClick={() => goTo('europa')}>
-            <span className="despacho-tile__icon" aria-hidden="true">🌍</span>
-            <span className="despacho-tile__label">Europa</span>
-          </button>
-        ) : null}
-        <button type="button" className="despacho-tile" onClick={() => goTo('palmares')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
-          <span className="despacho-tile__label">Palmarés</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('stats')}>
-          <span className="despacho-tile__icon" aria-hidden="true">📊</span>
-          <span className="despacho-tile__label">Estadísticas</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('slots')}>
-          <span className="despacho-tile__icon" aria-hidden="true">💾</span>
-          <span className="despacho-tile__label">Guardar</span>
-        </button>
-        <button type="button" className="despacho-tile" onClick={() => goTo('title')}>
-          <span className="despacho-tile__icon" aria-hidden="true">🏠</span>
-          <span className="despacho-tile__label">Menú</span>
-        </button>
-      </nav>
+      <div className="despacho-groups">
+        <section className="despacho-group">
+          <h2 className="despacho-group__label">Equipo</h2>
+          <nav className="despacho-nav" aria-label="Equipo">
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('squad')}>
+              <span className="despacho-tile__icon" aria-hidden="true">👥</span>
+              <span className="despacho-tile__label">Plantilla</span>
+            </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
+              <span className="despacho-tile__icon" aria-hidden="true">📋</span>
+              <span className="despacho-tile__label">Táctica</span>
+            </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('training')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
+              <span className="despacho-tile__label">Entrenamiento</span>
+            </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
+              <span className="despacho-tile__label">Cantera</span>
+            </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('ojeo')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
+              <span className="despacho-tile__label">Ojeo</span>
+            </button>
+          </nav>
+        </section>
+
+        <section className="despacho-group">
+          <h2 className="despacho-group__label">Competición</h2>
+          <nav className="despacho-nav" aria-label="Competición">
+            <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🏆</span>
+              <span className="despacho-tile__label">Copa</span>
+            </button>
+            {hasEuropa ? (
+              <button type="button" className="despacho-tile" onClick={() => goTo('europa')}>
+                <span className="despacho-tile__icon" aria-hidden="true">🌍</span>
+                <span className="despacho-tile__label">Europa</span>
+              </button>
+            ) : null}
+            <button type="button" className="despacho-tile" onClick={() => goTo('stats')}>
+              <span className="despacho-tile__icon" aria-hidden="true">📊</span>
+              <span className="despacho-tile__label">Estadísticas</span>
+            </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('palmares')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
+              <span className="despacho-tile__label">Palmarés</span>
+            </button>
+          </nav>
+        </section>
+
+        <section className="despacho-group">
+          <h2 className="despacho-group__label">Club y economía</h2>
+          <nav className="despacho-nav" aria-label="Club y economía">
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('stadium')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🏟️</span>
+              <span className="despacho-tile__label">Estadio</span>
+            </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('sponsors')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🤝</span>
+              <span className="despacho-tile__label">Patrocinio</span>
+            </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('press')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🎙️</span>
+              <span className="despacho-tile__label">Prensa</span>
+            </button>
+          </nav>
+        </section>
+
+        <section className="despacho-group">
+          <h2 className="despacho-group__label">Partida</h2>
+          <nav className="despacho-nav" aria-label="Partida">
+            <button type="button" className="despacho-tile" onClick={() => goTo('slots')}>
+              <span className="despacho-tile__icon" aria-hidden="true">💾</span>
+              <span className="despacho-tile__label">Guardar</span>
+            </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('title')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🏠</span>
+              <span className="despacho-tile__label">Menú</span>
+            </button>
+          </nav>
+        </section>
+      </div>
     </main>
   );
 }

@@ -88,7 +88,7 @@ export function TacticsScreen() {
         <RetroButton variant="primary" onClick={save}>
           Guardar táctica
         </RetroButton>
-        <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
+        <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
       </div>
     </main>
   );

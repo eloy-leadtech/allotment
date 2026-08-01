@@ -102,4 +102,10 @@ export interface MatchResult {
   homeGoals: number;
   awayGoals: number;
   events: MatchEvent[];
+  /**
+   * Whether this fixture was a derbi (rivalry). Set by the simulation; optional
+   * so fixtures/results constructed by hand (e.g. tests) stay valid. When true,
+   * the teletipo and UI mark it as a derby and a light motivation boost applied.
+   */
+  derby?: boolean;
 }

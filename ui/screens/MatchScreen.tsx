@@ -1,4 +1,5 @@
 import { narrateMatch, teamName } from '@game';
+import { derbyName } from '@engine';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { Ticker } from '@ui/components/Ticker';
@@ -21,9 +22,15 @@ export function MatchScreen() {
   const home = teamName(season, match.homeId);
   const away = teamName(season, match.awayId);
   const lines = narrateMatch(match, home, away);
+  const derby = (match.derby ?? false) ? derbyName(match.homeId, match.awayId) : null;
 
   return (
     <main className="screen">
+      {derby ? (
+        <p className="derby-banner" role="note">
+          DERBI - {derby}
+        </p>
+      ) : null}
       <h1 className="scoreboard">
         <span className="scoreboard__side">
           <Crest teamId={match.homeId} size={36} />

@@ -22,6 +22,15 @@ export const MATCH_CONFIG = {
   strengthSlope: 0.03,
   /** Attack bonus for the home side (localía). */
   homeAttackBonus: 8,
+  /**
+   * Derby motivation: in a derbi both teams raise their intensity. It scales the
+   * OUTFIELD ratings (attack AND defense) of BOTH sides by `1 + derbyMotivation`,
+   * leaving the goalkeeper untouched. Because the change is symmetric and the
+   * keeper — the real regulator of the scoreline — is not touched, the goals/game
+   * average is preserved (the same reasoning the fatigue channel relies on); it
+   * only amplifies, ever so slightly, the quality gap between the two rivals.
+   */
+  derbyMotivation: 0.06,
   /** Booking attempts per team per half. */
   yellowAttemptsPerHalf: 6,
   /** A booking attempt sticks with probability 1/yellowChanceDenom. */

@@ -1,5 +1,5 @@
 import { nextHumanFixture, teamName, availabilityStatus } from '@game';
-import { fatigueTier, FRESH_FATIGUE } from '@engine';
+import { fatigueTier, FRESH_FATIGUE, derbyName } from '@engine';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -47,6 +47,7 @@ export function PrematchScreen() {
   const atHome = fixture.homeId === me;
   const rivalId = atHome ? fixture.awayId : fixture.homeId;
   const name = (id: string): string => teamName(season, id);
+  const derby = derbyName(fixture.homeId, fixture.awayId);
 
   return (
     <main className="screen">
@@ -54,6 +55,12 @@ export function PrematchScreen() {
         <h1>Jornada {season.currentMatchday}</h1>
         <span className="matchday">{atHome ? 'En casa' : 'Fuera'}</span>
       </header>
+
+      {derby ? (
+        <p className="derby-banner" role="note">
+          DERBI - {derby}: partido marcado en rojo, tension en las gradas
+        </p>
+      ) : null}
 
       <RetroPanel title="Tu partido">
         <h1 className="scoreboard">
