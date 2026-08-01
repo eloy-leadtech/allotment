@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
+import { computeSeasonObjective, type BoardState } from '../career/board';
 import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
@@ -69,6 +70,22 @@ const YouthProspectSchema = z.object({
   entrySeason: z.number().int().min(1),
 });
 
+const BoardObjectiveSchema = z.object({
+  type: z.enum(['title', 'europe', 'promotion', 'mid-table', 'avoid-relegation']),
+  targetPosition: z.number().int().min(1),
+});
+
+const BoardStateSchema = z.object({
+  objective: BoardObjectiveSchema,
+  lastEvaluation: z
+    .object({
+      satisfaction: z.enum(['contento', 'normal', 'enfadado']),
+      dismissed: z.boolean(),
+      shortfall: z.number().int(),
+    })
+    .optional(),
+});
+
 export const CareerSaveSchema = z.object({
   version: z.literal(CAREER_SAVE_VERSION),
   seed: z.number().int(),
@@ -80,6 +97,8 @@ export const CareerSaveSchema = z.object({
   relegationSpots: z.number().int().min(0),
   /** Human's division; defaults to primera for pre-pyramid saves. */
   division: z.enum(['primera', 'segunda']).default('primera'),
+  /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
+  board: BoardStateSchema.optional(),
   /** Human's tactics; absent means neutral auto-XI. */
   tactics: z
     .object({
@@ -124,6 +143,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     pointsForWin: career.pointsForWin,
     relegationSpots: career.relegationSpots,
     division: career.division,
+    board: career.board,
     tactics: career.tactics,
     budget: career.budget,
     teams,
@@ -136,6 +156,16 @@ export function serializeCareer(career: CareerState): CareerSave {
 
 /** Rebuild the full CareerState from a validated v2 save (self-contained snapshot). */
 function restoreCareerV2(save: CareerSave): CareerState {
+  // Pre-board saves have no objective persisted: recompute it deterministically
+  // from the snapshotted squads so the board relationship is always present.
+  const board: BoardState = save.board ?? {
+    objective: computeSeasonObjective({
+      teams: save.teams,
+      division: save.division,
+      humanTeamId: save.humanTeamId,
+      relegationSpots: save.relegationSpots,
+    }),
+  };
   const meta: Omit<CareerState, 'season' | 'history'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -145,6 +175,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     pointsForWin: save.pointsForWin,
     relegationSpots: save.relegationSpots,
     division: save.division,
+    board,
     tactics: save.tactics,
     budget: save.budget,
     teams: save.teams,

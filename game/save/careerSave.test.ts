@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import { newCareer, seasonFromCareer } from '../career/career';
+import { computeSeasonObjective } from '../career/board';
 import { advanceMatchday, currentStandings, newSeason } from '../season/season';
 import type { CareerState, SeasonSummary } from '../career/types';
 import {
@@ -37,6 +38,14 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     pointsForWin: base.pointsForWin,
     relegationSpots: base.relegationSpots,
     division: base.division,
+    board: {
+      objective: computeSeasonObjective({
+        teams,
+        division: base.division,
+        humanTeamId: base.humanTeamId,
+        relegationSpots: base.relegationSpots,
+      }),
+    },
     budget: base.budget,
     teams,
     youthProspects: base.youthProspects,
@@ -134,6 +143,29 @@ describe('career save v2 (snapshot)', () => {
     expect(() => CareerSaveSchema.parse({ ...good, teams: 'not-an-array' })).toThrow();
     expect(() => CareerSaveSchema.parse({ ...good, seasonNumber: 0 })).toThrow();
     expect(() => CareerSaveSchema.parse({ ...good, version: 1 })).toThrow();
+  });
+
+  it('round-trips the board objective and last verdict', () => {
+    const career = evolvedCareer(4);
+    const withVerdict: CareerState = {
+      ...career,
+      board: {
+        ...career.board,
+        lastEvaluation: { satisfaction: 'normal', dismissed: false, shortfall: 2 },
+      },
+    };
+    const restored = restoreCareer(serializeCareer(withVerdict), league);
+    expect(restored.board).toEqual(withVerdict.board);
+  });
+
+  it('recomputes the objective for a pre-board save (no board field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { board?: unknown }).board;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.board.objective.type).toBeDefined();
+    expect(restored.board.objective.targetPosition).toBeGreaterThanOrEqual(1);
+    expect(restored.board.lastEvaluation).toBeUndefined();
   });
 
   it('rejects a save from a different league', () => {

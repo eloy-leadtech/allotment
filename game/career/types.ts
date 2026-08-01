@@ -2,6 +2,7 @@ import type { Player, TeamColors } from '@data';
 import type { Formation } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
+import type { BoardState } from './board';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 
@@ -60,6 +61,8 @@ export interface CareerState {
   relegationSpots: number;
   /** Which division the human currently competes in. */
   division: Division;
+  /** The board relationship: this season's objective and last season's verdict. */
+  board: BoardState;
   /** The human's tactics for their matches; absent means neutral auto-XI. */
   tactics?: CareerTactics;
   /** This season's Copa del Rey (regenerated deterministically; not persisted). */

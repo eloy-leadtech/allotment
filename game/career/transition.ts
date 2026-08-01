@@ -19,6 +19,12 @@ import { developPlayer, seasonStartYear } from './development';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
+import {
+  computeSeasonObjective,
+  evaluateObjective,
+  type BoardState,
+  type ObjectiveEvaluation,
+} from './board';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -65,6 +71,32 @@ function finishedSummary(career: CareerState, championId: string) {
     championId,
     division: career.division,
     humanPosition: humanPosition(career),
+  };
+}
+
+/**
+ * The board state for the NEXT season: a fresh objective from the incoming
+ * squads/division plus the board's verdict on the season just finished (compared
+ * against the objective that WAS set for it).
+ */
+function nextBoardState(
+  finishedCareer: CareerState,
+  nextTeams: readonly CareerTeam[],
+  division: Division,
+  relegationSpots: number,
+): BoardState {
+  return {
+    objective: computeSeasonObjective({
+      teams: nextTeams,
+      division,
+      humanTeamId: finishedCareer.humanTeamId,
+      relegationSpots,
+    }),
+    lastEvaluation: evaluateObjective(
+      finishedCareer.board.objective,
+      humanPosition(finishedCareer),
+      careerOutcome(finishedCareer),
+    ),
   };
 }
 
@@ -166,6 +198,7 @@ export function applyTransition(
     relegationSpots: nextWorld.competicion.relegationSpots,
     // Same-division advance keeps the human where they were.
     division: career.division,
+    board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
     teams,
@@ -190,6 +223,20 @@ export function applyTransition(
 /** Standard promotion and relegation places for the career pyramid. */
 export const RELEGATION_PLACES = 3;
 export const PROMOTION_PLACES = 3;
+
+/**
+ * The board's verdict on the in-progress (finished) season: compares the human's
+ * real final position and promotion/relegation outcome against the objective the
+ * board set for it. Drives the season-end satisfaction banner and the dismissal
+ * decision, and matches the `lastEvaluation` the next season carries forward.
+ */
+export function endOfSeasonEvaluation(career: CareerState): ObjectiveEvaluation {
+  return evaluateObjective(
+    career.board.objective,
+    humanPosition(career),
+    careerOutcome(career),
+  );
+}
 
 /** The human's promotion/relegation outcome from their division's final table. */
 export function careerOutcome(career: CareerState): PromotionOutcome {
@@ -258,6 +305,7 @@ export function applyDivisionChange(
     pointsForWin: targetLeague.competicion.pointsForWin,
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
+    board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
     budget: career.budget,
     teams,
     // Age out overstaying prospects and breed the new pretemporada hornada.

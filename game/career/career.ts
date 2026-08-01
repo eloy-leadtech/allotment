@@ -5,6 +5,7 @@ import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { initialBudget } from './market';
 import { seasonStartYear } from './development';
 import { generateYouthBatch } from './cantera';
+import { computeSeasonObjective } from './board';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history). */
 type CareerMeta = Omit<CareerState, 'season' | 'history'>;
@@ -64,6 +65,7 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
   if (!humanTeam) {
     throw new Error(`Human team ${humanTeamId} is not in the league`);
   }
+  const relegationSpots = league.competicion.relegationSpots;
   const meta: CareerMeta = {
     seed,
     leagueId: league.id,
@@ -71,8 +73,16 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     seasonNumber: 1,
     temporada: league.temporada,
     pointsForWin: league.competicion.pointsForWin,
-    relegationSpots: league.competicion.relegationSpots,
+    relegationSpots,
     division: 'primera',
+    board: {
+      objective: computeSeasonObjective({
+        teams,
+        division: 'primera',
+        humanTeamId,
+        relegationSpots,
+      }),
+    },
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
     // Season 1's opening hornada of juveniles.

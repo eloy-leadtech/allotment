@@ -7,6 +7,8 @@ export * from './scouting';
 export * from './cantera';
 export * from './market';
 export * from './promotion';
+export * from './board';
+export * from './press';
 export * from './competitions';
 export * from './europa';
 export * from './finances';

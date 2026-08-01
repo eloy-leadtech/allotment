@@ -16,6 +16,7 @@ import {
   applyTransition,
   applyDivisionChange,
   careerOutcome,
+  endOfSeasonEvaluation,
   nextDivision,
   setCareerTactics,
   advanceMatchday,
@@ -257,6 +258,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;
+      // A sacked manager cannot carry on: the board ended their tenure.
+      if (endOfSeasonEvaluation(career).dismissed) return;
       // Seasons advance by year; the human's division depends on their result.
       const nextPrimera = nextSeasonByTemporada(career.temporada);
       if (!nextPrimera) return; // no more seasons available yet
