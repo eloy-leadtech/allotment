@@ -13,6 +13,7 @@ import { TrainingScreen } from '@ui/screens/TrainingScreen';
 import { TournamentScreen } from '@ui/screens/TournamentScreen';
 import { CopaScreen } from '@ui/screens/CopaScreen';
 import { EuropaScreen } from '@ui/screens/EuropaScreen';
+import { PalmaresScreen } from '@ui/screens/PalmaresScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
 import { SlotsScreen } from '@ui/screens/SlotsScreen';
 
@@ -48,6 +49,8 @@ export function App() {
       return <CopaScreen />;
     case 'europa':
       return <EuropaScreen />;
+    case 'palmares':
+      return <PalmaresScreen />;
     case 'match':
       return <MatchScreen />;
     case 'slots':

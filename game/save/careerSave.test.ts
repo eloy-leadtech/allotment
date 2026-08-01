@@ -29,7 +29,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
       ? { ...t, players: t.players.map((p) => ({ ...p, media: Math.max(1, p.media - 5) })) }
       : t,
   );
-  const meta: Omit<CareerState, 'season' | 'history'> = {
+  const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: base.seed,
     leagueId: base.leagueId,
     humanTeamId: base.humanTeamId,
@@ -58,7 +58,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
   const history: SeasonSummary[] = [
     { seasonNumber: 1, temporada: base.temporada, championId: humanTeamId },
   ];
-  return { ...meta, season, history };
+  return { ...meta, season, history, palmares: [] };
 }
 
 describe('career save v2 (snapshot)', () => {
@@ -199,6 +199,30 @@ describe('career save v2 (snapshot)', () => {
     delete (legacy as { training?: unknown }).training;
     const restored = restoreCareer(legacy, league);
     expect(restored.training).toEqual({ focus: 'equilibrado' });
+  });
+
+  it('round-trips the club palmarés exactly', () => {
+    const career = evolvedCareer(4);
+    const withPalmares: CareerState = {
+      ...career,
+      palmares: [
+        { competition: 'liga', division: 'segunda', seasonNumber: 1, temporada: '96/97' },
+        { competition: 'copa', seasonNumber: 2, temporada: '97/98' },
+        { competition: 'champions', seasonNumber: 2, temporada: '97/98' },
+      ],
+    };
+    const save = serializeCareer(withPalmares);
+    expect(save.palmares).toEqual(withPalmares.palmares);
+    const restored = restoreCareer(save, league);
+    expect(restored.palmares).toEqual(withPalmares.palmares);
+  });
+
+  it('defaults the palmarés to [] for a pre-palmarés save (no palmares field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { palmares?: unknown }).palmares;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.palmares).toEqual([]);
   });
 
   it('rejects a save from a different league', () => {

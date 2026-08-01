@@ -6,7 +6,7 @@ import { computeSeasonObjective, type BoardState } from '../career/board';
 import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
-import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
+import type { CareerState, CareerTeam, PalmaresTitle, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
 const CAREER_SAVE_VERSION = 2;
@@ -65,6 +65,14 @@ const SeasonSummarySchema = z.object({
   seasonNumber: z.number().int(),
   temporada: z.string().min(1),
   championId: z.string().min(1),
+});
+
+/** One palmarés title: the competition won and the season it was won in. */
+const PalmaresTitleSchema = z.object({
+  competition: z.enum(['liga', 'copa', 'champions', 'uefa']),
+  seasonNumber: z.number().int().min(1),
+  temporada: z.string().min(1),
+  division: z.enum(['primera', 'segunda']).optional(),
 });
 
 /** A squad contract: annual salary and full seasons remaining. */
@@ -127,6 +135,8 @@ export const CareerSaveSchema = z.object({
   /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
   youthProspects: z.array(YouthProspectSchema).default([]),
   history: z.array(SeasonSummarySchema),
+  /** The club's palmarés; defaults to [] for pre-palmarés saves. */
+  palmares: z.array(PalmaresTitleSchema).default([]),
   /** Next matchday to play in the in-progress season (1-indexed). */
   currentMatchday: z.number().int().min(1),
 });
@@ -148,6 +158,7 @@ function replaySeasonTo(state: SeasonState, targetMatchday: number): SeasonState
 export function serializeCareer(career: CareerState): CareerSave {
   const teams: CareerTeam[] = career.teams;
   const history: SeasonSummary[] = career.history;
+  const palmares: PalmaresTitle[] = career.palmares;
   return {
     version: CAREER_SAVE_VERSION,
     seed: career.seed,
@@ -166,6 +177,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     contracts: career.contracts,
     youthProspects: career.youthProspects,
     history,
+    palmares,
     // The in-progress season is derived from `teams`; only its resume point is saved.
     currentMatchday: career.season.currentMatchday,
   };
@@ -190,7 +202,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     Object.keys(save.contracts).length > 0
       ? save.contracts
       : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
-  const meta: Omit<CareerState, 'season' | 'history'> = {
+  const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: save.seed,
     leagueId: save.leagueId,
     humanTeamId: save.humanTeamId,
@@ -209,7 +221,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     youthProspects: save.youthProspects,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
-  return { ...meta, season, history: save.history };
+  return { ...meta, season, history: save.history, palmares: save.palmares };
 }
 
 /**

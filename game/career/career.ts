@@ -9,8 +9,8 @@ import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
 
-/** Everything `seasonFromCareer` needs (the career minus its derived season/history). */
-type CareerMeta = Omit<CareerState, 'season' | 'history'>;
+/** Everything `seasonFromCareer` needs (the career minus its derived season/history/palmarés). */
+type CareerMeta = Omit<CareerState, 'season' | 'history' | 'palmares'>;
 
 /**
  * Build the engine tactics for a match team from career tactics: resolve the
@@ -99,7 +99,7 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
       humanTeamId,
     }),
   };
-  return { ...meta, season: seasonFromCareer(meta), history: [] };
+  return { ...meta, season: seasonFromCareer(meta), history: [], palmares: [] };
 }
 
 /** Resolve a team id to its display name in the career. */

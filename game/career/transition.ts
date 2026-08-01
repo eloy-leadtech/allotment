@@ -20,6 +20,7 @@ import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
+import { titlesWonThisSeason } from './palmares';
 import {
   computeSeasonObjective,
   evaluateObjective,
@@ -233,6 +234,8 @@ export function applyTransition(
     ...meta,
     season: seasonFromCareer(meta),
     history: [...career.history, finishedSummary(career, preview.championId)],
+    // Record any title the human won this season before advancing.
+    palmares: [...career.palmares, ...titlesWonThisSeason(career, preview.championId)],
   };
 }
 
@@ -346,9 +349,12 @@ export function applyDivisionChange(
       humanTeamId: career.humanTeamId,
     }),
   };
+  const champ = championOf(career);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, championOf(career))],
+    history: [...career.history, finishedSummary(career, champ)],
+    // Record any title the human won this season before changing division.
+    palmares: [...career.palmares, ...titlesWonThisSeason(career, champ)],
   };
 }
