@@ -8,6 +8,7 @@ import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import { DEFAULT_SPONSOR } from '../career/sponsors';
+import { DEFAULT_LOANS } from '../career/loans';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
@@ -103,6 +104,22 @@ const ContractSchema = z.object({
   yearsLeft: z.number().int().min(1),
 });
 
+/** A player away on loan: his snapshot + set-aside deal, the club and season. */
+const LoanedOutSchema = z.object({
+  player: PlayerSchema,
+  contract: ContractSchema,
+  toClubId: z.string().min(1),
+  seasonNumber: z.number().int().min(1),
+});
+
+/** The club's loan book; defaults to empty for pre-cesiones saves. */
+const LoansStateSchema = z
+  .object({
+    out: z.array(LoanedOutSchema).default([]),
+    in: z.array(z.string()).default([]),
+  })
+  .default({ out: [], in: [] });
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -179,6 +196,8 @@ export const CareerSaveSchema = z.object({
   sponsor: z
     .object({ sponsorId: z.enum(['basico', 'estandar', 'ambicioso', 'premium']) })
     .default({ ...DEFAULT_SPONSOR }),
+  /** Loan book (out/in); defaults to empty for pre-cesiones saves. */
+  loans: LoansStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -228,6 +247,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     budget: career.budget,
     stadium: career.stadium,
     sponsor: career.sponsor ?? DEFAULT_SPONSOR,
+    loans: career.loans ?? DEFAULT_LOANS,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -278,6 +298,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     stadium: save.stadium ?? DEFAULT_STADIUM,
     // Pre-patrocinios saves default to the basic sponsor so it is always present.
     sponsor: save.sponsor ?? DEFAULT_SPONSOR,
+    // Pre-cesiones saves have no loan book: default to empty (schema default).
+    loans: save.loans,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,

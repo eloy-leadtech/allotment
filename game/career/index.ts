@@ -19,4 +19,5 @@ export * from './palmares';
 export * from './finances';
 export * from './stadium';
 export * from './sponsors';
+export * from './loans';
 export * from './awards';

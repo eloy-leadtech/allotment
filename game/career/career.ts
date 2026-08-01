@@ -6,6 +6,7 @@ import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
 import { initialBudget } from './market';
 import { DEFAULT_STADIUM } from './stadium';
 import { DEFAULT_SPONSOR } from './sponsors';
+import { DEFAULT_LOANS } from './loans';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
@@ -94,6 +95,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     stadium: DEFAULT_STADIUM,
     // A fresh career signs the basic sponsor until the manager picks a better offer.
     sponsor: DEFAULT_SPONSOR,
+    // A fresh career has nobody out or in on loan.
+    loans: DEFAULT_LOANS,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),
