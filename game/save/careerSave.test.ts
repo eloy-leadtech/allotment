@@ -168,6 +168,21 @@ describe('career save v2 (snapshot)', () => {
     expect(restored.board.lastEvaluation).toBeUndefined();
   });
 
+  it('round-trips the training focus', () => {
+    const career = evolvedCareer(4);
+    const withFocus: CareerState = { ...career, training: { focus: 'ataque' } };
+    const restored = restoreCareer(serializeCareer(withFocus), league);
+    expect(restored.training).toEqual({ focus: 'ataque' });
+  });
+
+  it('defaults the training focus for a pre-training save (no training field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { training?: unknown }).training;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.training).toEqual({ focus: 'equilibrado' });
+  });
+
   it('rejects a save from a different league', () => {
     const save = serializeCareer(evolvedCareer(1));
     const other = loadPrimera9798();

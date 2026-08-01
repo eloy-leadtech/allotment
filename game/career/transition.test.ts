@@ -192,6 +192,41 @@ describe('applyTransition dedup (synthetic)', () => {
     expect(noPersonInTwoClubs(next.teams)).toBe(true);
   });
 
+  it('applies the training focus to a retained player and carries the focus forward', () => {
+    // A YOUNG departure (age 19 in 99/00) so the focus clearly moves attributes.
+    const season1 = league('t-9899', '98/99', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-kid-1980', 'Kid', '1980-01-01')] },
+      { id: 'rival', nombre: 'Rival', jugadores: [player('rival-guy-1979', 'RivalGuy', '1979-01-01')] },
+    ]);
+    const season2 = league('t-9900', '99/00', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-new-1982', 'New', '1982-01-01')] },
+      {
+        id: 'rival',
+        nombre: 'Rival',
+        jugadores: [
+          player('rival-guy-1979', 'RivalGuy', '1979-01-01'),
+          player('rival-kid-1980', 'Kid', '1980-01-01'), // Kid moved to rival
+        ],
+      },
+    ]);
+    const base = newCareer(season1, 'you', 7);
+    const retain = new Set(['you-kid-1980']);
+
+    const atk = applyTransition({ ...base, training: { focus: 'ataque' } }, season2, retain);
+    const def = applyTransition({ ...base, training: { focus: 'defensa' } }, season2, retain);
+
+    const kidAtk = atk.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    const kidDef = def.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    expect(kidAtk).toBeDefined();
+    expect(kidDef).toBeDefined();
+    // Attacking training grows shooting more; defensive training grows tackling more.
+    expect(kidAtk!.atributos.remate).toBeGreaterThan(kidDef!.atributos.remate);
+    expect(kidDef!.atributos.entrada).toBeGreaterThan(kidAtk!.atributos.entrada);
+    // The chosen focus is carried into the next season.
+    expect(atk.training?.focus).toBe('ataque');
+    expect(def.training?.focus).toBe('defensa');
+  });
+
   it('releasing (not retaining) leaves the real world untouched', () => {
     const season1 = league('t-9899', '98/99', [
       { id: 'you', nombre: 'You', jugadores: [player('you-nomad-1978', 'Nomad', '1978-01-01')] },

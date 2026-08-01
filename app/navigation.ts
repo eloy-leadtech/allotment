@@ -10,6 +10,7 @@ export type Screen =
   | 'squad'
   | 'youth'
   | 'tactics'
+  | 'training'
   | 'tournament'
   | 'copa'
   | 'europa'

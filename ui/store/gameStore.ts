@@ -19,6 +19,7 @@ import {
   endOfSeasonEvaluation,
   nextDivision,
   setCareerTactics,
+  setCareerTraining,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -40,6 +41,7 @@ import {
   type SeasonIncome,
   type CareerState,
   type CareerTactics,
+  type TrainingState,
   type SeasonState,
   type TournamentResult,
   type Bid,
@@ -140,6 +142,7 @@ interface GameStore {
   watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
+  setTraining: (training: TrainingState) => void;
   promoteYouth: (playerId: string) => void;
   discardYouth: (playerId: string) => void;
   startTournament: (tournamentId: string, nationId: string) => void;
@@ -241,6 +244,13 @@ export const useGameStore = create<GameStore>((set, get) => {
       const { career } = get();
       if (!career) return;
       const next = setCareerTactics(career, tactics);
+      set({ career: next, season: next.season });
+    },
+    setTraining: (training) => {
+      const { career } = get();
+      if (!career) return;
+      // Training never resets played matchdays; it shapes next season's development.
+      const next = setCareerTraining(career, training);
       set({ career: next, season: next.season });
     },
     promoteYouth: (playerId) => {

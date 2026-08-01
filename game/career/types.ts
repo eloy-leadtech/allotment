@@ -5,6 +5,7 @@ import type { Division } from './promotion';
 import type { BoardState } from './board';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
+import type { TrainingState } from './training';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -65,6 +66,8 @@ export interface CareerState {
   board: BoardState;
   /** The human's tactics for their matches; absent means neutral auto-XI. */
   tactics?: CareerTactics;
+  /** The season's training focus for the human club; absent means the default (equilibrado). */
+  training?: TrainingState;
   /** This season's Copa del Rey (regenerated deterministically; not persisted). */
   copa?: CopaResult;
   /** This season's European competition (regenerated deterministically; not persisted). */
