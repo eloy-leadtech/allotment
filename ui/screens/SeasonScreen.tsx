@@ -1,4 +1,4 @@
-import { currentStandings, isSeasonOver, teamName, latestHeadlines } from '@game';
+import { currentStandings, isSeasonOver, teamName, latestHeadlines, selectPressQuestion } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -30,6 +30,7 @@ export function SeasonScreen() {
   const champion = over ? table[0] : undefined;
   const board = career?.board;
   const headlines = career ? latestHeadlines(career, 6) : [];
+  const pressPending = career ? selectPressQuestion(career) : null;
 
   return (
     <main className="screen">
@@ -55,6 +56,15 @@ export function SeasonScreen() {
           <RetroButton onClick={playNextMatchday}>Simular jornada</RetroButton>
         </div>
       )}
+
+      {pressPending ? (
+        <RetroPanel title="Rueda de prensa">
+          <p className="press-notice">🎙️ La prensa espera tus declaraciones.</p>
+          <RetroButton variant="primary" onClick={() => goTo('press')}>
+            Comparecer →
+          </RetroButton>
+        </RetroPanel>
+      ) : null}
 
       {board ? (
         <RetroPanel title="Objetivo de la directiva">
@@ -124,6 +134,10 @@ export function SeasonScreen() {
         <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('stadium')}>
           <span className="despacho-tile__icon" aria-hidden="true">🏟️</span>
           <span className="despacho-tile__label">Estadio</span>
+        </button>
+        <button type="button" className="despacho-tile" onClick={() => goTo('press')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🎙️</span>
+          <span className="despacho-tile__label">Prensa</span>
         </button>
         <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
           <span className="despacho-tile__icon" aria-hidden="true">🏆</span>
