@@ -11,6 +11,7 @@
  */
 import { createRng, hashSeed, type Rng } from '@engine';
 import type { Attributes, Player, Position } from '@data';
+import { trainingAttributeDelta, type TrainingFocus } from './training';
 
 /** Attributes that fade with age (athleticism). */
 const PHYSICAL: readonly (keyof Attributes)[] = ['agresividad', 'resistencia', 'velocidad', 'fisico'];
@@ -35,6 +36,12 @@ export interface DevelopmentContext {
   seasonNumber: number;
   /** Calendar start year of that season, e.g. 1997 for "97/98". */
   seasonStartYear: number;
+  /**
+   * The human club's training focus this season, if this player belongs to it.
+   * Layers a MODERATE, deterministic trend nudge on top of the aging curve
+   * (see training.ts). Absent means no focus (AI clubs, or the neutral default).
+   */
+  training?: TrainingFocus;
 }
 
 export interface DevelopmentResult {
@@ -132,6 +139,10 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
   const trend = ageTrend(age);
   const factor = player.esPortero ? GK_TREND_FACTOR : 1;
   const before = { ...player.atributos };
+  // Training focus (if any) adds a deterministic per-attribute nudge on top of
+  // the age trend; no focus (AI clubs / neutral default) means a zero delta.
+  const train = (key: keyof Attributes): number =>
+    ctx.training ? trainingAttributeDelta(ctx.training, key, age) : 0;
 
   const next: Attributes = { ...player.atributos };
   // Fixed attribute order for stable RNG consumption within this player.
@@ -139,17 +150,17 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
     const value = before[key];
     if (value === null) continue; // physical attrs are never null; guard for the type
     const ceil = player.potencial ? player.potencial[key] : null;
-    next[key] = driftValue(value, trend.phys * factor, ceil, rng);
+    next[key] = driftValue(value, trend.phys * factor + train(key), ceil, rng);
   }
   for (const key of TECHNICAL) {
     const value = before[key];
     if (value === null) continue; // technical attrs are never null; guard for the type
     const ceil = player.potencial ? player.potencial[key] : null;
-    next[key] = driftValue(value, trend.tech * factor, ceil, rng);
+    next[key] = driftValue(value, trend.tech * factor + train(key), ceil, rng);
   }
   if (before.calidad !== null) {
     const ceil = player.potencial ? player.potencial.calidad : null;
-    next.calidad = driftValue(before.calidad, trend.tech * factor, ceil, rng);
+    next.calidad = driftValue(before.calidad, trend.tech * factor + train('calidad'), ceil, rng);
   }
 
   // Move media by the SAME delta the position-weighted core moved (never absolute).

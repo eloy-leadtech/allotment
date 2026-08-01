@@ -2,6 +2,10 @@ import { z } from 'zod';
 import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
+import { computeSeasonObjective, type BoardState } from '../career/board';
+import { initialContracts, type Contract } from '../career/contracts';
+import { seasonStartYear } from '../career/development';
+import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
@@ -63,6 +67,34 @@ const SeasonSummarySchema = z.object({
   championId: z.string().min(1),
 });
 
+/** A squad contract: annual salary and full seasons remaining. */
+const ContractSchema = z.object({
+  salary: z.number().int().min(0),
+  yearsLeft: z.number().int().min(1),
+});
+
+/** A youth-academy prospect: its full player data plus its entry season. */
+const YouthProspectSchema = z.object({
+  player: PlayerSchema,
+  entrySeason: z.number().int().min(1),
+});
+
+const BoardObjectiveSchema = z.object({
+  type: z.enum(['title', 'europe', 'promotion', 'mid-table', 'avoid-relegation']),
+  targetPosition: z.number().int().min(1),
+});
+
+const BoardStateSchema = z.object({
+  objective: BoardObjectiveSchema,
+  lastEvaluation: z
+    .object({
+      satisfaction: z.enum(['contento', 'normal', 'enfadado']),
+      dismissed: z.boolean(),
+      shortfall: z.number().int(),
+    })
+    .optional(),
+});
+
 export const CareerSaveSchema = z.object({
   version: z.literal(CAREER_SAVE_VERSION),
   seed: z.number().int(),
@@ -74,6 +106,8 @@ export const CareerSaveSchema = z.object({
   relegationSpots: z.number().int().min(0),
   /** Human's division; defaults to primera for pre-pyramid saves. */
   division: z.enum(['primera', 'segunda']).default('primera'),
+  /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
+  board: BoardStateSchema.optional(),
   /** Human's tactics; absent means neutral auto-XI. */
   tactics: z
     .object({
@@ -81,9 +115,17 @@ export const CareerSaveSchema = z.object({
       xiIds: z.array(z.string()).optional(),
     })
     .optional(),
+  /** Human's training focus; absent in pre-training saves (defaults on load). */
+  training: z
+    .object({ focus: z.enum(['ataque', 'defensa', 'fisico', 'equilibrado']) })
+    .optional(),
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
+  /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
+  contracts: z.record(z.string(), ContractSchema).default({}),
+  /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
+  youthProspects: z.array(YouthProspectSchema).default([]),
   history: z.array(SeasonSummarySchema),
   /** Next matchday to play in the in-progress season (1-indexed). */
   currentMatchday: z.number().int().min(1),
@@ -116,9 +158,13 @@ export function serializeCareer(career: CareerState): CareerSave {
     pointsForWin: career.pointsForWin,
     relegationSpots: career.relegationSpots,
     division: career.division,
+    board: career.board,
     tactics: career.tactics,
+    training: career.training,
     budget: career.budget,
     teams,
+    contracts: career.contracts,
+    youthProspects: career.youthProspects,
     history,
     // The in-progress season is derived from `teams`; only its resume point is saved.
     currentMatchday: career.season.currentMatchday,
@@ -127,6 +173,23 @@ export function serializeCareer(career: CareerState): CareerSave {
 
 /** Rebuild the full CareerState from a validated v2 save (self-contained snapshot). */
 function restoreCareerV2(save: CareerSave): CareerState {
+  // Pre-board saves have no objective persisted: recompute it deterministically
+  // from the snapshotted squads so the board relationship is always present.
+  const board: BoardState = save.board ?? {
+    objective: computeSeasonObjective({
+      teams: save.teams,
+      division: save.division,
+      humanTeamId: save.humanTeamId,
+      relegationSpots: save.relegationSpots,
+    }),
+  };
+  // Pre-contract saves have no wage book: recompute deterministic initial deals
+  // from the snapshotted squad so the masa salarial is always present on load.
+  const humanPlayers = save.teams.find((t) => t.id === save.humanTeamId)?.players ?? [];
+  const contracts: Record<string, Contract> =
+    Object.keys(save.contracts).length > 0
+      ? save.contracts
+      : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
   const meta: Omit<CareerState, 'season' | 'history'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -136,9 +199,14 @@ function restoreCareerV2(save: CareerSave): CareerState {
     pointsForWin: save.pointsForWin,
     relegationSpots: save.relegationSpots,
     division: save.division,
+    board,
     tactics: save.tactics,
+    // Pre-training saves default to a balanced focus so training is always present.
+    training: save.training ?? { focus: DEFAULT_TRAINING_FOCUS },
     budget: save.budget,
     teams: save.teams,
+    contracts,
+    youthProspects: save.youthProspects,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
   return { ...meta, season, history: save.history };

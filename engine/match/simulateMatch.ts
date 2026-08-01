@@ -1,4 +1,4 @@
-import { createRng, type Rng } from '../rng';
+import { createRng, hashSeed, type Rng } from '../rng';
 import { MATCH_CONFIG } from './config';
 import { selectStartingXI } from './lineup';
 import { computeStrength, type TeamStrength } from './strength';
@@ -115,6 +115,27 @@ export function simulateMatch(input: MatchInput): MatchResult {
         const player = pickWeighted(side.xi, MATCH_CONFIG.cardWeights, rng);
         const min = phase.start + rng.int(phase.length);
         events.push({ min, type: 'red', team: side.key, playerId: player.id, playerName: player.nombre });
+      }
+    }
+  }
+
+  // Injuries: rolled on a dedicated RNG (seed derived per player) so they are
+  // deterministic per season+jornada+player yet never disturb the goal/card
+  // stream above. Only fielded players (the XI) can get injured.
+  for (const side of sides) {
+    for (const player of side.xi) {
+      const injuryRng = createRng(hashSeed(input.seed, 'injury', player.id));
+      if (injuryRng.int(MATCH_CONFIG.injuryChanceDenom) === 0) {
+        const matchesOut = injuryRng.int(MATCH_CONFIG.injuryMaxMatches) + 1;
+        const min = 1 + injuryRng.int(90);
+        events.push({
+          min,
+          type: 'injury',
+          team: side.key,
+          playerId: player.id,
+          playerName: player.nombre,
+          matchesOut,
+        });
       }
     }
   }

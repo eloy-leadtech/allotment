@@ -1,11 +1,13 @@
-import { currentStandings, isSeasonOver, teamName } from '@game';
+import { currentStandings, isSeasonOver, teamName, latestHeadlines } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { StandingsTable } from '@ui/components/StandingsTable';
+import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 export function SeasonScreen() {
   const season = useGameStore((s) => s.season);
+  const career = useGameStore((s) => s.career);
   const division = useGameStore((s) => s.career?.division ?? 'primera');
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
@@ -26,6 +28,8 @@ export function SeasonScreen() {
   const table = currentStandings(season);
   const over = isSeasonOver(season);
   const champion = over ? table[0] : undefined;
+  const board = career?.board;
+  const headlines = career ? latestHeadlines(career, 6) : [];
 
   return (
     <main className="screen">
@@ -52,7 +56,35 @@ export function SeasonScreen() {
         </div>
       )}
 
+      {board ? (
+        <RetroPanel title="Objetivo de la directiva">
+          <p className="board-objective">
+            🎯 {objectiveLabel(board.objective.type)}{' '}
+            <span className="hint">(no peor que el puesto {board.objective.targetPosition})</span>
+          </p>
+          {board.lastEvaluation ? (
+            <p className={`board-mood board-mood--${board.lastEvaluation.satisfaction}`}>
+              {satisfactionIcon(board.lastEvaluation.satisfaction)}{' '}
+              {satisfactionLabel(board.lastEvaluation.satisfaction)}{' '}
+              <span className="hint">(temporada anterior)</span>
+            </p>
+          ) : null}
+        </RetroPanel>
+      ) : null}
+
       <StandingsTable rows={table} teamName={name} highlightTeamId={season.humanTeamId} />
+
+      {headlines.length > 0 ? (
+        <RetroPanel title="Prensa">
+          <ul className="press-feed">
+            {headlines.map((h, i) => (
+              <li key={`${h.matchday}-${i}`} className="press-line">
+                <span className="press-matchday">J{h.matchday}</span> {h.text}
+              </li>
+            ))}
+          </ul>
+        </RetroPanel>
+      ) : null}
 
       {lastResults.length > 0 ? (
         <RetroPanel title="Resultados de la última jornada">
@@ -73,9 +105,17 @@ export function SeasonScreen() {
           <span className="despacho-tile__icon" aria-hidden="true">👥</span>
           <span className="despacho-tile__label">Plantilla</span>
         </button>
+        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
+          <span className="despacho-tile__label">Cantera</span>
+        </button>
         <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
           <span className="despacho-tile__icon" aria-hidden="true">📋</span>
           <span className="despacho-tile__label">Táctica</span>
+        </button>
+        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('training')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
+          <span className="despacho-tile__label">Entrenamiento</span>
         </button>
         <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
           <span className="despacho-tile__icon" aria-hidden="true">🏆</span>

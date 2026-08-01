@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { buyableListings, formatEuros, careerTeamName } from '@game';
+import { buyableListings, formatEuros, careerTeamName, squadWageBill } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -12,6 +12,7 @@ export function MarketScreen() {
   const career = useGameStore((s) => s.career);
   const bids = useGameStore((s) => s.bids);
   const lastIncome = useGameStore((s) => s.lastIncome);
+  const lastWageBill = useGameStore((s) => s.lastWageBill);
   const marketMessage = useGameStore((s) => s.marketMessage);
   const counterOffer = useGameStore((s) => s.counterOffer);
   const makeOffer = useGameStore((s) => s.makeOffer);
@@ -39,7 +40,9 @@ export function MarketScreen() {
     );
   }
 
-  const mySquad = career.teams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const myTeam = career.teams.find((t) => t.id === career.humanTeamId);
+  const mySquad = myTeam?.players ?? [];
+  const currentWages = myTeam ? squadWageBill(myTeam, career.contracts) : 0;
   const nameById = new Map(mySquad.map((p) => [p.id, p.nombre]));
   // A bid is only valid while you still own that player.
   const openBids = bids.filter((b) => nameById.has(b.playerId));
@@ -49,7 +52,9 @@ export function MarketScreen() {
     <main className="screen">
       <header className="season-head">
         <h1>Mercado de fichajes · {career.temporada}</h1>
-        <span className="matchday">Presupuesto: {formatEuros(career.budget)}</span>
+        <span className="matchday">
+          Presupuesto: {formatEuros(career.budget)} · Masa salarial: {formatEuros(currentWages)}/año
+        </span>
       </header>
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
@@ -65,6 +70,18 @@ export function MarketScreen() {
             ) : null}
             {lastIncome.europa > 0 ? (
               <li className="market-row"><span className="market-name">Competición europea</span><span className="hint">{formatEuros(lastIncome.europa)}</span></li>
+            ) : null}
+            {lastWageBill != null ? (
+              <li className="market-row">
+                <span className="market-name">Masa salarial (−)</span>
+                <span className="squad-status squad-status--injured">−{formatEuros(lastWageBill)}</span>
+              </li>
+            ) : null}
+            {lastWageBill != null ? (
+              <li className="market-row">
+                <span className="market-name"><strong>Balance</strong></span>
+                <span className="hint"><strong>{formatEuros(lastIncome.total - lastWageBill)}</strong></span>
+              </li>
             ) : null}
           </ul>
         </RetroPanel>

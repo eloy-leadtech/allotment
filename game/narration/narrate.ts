@@ -14,6 +14,11 @@ export function narrateEvent(event: MatchEvent, homeName: string, awayName: stri
       return `${event.min}' Segunda amarilla: ${event.playerName} (${team}) se va expulsado`;
     case 'red':
       return `${event.min}' Roja directa a ${event.playerName} (${team})`;
+    case 'injury': {
+      const n = event.matchesOut ?? 1;
+      const jornadas = n === 1 ? '1 jornada' : `${n} jornadas`;
+      return `${event.min}' Lesion de ${event.playerName} (${team}), baja ${jornadas}`;
+    }
   }
 }
 

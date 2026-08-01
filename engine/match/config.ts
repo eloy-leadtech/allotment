@@ -28,6 +28,13 @@ export const MATCH_CONFIG = {
   yellowChanceDenom: 4,
   /** Direct red probability per team per half: 1/directRedDenom. */
   directRedDenom: 60,
+  /**
+   * Injury probability per fielded player per match: 1/injuryChanceDenom. Rolled
+   * on its OWN isolated RNG so it never perturbs the goal/card stream.
+   */
+  injuryChanceDenom: 200,
+  /** Injury lay-off is 1..injuryMaxMatches matchdays (inclusive). */
+  injuryMaxMatches: 8,
   /** Scorer roulette weights by line (forwards score more). */
   scorerWeights: { POR: 0, DEF: 1, MED: 3, DEL: 5 } satisfies Record<Line, number>,
   /** Booking weights by line (defenders/midfielders foul more). */

@@ -16,8 +16,10 @@ import {
   applyTransition,
   applyDivisionChange,
   careerOutcome,
+  endOfSeasonEvaluation,
   nextDivision,
   setCareerTactics,
+  setCareerTraining,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -26,6 +28,10 @@ import {
   negotiateBuy,
   acceptCounter,
   acceptBid,
+  promoteProspect,
+  discardProspect,
+  renewContract,
+  wageBill,
   formatEuros,
   toCompetitionTeam,
   runCareerCopa,
@@ -37,6 +43,7 @@ import {
   type SeasonIncome,
   type CareerState,
   type CareerTactics,
+  type TrainingState,
   type SeasonState,
   type TournamentResult,
   type Bid,
@@ -126,6 +133,8 @@ interface GameStore {
   counterOffer: { playerId: string; counter: number } | null;
   /** Income breakdown from the season just finished (shown on the market screen). */
   lastIncome: SeasonIncome | null;
+  /** Masa salarial charged for the season just finished (shown on the market screen). */
+  lastWageBill: number | null;
   /** Snapshot of the save slots (for the slots screen). */
   slots: Array<SlotInfo | null>;
   goTo: (screen: Screen) => void;
@@ -137,6 +146,10 @@ interface GameStore {
   watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
+  setTraining: (training: TrainingState) => void;
+  promoteYouth: (playerId: string) => void;
+  discardYouth: (playerId: string) => void;
+  renewPlayer: (playerId: string) => void;
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
@@ -181,6 +194,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     marketMessage: null,
     counterOffer: null,
     lastIncome: null,
+    lastWageBill: null,
     slots: listSlots(),
     goTo: (screen) => set({ screen }),
     chooseSeason: (id) => {
@@ -238,9 +252,41 @@ export const useGameStore = create<GameStore>((set, get) => {
       const next = setCareerTactics(career, tactics);
       set({ career: next, season: next.season });
     },
+    setTraining: (training) => {
+      const { career } = get();
+      if (!career) return;
+      // Training never resets played matchdays; it shapes next season's development.
+      const next = setCareerTraining(career, training);
+      set({ career: next, season: next.season });
+    },
+    promoteYouth: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const next = promoteProspect(career, playerId);
+      set({ career: next, season: next.season });
+    },
+    discardYouth: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const next = discardProspect(career, playerId);
+      set({ career: next, season: next.season });
+    },
+    renewPlayer: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = renewContract(career, playerId);
+      if (!result.ok) {
+        set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega para la prima de renovación.' : 'No se puede renovar.' });
+        return;
+      }
+      // The squad is unchanged (only the wage book + budget), so keep the season.
+      set({ career: result.career, marketMessage: null });
+    },
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;
+      // A sacked manager cannot carry on: the board ended their tenure.
+      if (endOfSeasonEvaluation(career).dismissed) return;
       // Seasons advance by year; the human's division depends on their result.
       const nextPrimera = nextSeasonByTemporada(career.temporada);
       if (!nextPrimera) return; // no more seasons available yet
@@ -252,6 +298,8 @@ export const useGameStore = create<GameStore>((set, get) => {
       // The finished season pays out: TV, gate, league prize and cup/European
       // bonuses, added to the budget carried into the transfer window.
       const income = seasonIncome(career);
+      // The finished squad's masa salarial is charged against the budget.
+      const wages = wageBill(career.contracts);
       const transitioned = attachEuropa(
         attachCopa(
           toDivision === career.division
@@ -259,7 +307,10 @@ export const useGameStore = create<GameStore>((set, get) => {
             : applyDivisionChange(career, toDivision, targetLeague),
         ),
       );
-      const next = { ...transitioned, budget: transitioned.budget + income.total };
+      const next = {
+        ...transitioned,
+        budget: Math.max(0, transitioned.budget + income.total - wages),
+      };
       // Between seasons the transfer window opens: buy/sell before kick-off.
       set({
         career: next,
@@ -271,6 +322,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         marketMessage: null,
         counterOffer: null,
         lastIncome: income,
+        lastWageBill: wages,
         lastResults: [],
         viewingMatch: null,
         screen: 'market',

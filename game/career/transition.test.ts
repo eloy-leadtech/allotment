@@ -105,6 +105,40 @@ describe('applyTransition (real data)', () => {
     expect(a.teams).toEqual(b.teams);
     expect(a.season.fixtures).toEqual(b.season.fixtures);
   });
+
+  it('leaves the whole next-season squad under contract (no orphans, no gaps)', () => {
+    const career = careerAfterSomeMatches();
+    const next2 = applyTransition(career, next, new Set());
+    const squadIds = next2.teams.find((t) => t.id === HUMAN)!.players.map((p) => p.id).sort();
+    expect(Object.keys(next2.contracts).sort()).toEqual(squadIds);
+  });
+
+  it('ticks a continuing player’s contract down a season', () => {
+    const career = careerAfterSomeMatches();
+    // A stayer: in the squad now and still in the real 97/98 roster.
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams
+      .find((t) => t.id === HUMAN)!
+      .players.find((p) => !departures.has(p.id) && career.contracts[p.id]!.yearsLeft > 1)!;
+    const before = career.contracts[stayer.id]!.yearsLeft;
+    const next2 = applyTransition(career, next, new Set());
+    expect(next2.contracts[stayer.id]!.yearsLeft).toBe(before - 1);
+  });
+
+  it('releases a stayer whose deal hits 0 (VENCIMIENTO: leaves FREE)', () => {
+    const career = careerAfterSomeMatches();
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams.find((t) => t.id === HUMAN)!.players.find((p) => !departures.has(p.id))!;
+    // Force this stayer into the final year of their deal.
+    const expiring: typeof career = {
+      ...career,
+      contracts: { ...career.contracts, [stayer.id]: { salary: 1_000_000, yearsLeft: 1 } },
+    };
+    const next2 = applyTransition(expiring, next, new Set([stayer.id]));
+    const squad = next2.teams.find((t) => t.id === HUMAN)!;
+    expect(squad.players.some((p) => p.id === stayer.id)).toBe(false);
+    expect(next2.contracts[stayer.id]).toBeUndefined();
+  });
 });
 
 // --- Synthetic dedup case: retaining a player removes them from their new club.
@@ -190,6 +224,41 @@ describe('applyTransition dedup (synthetic)', () => {
     // Nomad must NOT also be at rival.
     expect(rival?.players.map((p) => p.nombre)).toEqual(['RivalGuy']);
     expect(noPersonInTwoClubs(next.teams)).toBe(true);
+  });
+
+  it('applies the training focus to a retained player and carries the focus forward', () => {
+    // A YOUNG departure (age 19 in 99/00) so the focus clearly moves attributes.
+    const season1 = league('t-9899', '98/99', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-kid-1980', 'Kid', '1980-01-01')] },
+      { id: 'rival', nombre: 'Rival', jugadores: [player('rival-guy-1979', 'RivalGuy', '1979-01-01')] },
+    ]);
+    const season2 = league('t-9900', '99/00', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-new-1982', 'New', '1982-01-01')] },
+      {
+        id: 'rival',
+        nombre: 'Rival',
+        jugadores: [
+          player('rival-guy-1979', 'RivalGuy', '1979-01-01'),
+          player('rival-kid-1980', 'Kid', '1980-01-01'), // Kid moved to rival
+        ],
+      },
+    ]);
+    const base = newCareer(season1, 'you', 7);
+    const retain = new Set(['you-kid-1980']);
+
+    const atk = applyTransition({ ...base, training: { focus: 'ataque' } }, season2, retain);
+    const def = applyTransition({ ...base, training: { focus: 'defensa' } }, season2, retain);
+
+    const kidAtk = atk.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    const kidDef = def.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    expect(kidAtk).toBeDefined();
+    expect(kidDef).toBeDefined();
+    // Attacking training grows shooting more; defensive training grows tackling more.
+    expect(kidAtk!.atributos.remate).toBeGreaterThan(kidDef!.atributos.remate);
+    expect(kidDef!.atributos.entrada).toBeGreaterThan(kidAtk!.atributos.entrada);
+    // The chosen focus is carried into the next season.
+    expect(atk.training?.focus).toBe('ataque');
+    expect(def.training?.focus).toBe('defensa');
   });
 
   it('releasing (not retaining) leaves the real world untouched', () => {

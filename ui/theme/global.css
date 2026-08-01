@@ -823,6 +823,68 @@ h1 {
   font-weight: 600;
 }
 
+/* Estado de disponibilidad: lesionado (rojo) / sancionado (ambar). */
+.squad-status {
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.squad-status--injured {
+  color: #ff6b6b;
+}
+.squad-status--suspended {
+  color: #ffb454;
+}
+.squad-row--out {
+  opacity: 0.72;
+}
+/* Forma (racha) y moral: flechas y barra con acento frío/verde/rojo. */
+.streak--up {
+  color: var(--c-accent-2);
+}
+.streak--down {
+  color: var(--c-danger);
+}
+.streak--flat {
+  color: var(--c-ink-dim);
+}
+
+.form-arrow {
+  font-family: var(--font-data);
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.morale-bar {
+  display: inline-block;
+  width: 70px;
+  height: 8px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.morale-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+.vestuario {
+  display: block;
+  font-family: var(--font-data);
+  font-size: 13px;
+  color: var(--c-ink-dim);
+}
+.vestuario strong {
+  font-variant-numeric: tabular-nums;
+}
+
 .potrange {
   display: inline-flex;
   align-items: center;
@@ -910,4 +972,50 @@ h1 {
 .retro-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* Board objective + satisfaction */
+.board-objective {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.board-mood {
+  margin: 0;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+}
+.board-mood--contento {
+  color: var(--c-bg);
+  background: var(--c-accent-2);
+}
+.board-mood--normal {
+  color: var(--c-ink);
+  border: 1px solid var(--c-ink-dim);
+}
+.board-mood--enfadado {
+  color: var(--c-ink);
+  background: var(--c-danger);
+}
+
+/* Press feed (newspaper ticker) */
+.press-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.press-line {
+  line-height: 1.3;
+}
+
+.press-matchday {
+  display: inline-block;
+  min-width: 2.2em;
+  font-weight: 700;
+  color: var(--c-accent);
 }

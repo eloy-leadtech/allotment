@@ -16,8 +16,16 @@ import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { seasonFromCareer } from './career';
 import { developPlayer, seasonStartYear } from './development';
+import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
+import { rolloverYouth } from './cantera';
+import {
+  computeSeasonObjective,
+  evaluateObjective,
+  type BoardState,
+  type ObjectiveEvaluation,
+} from './board';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -64,6 +72,32 @@ function finishedSummary(career: CareerState, championId: string) {
     championId,
     division: career.division,
     humanPosition: humanPosition(career),
+  };
+}
+
+/**
+ * The board state for the NEXT season: a fresh objective from the incoming
+ * squads/division plus the board's verdict on the season just finished (compared
+ * against the objective that WAS set for it).
+ */
+function nextBoardState(
+  finishedCareer: CareerState,
+  nextTeams: readonly CareerTeam[],
+  division: Division,
+  relegationSpots: number,
+): BoardState {
+  return {
+    objective: computeSeasonObjective({
+      teams: nextTeams,
+      division,
+      humanTeamId: finishedCareer.humanTeamId,
+      relegationSpots,
+    }),
+    lastEvaluation: evaluateObjective(
+      finishedCareer.board.objective,
+      humanPosition(finishedCareer),
+      careerOutcome(finishedCareer),
+    ),
   };
 }
 
@@ -132,20 +166,22 @@ export function applyTransition(
   const preview = previewTransition(career, nextWorld);
   const retained = preview.departures.filter((p) => retainIds.has(p.id));
 
-  // Age each retained player one season; drop those who retire.
+  // Age each retained player one season; drop those who retire. Retained players
+  // are yours, so this season's training focus shapes how they evolve.
   const developedRetained: Player[] = [];
   for (const player of retained) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
     });
     if (!result.retired) developedRetained.push(result.player);
   }
   const retainedKeys = new Set(retained.map(personKey));
 
   const base = worldTeams(nextWorld);
-  const teams: CareerTeam[] = base.map((team) => {
+  const rawTeams: CareerTeam[] = base.map((team) => {
     if (team.id === career.humanTeamId) {
       // Your real next roster plus the retained (aged) players.
       return { ...team, players: [...team.players, ...developedRetained] };
@@ -154,6 +190,18 @@ export function applyTransition(
     if (retainedKeys.size === 0) return team;
     return { ...team, players: team.players.filter((p) => !retainedKeys.has(personKey(p))) };
   });
+
+  // Tick every deal down a season: expired players leave FREE, new arrivals are
+  // handed a fresh contract, so your wage book always matches your squad.
+  const humanRaw = rawTeams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const advance = advanceContracts(humanRaw, career.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+  });
+  const teams: CareerTeam[] = rawTeams.map((team) =>
+    team.id === career.humanTeamId ? { ...team, players: advance.players } : team,
+  );
 
   const meta = {
     seed: career.seed,
@@ -165,9 +213,20 @@ export function applyTransition(
     relegationSpots: nextWorld.competicion.relegationSpots,
     // Same-division advance keeps the human where they were.
     division: career.division,
+    board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
     teams,
+    contracts: advance.contracts,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
   };
 
   return {
@@ -182,6 +241,20 @@ export function applyTransition(
 /** Standard promotion and relegation places for the career pyramid. */
 export const RELEGATION_PLACES = 3;
 export const PROMOTION_PLACES = 3;
+
+/**
+ * The board's verdict on the in-progress (finished) season: compares the human's
+ * real final position and promotion/relegation outcome against the objective the
+ * board set for it. Drives the season-end satisfaction banner and the dismissal
+ * decision, and matches the `lastEvaluation` the next season carries forward.
+ */
+export function endOfSeasonEvaluation(career: CareerState): ObjectiveEvaluation {
+  return evaluateObjective(
+    career.board.objective,
+    humanPosition(career),
+    careerOutcome(career),
+  );
+}
 
 /** The human's promotion/relegation outcome from their division's final table. */
 export function careerOutcome(career: CareerState): PromotionOutcome {
@@ -217,28 +290,37 @@ export function applyDivisionChange(
   const current = humanTeam?.players ?? [];
   const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
 
-  // The whole squad moves with you, aged one season; retirees drop out.
+  // The whole squad moves with you, aged one season; retirees drop out. It is
+  // your squad, so this season's training focus shapes how it evolves.
   const aged: Player[] = [];
   for (const player of current) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
     });
     if (!result.retired) aged.push(result.player);
   }
   const humanKeys = new Set(current.map(personKey));
 
+  // Tick every deal down a season alongside the squad's move up/down a division.
+  const advance = advanceContracts(aged, career.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+  });
+
   let humanPresent = false;
   const teams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
     if (team.id === career.humanTeamId) {
       humanPresent = true;
-      return { ...team, players: aged };
+      return { ...team, players: advance.players };
     }
     return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
   });
   if (!humanPresent) {
-    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: aged });
+    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
   }
 
   const meta = {
@@ -250,8 +332,19 @@ export function applyDivisionChange(
     pointsForWin: targetLeague.competicion.pointsForWin,
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
+    board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     budget: career.budget,
     teams,
+    contracts: advance.contracts,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
   };
   return {
     ...meta,

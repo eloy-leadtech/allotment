@@ -1,6 +1,6 @@
 export type Line = 'POR' | 'DEF' | 'MED' | 'DEL';
 
-export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red';
+export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red' | 'injury';
 
 /** Minimal player view the match engine needs (mapped from the data Player). */
 export interface MatchPlayer {
@@ -14,6 +14,14 @@ export interface MatchPlayer {
   pase: number;
   entrada: number;
   porteria: number;
+  /**
+   * Short-term streak (0-100, 50 neutral): rises with wins/goals/playing, falls
+   * with defeats and benching. Optional so existing fixtures stay valid; when
+   * absent the player is treated as neutral (no effect on the pitch).
+   */
+  form?: number;
+  /** Player morale (0-100, 50 neutral): medium-term, moved by results and minutes. */
+  morale?: number;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */
@@ -48,6 +56,11 @@ export interface MatchEvent {
   team: 'home' | 'away';
   playerId: string;
   playerName: string;
+  /**
+   * For `injury` events: how many upcoming matchdays the player is out (1-8).
+   * Absent for every other event type.
+   */
+  matchesOut?: number;
 }
 
 export interface MatchResult {
