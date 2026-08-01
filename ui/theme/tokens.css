@@ -8,6 +8,7 @@
   --c-bg-base: #14143c;     /* azul base de pantalla */
   --c-bg-panel: #1e3462;    /* cuerpo de placas/paneles */
   --c-bg-raised: #2a3f7a;   /* placa elevada / fila */
+  --c-bg-sunken: #0a1024;   /* hueco empotrado (marcador, chips, carriles) */
 
   /* --- Azules de bisel y metal --- */
   --c-panel-top: #5c7eae;   /* cara superior del bisel (claro) */
@@ -15,18 +16,26 @@
   --c-edge-light: #7f9fff;  /* filo iluminado (borde sup/izq) */
   --c-edge-dark: #0a0a28;   /* filo en sombra (borde inf/der) */
   --c-electric: #2a3faa;    /* azul eléctrico: relleno vivo, brillo */
+  --c-electric-hi: #4f6be0; /* azul eléctrico brillante (cresta del relleno) */
+  --c-steel-hi: #8fabde;    /* cresta clara del acero (top del bisel) */
   --c-metal: #8890a8;       /* cromo/casquillos plateados */
+  --c-metal-hi: #dfe4f0;    /* brillo del cromo */
+  --c-metal-lo: #4b5069;    /* sombra del cromo */
 
   /* --- Tinta --- */
   --c-ink: #ffffff;         /* texto y datos */
   --c-ink-dim: #b8c8e8;     /* texto tenue / bordes de tabla */
+  --c-ink-soft: #8ea3cc;    /* texto terciario / rótulos muy tenues */
 
   /* --- Acentos --- */
   --c-accent: #7f9fff;      /* highlight frío (antes ámbar) */
   --c-accent-2: #2a9d4a;    /* verde césped (iconografía de campo) */
+  --c-accent-2-hi: #43c268; /* verde césped brillante */
   --c-danger: #c81e1e;      /* rojo acento: marcadores, estado activo */
+  --c-danger-hi: #e24b4b;   /* rojo brillante (cresta del casquillo activo) */
   --c-border: #3a5490;      /* borde de tabla/panel */
   --c-me: #2a3f7a;          /* fila del equipo humano */
+  --c-gold: #f2c94c;        /* oro del trofeo / distinción */
 
   /* Titulares: geométrica estilo Futura, en oblicua para los rótulos grandes.
      Datos/tablas: condensada estilo Oswald/Barlow. Sin dependencias externas:
@@ -36,12 +45,44 @@
     'Segoe UI Semilight', 'Arial Narrow', system-ui, sans-serif;
 
   --radius: 10px;           /* cápsula: cantos redondeados generosos */
+  --radius-sm: 6px;         /* radios pequeños (chips, badges) */
   --radius-pill: 999px;
   --tap: 48px;
   --space: 12px;
 
-  /* Bisel reutilizable: metal abombado (claro arriba → oscuro abajo). */
-  --bevel: linear-gradient(180deg, var(--c-panel-top) 0%, var(--c-bg-panel) 55%, #16264a 100%);
+  /* --- Gradientes de acero reutilizables (biseles multi-parada, más ricos) --- */
+  /* Bisel base: metal abombado (cresta clara arriba → cuerpo → sombra abajo). */
+  --bevel: linear-gradient(178deg,
+    #6f92c6 0%, #4a6ba6 26%, #2c4c86 58%, #1c335f 82%, #15254a 100%);
+  /* Bisel de placa elevada (fila alterna, un punto más clara). */
+  --bevel-raised: linear-gradient(178deg,
+    #82a3d4 0%, #5678b4 28%, #33548e 62%, #223c6c 100%);
+  /* Casquillo/cromo plateado (metal caps). */
+  --cap-metal: linear-gradient(180deg,
+    var(--c-metal-hi) 0%, #aab2c8 22%, var(--c-metal) 52%, var(--c-metal-lo) 100%);
+  /* Casquillo activo rojo (estado / equipo humano / botón primario). */
+  --cap-danger: linear-gradient(178deg,
+    var(--c-danger-hi) 0%, #cf2626 52%, #8f1414 100%);
+  /* Casquillo verde de campo (iconografía táctica). */
+  --cap-pitch: linear-gradient(178deg,
+    var(--c-accent-2-hi) 0%, var(--c-accent-2) 58%, #176030 100%);
+  /* Hueco empotrado (marcador, chips de dato, carriles de barra). */
+  --sunken: linear-gradient(180deg, #0a0e26 0%, #05050f 100%);
+  /* Sheen de cristal: reflejo suave sobre la mitad superior de las placas. */
+  --sheen: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 38%, transparent 60%);
+
+  /* --- Sombras y filos reutilizables --- */
+  /* Bisel de doble filo + sombra proyectada (placas y botones). */
   --bevel-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
     0 3px 8px rgba(0, 0, 0, 0.55);
+  /* Bisel más marcado para placas grandes (cabeceras, marcador). */
+  --bevel-shadow-lg: inset 0 1px 0 rgba(180, 200, 255, 0.85),
+    inset 0 -3px 5px var(--c-edge-dark),
+    0 6px 18px rgba(0, 0, 0, 0.6);
+  /* Filo empotrado de un hueco (chips, carriles). */
+  --inset-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75),
+    inset 0 0 0 1px rgba(127, 159, 255, 0.14);
+  /* Glow frío para textos/estados destacados. */
+  --glow-cool: 0 0 14px rgba(127, 159, 255, 0.5);
 }

@@ -51,43 +51,75 @@ export function PrematchScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
+      <header className="match-head">
         <h1>Jornada {season.currentMatchday}</h1>
-        <span className="matchday">{atHome ? 'En casa' : 'Fuera'}</span>
+        <span className={`match-venue match-venue--${atHome ? 'home' : 'away'}`}>
+          {atHome ? 'En casa' : 'Fuera'}
+        </span>
       </header>
 
       {derby ? (
-        <p className="derby-banner" role="note">
-          DERBI - {derby}: partido marcado en rojo, tension en las gradas
+        <p className="match-derby" role="note">
+          <span className="match-derby__spark" aria-hidden>
+            ▲
+          </span>
+          Derbi · {derby}
+          <span className="match-derby__spark" aria-hidden>
+            ▲
+          </span>
         </p>
       ) : null}
 
-      <RetroPanel title="Tu partido">
-        <h1 className="scoreboard">
-          <span className="scoreboard__side">
-            <Crest teamId={fixture.homeId} size={36} />
-            <span className="scoreboard__team">{name(fixture.homeId)}</span>
+      <section className="sb" aria-label={`${name(fixture.homeId)} contra ${name(fixture.awayId)}`}>
+        <div className="sb__side">
+          <span className="crest-frame sb__crest">
+            <Crest teamId={fixture.homeId} size={42} />
           </span>
-          <span className="scoreboard__score scoreboard__score--vs">vs</span>
-          <span className="scoreboard__side scoreboard__side--away">
-            <span className="scoreboard__team">{name(fixture.awayId)}</span>
-            <Crest teamId={fixture.awayId} size={36} />
+          <span className="sb__id">
+            <span className="sb__name">{name(fixture.homeId)}</span>
+            <span className="sb__role">Local</span>
           </span>
-        </h1>
-        <p className="champion">
-          Rival: <strong>{name(rivalId)}</strong> · Tu formación:{' '}
-          <strong>{formation ?? '4-4-2 (por defecto)'}</strong>
-        </p>
-      </RetroPanel>
+        </div>
+        <div className="sb__center">
+          <span className="sb__score sb__score--vs">VS</span>
+          <span className="sb__status">{atHome ? 'Casa' : 'Fuera'}</span>
+        </div>
+        <div className="sb__side sb__side--away">
+          <span className="crest-frame sb__crest">
+            <Crest teamId={fixture.awayId} size={42} />
+          </span>
+          <span className="sb__id">
+            <span className="sb__name">{name(fixture.awayId)}</span>
+            <span className="sb__role">Visitante</span>
+          </span>
+        </div>
+      </section>
+
+      <p className="match-brief">
+        <span className="match-brief__label">Tu formación</span>
+        <span className="match-formation">{formation ?? '4-4-2'}</span>
+        <span className="match-brief__label">Rival</span>
+        <strong style={{ color: 'var(--c-ink)' }}>{name(rivalId)}</strong>
+      </p>
 
       <RetroPanel title="Bajas">
         {unavailable.length === 0 ? (
           <p className="hint">Sin bajas: toda la plantilla disponible.</p>
         ) : (
-          <ul className="ticker">
+          <ul className="match-list">
             {unavailable.map(({ p, st }) => (
-              <li key={p.id} className="ticker__line">
-                {st.status === 'injured' ? 'Lesionado' : 'Sancionado'}: {p.nombre} ({st.matchesOut})
+              <li key={p.id} className="match-list__row">
+                <span
+                  className={`match-list__tag match-list__tag--${
+                    st.status === 'injured' ? 'injured' : 'suspended'
+                  }`}
+                >
+                  {st.status === 'injured' ? 'Lesionado' : 'Sancionado'}
+                </span>
+                <span className="match-list__name">{p.nombre}</span>
+                <span className="match-list__meta">
+                  {st.matchesOut} {st.matchesOut === 1 ? 'jornada' : 'jornadas'}
+                </span>
               </li>
             ))}
           </ul>
@@ -98,10 +130,18 @@ export function PrematchScreen() {
         {tired.length === 0 ? (
           <p className="hint">Plantilla en forma: nadie acusa el desgaste.</p>
         ) : (
-          <ul className="ticker">
+          <ul className="match-list">
             {tired.map((p) => (
-              <li key={p.nombre} className="ticker__line">
-                {fatigueTier(p.fatigue) >= 3 ? 'Reventado' : 'Cansado'}: {p.nombre} (fatiga {p.fatigue})
+              <li key={p.nombre} className="match-list__row">
+                <span
+                  className={`match-list__tag match-list__tag--${
+                    fatigueTier(p.fatigue) >= 3 ? 'spent' : 'tired'
+                  }`}
+                >
+                  {fatigueTier(p.fatigue) >= 3 ? 'Reventado' : 'Cansado'}
+                </span>
+                <span className="match-list__name">{p.nombre}</span>
+                <span className="match-list__meta">fatiga {p.fatigue}</span>
               </li>
             ))}
           </ul>

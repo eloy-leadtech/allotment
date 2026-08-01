@@ -4,6 +4,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 import { PotentialRange } from '@ui/components/PotentialRange';
 
 /** How many scouting targets to show at once (the pool is every rival player). */
@@ -36,10 +37,12 @@ export function OjeoScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>Ojeo de rivales · {career.temporada}</h1>
-        <span className="matchday">Envía ojeadores a jugadores de otros equipos</span>
-      </header>
+      <GestHeader
+        icon="🔍"
+        title="Ojeo de rivales"
+        subtitle="Envía ojeadores a jugadores de otros equipos"
+        chips={[{ label: 'Temporada', value: career.temporada }]}
+      />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
@@ -52,7 +55,7 @@ export function OjeoScreen() {
           onChange={(e) => setQuery(e.target.value)}
         />
         <div className="squad-scroll">
-          <table className="squad-table">
+          <table className="squad-table table-steel">
             <thead>
               <tr>
                 <th>Pos</th>
@@ -67,7 +70,7 @@ export function OjeoScreen() {
             <tbody>
               {filtered.map(({ player, clubId, report }) => (
                 <tr key={player.id}>
-                  <td>{player.posicion}</td>
+                  <td><span className={`pos-badge pos-badge--${player.posicion}`}>{player.posicion}</span></td>
                   <td className="squad-name">{player.nombre}</td>
                   <td className="team-cell">
                     <Crest teamId={clubId} size={18} />

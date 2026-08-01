@@ -4,6 +4,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 import { PotentialRange } from '@ui/components/PotentialRange';
 
 /** How many buy candidates to show at once (the pool is the whole league). */
@@ -52,40 +53,61 @@ export function MarketScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>Mercado de fichajes · {career.temporada}</h1>
-        <span className="matchday">
-          Presupuesto: {formatEuros(career.budget)} · Masa salarial: {formatEuros(currentWages)}/año
-        </span>
-      </header>
+      <GestHeader
+        icon="💰"
+        title="Mercado de fichajes"
+        subtitle={`Temporada ${career.temporada}`}
+        chips={[
+          { label: 'Presupuesto', value: formatEuros(career.budget) },
+          { label: 'Masa salarial', value: `${formatEuros(currentWages)}/año`, tone: 'danger' },
+        ]}
+      />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
       {lastIncome ? (
         <RetroPanel title={`Ingresos de la temporada · ${formatEuros(lastIncome.total)}`}>
-          <ul className="market-list">
-            <li className="market-row"><span className="market-name">Derechos de TV</span><span className="hint">{formatEuros(lastIncome.tv)}</span></li>
-            <li className="market-row"><span className="market-name">Taquilla</span><span className="hint">{formatEuros(lastIncome.gate)}</span></li>
-            <li className="market-row"><span className="market-name">Premio de liga (posición)</span><span className="hint">{formatEuros(lastIncome.leaguePrize)}</span></li>
+          <ul className="mkt-ledger">
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Derechos de TV</span>
+              <span className="mkt-ledger__value">{formatEuros(lastIncome.tv)}</span>
+            </li>
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Taquilla</span>
+              <span className="mkt-ledger__value">{formatEuros(lastIncome.gate)}</span>
+            </li>
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Premio de liga (posición)</span>
+              <span className="mkt-ledger__value">{formatEuros(lastIncome.leaguePrize)}</span>
+            </li>
             {lastIncome.copa > 0 ? (
-              <li className="market-row"><span className="market-name">Copa del Rey</span><span className="hint">{formatEuros(lastIncome.copa)}</span></li>
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Copa del Rey</span>
+                <span className="mkt-ledger__value">{formatEuros(lastIncome.copa)}</span>
+              </li>
             ) : null}
             {lastIncome.europa > 0 ? (
-              <li className="market-row"><span className="market-name">Competición europea</span><span className="hint">{formatEuros(lastIncome.europa)}</span></li>
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Competición europea</span>
+                <span className="mkt-ledger__value">{formatEuros(lastIncome.europa)}</span>
+              </li>
             ) : null}
             {lastIncome.sponsor > 0 ? (
-              <li className="market-row"><span className="market-name">Patrocinador principal</span><span className="hint">{formatEuros(lastIncome.sponsor)}</span></li>
-            ) : null}
-            {lastWageBill != null ? (
-              <li className="market-row">
-                <span className="market-name">Masa salarial (−)</span>
-                <span className="squad-status squad-status--injured">−{formatEuros(lastWageBill)}</span>
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Patrocinador principal</span>
+                <span className="mkt-ledger__value">{formatEuros(lastIncome.sponsor)}</span>
               </li>
             ) : null}
             {lastWageBill != null ? (
-              <li className="market-row">
-                <span className="market-name"><strong>Balance</strong></span>
-                <span className="hint"><strong>{formatEuros(lastIncome.total - lastWageBill)}</strong></span>
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Masa salarial</span>
+                <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(lastWageBill)}</span>
+              </li>
+            ) : null}
+            {lastWageBill != null ? (
+              <li className="mkt-ledger__row mkt-ledger__row--balance">
+                <span className="mkt-ledger__label">Balance</span>
+                <span className="mkt-ledger__value">{formatEuros(lastIncome.total - lastWageBill)}</span>
               </li>
             ) : null}
           </ul>
@@ -100,14 +122,28 @@ export function MarketScreen() {
         {openBids.length === 0 ? (
           <p className="hint">Nadie puja por tus jugadores este mercado.</p>
         ) : (
-          <ul className="market-list">
+          <ul className="mkt-list">
             {openBids.map((bid) => (
-              <li key={bid.playerId} className="market-row">
-                <span className="market-name">{nameById.get(bid.playerId)}</span>
-                <span className="hint">
-                  {name(bid.fromClubId)} · {formatEuros(bid.amount)}
-                </span>
-                <RetroButton onClick={() => acceptMarketBid(bid)}>Vender</RetroButton>
+              <li key={bid.playerId} className="mkt-signing">
+                <div className="mkt-signing__head">
+                  <span className="mkt-signing__name team-cell">
+                    <Crest teamId={bid.fromClubId} size={22} />
+                    {nameById.get(bid.playerId)}
+                  </span>
+                  <span className="mkt-media">
+                    {formatEuros(bid.amount)}
+                    <small>oferta</small>
+                  </span>
+                </div>
+                <div className="mkt-signing__actions">
+                  <span className="mkt-term">
+                    <em>Puja</em>
+                    <strong>{name(bid.fromClubId)}</strong>
+                  </span>
+                  <RetroButton variant="primary" onClick={() => acceptMarketBid(bid)}>
+                    Vender
+                  </RetroButton>
+                </div>
               </li>
             ))}
           </ul>
@@ -122,7 +158,7 @@ export function MarketScreen() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <ul className="market-list">
+        <ul className="mkt-list">
           {filtered.map((l) => {
             const draft = offers[l.player.id] ?? '';
             const offerEuros = draft.trim() === '' ? l.askingPrice : Math.round(Number(draft) * 1_000_000);
@@ -130,28 +166,39 @@ export function MarketScreen() {
             const isCountered = counterOffer?.playerId === l.player.id;
             const report = playerScoutReport(career, l.player);
             return (
-              <li key={l.player.id} className="market-row market-negotiate">
-                <span className="market-name team-cell">
-                  <Crest teamId={l.clubId} size={18} />
-                  {l.player.nombre}
-                </span>
-                <span className="hint">
-                  {l.player.posicion} ·{' '}
-                  {report.revealed
-                    ? `media ${report.media}`
-                    : `media ~${report.ability.low}–${report.ability.high}`}{' '}
-                  · pide {formatEuros(l.askingPrice)} · cláusula {formatEuros(l.clause)}
-                </span>
-                <span className="market-scout">
-                  <PotentialRange low={report.potential.low} high={report.potential.high} />
+              <li key={l.player.id} className="mkt-signing">
+                <div className="mkt-signing__head">
+                  <span className={`pos-badge pos-badge--${l.player.posicion}`}>{l.player.posicion}</span>
+                  <span className="mkt-signing__name team-cell">
+                    <Crest teamId={l.clubId} size={22} />
+                    {l.player.nombre}
+                  </span>
+                  <span className="mkt-media">
+                    {report.revealed ? report.media : `${report.ability.low}–${report.ability.high}`}
+                    <small>media</small>
+                  </span>
+                </div>
+                <div className="mkt-signing__terms">
+                  <span className="mkt-term">
+                    <em>Pide</em>
+                    <strong>{formatEuros(l.askingPrice)}</strong>
+                  </span>
+                  <span className="mkt-term">
+                    <em>Cláusula</em>
+                    <strong>{formatEuros(l.clause)}</strong>
+                  </span>
+                  <span className="mkt-term">
+                    <em>Potencial</em>
+                    <PotentialRange low={report.potential.low} high={report.potential.high} />
+                  </span>
+                </div>
+                <div className="mkt-signing__actions">
                   <RetroButton
                     disabled={report.scoutedThisSeason}
                     onClick={() => scoutPlayer(l.player.id)}
                   >
                     {report.scoutedThisSeason ? 'Ojeado ✓' : 'Ojear'}
                   </RetroButton>
-                </span>
-                <span className="market-offer">
                   <input
                     className="offer-input"
                     type="number"
@@ -174,7 +221,7 @@ export function MarketScreen() {
                       Aceptar {formatEuros(counterOffer.counter)}
                     </RetroButton>
                   ) : null}
-                </span>
+                </div>
               </li>
             );
           })}

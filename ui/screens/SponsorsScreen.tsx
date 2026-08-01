@@ -7,6 +7,7 @@ import {
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
+import { GestHeader } from '@ui/components/GestHeader';
 
 /**
  * Patrocinios: shows the season's sponsor OFFERS and lets the manager sign one.
@@ -34,10 +35,15 @@ export function SponsorsScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>Patrocinio · {career.temporada}</h1>
-        <span className="matchday">Presupuesto: {formatEuros(career.budget)}</span>
-      </header>
+      <GestHeader
+        icon="🤝"
+        title="Patrocinio"
+        subtitle={`Temporada ${career.temporada}`}
+        chips={[
+          { label: 'Patrocinador', value: active.name },
+          { label: 'Presupuesto', value: formatEuros(career.budget) },
+        ]}
+      />
 
       <RetroPanel title="Patrocinador actual">
         <p className="board-objective">
@@ -65,7 +71,7 @@ export function SponsorsScreen() {
           {offers.map((offer) => {
             const on = offer.id === active.id;
             return (
-              <li key={offer.id} className="market-row market-negotiate">
+              <li key={offer.id} className={`market-row market-negotiate${on ? ' market-row--active' : ''}`}>
                 <span className="market-name">
                   {on ? '➡️ ' : ''}
                   {offer.name}

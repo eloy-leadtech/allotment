@@ -4,6 +4,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { GestHeader } from '@ui/components/GestHeader';
 
 /** A row of colour-coded V/E/D pills for the human's recent form (oldest→newest). */
 function FormStreak({ form }: { form: FormMatch[] }) {
@@ -50,12 +51,17 @@ export function StatsScreen() {
 
   return (
     <main className="screen">
-      <header className="season-head">
-        <h1>📊 Estadísticas {season.temporada}</h1>
-        <span className="matchday">
-          {`Jornada ${Math.min(season.currentMatchday, season.totalMatchdays)} / ${season.totalMatchdays}`}
-        </span>
-      </header>
+      <GestHeader
+        icon="📊"
+        title="Estadísticas"
+        subtitle={`Temporada ${season.temporada}`}
+        chips={[
+          {
+            label: 'Jornada',
+            value: `${Math.min(season.currentMatchday, season.totalMatchdays)}/${season.totalMatchdays}`,
+          },
+        ]}
+      />
 
       {team ? (
         <RetroPanel title="Tu equipo">
