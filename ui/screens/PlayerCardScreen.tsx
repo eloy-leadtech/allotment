@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   synthesizePotential,
   scoutEstimate,
@@ -10,6 +11,7 @@ import {
 import { scoreTier, fatigueTier, NEUTRAL_FORM, NEUTRAL_MORALE, FRESH_FATIGUE } from '@engine';
 import type { Attributes, Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
+import { useFichaPhoto, type FichaPhoto } from '@ui/hooks/useFichaPhoto';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
@@ -103,6 +105,31 @@ function availabilityText({ status, matchesOut }: AvailabilityStatus): { text: s
   return { text: 'Disponible', className: 'hint' };
 }
 
+/**
+ * The ficha hero's icon: the real BDFutbol portrait when we have a
+ * high-confidence match and the image loads, otherwise the club crest. Any
+ * load failure (e.g. deployed web where `public/fotos-bdf` is absent) falls
+ * back to the crest via `onError`, so the ficha never breaks.
+ */
+function HeroIcon({ photo, teamId }: { photo: FichaPhoto | null; teamId: string }) {
+  const [failed, setFailed] = useState(false);
+  const showPhoto = photo !== null && !failed;
+  return (
+    <div className={`player-hero__crest crest-frame${showPhoto ? ' player-hero__portrait' : ''}`}>
+      {showPhoto ? (
+        <img
+          className="player-hero__photo"
+          src={photo.src}
+          alt=""
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <Crest teamId={teamId} size={72} />
+      )}
+    </div>
+  );
+}
+
 export function PlayerCardScreen() {
   const career = useGameStore((s) => s.career);
   const selectedPlayerId = useGameStore((s) => s.selectedPlayerId);
@@ -111,6 +138,10 @@ export function PlayerCardScreen() {
 
   const team = career?.teams.find((t) => t.id === career.humanTeamId);
   const player: Player | undefined = team?.players.find((p) => p.id === selectedPlayerId);
+
+  // Called unconditionally (rules-of-hooks) with safe fallbacks; resolves to the
+  // real BDFutbol portrait for this season/player, or null when there is no match.
+  const photo = useFichaPhoto(career?.temporada ?? '', player?.id ?? null);
 
   if (!career || !player) {
     return (
@@ -146,9 +177,7 @@ export function PlayerCardScreen() {
   return (
     <main className="screen">
       <section className="player-hero">
-        <div className="player-hero__crest crest-frame">
-          <Crest teamId={career.humanTeamId} size={72} />
-        </div>
+        <HeroIcon key={player.id} photo={photo} teamId={career.humanTeamId} />
         <div className="player-hero__meta">
           <h1>{player.nombre}</h1>
           <span className="matchday">
