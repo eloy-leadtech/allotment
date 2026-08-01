@@ -3,6 +3,8 @@ import {
   scoutEstimate,
   playerAge,
   seasonStartYear,
+  availabilityStatus,
+  type AvailabilityStatus,
 } from '@game';
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
@@ -16,6 +18,17 @@ import { PotentialRange } from '@ui/components/PotentialRange';
 const YOUTH_MAX_AGE = 23;
 
 const POSITION_ORDER: Record<Position, number> = { POR: 0, DEF: 1, MED: 2, DEL: 3 };
+
+/** Retro teletipo-style label for a player's availability. */
+function statusLabel({ status, matchesOut }: AvailabilityStatus): { text: string; className: string } | null {
+  if (status === 'injured') {
+    return { text: `Lesionado (${matchesOut})`, className: 'squad-status squad-status--injured' };
+  }
+  if (status === 'suspended') {
+    return { text: `Sancionado (${matchesOut})`, className: 'squad-status squad-status--suspended' };
+  }
+  return null;
+}
 
 function byLineThenMedia(a: Player, b: Player): number {
   const line = POSITION_ORDER[a.posicion] - POSITION_ORDER[b.posicion];
@@ -39,6 +52,8 @@ export function SquadScreen() {
   const players = [...(team?.players ?? [])].sort(byLineThenMedia);
   const startYear = seasonStartYear(career.temporada);
   const observedSeasons = career.seasonNumber - 1;
+  const availability = career.season.availability;
+  const matchday = career.season.currentMatchday;
 
   return (
     <main className="screen">
@@ -63,6 +78,7 @@ export function SquadScreen() {
                 <th>Jugador</th>
                 <th>Edad</th>
                 <th>Media</th>
+                <th>Estado</th>
                 <th>Potencial ojeado</th>
               </tr>
             </thead>
@@ -73,12 +89,20 @@ export function SquadScreen() {
                 const range = isYouth
                   ? scoutEstimate(p, synthesizePotential(p, career.seed), observedSeasons, career.seed)
                   : null;
+                const status = statusLabel(availabilityStatus(availability[p.id], matchday));
                 return (
-                  <tr key={p.id}>
+                  <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
                     <td>{p.posicion}</td>
                     <td className="squad-name">{p.nombre}</td>
                     <td>{age ?? '—'}</td>
                     <td className="squad-media">{p.media}</td>
+                    <td>
+                      {status ? (
+                        <span className={status.className}>{status.text}</span>
+                      ) : (
+                        <span className="hint">Disponible</span>
+                      )}
+                    </td>
                     <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
                   </tr>
                 );

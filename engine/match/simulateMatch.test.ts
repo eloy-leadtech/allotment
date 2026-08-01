@@ -92,6 +92,29 @@ describe('simulateMatch', () => {
     }
   });
 
+  it('injuries: always reference a fielded player, last 1-8 matchdays, and are deterministic', () => {
+    let injuries = 0;
+    for (let seed = 0; seed < 400; seed += 1) {
+      const r = simulateMatch({ home, away, seed });
+      const homeIds = new Set(home.players.map((p) => p.id));
+      const awayIds = new Set(away.players.map((p) => p.id));
+      for (const e of r.events) {
+        if (e.type !== 'injury') continue;
+        injuries += 1;
+        expect(e.matchesOut).toBeGreaterThanOrEqual(1);
+        expect(e.matchesOut).toBeLessThanOrEqual(8);
+        const pool = e.team === 'home' ? homeIds : awayIds;
+        expect(pool.has(e.playerId)).toBe(true);
+      }
+    }
+    // Over 400 matches the low per-player chance still yields some injuries.
+    expect(injuries).toBeGreaterThan(0);
+    // Determinism: replaying a seed reproduces the exact same injury events.
+    const a = simulateMatch({ home, away, seed: 123 }).events.filter((e) => e.type === 'injury');
+    const b = simulateMatch({ home, away, seed: 123 }).events.filter((e) => e.type === 'injury');
+    expect(a).toEqual(b);
+  });
+
   it('averages a plausible number of goals per game (~2.6)', () => {
     const samples = 400;
     let totalGoals = 0;

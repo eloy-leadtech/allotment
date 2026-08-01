@@ -121,4 +121,18 @@ describe('career save v2 (snapshot)', () => {
     const save = serializeCareer(evolvedCareer(1));
     expect(() => restoreCareer({ ...save, version: 99 }, league)).toThrow();
   });
+
+  it('reconstructs injuries/suspensions on load (availability survives the replay)', () => {
+    // Play deep enough that some injuries/suspensions have surely accrued.
+    const career = evolvedCareer(20);
+    const anyOut = Object.values(career.season.availability).some(
+      (a) => a.injuredUntil !== undefined || (a.suspendedMatches ?? 0) > 0 || a.yellowAccum > 0,
+    );
+    expect(anyOut).toBe(true); // the mechanic actually fired by matchday 20
+
+    const restored = restoreCareer(serializeCareer(career), league);
+    // Availability is not stored explicitly; it is rebuilt by the deterministic
+    // replay and must match the pre-save state exactly.
+    expect(restored.season.availability).toEqual(career.season.availability);
+  });
 });

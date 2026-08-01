@@ -823,6 +823,24 @@ h1 {
   font-weight: 600;
 }
 
+/* Estado de disponibilidad: lesionado (rojo) / sancionado (ambar). */
+.squad-status {
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.squad-status--injured {
+  color: #ff6b6b;
+}
+.squad-status--suspended {
+  color: #ffb454;
+}
+.squad-row--out {
+  opacity: 0.72;
+}
+
 .potrange {
   display: inline-flex;
   align-items: center;

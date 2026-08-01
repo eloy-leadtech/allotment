@@ -1,4 +1,4 @@
-import { nextHumanFixture, teamName } from '@game';
+import { nextHumanFixture, teamName, availabilityStatus } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -11,12 +11,21 @@ import { Crest } from '@ui/components/Crest';
  */
 export function PrematchScreen() {
   const season = useGameStore((s) => s.season);
+  const career = useGameStore((s) => s.career);
   const formation = useGameStore((s) => s.career?.tactics?.formation ?? null);
   const watchNextMatchday = useGameStore((s) => s.watchNextMatchday);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const goTo = useGameStore((s) => s.goTo);
 
   const fixture = season ? nextHumanFixture(season) : null;
+
+  // Who from our squad is out this matchday (injured or suspended).
+  const myPlayers = career?.teams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const unavailable = season
+    ? myPlayers
+        .map((p) => ({ p, st: availabilityStatus(season.availability[p.id], season.currentMatchday) }))
+        .filter(({ st }) => st.status !== 'fit')
+    : [];
   if (!season || !fixture) {
     return (
       <main className="screen">
@@ -54,6 +63,20 @@ export function PrematchScreen() {
           Rival: <strong>{name(rivalId)}</strong> · Tu formación:{' '}
           <strong>{formation ?? '4-4-2 (por defecto)'}</strong>
         </p>
+      </RetroPanel>
+
+      <RetroPanel title="Bajas">
+        {unavailable.length === 0 ? (
+          <p className="hint">Sin bajas: toda la plantilla disponible.</p>
+        ) : (
+          <ul className="ticker">
+            {unavailable.map(({ p, st }) => (
+              <li key={p.id} className="ticker__line">
+                {st.status === 'injured' ? 'Lesionado' : 'Sancionado'}: {p.nombre} ({st.matchesOut})
+              </li>
+            ))}
+          </ul>
+        )}
       </RetroPanel>
 
       <div className="season-actions">

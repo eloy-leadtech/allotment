@@ -10,6 +10,11 @@ import {
   type StandingRow,
 } from '@engine';
 import type { League, Player, Team } from '@data';
+import {
+  applyMatchdayAvailability,
+  isAvailable,
+  type AvailabilityMap,
+} from '../career/availability';
 
 export interface SeasonState {
   leagueId: string;
@@ -24,6 +29,11 @@ export interface SeasonState {
   /** Next matchday to play (1-indexed). currentMatchday > totalMatchdays => finished. */
   currentMatchday: number;
   results: MatchResult[];
+  /**
+   * Injuries/suspensions by player id. DERIVED (rebuilt by the save/load replay),
+   * never persisted directly; empty at kick-off.
+   */
+  availability: AvailabilityMap;
 }
 
 export function toMatchPlayer(p: Player): MatchPlayer {
@@ -81,6 +91,7 @@ export function newSeasonFromTeams(
     totalMatchdays,
     currentMatchday: 1,
     results: [],
+    availability: {},
   };
 }
 
@@ -118,23 +129,56 @@ export function nextHumanFixture(state: SeasonState): Fixture | null {
   return fixtures.find((f) => f.homeId === state.humanTeamId || f.awayId === state.humanTeamId) ?? null;
 }
 
+/**
+ * The team as it lines up on `matchday`: injured/suspended players are dropped so
+ * the auto-XI (and the chosen XI) skip them. If fewer than 11 remain fit, the
+ * full squad is kept — the engine still needs eleven bodies on the pitch.
+ */
+function fieldableTeam(
+  team: CompetitionTeam,
+  availability: AvailabilityMap,
+  matchday: number,
+): CompetitionTeam {
+  const fit = team.players.filter((p) => isAvailable(availability[p.id], matchday));
+  const players = fit.length >= 11 ? fit : team.players;
+  if (players.length === team.players.length) return team;
+  // Drop any explicitly-chosen starters that are now unavailable; if the XI can
+  // no longer be honoured (fewer than 11 fit picks) fall back to the auto-XI.
+  let tactics = team.tactics;
+  if (tactics?.xi) {
+    const fitIds = new Set(players.map((p) => p.id));
+    const xi = tactics.xi.filter((p) => fitIds.has(p.id));
+    tactics = xi.length === 11 ? { ...tactics, xi } : { formation: tactics.formation };
+  }
+  return { ...team, players, tactics };
+}
+
 /** Play the current matchday; returns the updated state and the results just played. */
 export function advanceMatchday(state: SeasonState): { state: SeasonState; played: MatchResult[] } {
   if (isSeasonOver(state)) {
     return { state, played: [] };
   }
+  const matchday = state.currentMatchday;
   const byId = new Map(state.teams.map((t) => [t.id, t]));
   const played: MatchResult[] = [];
-  for (const fixture of fixturesForMatchday(state, state.currentMatchday)) {
+  for (const fixture of fixturesForMatchday(state, matchday)) {
     const home = byId.get(fixture.homeId);
     const away = byId.get(fixture.awayId);
     if (!home || !away) {
       throw new Error(`Fixture references unknown team: ${fixture.homeId} vs ${fixture.awayId}`);
     }
-    played.push(simulateFixture(home, away, state.seed, fixture));
+    const homeXI = fieldableTeam(home, state.availability, matchday);
+    const awayXI = fieldableTeam(away, state.availability, matchday);
+    played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
   }
+  const availability = applyMatchdayAvailability(state.availability, played, matchday);
   return {
-    state: { ...state, results: [...state.results, ...played], currentMatchday: state.currentMatchday + 1 },
+    state: {
+      ...state,
+      results: [...state.results, ...played],
+      currentMatchday: matchday + 1,
+      availability,
+    },
     played,
   };
 }

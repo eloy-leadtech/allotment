@@ -1,6 +1,6 @@
 export type Line = 'POR' | 'DEF' | 'MED' | 'DEL';
 
-export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red';
+export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red' | 'injury';
 
 /** Minimal player view the match engine needs (mapped from the data Player). */
 export interface MatchPlayer {
@@ -48,6 +48,11 @@ export interface MatchEvent {
   team: 'home' | 'away';
   playerId: string;
   playerName: string;
+  /**
+   * For `injury` events: how many upcoming matchdays the player is out (1-8).
+   * Absent for every other event type.
+   */
+  matchesOut?: number;
 }
 
 export interface MatchResult {
