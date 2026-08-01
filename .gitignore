@@ -11,3 +11,7 @@ ios
 
 # Agent worktrees (not part of the project)
 .claude/worktrees/
+
+# BDFutbol player photos: served locally via a Windows junction, never committed
+# (the link points outside the repo and holds thousands of images).
+public/fotos-bdf

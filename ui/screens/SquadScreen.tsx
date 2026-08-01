@@ -11,6 +11,7 @@ import { RetroButton } from '@ui/components/RetroButton';
 import { Crest } from '@ui/components/Crest';
 import { PotentialRange } from '@ui/components/PotentialRange';
 import { Pcf7Console } from '@ui/components/Pcf7Frame';
+import { useFichaPhoto } from '@ui/hooks/useFichaPhoto';
 
 /** Players at or under this age get a (fallible) scouted potential range. */
 const YOUTH_MAX_AGE = 23;
@@ -38,6 +39,36 @@ function attrRows(p: Player): Array<[string, number]> {
   ];
   if (a.calidad != null) pairs.unshift(['Calidad', a.calidad]);
   return pairs;
+}
+
+/**
+ * The player's real BDFutbol portrait when we have a high-confidence match for
+ * this season, otherwise the club crest (the existing silhouette fallback). The
+ * `<img>` is a fixed 2/3-vertical `object-fit: cover` fill of the ficha frame.
+ */
+function PlayerPhoto({
+  temporada,
+  player,
+  teamId,
+}: {
+  temporada: string;
+  player: Player;
+  teamId: string;
+}) {
+  const photo = useFichaPhoto(temporada, player.id);
+  const [failed, setFailed] = useState(false);
+  if (!photo || failed) {
+    return <Crest teamId={teamId} size={64} />;
+  }
+  return (
+    <img
+      src={photo.src}
+      alt={player.nombre}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+    />
+  );
 }
 
 export function SquadScreen() {
@@ -74,7 +105,7 @@ export function SquadScreen() {
           </div>
           <div className="pcf7ficha" style={{ padding: '0.7em' }}>
             <div className="pcf7ficha__photo">
-              <Crest teamId={career.humanTeamId} size={64} />
+              <PlayerPhoto temporada={career.temporada} player={selected} teamId={career.humanTeamId} />
             </div>
             <table className="pcf7tbl">
               <tbody>
