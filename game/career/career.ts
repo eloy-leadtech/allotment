@@ -12,6 +12,7 @@ import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
+import { DEFAULT_CONFIANZA } from './confianza';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history/palmarés). */
 type CareerMeta = Omit<CareerState, 'season' | 'history' | 'palmares'>;
@@ -89,6 +90,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
         relegationSpots,
       }),
     },
+    // A fresh career starts with the board and the crowd neutral (50/50).
+    confianza: DEFAULT_CONFIANZA,
     // A fresh career trains with a balanced focus until the manager changes it.
     training: { focus: DEFAULT_TRAINING_FOCUS },
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),

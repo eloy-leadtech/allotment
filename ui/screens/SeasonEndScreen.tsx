@@ -8,6 +8,8 @@ import {
   endOfSeasonEvaluation,
   economicDismissal,
   totalDebt,
+  endOfSeasonConfianza,
+  isManagerDismissed,
   titlesWonThisSeason,
   palmaresCompetitionLabel,
   palmaresCompetitionIcon,
@@ -18,6 +20,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { ConfianzaMeters } from '@ui/components/ConfianzaMeters';
 import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 const divisionName = (d: 'primera' | 'segunda'): string =>
@@ -49,8 +52,11 @@ export function SeasonEndScreen() {
   const outcome = careerOutcome(career);
   const evaluation = endOfSeasonEvaluation(career);
   const economicallySacked = economicDismissal(career);
-  const dismissed = evaluation.dismissed || economicallySacked;
+  const confianza = endOfSeasonConfianza(career);
   const debt = totalDebt(career);
+  // The tenure ends here if the board sacks by objective miss OR the directiva
+  // confianza meter collapses (both in isManagerDismissed) OR ruinous debt.
+  const dismissed = isManagerDismissed(career) || economicallySacked;
   const objective = career.board.objective;
   const toDivision = nextDivision(career.division, outcome);
   const changing = toDivision !== career.division;
@@ -119,7 +125,8 @@ export function SeasonEndScreen() {
             {economicallySacked ? '' : '. Sanéala o la directiva perderá la paciencia.'}
           </p>
         ) : null}
-        {evaluation.dismissed ? (
+        <ConfianzaMeters confianza={confianza} showWarning={!dismissed} />
+        {dismissed ? (
           <p className="fate fate--down">
             ⛔ La directiva te DESTITUYE. Aquí termina tu etapa en el club.
           </p>

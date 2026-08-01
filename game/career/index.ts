@@ -11,6 +11,7 @@ export * from './market';
 export * from './contracts';
 export * from './promotion';
 export * from './board';
+export * from './confianza';
 export * from './press';
 export * from './pressConference';
 export * from './competitions';

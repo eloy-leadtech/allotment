@@ -21,6 +21,7 @@ import {
   liquidateSeason,
   creditLimit,
   requestCredit,
+  isManagerDismissed,
   nextDivision,
   setCareerTactics,
   setCareerTraining,
@@ -390,9 +391,9 @@ export const useGameStore = create<GameStore>((set, get) => {
     continueCareer: () => {
       const { career, retainIds } = get();
       if (!career) return;
-      // A sacked manager cannot carry on: the board ended their tenure, whether for
-      // sporting failure or for running the club into ruinous, lasting debt.
-      if (endOfSeasonEvaluation(career).dismissed || economicDismissal(career)) return;
+      // A sacked manager cannot carry on: the board ended their tenure — by a hard
+      // objective miss, the directiva confianza meter collapsing, or ruinous debt.
+      if (isManagerDismissed(career) || economicDismissal(career)) return;
       // Seasons advance by year; the human's division depends on their result.
       const nextPrimera = nextSeasonByTemporada(career.temporada);
       if (!nextPrimera) return; // no more seasons available yet

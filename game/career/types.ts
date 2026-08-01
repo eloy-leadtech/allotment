@@ -3,6 +3,7 @@ import type { Formation, Pichichi, Zamora } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { BoardState } from './board';
+import type { ConfianzaState } from './confianza';
 import type { Contract } from './contracts';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
@@ -128,6 +129,14 @@ export interface CareerState {
   division: Division;
   /** The board relationship: this season's objective and last season's verdict. */
   board: BoardState;
+  /**
+   * The two institutional confidence meters (directiva + afición), an EVOLVING
+   * value that accumulates across seasons. Optional so pre-confianza saves and the
+   * many places that build a career meta stay valid; absent means the neutral
+   * default (see DEFAULT_CONFIANZA). Never re-derived inside `seasonFromCareer`:
+   * it is updated at each season transition and carried forward.
+   */
+  confianza?: ConfianzaState;
   /**
    * This season's press-conference decisions. Optional so pre-rueda saves and the
    * many places that build a career meta stay valid; absent means "no answers yet".
