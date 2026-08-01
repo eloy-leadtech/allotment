@@ -16,7 +16,7 @@ const humanTeamId = league.equipos[0]?.id;
 if (!humanTeamId) throw new Error('league has no teams');
 
 function freshCareer(): CareerState {
-  return newCareer(league, humanTeamId, 2024);
+  return newCareer(league, humanTeamId!, 2024);
 }
 
 /** A rival player's id (first player of some non-human club). */
