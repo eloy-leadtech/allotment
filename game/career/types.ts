@@ -9,6 +9,7 @@ import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
 import type { StadiumState } from './stadium';
 import type { SponsorState } from './sponsors';
+import type { CreditState } from './credit';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -149,6 +150,14 @@ export interface CareerState {
    * meta stay valid; absent means the basic sponsor (see DEFAULT_SPONSOR).
    */
   sponsor?: SponsorState;
+  /**
+   * The club's bank/board CREDIT and DEUDA state (loan owed + seasons over the
+   * credit limit). A negative `budget` above is the visible "números rojos"; this
+   * tracks the loan on top and the sacking counter. Optional so pre-crédito saves
+   * and every place that builds a career meta stay valid; absent means debt-free
+   * (see DEFAULT_CREDIT). Persisted in save v2.
+   */
+  credit?: CreditState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human

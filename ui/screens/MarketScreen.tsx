@@ -1,5 +1,14 @@
 import { useMemo, useState } from 'react';
-import { buyableListings, formatEuros, careerTeamName, squadWageBill, playerScoutReport } from '@game';
+import {
+  buyableListings,
+  formatEuros,
+  careerTeamName,
+  squadWageBill,
+  playerScoutReport,
+  totalDebt,
+  creditLimit,
+  creditAvailable,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -15,11 +24,13 @@ export function MarketScreen() {
   const bids = useGameStore((s) => s.bids);
   const lastIncome = useGameStore((s) => s.lastIncome);
   const lastWageBill = useGameStore((s) => s.lastWageBill);
+  const lastInterest = useGameStore((s) => s.lastInterest);
   const marketMessage = useGameStore((s) => s.marketMessage);
   const counterOffer = useGameStore((s) => s.counterOffer);
   const makeOffer = useGameStore((s) => s.makeOffer);
   const acceptCounterOffer = useGameStore((s) => s.acceptCounterOffer);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
+  const requestCredit = useGameStore((s) => s.requestCredit);
   const scoutPlayer = useGameStore((s) => s.scoutPlayer);
   const startSeasonFromMarket = useGameStore((s) => s.startSeasonFromMarket);
   const goTo = useGameStore((s) => s.goTo);
@@ -51,6 +62,16 @@ export function MarketScreen() {
   const openBids = bids.filter((b) => nameById.has(b.playerId));
   const name = (id: string): string => careerTeamName(career, id);
 
+  // Bank/board credit and debt ("números rojos"): the budget can be negative.
+  const debt = totalDebt(career);
+  const inTheRed = career.budget < 0;
+  const limit = creditLimit(career);
+  const available = creditAvailable(career);
+  const seasonsOverLimit = career.credit?.seasonsOverLimit ?? 0;
+  const budgetChip = career.budget < 0
+    ? { label: 'Presupuesto', value: `−${formatEuros(-career.budget)}`, tone: 'danger' as const }
+    : { label: 'Presupuesto', value: formatEuros(career.budget) };
+
   return (
     <main className="screen">
       <GestHeader
@@ -58,12 +79,53 @@ export function MarketScreen() {
         title="Mercado de fichajes"
         subtitle={`Temporada ${career.temporada}`}
         chips={[
-          { label: 'Presupuesto', value: formatEuros(career.budget) },
+          budgetChip,
           { label: 'Masa salarial', value: `${formatEuros(currentWages)}/año`, tone: 'danger' },
         ]}
       />
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
+
+      <RetroPanel title="Crédito y deuda">
+        <ul className="mkt-ledger">
+          {debt > 0 ? (
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Deuda actual</span>
+              <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(debt)}</span>
+            </li>
+          ) : (
+            <li className="mkt-ledger__row">
+              <span className="mkt-ledger__label">Deuda actual</span>
+              <span className="mkt-ledger__value">Sin deuda</span>
+            </li>
+          )}
+          <li className="mkt-ledger__row">
+            <span className="mkt-ledger__label">Límite de crédito de la directiva</span>
+            <span className="mkt-ledger__value">{formatEuros(limit)}</span>
+          </li>
+          <li className="mkt-ledger__row">
+            <span className="mkt-ledger__label">Crédito disponible</span>
+            <span className="mkt-ledger__value">{formatEuros(available)}</span>
+          </li>
+        </ul>
+        {inTheRed ? (
+          <p className="fate fate--down">
+            🔴 Estás en números rojos. La directiva te cobrará intereses cada temporada
+            {seasonsOverLimit > 0
+              ? ` y llevas ${seasonsOverLimit} temporada(s) por encima del límite: si sigues así, te destituirá.`
+              : '.'}
+          </p>
+        ) : null}
+        {available > 0 ? (
+          <div className="season-actions">
+            <RetroButton onClick={() => requestCredit(available)}>
+              Pedir crédito ({formatEuros(available)})
+            </RetroButton>
+          </div>
+        ) : (
+          <p className="hint">La directiva no te concede más crédito por ahora.</p>
+        )}
+      </RetroPanel>
 
       {lastIncome ? (
         <RetroPanel title={`Ingresos de la temporada · ${formatEuros(lastIncome.total)}`}>
@@ -104,10 +166,18 @@ export function MarketScreen() {
                 <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(lastWageBill)}</span>
               </li>
             ) : null}
+            {lastInterest != null && lastInterest > 0 ? (
+              <li className="mkt-ledger__row">
+                <span className="mkt-ledger__label">Intereses de la deuda</span>
+                <span className="mkt-ledger__value mkt-ledger__value--neg">−{formatEuros(lastInterest)}</span>
+              </li>
+            ) : null}
             {lastWageBill != null ? (
               <li className="mkt-ledger__row mkt-ledger__row--balance">
                 <span className="mkt-ledger__label">Balance</span>
-                <span className="mkt-ledger__value">{formatEuros(lastIncome.total - lastWageBill)}</span>
+                <span className="mkt-ledger__value">
+                  {formatEuros(lastIncome.total - lastWageBill - (lastInterest ?? 0))}
+                </span>
               </li>
             ) : null}
           </ul>

@@ -6,9 +6,12 @@ import {
   currentStandings,
   currentSeasonAwards,
   endOfSeasonEvaluation,
+  economicDismissal,
+  totalDebt,
   titlesWonThisSeason,
   palmaresCompetitionLabel,
   palmaresCompetitionIcon,
+  formatEuros,
 } from '@game';
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
@@ -45,6 +48,9 @@ export function SeasonEndScreen() {
 
   const outcome = careerOutcome(career);
   const evaluation = endOfSeasonEvaluation(career);
+  const economicallySacked = economicDismissal(career);
+  const dismissed = evaluation.dismissed || economicallySacked;
+  const debt = totalDebt(career);
   const objective = career.board.objective;
   const toDivision = nextDivision(career.division, outcome);
   const changing = toDivision !== career.division;
@@ -107,9 +113,20 @@ export function SeasonEndScreen() {
         <p className={`board-mood board-mood--${evaluation.satisfaction}`}>
           {satisfactionIcon(evaluation.satisfaction)} {satisfactionLabel(evaluation.satisfaction)}
         </p>
+        {debt > 0 ? (
+          <p className={`fate ${economicallySacked ? 'fate--down' : ''}`}>
+            🔴 Deuda del club: <strong>−{formatEuros(debt)}</strong>
+            {economicallySacked ? '' : '. Sanéala o la directiva perderá la paciencia.'}
+          </p>
+        ) : null}
         {evaluation.dismissed ? (
           <p className="fate fate--down">
             ⛔ La directiva te DESTITUYE. Aquí termina tu etapa en el club.
+          </p>
+        ) : null}
+        {economicallySacked ? (
+          <p className="fate fate--down">
+            ⛔ La directiva te DESTITUYE por la pésima gestión económica. Aquí termina tu etapa.
           </p>
         ) : null}
       </RetroPanel>
@@ -172,7 +189,7 @@ export function SeasonEndScreen() {
         )
       ) : null}
 
-      {targetEntry && !evaluation.dismissed ? (
+      {targetEntry && !dismissed ? (
         <div className="season-actions">
           <RetroButton variant="primary" onClick={continueCareer}>
             <span className="team-cell">
@@ -185,7 +202,7 @@ export function SeasonEndScreen() {
       ) : (
         <>
           <p className="hint">
-            {evaluation.dismissed
+            {dismissed
               ? 'Fin de tu carrera en el club: la directiva ha prescindido de ti.'
               : 'No hay datos de la temporada siguiente: fin de la carrera disponible.'}
           </p>

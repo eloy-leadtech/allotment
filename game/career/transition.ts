@@ -228,6 +228,8 @@ export function applyTransition(
     stadium: career.stadium,
     // The sponsor tier you signed carries forward (you can change it each season).
     sponsor: career.sponsor,
+    // The bank/board credit and debt carry forward; the liquidation settles them.
+    credit: career.credit,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -354,6 +356,8 @@ export function applyDivisionChange(
     stadium: career.stadium,
     // The sponsor tier you signed carries forward across divisions too.
     sponsor: career.sponsor,
+    // The bank/board credit and debt move with you across divisions.
+    credit: career.credit,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
