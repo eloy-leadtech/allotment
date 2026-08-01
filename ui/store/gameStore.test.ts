@@ -5,9 +5,27 @@ import { useGameStore, nextSeasonEntry } from './gameStore';
 
 const personKey = (p: Player): string => `${p.nombreCompleto}|${p.fechaNacimiento ?? '?'}`;
 
-/** Reset the singleton store to a clean 96/97 pre-game state. */
+/**
+ * A FIXED seed for the career-loop tests. The production store seeds every new
+ * game from the CSPRNG (`randomSeed`), which is right for the game but makes these
+ * tests non-deterministic: the season simulation is seed-driven, and for a share
+ * of seeds Barcelona legitimately misses the board objective and gets sacked after
+ * season 1, so `continueCareer` correctly refuses to advance. Pinning the seed
+ * removes that randomness (the outcome is now the same on every run and in CI)
+ * without touching any game behaviour — it is purely test setup.
+ */
+const TEST_SEED = 7;
+
+/** Reset the singleton store to a clean, DETERMINISTIC 96/97 pre-game state. */
 function reset(): void {
-  useGameStore.setState({ career: null, season: null, retainIds: [], lastResults: [], screen: 'title' });
+  useGameStore.setState({
+    career: null,
+    season: null,
+    retainIds: [],
+    lastResults: [],
+    screen: 'title',
+    seed: TEST_SEED,
+  });
   useGameStore.getState().chooseSeason('es-primera-9697');
 }
 
