@@ -4,6 +4,7 @@ import {
   playerAge,
   seasonStartYear,
 } from '@game';
+import { scoreTier, squadMorale, NEUTRAL_FORM, NEUTRAL_MORALE } from '@engine';
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -20,6 +21,40 @@ const POSITION_ORDER: Record<Position, number> = { POR: 0, DEF: 1, MED: 2, DEL: 
 function byLineThenMedia(a: Player, b: Player): number {
   const line = POSITION_ORDER[a.posicion] - POSITION_ORDER[b.posicion];
   return line !== 0 ? line : b.media - a.media;
+}
+
+/** Arrow glyph for a -3..+3 streak tier. */
+function arrowFor(tier: number): string {
+  if (tier === 0) return '▬';
+  const glyph = tier > 0 ? '▲' : '▼';
+  return glyph.repeat(Math.abs(tier));
+}
+
+/** CSS modifier for a tier: positive = good, negative = bad, 0 = neutral. */
+function tierClass(tier: number): string {
+  if (tier > 0) return 'streak--up';
+  if (tier < 0) return 'streak--down';
+  return 'streak--flat';
+}
+
+/** Form as a coloured arrow reflecting the streak. */
+function FormArrow({ form }: { form: number }) {
+  const tier = scoreTier(form);
+  return (
+    <span className={`form-arrow ${tierClass(tier)}`} title={`Forma ${form}/100`}>
+      {arrowFor(tier)}
+    </span>
+  );
+}
+
+/** Morale as a compact coloured bar. */
+function MoraleBar({ morale }: { morale: number }) {
+  const tier = scoreTier(morale);
+  return (
+    <span className={`morale-bar ${tierClass(tier)}`} title={`Moral ${morale}/100`}>
+      <span className="morale-bar__fill" style={{ width: `${morale}%` }} />
+    </span>
+  );
 }
 
 export function SquadScreen() {
@@ -40,6 +75,12 @@ export function SquadScreen() {
   const startYear = seasonStartYear(career.temporada);
   const observedSeasons = career.seasonNumber - 1;
 
+  // Form/morale live on the in-progress season's players (they reset neutral each
+  // season and evolve matchday to matchday). Index them by player id for lookup.
+  const seasonPlayers = career.season.teams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
+  const vestuario = squadMorale(seasonPlayers);
+
   return (
     <main className="screen">
       <section className="squad-card">
@@ -49,6 +90,9 @@ export function SquadScreen() {
         <div className="squad-card__meta">
           <h1>{team?.nombre ?? career.humanTeamId}</h1>
           <span className="matchday">Plantilla · {career.temporada}</span>
+          <span className={`vestuario ${tierClass(scoreTier(vestuario))}`}>
+            Moral del vestuario: <strong>{vestuario}</strong>/100
+          </span>
         </div>
       </section>
 
@@ -63,6 +107,8 @@ export function SquadScreen() {
                 <th>Jugador</th>
                 <th>Edad</th>
                 <th>Media</th>
+                <th>Forma</th>
+                <th>Moral</th>
                 <th>Potencial ojeado</th>
               </tr>
             </thead>
@@ -73,12 +119,17 @@ export function SquadScreen() {
                 const range = isYouth
                   ? scoutEstimate(p, synthesizePotential(p, career.seed), observedSeasons, career.seed)
                   : null;
+                const streak = streakById.get(p.id);
+                const form = streak?.form ?? NEUTRAL_FORM;
+                const morale = streak?.morale ?? NEUTRAL_MORALE;
                 return (
                   <tr key={p.id}>
                     <td>{p.posicion}</td>
                     <td className="squad-name">{p.nombre}</td>
                     <td>{age ?? '—'}</td>
                     <td className="squad-media">{p.media}</td>
+                    <td><FormArrow form={form} /></td>
+                    <td><MoraleBar morale={morale} /></td>
                     <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
                   </tr>
                 );

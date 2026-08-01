@@ -91,6 +91,23 @@ describe('career save v2 (snapshot)', () => {
     expect(currentStandings(a.season)).toEqual(currentStandings(b.season));
   });
 
+  it('reproduces form/morale exactly across a save/load round-trip', () => {
+    const career = evolvedCareer(8);
+    // Some player has a non-neutral streak by now (the mechanic is live).
+    const human = career.season.teams.find((t) => t.id === humanTeamId);
+    expect(human?.players.some((p) => p.form !== 50)).toBe(true);
+
+    const restored = restoreCareer(serializeCareer(career), league);
+    const restoredHuman = restored.season.teams.find((t) => t.id === humanTeamId);
+    const forms = (team?: { players: { id: string; form?: number; morale?: number }[] }) =>
+      (team?.players ?? [])
+        .map((p) => `${p.id}:${p.form}:${p.morale}`)
+        .sort();
+    // The season is re-derived from a neutral start and replayed, so form/morale
+    // are reconstructed identically — no need to persist them explicitly.
+    expect(forms(restoredHuman)).toEqual(forms(human));
+  });
+
   it('migrates a v1 season save into a season-1 career', () => {
     let state = newSeason(league, humanTeamId, 2024);
     for (let i = 0; i < 4; i += 1) state = advanceMatchday(state).state;
