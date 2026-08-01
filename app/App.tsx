@@ -8,6 +8,7 @@ import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
 import { SquadScreen } from '@ui/screens/SquadScreen';
 import { YouthScreen } from '@ui/screens/YouthScreen';
+import { OjeoScreen } from '@ui/screens/OjeoScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { TrainingScreen } from '@ui/screens/TrainingScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
@@ -40,6 +41,8 @@ export function App() {
       return <SquadScreen />;
     case 'youth':
       return <YouthScreen />;
+    case 'ojeo':
+      return <OjeoScreen />;
     case 'tactics':
       return <TacticsScreen />;
     case 'training':

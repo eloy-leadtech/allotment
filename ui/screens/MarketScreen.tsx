@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { buyableListings, formatEuros, careerTeamName, squadWageBill } from '@game';
+import { buyableListings, formatEuros, careerTeamName, squadWageBill, playerScoutReport } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { PotentialRange } from '@ui/components/PotentialRange';
 
 /** How many buy candidates to show at once (the pool is the whole league). */
 const MAX_ROWS = 40;
@@ -18,6 +19,7 @@ export function MarketScreen() {
   const makeOffer = useGameStore((s) => s.makeOffer);
   const acceptCounterOffer = useGameStore((s) => s.acceptCounterOffer);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
+  const scoutPlayer = useGameStore((s) => s.scoutPlayer);
   const startSeasonFromMarket = useGameStore((s) => s.startSeasonFromMarket);
   const goTo = useGameStore((s) => s.goTo);
   const [query, setQuery] = useState('');
@@ -123,6 +125,7 @@ export function MarketScreen() {
             const offerEuros = draft.trim() === '' ? l.askingPrice : Math.round(Number(draft) * 1_000_000);
             const validOffer = Number.isFinite(offerEuros) && offerEuros > 0;
             const isCountered = counterOffer?.playerId === l.player.id;
+            const report = playerScoutReport(career, l.player);
             return (
               <li key={l.player.id} className="market-row market-negotiate">
                 <span className="market-name team-cell">
@@ -130,7 +133,20 @@ export function MarketScreen() {
                   {l.player.nombre}
                 </span>
                 <span className="hint">
-                  {l.player.posicion} · media {l.player.media} · pide {formatEuros(l.askingPrice)} · cláusula {formatEuros(l.clause)}
+                  {l.player.posicion} ·{' '}
+                  {report.revealed
+                    ? `media ${report.media}`
+                    : `media ~${report.ability.low}–${report.ability.high}`}{' '}
+                  · pide {formatEuros(l.askingPrice)} · cláusula {formatEuros(l.clause)}
+                </span>
+                <span className="market-scout">
+                  <PotentialRange low={report.potential.low} high={report.potential.high} />
+                  <RetroButton
+                    disabled={report.scoutedThisSeason}
+                    onClick={() => scoutPlayer(l.player.id)}
+                  >
+                    {report.scoutedThisSeason ? 'Ojeado ✓' : 'Ojear'}
+                  </RetroButton>
                 </span>
                 <span className="market-offer">
                   <input

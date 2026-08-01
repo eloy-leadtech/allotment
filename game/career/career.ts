@@ -101,6 +101,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
       temporada: league.temporada,
       humanTeamId,
     }),
+    // A fresh career has ojeado no rival yet; reports build as you assign scouts.
+    scouting: {},
   };
   return { ...meta, season: seasonFromCareer(meta), history: [], palmares: [] };
 }

@@ -37,6 +37,18 @@ export interface YouthProspect {
   entrySeason: number;
 }
 
+/**
+ * A rival-scouting record for one player: how deeply the human has ojeado them.
+ * It is the human's DECISION (which rivals to assign a scout to), so it is
+ * persisted in the save. Keyed by player id in `CareerState.scouting`.
+ */
+export interface ScoutingRecord {
+  /** Total scouting assignments made on this player (accumulates across seasons). */
+  observations: number;
+  /** Last career season a scout was assigned to this player (1-indexed; 0 = never). */
+  lastSeason: number;
+}
+
 /** One line of the career league-champions roll. Grows with retirements/transfers later. */
 export interface SeasonSummary {
   seasonNumber: number;
@@ -113,6 +125,12 @@ export interface CareerState {
   contracts: Record<string, Contract>;
   /** Your club's youth-academy prospects awaiting promotion (see YouthProspect). */
   youthProspects: YouthProspect[];
+  /**
+   * Your scouting reports on RIVAL players, keyed by player id. Records how many
+   * times (and when) you have ojeado each one, so the fallible report narrows the
+   * more you observe. A human DECISION → persisted in save v2 (empty by default).
+   */
+  scouting: Record<string, ScoutingRecord>;
   season: SeasonState;
   history: SeasonSummary[];
   /**
