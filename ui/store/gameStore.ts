@@ -146,7 +146,11 @@ interface GameStore {
   lastWageBill: number | null;
   /** Snapshot of the save slots (for the slots screen). */
   slots: Array<SlotInfo | null>;
+  /** Player whose rich card (ficha) is open, if any. */
+  selectedPlayerId: string | null;
   goTo: (screen: Screen) => void;
+  /** Open a player's rich card (ficha) from the squad list. */
+  openPlayer: (playerId: string) => void;
   chooseSeason: (id: string) => void;
   setSeed: (seed: number) => void;
   randomizeSeed: () => void;
@@ -209,7 +213,9 @@ export const useGameStore = create<GameStore>((set, get) => {
     lastIncome: null,
     lastWageBill: null,
     slots: listSlots(),
+    selectedPlayerId: null,
     goTo: (screen) => set({ screen }),
+    openPlayer: (playerId) => set({ selectedPlayerId: playerId, screen: 'playerCard' }),
     chooseSeason: (id) => {
       const entry = getSeason(id);
       if (entry) set({ seasonId: id, league: entry.load() });
