@@ -21,6 +21,7 @@ import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
 import { titlesWonThisSeason } from './palmares';
+import { returnLoans, DEFAULT_LOANS } from './loans';
 import {
   computeSeasonObjective,
   evaluateObjective,
@@ -205,9 +206,21 @@ export function applyTransition(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
   });
-  const teams: CareerTeam[] = rawTeams.map((team) =>
+  const rebuiltTeams: CareerTeam[] = rawTeams.map((team) =>
     team.id === career.humanTeamId ? { ...team, players: advance.players } : team,
   );
+
+  // Players you loaned out come home now — aged a season, deal restored — while
+  // players brought in on loan are dropped by the real-world rebuild above. With
+  // an empty loan book this is a no-op.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -230,8 +243,11 @@ export function applyTransition(
     sponsor: career.sponsor,
     // The bank/board credit and debt carry forward; the liquidation settles them.
     credit: career.credit,
+    // Loans are settled by this transition (returnees folded in, loanees dropped):
+    // the next season starts with an empty loan book.
+    loans: DEFAULT_LOANS,
     teams,
-    contracts: advance.contracts,
+    contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,
@@ -328,7 +344,7 @@ export function applyDivisionChange(
   });
 
   let humanPresent = false;
-  const teams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
+  const rebuiltTeams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
     if (team.id === career.humanTeamId) {
       humanPresent = true;
       return { ...team, players: advance.players };
@@ -336,8 +352,19 @@ export function applyDivisionChange(
     return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
   });
   if (!humanPresent) {
-    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
+    rebuiltTeams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
   }
+
+  // Loanees return (aged, deal restored) even across a division change; players
+  // brought in on loan are dropped by the rebuild. No-op with an empty loan book.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -358,8 +385,10 @@ export function applyDivisionChange(
     sponsor: career.sponsor,
     // The bank/board credit and debt move with you across divisions.
     credit: career.credit,
+    // The loan book is settled by the transition; start clean.
+    loans: DEFAULT_LOANS,
     teams,
-    contracts: advance.contracts,
+    contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,

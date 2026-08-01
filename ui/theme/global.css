@@ -1929,6 +1929,20 @@ h1 {
   flex-wrap: wrap;
 }
 
+/* Cesiones: a section subheading and the "already lent out" muted row. */
+.mkt-subhead {
+  margin: 14px 0 6px;
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-muted, #9fb2d8);
+}
+
+.mkt-signing--muted {
+  opacity: 0.72;
+}
+
 .mkt-signing__name {
   font-family: var(--font-ui);
   font-weight: 700;

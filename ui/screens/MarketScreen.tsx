@@ -8,6 +8,9 @@ import {
   totalDebt,
   creditLimit,
   creditAvailable,
+  loanOutCandidates,
+  loanOffers,
+  careerLoans,
 } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -32,6 +35,8 @@ export function MarketScreen() {
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
   const requestCredit = useGameStore((s) => s.requestCredit);
   const scoutPlayer = useGameStore((s) => s.scoutPlayer);
+  const loanOut = useGameStore((s) => s.loanOut);
+  const loanIn = useGameStore((s) => s.loanIn);
   const startSeasonFromMarket = useGameStore((s) => s.startSeasonFromMarket);
   const goTo = useGameStore((s) => s.goTo);
   const [query, setQuery] = useState('');
@@ -44,6 +49,10 @@ export function MarketScreen() {
     const pool = q ? listings.filter((l) => l.player.nombre.toLowerCase().includes(q)) : listings;
     return pool.slice(0, MAX_ROWS);
   }, [listings, query]);
+  const outCandidates = useMemo(() => (career ? loanOutCandidates(career) : []), [career]);
+  const inOffers = useMemo(() => (career ? loanOffers(career).slice(0, MAX_ROWS) : []), [career]);
+  const loanedInIds = useMemo(() => new Set(career ? careerLoans(career).in : []), [career]);
+  const loanedOut = useMemo(() => (career ? careerLoans(career).out : []), [career]);
 
   if (!career) {
     return (
@@ -299,6 +308,111 @@ export function MarketScreen() {
         {listings.length > filtered.length ? (
           <p className="hint">Mostrando {filtered.length} de {listings.length}. Busca por nombre para afinar.</p>
         ) : null}
+      </RetroPanel>
+
+      <RetroPanel title="Cesiones">
+        <p className="hint">
+          Cede a un jugador una temporada (te ahorras su ficha y cobras una comisión; vuelve la
+          próxima) o incorpora a un cedido, más barato que fichar, hasta final de temporada.
+        </p>
+
+        {loanedOut.length > 0 ? (
+          <ul className="mkt-list">
+            {loanedOut.map((lo) => (
+              <li key={lo.player.id} className="mkt-signing mkt-signing--muted">
+                <div className="mkt-signing__head">
+                  <span className={`pos-badge pos-badge--${lo.player.posicion}`}>
+                    {lo.player.posicion}
+                  </span>
+                  <span className="mkt-signing__name team-cell">
+                    <Crest teamId={lo.toClubId} size={22} />
+                    {lo.player.nombre}
+                  </span>
+                  <span className="mkt-term">
+                    <em>Cedido a</em>
+                    <strong>{name(lo.toClubId)}</strong>
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <h4 className="mkt-subhead">Ceder de tu plantilla</h4>
+        {outCandidates.length === 0 ? (
+          <p className="hint">No tienes jugadores disponibles para ceder.</p>
+        ) : (
+          <ul className="mkt-list">
+            {outCandidates.slice(0, MAX_ROWS).map((c) => (
+              <li key={c.player.id} className="mkt-signing">
+                <div className="mkt-signing__head">
+                  <span className={`pos-badge pos-badge--${c.player.posicion}`}>
+                    {c.player.posicion}
+                  </span>
+                  <span className="mkt-signing__name">{c.player.nombre}</span>
+                  <span className="mkt-media">
+                    {c.player.media}
+                    <small>media</small>
+                  </span>
+                </div>
+                <div className="mkt-signing__actions">
+                  <span className="mkt-term">
+                    <em>Comisión</em>
+                    <strong>{formatEuros(c.commission)}</strong>
+                  </span>
+                  <RetroButton onClick={() => loanOut(c.player.id)}>Ceder</RetroButton>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <h4 className="mkt-subhead">Incorporar cedidos</h4>
+        {inOffers.length === 0 ? (
+          <p className="hint">No hay jugadores ofrecidos en cesión este mercado.</p>
+        ) : (
+          <ul className="mkt-list">
+            {inOffers.map((o) => {
+              const already = loanedInIds.has(o.player.id);
+              return (
+                <li key={o.player.id} className="mkt-signing">
+                  <div className="mkt-signing__head">
+                    <span className={`pos-badge pos-badge--${o.player.posicion}`}>
+                      {o.player.posicion}
+                    </span>
+                    <span className="mkt-signing__name team-cell">
+                      <Crest teamId={o.clubId} size={22} />
+                      {o.player.nombre}
+                    </span>
+                    <span className="mkt-media">
+                      {o.player.media}
+                      <small>media</small>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__terms">
+                    <span className="mkt-term">
+                      <em>Cesión</em>
+                      <strong>{formatEuros(o.fee)}</strong>
+                    </span>
+                    <span className="mkt-term">
+                      <em>Ficha</em>
+                      <strong>{formatEuros(o.wage)}/año</strong>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__actions">
+                    <RetroButton
+                      variant="primary"
+                      disabled={already}
+                      onClick={() => loanIn(o.player.id)}
+                    >
+                      {already ? 'Cedido ✓' : 'Incorporar'}
+                    </RetroButton>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </RetroPanel>
 
       <div className="season-actions">

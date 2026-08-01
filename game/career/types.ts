@@ -10,6 +10,7 @@ import type { TrainingState } from './training';
 import type { StadiumState } from './stadium';
 import type { SponsorState } from './sponsors';
 import type { CreditState } from './credit';
+import type { LoansState } from './loans';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -158,6 +159,13 @@ export interface CareerState {
    * (see DEFAULT_CREDIT). Persisted in save v2.
    */
   credit?: CreditState;
+  /**
+   * The club's loan book: players sent OUT on loan (returning next season) and
+   * players brought IN on loan this season. A player DECISION → persisted in save
+   * v2. Optional so pre-cesiones saves and the many places that build a career
+   * meta stay valid; absent means an empty loan book (see DEFAULT_LOANS).
+   */
+  loans?: LoansState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human

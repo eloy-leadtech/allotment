@@ -40,6 +40,8 @@ import {
   observePlayer,
   renewContract,
   chooseSponsor,
+  loanOutPlayer,
+  loanInPlayer,
   wageBill,
   formatEuros,
   toCompetitionTeam,
@@ -181,6 +183,8 @@ interface GameStore {
   acceptCounterOffer: () => void;
   dismissCounter: () => void;
   acceptMarketBid: (bid: Bid) => void;
+  loanOut: (playerId: string) => void;
+  loanIn: (playerId: string) => void;
   startSeasonFromMarket: () => void;
   openMatch: (result: MatchResult) => void;
   refreshSlots: () => void;
@@ -504,6 +508,44 @@ export const useGameStore = create<GameStore>((set, get) => {
         season: result.career.season,
         bids: bids.filter((b) => b.playerId !== bid.playerId),
         marketMessage: null,
+      });
+    },
+    loanOut: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = loanOutPlayer(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'ya-cedido'
+              ? 'Ese jugador ya está en tu plantilla como cedido.'
+              : 'No se puede ceder a ese jugador.',
+        });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: 'Jugador cedido: te ahorras su ficha esta temporada.',
+      });
+    },
+    loanIn: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = loanInPlayer(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'presupuesto'
+              ? 'No te llega para la cesión.'
+              : 'Ese jugador no está disponible en cesión.',
+        });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: 'Cedido incorporado hasta final de temporada.',
       });
     },
     startSeasonFromMarket: () => set({ screen: 'season', marketMessage: null }),

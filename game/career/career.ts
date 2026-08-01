@@ -7,6 +7,7 @@ import { initialBudget } from './market';
 import { DEFAULT_STADIUM } from './stadium';
 import { DEFAULT_SPONSOR } from './sponsors';
 import { DEFAULT_CREDIT } from './credit';
+import { DEFAULT_LOANS } from './loans';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
@@ -97,6 +98,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     sponsor: DEFAULT_SPONSOR,
     // A fresh career is debt-free; the board grants credit once you overspend.
     credit: DEFAULT_CREDIT,
+    // A fresh career has nobody out or in on loan.
+    loans: DEFAULT_LOANS,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),
