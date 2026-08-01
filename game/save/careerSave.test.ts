@@ -52,6 +52,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     teams,
     contracts: base.contracts,
     youthProspects: base.youthProspects,
+    scouting: base.scouting,
   };
   let season = seasonFromCareer(meta);
   for (let i = 0; i < playedMatchdays; i += 1) {
@@ -88,6 +89,27 @@ describe('career save v2 (snapshot)', () => {
     const restored = restoreCareer(serializeCareer(career), league);
     expect(career.youthProspects.length).toBeGreaterThan(0);
     expect(restored.youthProspects).toEqual(career.youthProspects);
+  });
+
+  it('round-trips rival-scouting reports (observations + lastSeason)', () => {
+    const base = evolvedCareer(4);
+    const rivalId = base.teams.find((t) => t.id !== humanTeamId)!.players[0]!.id;
+    const career: CareerState = {
+      ...base,
+      scouting: { [rivalId]: { observations: 2, lastSeason: 2 } },
+    };
+    const save = serializeCareer(career);
+    expect(save.scouting).toEqual({ [rivalId]: { observations: 2, lastSeason: 2 } });
+    const restored = restoreCareer(save, league);
+    expect(restored.scouting).toEqual(career.scouting);
+  });
+
+  it('defaults scouting to {} for a pre-ojeo save (no scouting field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { scouting?: unknown }).scouting;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.scouting).toEqual({});
   });
 
   it('round-trips the squad contracts (salario + años) exactly', () => {
@@ -143,6 +165,23 @@ describe('career save v2 (snapshot)', () => {
     // The season is re-derived from a neutral start and replayed, so form/morale
     // are reconstructed identically — no need to persist them explicitly.
     expect(forms(restoredHuman)).toEqual(forms(human));
+  });
+
+  it('reproduces fatigue exactly across a save/load round-trip (never persisted)', () => {
+    const career = evolvedCareer(8);
+    // The human XI has genuinely tired by now (the mechanic is live).
+    const human = career.season.teams.find((t) => t.id === humanTeamId);
+    expect(human?.players.some((p) => (p.fatigue ?? 0) > 0)).toBe(true);
+    // Fatigue is NOT part of the persisted payload (only teams + resume point).
+    const save = serializeCareer(career);
+    expect(JSON.stringify(save)).not.toMatch(/fatigue/);
+
+    const restored = restoreCareer(save, league);
+    const restoredHuman = restored.season.teams.find((t) => t.id === humanTeamId);
+    const fatigues = (team?: { players: { id: string; fatigue?: number }[] }) =>
+      (team?.players ?? []).map((p) => `${p.id}:${p.fatigue ?? 0}`).sort();
+    // Re-derived from a fresh start by replaying the season — reconstructed identically.
+    expect(fatigues(restoredHuman)).toEqual(fatigues(human));
   });
 
   it('migrates a v1 season save into a season-1 career', () => {

@@ -4,6 +4,7 @@ import {
   computeStandings,
   NEUTRAL_FORM,
   NEUTRAL_MORALE,
+  FRESH_FATIGUE,
   type CompetitionTeam,
   type Fixture,
   type MatchPlayer,
@@ -18,6 +19,7 @@ import {
   type AvailabilityMap,
 } from '../career/availability';
 import { applyFormMorale } from './formMorale';
+import { applyFatigue } from './fatigue';
 
 export interface SeasonState {
   leagueId: string;
@@ -51,9 +53,11 @@ export function toMatchPlayer(p: Player): MatchPlayer {
     pase: p.atributos.pase,
     entrada: p.atributos.entrada,
     porteria: p.atributos.porteria,
-    // Every season starts neutral; form/morale evolve as matchdays are played.
+    // Every season starts neutral/fresh; form/morale/fatigue evolve as matchdays
+    // are played (all re-derived by the save/load replay — never persisted).
     form: NEUTRAL_FORM,
     morale: NEUTRAL_MORALE,
+    fatigue: FRESH_FATIGUE,
   };
 }
 
@@ -178,9 +182,11 @@ export function advanceMatchday(state: SeasonState): { state: SeasonState; playe
     played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
   }
   const availability = applyMatchdayAvailability(state.availability, played, matchday);
-  // Evolve form/morale from the matchday just played (deterministic: replaying
-  // the season from its neutral start always rebuilds the same values).
-  const teams = applyFormMorale(state.teams, played);
+  // Evolve form/morale and fatigue from the matchday just played (deterministic:
+  // replaying the season from its neutral/fresh start always rebuilds the same
+  // values, so neither has to be persisted). Fatigue after so it reads the same
+  // fielded XI; the two updates touch independent player fields.
+  const teams = applyFatigue(applyFormMorale(state.teams, played), played);
   return {
     state: {
       ...state,

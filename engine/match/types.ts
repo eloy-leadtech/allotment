@@ -1,6 +1,33 @@
 export type Line = 'POR' | 'DEF' | 'MED' | 'DEL';
 
-export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red' | 'injury';
+/**
+ * Core event types drive the scoreline/discipline stream (goals, cards, injuries).
+ * The `flavor` types below are purely narrative colour — they NEVER change the
+ * result and are generated on an isolated RNG (see `simulateMatch`).
+ */
+export type EventType =
+  | 'goal'
+  | 'chance'
+  | 'yellow'
+  | 'secondYellow'
+  | 'red'
+  | 'injury'
+  // Flavor-only events (teletipo variety, no effect on the score):
+  | 'saved'
+  | 'offTarget'
+  | 'post'
+  | 'corner'
+  | 'foul';
+
+/** The purely-narrative event types: they add teletipo colour, never goals/cards. */
+export const FLAVOR_EVENT_TYPES = ['saved', 'offTarget', 'post', 'corner', 'foul'] as const;
+
+export type FlavorEventType = (typeof FLAVOR_EVENT_TYPES)[number];
+
+/** Whether an event type is flavor-only (does not affect the scoreline/discipline). */
+export function isFlavorEvent(type: EventType): type is FlavorEventType {
+  return (FLAVOR_EVENT_TYPES as readonly string[]).includes(type);
+}
 
 /** Minimal player view the match engine needs (mapped from the data Player). */
 export interface MatchPlayer {
@@ -22,6 +49,12 @@ export interface MatchPlayer {
   form?: number;
   /** Player morale (0-100, 50 neutral): medium-term, moved by results and minutes. */
   morale?: number;
+  /**
+   * Physical fatigue (0-100, 0 fresh): rises with minutes played, recovers with
+   * rest. Optional so existing fixtures stay valid; absent means fresh (no effect
+   * on the pitch). Feeds a small penalty multiplier into the effective ratings.
+   */
+  fatigue?: number;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */

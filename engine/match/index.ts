@@ -1,6 +1,7 @@
 export type {
   Line,
   EventType,
+  FlavorEventType,
   MatchPlayer,
   MatchTeam,
   MatchInput,
@@ -9,6 +10,7 @@ export type {
   Formation,
   Tactics,
 } from './types';
+export { FLAVOR_EVENT_TYPES, isFlavorEvent } from './types';
 export { simulateMatch } from './simulateMatch';
 export { selectStartingXI } from './lineup';
 export { computeStrength, type TeamStrength } from './strength';
@@ -30,6 +32,17 @@ export {
   type MatchOutcome,
   type PlayerMatchContext,
 } from './morale';
+export {
+  FRESH_FATIGUE,
+  FATIGUE_MIN,
+  FATIGUE_MAX,
+  clampFatigue,
+  playerFatigue,
+  fatigueMultiplier,
+  nextFatigue,
+  updateTeamFatigue,
+  fatigueTier,
+} from './fatigue';
 export {
   FORMATIONS,
   FORMATION_LIST,

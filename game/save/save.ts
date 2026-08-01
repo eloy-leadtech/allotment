@@ -7,7 +7,8 @@ import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
-import type { CareerState, CareerTeam, PalmaresTitle, SeasonSummary } from '../career/types';
+import { replaySeasonWithPress } from '../career/pressConference';
+import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
 const CAREER_SAVE_VERSION = 2;
@@ -107,6 +108,12 @@ const YouthProspectSchema = z.object({
   entrySeason: z.number().int().min(1),
 });
 
+/** A rival-scouting record: how many times and when the player was ojeado. */
+const ScoutingRecordSchema = z.object({
+  observations: z.number().int().min(0),
+  lastSeason: z.number().int().min(0),
+});
+
 const BoardObjectiveSchema = z.object({
   type: z.enum(['title', 'europe', 'promotion', 'mid-table', 'avoid-relegation']),
   targetPosition: z.number().int().min(1),
@@ -123,6 +130,18 @@ const BoardStateSchema = z.object({
     .optional(),
 });
 
+/** One press-conference decision: the matchday, question and chosen option. */
+const PressAnswerSchema = z.object({
+  matchday: z.number().int().min(1),
+  questionId: z.string().min(1),
+  optionId: z.string().min(1),
+});
+
+/** The season's press-conference decisions; defaults to none for pre-rueda saves. */
+const PressStateSchema = z.object({
+  answers: z.array(PressAnswerSchema).default([]),
+});
+
 export const CareerSaveSchema = z.object({
   version: z.literal(CAREER_SAVE_VERSION),
   seed: z.number().int(),
@@ -136,6 +155,8 @@ export const CareerSaveSchema = z.object({
   division: z.enum(['primera', 'segunda']).default('primera'),
   /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
   board: BoardStateSchema.optional(),
+  /** Press-conference decisions this season; defaults to none for pre-rueda saves. */
+  press: PressStateSchema.default({ answers: [] }),
   /** Human's tactics; absent means neutral auto-XI. */
   tactics: z
     .object({
@@ -158,6 +179,8 @@ export const CareerSaveSchema = z.object({
   contracts: z.record(z.string(), ContractSchema).default({}),
   /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
   youthProspects: z.array(YouthProspectSchema).default([]),
+  /** Rival-scouting reports by player id; defaults to {} for pre-ojeo saves. */
+  scouting: z.record(z.string(), ScoutingRecordSchema).default({}),
   history: z.array(SeasonSummarySchema),
   /** The club's palmarés; defaults to [] for pre-palmarés saves. */
   palmares: z.array(PalmaresTitleSchema).default([]),
@@ -194,6 +217,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     relegationSpots: career.relegationSpots,
     division: career.division,
     board: career.board,
+    press: career.press ?? { answers: [] },
     tactics: career.tactics,
     training: career.training,
     budget: career.budget,
@@ -201,6 +225,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
+    scouting: career.scouting,
     history,
     palmares,
     // The in-progress season is derived from `teams`; only its resume point is saved.
@@ -227,6 +252,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     Object.keys(save.contracts).length > 0
       ? save.contracts
       : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
+  const press: PressState = save.press ?? { answers: [] };
   const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -237,6 +263,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     relegationSpots: save.relegationSpots,
     division: save.division,
     board,
+    press,
     tactics: save.tactics,
     // Pre-training saves default to a balanced focus so training is always present.
     training: save.training ?? { focus: DEFAULT_TRAINING_FOCUS },
@@ -246,8 +273,17 @@ function restoreCareerV2(save: CareerSave): CareerState {
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,
+    // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
+    scouting: save.scouting,
   };
-  const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
+  // Interleave the persisted press morale bumps back into the replay so a loaded
+  // career reconstructs the live one exactly (with no answers this is a plain replay).
+  const season = replaySeasonWithPress(
+    seasonFromCareer(meta),
+    save.currentMatchday,
+    save.humanTeamId,
+    press.answers,
+  );
   return { ...meta, season, history: save.history, palmares: save.palmares };
 }
 

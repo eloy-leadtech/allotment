@@ -9,6 +9,7 @@ export type Screen =
   | 'market'
   | 'squad'
   | 'youth'
+  | 'ojeo'
   | 'tactics'
   | 'training'
   | 'stadium'
@@ -16,5 +17,6 @@ export type Screen =
   | 'copa'
   | 'europa'
   | 'palmares'
+  | 'press'
   | 'match'
   | 'slots';

@@ -20,6 +20,8 @@ import {
   nextDivision,
   setCareerTactics,
   setCareerTraining,
+  selectPressQuestion,
+  answerPressConference,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -31,6 +33,7 @@ import {
   acceptBid,
   promoteProspect,
   discardProspect,
+  observePlayer,
   renewContract,
   wageBill,
   formatEuros,
@@ -148,8 +151,10 @@ interface GameStore {
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
   setTraining: (training: TrainingState) => void;
+  answerPress: (optionId: string) => void;
   promoteYouth: (playerId: string) => void;
   discardYouth: (playerId: string) => void;
+  scoutPlayer: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
   expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
@@ -261,6 +266,19 @@ export const useGameStore = create<GameStore>((set, get) => {
       const next = setCareerTraining(career, training);
       set({ career: next, season: next.season });
     },
+    answerPress: (optionId) => {
+      const { career } = get();
+      if (!career) return;
+      // The pending question is derived deterministically from the career; answering
+      // records the decision and nudges dressing-room morale (future matchdays only).
+      const pending = selectPressQuestion(career);
+      if (!pending) {
+        set({ screen: 'season' });
+        return;
+      }
+      const next = answerPressConference(career, pending.question.id, optionId);
+      set({ career: next, season: next.season, screen: 'season' });
+    },
     promoteYouth: (playerId) => {
       const { career } = get();
       if (!career) return;
@@ -272,6 +290,24 @@ export const useGameStore = create<GameStore>((set, get) => {
       if (!career) return;
       const next = discardProspect(career, playerId);
       set({ career: next, season: next.season });
+    },
+    scoutPlayer: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = observePlayer(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'ya-ojeado'
+              ? 'Ya has enviado un ojeador a este jugador esta temporada.'
+              : result.reason === 'propio'
+                ? 'Es de tu plantilla: ya conoces su nivel.'
+                : 'Jugador no disponible.',
+        });
+        return;
+      }
+      // Scouting changes no rosters, only your reports; keep the season as-is.
+      set({ career: result.career, season: result.career.season, marketMessage: null });
     },
     renewPlayer: (playerId) => {
       const { career } = get();

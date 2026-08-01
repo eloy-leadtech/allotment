@@ -8,7 +8,7 @@ import {
   formatEuros,
   type AvailabilityStatus,
 } from '@game';
-import { scoreTier, squadMorale, NEUTRAL_FORM, NEUTRAL_MORALE } from '@engine';
+import { scoreTier, squadMorale, fatigueTier, NEUTRAL_FORM, NEUTRAL_MORALE, FRESH_FATIGUE } from '@engine';
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -68,6 +68,23 @@ function MoraleBar({ morale }: { morale: number }) {
   return (
     <span className={`morale-bar ${tierClass(tier)}`} title={`Moral ${morale}/100`}>
       <span className="morale-bar__fill" style={{ width: `${morale}%` }} />
+    </span>
+  );
+}
+
+/** Spanish label for a 0..3 physical-condition tier. */
+const FATIGUE_LABEL = ['Fresco', 'Algo cansado', 'Cansado', 'Reventado'] as const;
+
+/**
+ * Physical condition (fatiga) as a bar that fills and warms as a player tires:
+ * fresh = green, spent = red. The fill grows with fatigue so a full red bar reads
+ * as "needs a rest" at a glance.
+ */
+function FatigueBar({ fatigue }: { fatigue: number }) {
+  const tier = fatigueTier(fatigue);
+  return (
+    <span className={`fatigue-bar fatigue--${tier}`} title={`Estado físico: ${FATIGUE_LABEL[tier]} (fatiga ${fatigue}/100)`}>
+      <span className="fatigue-bar__fill" style={{ width: `${fatigue}%` }} />
     </span>
   );
 }
@@ -133,6 +150,7 @@ export function SquadScreen() {
                 <th>Edad</th>
                 <th>Media</th>
                 <th>Estado</th>
+                <th>Físico</th>
                 <th>Forma</th>
                 <th>Moral</th>
                 <th>Sueldo</th>
@@ -152,6 +170,7 @@ export function SquadScreen() {
                 const streak = streakById.get(p.id);
                 const form = streak?.form ?? NEUTRAL_FORM;
                 const morale = streak?.morale ?? NEUTRAL_MORALE;
+                const fatigue = streak?.fatigue ?? FRESH_FATIGUE;
                 const contract = career.contracts[p.id];
                 const lastYear = contract?.yearsLeft === 1;
                 return (
@@ -167,6 +186,7 @@ export function SquadScreen() {
                         <span className="hint">Disponible</span>
                       )}
                     </td>
+                    <td><FatigueBar fatigue={fatigue} /></td>
                     <td><FormArrow form={form} /></td>
                     <td><MoraleBar morale={morale} /></td>
                     <td className="squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
