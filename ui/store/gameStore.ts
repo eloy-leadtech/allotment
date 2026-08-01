@@ -20,6 +20,8 @@ import {
   nextDivision,
   setCareerTactics,
   setCareerTraining,
+  selectPressQuestion,
+  answerPressConference,
   advanceMatchday,
   serializeCareer,
   restoreCareer,
@@ -148,6 +150,7 @@ interface GameStore {
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
   setTraining: (training: TrainingState) => void;
+  answerPress: (optionId: string) => void;
   promoteYouth: (playerId: string) => void;
   discardYouth: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
@@ -260,6 +263,19 @@ export const useGameStore = create<GameStore>((set, get) => {
       // Training never resets played matchdays; it shapes next season's development.
       const next = setCareerTraining(career, training);
       set({ career: next, season: next.season });
+    },
+    answerPress: (optionId) => {
+      const { career } = get();
+      if (!career) return;
+      // The pending question is derived deterministically from the career; answering
+      // records the decision and nudges dressing-room morale (future matchdays only).
+      const pending = selectPressQuestion(career);
+      if (!pending) {
+        set({ screen: 'season' });
+        return;
+      }
+      const next = answerPressConference(career, pending.question.id, optionId);
+      set({ career: next, season: next.season, screen: 'season' });
     },
     promoteYouth: (playerId) => {
       const { career } = get();

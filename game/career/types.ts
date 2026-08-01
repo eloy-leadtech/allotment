@@ -75,6 +75,27 @@ export interface PalmaresTitle {
 }
 
 /**
+ * One recorded press-conference decision: which question was put to the manager
+ * and the option they chose, tied to the matchday it was answered at.
+ *
+ * This is a PLAYER DECISION — like tactics or the retain list, it is NOT derivable
+ * by replaying the season's results — so it is persisted and re-applied
+ * deterministically on load (see pressConference.ts). Keyed by matchday so a load
+ * can interleave each morale effect at the exact point it was taken.
+ */
+export interface PressAnswer {
+  /** career.season.currentMatchday at the moment the manager answered. */
+  matchday: number;
+  questionId: string;
+  optionId: string;
+}
+
+/** The season's press-conference decisions, oldest first. Resets each season. */
+export interface PressState {
+  answers: PressAnswer[];
+}
+
+/**
  * The whole career: owner of the evolving full-data teams. The in-progress
  * `season` is DERIVED from `teams`; the teams are the source of truth.
  */
@@ -92,6 +113,11 @@ export interface CareerState {
   division: Division;
   /** The board relationship: this season's objective and last season's verdict. */
   board: BoardState;
+  /**
+   * This season's press-conference decisions. Optional so pre-rueda saves and the
+   * many places that build a career meta stay valid; absent means "no answers yet".
+   */
+  press?: PressState;
   /** The human's tactics for their matches; absent means neutral auto-XI. */
   tactics?: CareerTactics;
   /** The season's training focus for the human club; absent means the default (equilibrado). */

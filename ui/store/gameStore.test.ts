@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { isSeasonOver } from '@game';
+import { isSeasonOver, selectPressQuestion } from '@game';
 import type { Player } from '@data';
 import { useGameStore, nextSeasonEntry } from './gameStore';
 
@@ -215,6 +215,41 @@ describe('gameStore career loop', () => {
     useGameStore.getState().chooseSeason('es-primera-9697');
     useGameStore.getState().startCareer('barcelona');
     expect(useGameStore.getState().career?.europa).toBeUndefined();
+  });
+
+  it('answerPress records the decision, lifts morale and returns to the season screen', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const career = useGameStore.getState().career!;
+    const pending = selectPressQuestion(career);
+    expect(pending).not.toBeNull();
+    // The first season-start option is a confident +3 morale answer.
+    const option = pending!.question.options[0]!;
+    useGameStore.getState().answerPress(option.id);
+    const after = useGameStore.getState().career!;
+    expect(after.press?.answers).toHaveLength(1);
+    expect(after.press?.answers[0]?.questionId).toBe(pending!.question.id);
+    expect(useGameStore.getState().screen).toBe('season');
+    // Every human player's morale rose off neutral by the option's morale effect.
+    const players = after.season.teams.find((t) => t.id === 'barcelona')!.players;
+    expect(players.every((p) => (p.morale ?? 50) === 50 + option.effect.morale)).toBe(true);
+    // Answering again this matchday is refused (one conference per jornada).
+    expect(selectPressQuestion(after)).toBeNull();
+  });
+
+  it('press decisions round-trip through a save slot', () => {
+    localStorage.clear();
+    useGameStore.getState().startCareer('barcelona');
+    const pending = selectPressQuestion(useGameStore.getState().career!)!;
+    useGameStore.getState().answerPress(pending.question.options[0]!.id);
+    useGameStore.getState().playNextMatchday();
+    const before = useGameStore.getState().career!;
+    useGameStore.getState().saveToSlot(2);
+
+    useGameStore.setState({ career: null, season: null });
+    useGameStore.getState().loadFromSlot(2);
+    const after = useGameStore.getState().career!;
+    expect(after.press).toEqual(before.press);
+    expect(after.season.results).toEqual(before.season.results);
   });
 
   it('setTactics stores the human formation and applies it to the live season', () => {
