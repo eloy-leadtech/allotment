@@ -18,6 +18,7 @@ export type Screen =
   | 'copa'
   | 'europa'
   | 'palmares'
+  | 'stats'
   | 'press'
   | 'match'
   | 'slots';
