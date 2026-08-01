@@ -11,14 +11,21 @@
 body {
   margin: 0;
   font-family: var(--font-ui);
-  /* Consola de acero azul: azul base con viñeteado radial a azul profundo
-     y un destello frío alto-centro (la "foto de estadio difuminada" del PCF7). */
+  /* Consola de acero azul: azul base con viñeteado radial a azul profundo,
+     un destello frío alto-centro (la "foto de estadio difuminada" del PCF7) y
+     un rayado técnico muy tenue (scanlines) que da textura de panel. */
   background:
-    radial-gradient(120% 80% at 50% 22%, rgba(127, 159, 255, 0.14) 0%, transparent 45%),
-    radial-gradient(140% 120% at 50% 40%, var(--c-bg-base) 0%, var(--c-bg) 100%);
+    repeating-linear-gradient(180deg,
+      rgba(127, 159, 255, 0.03) 0px, rgba(127, 159, 255, 0.03) 1px,
+      transparent 1px, transparent 4px),
+    radial-gradient(120% 80% at 50% 20%, rgba(127, 159, 255, 0.16) 0%, transparent 46%),
+    radial-gradient(90% 70% at 50% 4%, rgba(150, 180, 255, 0.10) 0%, transparent 40%),
+    radial-gradient(150% 130% at 50% 38%, var(--c-bg-base) 0%, var(--c-bg) 72%, #05050f 100%);
   background-attachment: fixed;
   color: var(--c-ink);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .screen {
@@ -45,16 +52,45 @@ body {
   position: fixed;
   top: 34%;
   left: 50%;
-  width: min(70vw, 520px);
-  height: min(70vw, 520px);
+  width: min(78vw, 560px);
+  height: min(78vw, 560px);
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle,
-    rgba(200, 220, 255, 0.9) 0%,
-    rgba(127, 159, 255, 0.35) 18%,
-    rgba(42, 63, 170, 0.18) 38%,
-    transparent 68%);
+  background:
+    radial-gradient(circle,
+      rgba(230, 240, 255, 0.95) 0%,
+      rgba(200, 220, 255, 0.7) 9%,
+      rgba(127, 159, 255, 0.34) 20%,
+      rgba(42, 63, 170, 0.16) 40%,
+      transparent 70%);
   pointer-events: none;
   z-index: 0;
+  animation: flare-breathe 6s ease-in-out infinite;
+}
+
+/* Rayos horizontales del lens-flare (el destello alargado del despacho PCF7). */
+.screen--title::after {
+  content: '';
+  position: fixed;
+  top: 34%;
+  left: 50%;
+  width: min(96vw, 900px);
+  height: 3px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(180, 205, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.9) 50%, rgba(180, 205, 255, 0.55) 55%, transparent 100%);
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes flare-breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen--title::before { animation: none; }
 }
 
 .screen--title > * {
@@ -65,13 +101,16 @@ body {
 /* Placa de título metálica con casquillos (barra del despacho). */
 .title-plate {
   display: inline-block;
-  padding: 10px 40px;
-  background: var(--bevel);
+  padding: 12px 44px;
+  background:
+    var(--sheen),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius-pill);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
   position: relative;
+  isolation: isolate;
 }
 
 /* Casquillos plateados en los extremos de la placa. */
@@ -80,15 +119,16 @@ body {
   content: '';
   position: absolute;
   top: 50%;
-  width: 16px;
-  height: 62%;
+  width: 17px;
+  height: 64%;
   transform: translateY(-50%);
-  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  background: var(--cap-metal);
   border-radius: var(--radius-pill);
-  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 var(--c-metal-hi), inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.5);
 }
-.title-plate::before { left: 8px; }
-.title-plate::after { right: 8px; }
+.title-plate::before { left: 9px; }
+.title-plate::after { right: 9px; }
 
 .title-menu {
   display: flex;
@@ -128,7 +168,20 @@ h1 {
   text-transform: uppercase;
   font-style: italic; /* rótulos grandes en oblicua, estilo Futura del PCF7 */
   font-weight: 800;
-  text-shadow: 0 1px 0 var(--c-edge-dark), 0 0 18px rgba(127, 159, 255, 0.5);
+  /* Titular con leve degradado de acero-cristal para que "brille" el texto. */
+  background: linear-gradient(180deg, #ffffff 0%, #e6eeff 52%, #b9cbf0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 var(--c-edge-dark), 0 0 20px rgba(127, 159, 255, 0.45);
+}
+
+/* Fallback si background-clip:text no pinta (mantiene el texto legible). */
+@supports not (background-clip: text) {
+  h1 {
+    color: var(--c-ink);
+    background: none;
+  }
 }
 
 .tagline {
@@ -139,15 +192,16 @@ h1 {
 
 /* Buttons — placa de acero biselada. Touch targets >= 48px */
 .retro-btn {
+  position: relative;
   min-height: var(--tap);
-  padding: 0 20px;
+  padding: 0 22px;
   font-family: var(--font-ui);
   font-size: 15px;
   font-weight: 700;
   font-style: italic;
   letter-spacing: 0.5px;
   color: var(--c-ink);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border: none;
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
@@ -155,27 +209,43 @@ h1 {
   box-shadow: var(--bevel-shadow);
   cursor: pointer;
   text-transform: uppercase;
-  transition: filter 0.12s ease, transform 0.05s ease;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transition: filter 0.14s ease, transform 0.06s ease, box-shadow 0.14s ease;
 }
 
 .retro-btn:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.16);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .retro-btn:active {
   transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--c-edge-light);
+}
+
+.retro-btn:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
 }
 
 /* Primario: casquillo con acento rojo del PCF7 (estado activo). */
 .retro-btn--primary {
-  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  background: var(--sheen), var(--cap-danger);
   border-top-color: #ff9c9c;
   color: var(--c-ink);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55);
+}
+
+.retro-btn--primary:hover {
+  box-shadow: var(--bevel-shadow), 0 0 14px rgba(200, 30, 30, 0.5);
 }
 
 .retro-panel {
-  background: var(--bevel);
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, transparent 22%),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
@@ -184,16 +254,28 @@ h1 {
 }
 
 .retro-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0 0 var(--space);
   color: var(--c-ink);
   font-size: 14px;
   font-style: italic;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  /* pequeño acento rojo a la izquierda del título, como los casquillos */
-  border-left: 4px solid var(--c-danger);
-  padding-left: 8px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Casquillo rojo del PCF7 a la izquierda del título (estado/marca de sección). */
+.retro-panel__title::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 15px;
+  border-radius: var(--radius-pill);
+  background: var(--cap-danger);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 8px rgba(200, 30, 30, 0.5);
 }
 
 /* Cabecera centrada con placa de título (píldora central del PCF7). */
@@ -230,25 +312,34 @@ h1 {
 }
 
 .team-tile:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.14);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .team-tile:active {
   transform: translateY(1px);
 }
 
-/* Marco biselado de 2px alrededor del escudo (findings/09 §4 "marcos de icono").
+.team-tile:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* Marco biselado alrededor del escudo (findings/09 §4 "marcos de icono"): metal
+   con hueco interior iluminado, como las miniaturas-foto del despacho PCF7.
    Base reutilizable; cada uso fija su tamaño. */
 .crest-frame,
 .team-tile__crest {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
-  border-top: 2px solid var(--c-edge-light);
+  background:
+    radial-gradient(circle at 50% 30%, #35508c 0%, #1a2c52 60%, #0e1a33 100%);
+  border-top: 2px solid var(--c-steel-hi);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 4px var(--c-edge-dark),
+    inset 0 0 10px rgba(127, 159, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .team-tile__crest {
@@ -330,11 +421,16 @@ h1 {
   background: var(--bevel);
   box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
     0 2px 5px rgba(0, 0, 0, 0.45);
+  transition: filter 0.12s ease;
 }
 
 /* Rayado alterno: cápsula un punto más clara para legibilidad. */
 .standings tbody tr:nth-child(even) {
-  background: linear-gradient(180deg, #6c8ec0 0%, #24407a 55%, #16264a 100%);
+  background: var(--bevel-raised);
+}
+
+.standings tbody tr:hover {
+  filter: brightness(1.12);
 }
 
 .standings tbody td {
@@ -368,24 +464,26 @@ h1 {
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
-  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  background: var(--cap-metal);
   color: #10142a;
   font-weight: 700;
   border-radius: var(--radius-pill);
-  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 var(--c-metal-hi), inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .standings__pts {
   color: var(--c-accent);
   font-weight: bold;
+  text-shadow: 0 0 8px rgba(127, 159, 255, 0.4);
 }
 
 /* Fila del equipo humano: casquillo rojo del PCF7 (mismo acento que el botón
    primario), para leer de un vistazo "este eres tú". */
 .standings__row--me {
-  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  background: var(--cap-danger);
   box-shadow: inset 0 1px 0 #ff9c9c, inset 0 -2px 3px #5a0c0c,
-    0 2px 6px rgba(0, 0, 0, 0.5);
+    0 2px 8px rgba(200, 30, 30, 0.35);
 }
 
 .standings__row--me .standings__pts {
@@ -437,11 +535,11 @@ h1 {
   letter-spacing: normal;
   text-transform: none;
   text-shadow: none;
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
 }
 
 .scoreboard__side {
@@ -474,10 +572,9 @@ h1 {
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
   color: #ff5a5a;
-  background: linear-gradient(180deg, #0a0a28, #05050f);
+  background: var(--sunken);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(127, 159, 255, 0.15),
-    0 0 10px rgba(200, 30, 30, 0.35);
+  box-shadow: var(--inset-shadow), 0 0 10px rgba(200, 30, 30, 0.35);
   text-shadow: 0 0 8px rgba(255, 60, 60, 0.6);
 }
 
@@ -575,47 +672,77 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  min-height: 84px;
-  padding: 12px 6px;
+  gap: 7px;
+  min-height: 92px;
+  padding: 12px 6px 11px;
   cursor: pointer;
   color: var(--c-ink);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border: none;
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
   box-shadow: var(--bevel-shadow);
-  transition: filter 0.12s ease, transform 0.05s ease;
+  transition: filter 0.14s ease, transform 0.06s ease, box-shadow 0.14s ease;
 }
 
 .despacho-tile:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.13);
+  transform: translateY(-1px);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .despacho-tile:active {
   transform: translateY(1px);
 }
 
+.despacho-tile:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* Icono enmarcado: la miniatura-foto en marco metálico del despacho PCF7. */
 .despacho-tile__icon {
-  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  font-size: 23px;
   line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  background: radial-gradient(circle at 50% 32%, #35508c 0%, #16264a 68%, #0c1730 100%);
+  border-top: 1px solid var(--c-steel-hi);
+  border-bottom: 1px solid var(--c-edge-dark);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
+    0 1px 2px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 }
 
 .despacho-tile__label {
   font-family: var(--font-data);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
-/* Variante "de campo": borde superior verde césped. */
+/* Variante "de campo": borde superior verde césped + halo del marco de icono. */
 .despacho-tile--pitch {
-  border-top-color: var(--c-accent-2);
-  box-shadow: inset 0 1px 0 var(--c-accent-2), inset 0 -2px 3px var(--c-edge-dark),
+  border-top-color: var(--c-accent-2-hi);
+  box-shadow: inset 0 1px 0 var(--c-accent-2-hi), inset 0 -2px 3px var(--c-edge-dark),
     0 3px 8px rgba(0, 0, 0, 0.55);
+}
+
+.despacho-tile--pitch:hover {
+  box-shadow: inset 0 1px 0 var(--c-accent-2-hi), inset 0 -2px 3px var(--c-edge-dark),
+    0 3px 8px rgba(0, 0, 0, 0.55), 0 0 14px rgba(42, 157, 74, 0.45);
+}
+
+.despacho-tile--pitch .despacho-tile__icon {
+  background: radial-gradient(circle at 50% 32%, #1f6d3a 0%, #124827 66%, #0a2417 100%);
+  border-top-color: var(--c-accent-2-hi);
 }
 
 /* Crests */
@@ -817,7 +944,7 @@ h1 {
   align-items: center;
   gap: var(--space);
   padding: var(--space);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
@@ -1204,16 +1331,36 @@ h1 {
 /* Cabecera del despacho: escudo enmarcado + identidad del club + chips de datos
    (jornada, presupuesto) en placa de acero, para leer el estado de un vistazo. */
 .despacho-head {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space);
   flex-wrap: wrap;
-  padding: var(--space);
-  background: var(--bevel);
+  padding: 14px var(--space);
+  background:
+    radial-gradient(120% 180% at 50% -40%, rgba(127, 159, 255, 0.22) 0%, transparent 55%),
+    var(--sheen),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Toque "sala de trofeos": filo de repisa iluminado en la base de la cabecera. */
+.despacho-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(127, 159, 255, 0.5) 20%, rgba(200, 220, 255, 0.85) 50%,
+    rgba(127, 159, 255, 0.5) 80%, transparent 100%);
+  pointer-events: none;
 }
 
 .despacho-head__crest {
@@ -1248,10 +1395,10 @@ h1 {
   align-items: center;
   gap: 2px;
   min-width: 84px;
-  padding: 6px 12px;
-  background: linear-gradient(180deg, #0a0a28, #05050f);
+  padding: 7px 13px;
+  background: var(--sunken);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+  box-shadow: var(--inset-shadow);
 }
 
 .head-chip__label {
@@ -1287,15 +1434,35 @@ h1 {
 /* Rótulo de grupo: tipografía de datos con casquillo rojo a la izquierda,
    igual que los títulos de panel, para que todo lea como un sistema. */
 .despacho-group__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
   font-family: var(--font-data);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--c-ink-dim);
-  border-left: 4px solid var(--c-danger);
-  padding-left: 8px;
+}
+
+/* Casquillo rojo + filo de repisa: el rótulo de grupo lee como los títulos de
+   panel, para que todo el sistema hable el mismo idioma visual. */
+.despacho-group__label::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 13px;
+  border-radius: var(--radius-pill);
+  background: var(--cap-danger);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 7px rgba(200, 30, 30, 0.5);
+}
+
+.despacho-group__label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(127, 159, 255, 0.35), transparent);
 }
 
 /* ============================================================
@@ -1309,11 +1476,14 @@ h1 {
   gap: var(--space);
   flex-wrap: wrap;
   padding: var(--space);
-  background: var(--bevel);
+  background:
+    radial-gradient(120% 180% at 50% -40%, rgba(127, 159, 255, 0.20) 0%, transparent 55%),
+    var(--sheen),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
 }
 
 .player-hero__crest {
@@ -1344,9 +1514,9 @@ h1 {
   flex: none;
   min-width: 76px;
   padding: 8px 14px;
-  background: linear-gradient(180deg, #0a0a28, #05050f);
+  background: var(--sunken);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+  box-shadow: var(--inset-shadow);
 }
 
 .player-hero__media-value {
