@@ -1,5 +1,5 @@
 import type { Player, TeamColors } from '@data';
-import type { Formation } from '@engine';
+import type { Formation, Pichichi, Zamora } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { BoardState } from './board';
@@ -7,6 +7,7 @@ import type { Contract } from './contracts';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
+import type { StadiumState } from './stadium';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -36,7 +37,7 @@ export interface YouthProspect {
   entrySeason: number;
 }
 
-/** One line of the career palmarés/history. Grows with retirements/transfers later. */
+/** One line of the career league-champions roll. Grows with retirements/transfers later. */
 export interface SeasonSummary {
   seasonNumber: number;
   temporada: string;
@@ -45,6 +46,32 @@ export interface SeasonSummary {
   division?: Division;
   /** The human's final league position that season, 1-indexed (for Europe qualification). */
   humanPosition?: number;
+  /** Season top scorer (Pichichi). Absent in pre-trophies saves/seasons. */
+  pichichi?: Pichichi;
+  /** Season least-conceded keeper (Zamora). Absent in pre-trophies saves/seasons. */
+  zamora?: Zamora;
+}
+
+/**
+ * A competition the human club can win, for the palmarés. `liga` is the human's
+ * own division title (Primera or Segunda — see `PalmaresTitle.division`); the
+ * others are the domestic cup and the two continental cups.
+ */
+export type TitleCompetition = 'liga' | 'copa' | 'champions' | 'uefa';
+
+/**
+ * One title in the club's palmarés: which competition, and in which season it was
+ * won. For a league title, `division` records which division was won so the UI
+ * can tell a Primera title from a Segunda one.
+ */
+export interface PalmaresTitle {
+  competition: TitleCompetition;
+  /** 1-indexed career season the title was won in. */
+  seasonNumber: number;
+  /** Season label, e.g. "96/97". */
+  temporada: string;
+  /** For a league title, the division that was won. */
+  division?: Division;
 }
 
 /**
@@ -75,6 +102,8 @@ export interface CareerState {
   europa?: EuropaResult;
   /** The human club's transfer budget, in whole euros. */
   budget: number;
+  /** The human club's stadium: its aforo/expansion level (drives gate income). */
+  stadium: StadiumState;
   teams: CareerTeam[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human
@@ -86,4 +115,9 @@ export interface CareerState {
   youthProspects: YouthProspect[];
   season: SeasonState;
   history: SeasonSummary[];
+  /**
+   * The club's palmarés: every title the human has won across the career, in the
+   * order they were won. Appended to at each season transition (see palmares.ts).
+   */
+  palmares: PalmaresTitle[];
 }

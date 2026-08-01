@@ -285,3 +285,51 @@ describe('applyTransition dedup (synthetic)', () => {
     expect(rival?.players.map((p) => p.nombre).sort()).toEqual(['Nomad', 'RivalGuy']);
   });
 });
+
+describe('applyTransition palmarés accumulation', () => {
+  const season1 = league('t-9899', '98/99', [
+    { id: 'you', nombre: 'You', jugadores: [player('you-a-1980', 'A', '1980-01-01')] },
+    { id: 'rival', nombre: 'Rival', jugadores: [player('rival-b-1979', 'B', '1979-01-01')] },
+  ]);
+  const season2 = league('t-9900', '99/00', [
+    { id: 'you', nombre: 'You', jugadores: [player('you-a-1980', 'A', '1980-01-01')] },
+    { id: 'rival', nombre: 'Rival', jugadores: [player('rival-b-1979', 'B', '1979-01-01')] },
+  ]);
+
+  it('starts a fresh career with an empty palmarés', () => {
+    expect(newCareer(season1, 'you', 7).palmares).toEqual([]);
+  });
+
+  it('records a league title exactly when the human tops the final table', () => {
+    const career = newCareer(season1, 'you', 7);
+    // The transition uses the league leader as champion; mirror that here without
+    // playing matches (the synthetic 1-player squads cannot field an XI).
+    const champion = currentStandings(career.season)[0]?.teamId;
+    const next = applyTransition(career, season2, new Set());
+    const ligaTitles = next.palmares.filter((t) => t.competition === 'liga');
+    if (champion === 'you') {
+      expect(ligaTitles).toEqual([
+        { competition: 'liga', division: 'primera', seasonNumber: 1, temporada: '98/99' },
+      ]);
+    } else {
+      expect(ligaTitles).toEqual([]);
+    }
+  });
+
+  it('appends a Copa title won this season and preserves the prior palmarés', () => {
+    const base = newCareer(season1, 'you', 7);
+    const prior = { competition: 'copa' as const, seasonNumber: 0, temporada: 'prev' };
+    const career = {
+      ...base,
+      copa: { knockout: [], championId: 'you' },
+      palmares: [prior],
+    };
+    const next = applyTransition(career, season2, new Set());
+    expect(next.palmares[0]).toEqual(prior); // prior title preserved, in order
+    expect(next.palmares).toContainEqual({
+      competition: 'copa',
+      seasonNumber: 1,
+      temporada: '98/99',
+    });
+  });
+});

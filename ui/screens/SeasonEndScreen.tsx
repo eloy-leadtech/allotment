@@ -4,7 +4,11 @@ import {
   careerOutcome,
   nextDivision,
   currentStandings,
+  currentSeasonAwards,
   endOfSeasonEvaluation,
+  titlesWonThisSeason,
+  palmaresCompetitionLabel,
+  palmaresCompetitionIcon,
 } from '@game';
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
@@ -34,6 +38,10 @@ export function SeasonEndScreen() {
 
   const name = (id: string): string => careerTeamName(career, id);
   const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
+  const awards = currentSeasonAwards(career);
+  // Titles the human just won this season (not yet committed to `palmares`, which
+  // is appended at the transition). Computed live so the banner is immediate.
+  const titlesThisSeason = titlesWonThisSeason(career, champion);
 
   const outcome = careerOutcome(career);
   const evaluation = endOfSeasonEvaluation(career);
@@ -60,6 +68,37 @@ export function SeasonEndScreen() {
 
       <p className="champion">🏆 Campeón: {name(champion)}</p>
 
+      <RetroPanel title="Trofeos individuales">
+        {awards.pichichi ? (
+          <p className="trophy trophy--pichichi">
+            ⚽ Pichichi: <strong>{awards.pichichi.playerName}</strong> ({name(awards.pichichi.teamId)}){' '}
+            — {awards.pichichi.goals}{' '}
+            {awards.pichichi.goals === 1 ? 'gol' : 'goles'}
+          </p>
+        ) : (
+          <p className="hint">Aún no hay goleadores registrados.</p>
+        )}
+        {awards.zamora ? (
+          <p className="trophy trophy--zamora">
+            🧤 Zamora: <strong>{awards.zamora.playerName}</strong> ({name(awards.zamora.teamId)}){' '}
+            — {awards.zamora.goalsConceded} encajados en {awards.zamora.matches}{' '}
+            {awards.zamora.matches === 1 ? 'partido' : 'partidos'}
+          </p>
+        ) : null}
+      </RetroPanel>
+      {titlesThisSeason.length > 0 ? (
+        <RetroPanel title="¡Títulos de esta temporada!">
+          <ul className="palmares">
+            {titlesThisSeason.map((t) => (
+              <li key={t.competition}>
+                {palmaresCompetitionIcon(t.competition)}{' '}
+                <strong>{palmaresCompetitionLabel(t.competition, t.division)}</strong>
+              </li>
+            ))}
+          </ul>
+        </RetroPanel>
+      ) : null}
+
       <RetroPanel title="Balance de la directiva">
         <p className="board-objective">
           🎯 Objetivo: {objectiveLabel(objective.type)}{' '}
@@ -83,15 +122,27 @@ export function SeasonEndScreen() {
       ) : null}
 
       {career.history.length > 0 ? (
-        <RetroPanel title="Palmarés">
+        <RetroPanel title="Campeones de Liga">
           <ul className="palmares">
             {career.history.map((h) => (
               <li key={h.seasonNumber}>
                 {h.temporada}: <strong>{name(h.championId)}</strong>
+                {h.pichichi ? (
+                  <span className="palmares-trophy"> · ⚽ {h.pichichi.playerName} ({h.pichichi.goals})</span>
+                ) : null}
+                {h.zamora ? (
+                  <span className="palmares-trophy"> · 🧤 {h.zamora.playerName} ({h.zamora.goalsConceded})</span>
+                ) : null}
               </li>
             ))}
           </ul>
         </RetroPanel>
+      ) : null}
+
+      {career.palmares.length > 0 || titlesThisSeason.length > 0 ? (
+        <div className="season-actions">
+          <RetroButton onClick={() => goTo('palmares')}>Ver palmarés del club 🏅</RetroButton>
+        </div>
       ) : null}
 
       {preview && targetEntry ? (

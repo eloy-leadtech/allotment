@@ -11,7 +11,7 @@
  *
  * Pure and deterministic: retained players age via the seeded development curve.
  */
-import { computeStandings, type StandingRow } from '@engine';
+import { computeSeasonAwards, computeStandings, type StandingRow } from '@engine';
 import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { seasonFromCareer } from './career';
@@ -20,6 +20,7 @@ import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
+import { titlesWonThisSeason } from './palmares';
 import {
   computeSeasonObjective,
   evaluateObjective,
@@ -66,12 +67,17 @@ function humanPosition(career: CareerState): number {
 
 /** The finished-season history line, including the human's finish (for Europe). */
 function finishedSummary(career: CareerState, championId: string) {
+  // Individual trophies are derived from the season's results/rosters at the
+  // moment it closes, so the palmarés can show each season's Pichichi/Zamora.
+  const awards = computeSeasonAwards(career.season.results, career.season.teams);
   return {
     seasonNumber: career.seasonNumber,
     temporada: career.temporada,
     championId,
     division: career.division,
     humanPosition: humanPosition(career),
+    pichichi: awards.pichichi ?? undefined,
+    zamora: awards.zamora ?? undefined,
   };
 }
 
@@ -218,6 +224,8 @@ export function applyTransition(
     training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
+    // The stadium you built stays yours into the next season.
+    stadium: career.stadium,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -233,6 +241,8 @@ export function applyTransition(
     ...meta,
     season: seasonFromCareer(meta),
     history: [...career.history, finishedSummary(career, preview.championId)],
+    // Record any title the human won this season before advancing.
+    palmares: [...career.palmares, ...titlesWonThisSeason(career, preview.championId)],
   };
 }
 
@@ -336,6 +346,8 @@ export function applyDivisionChange(
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     budget: career.budget,
+    // The stadium you built moves with you across divisions.
+    stadium: career.stadium,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -346,9 +358,12 @@ export function applyDivisionChange(
       humanTeamId: career.humanTeamId,
     }),
   };
+  const champ = championOf(career);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, championOf(career))],
+    history: [...career.history, finishedSummary(career, champ)],
+    // Record any title the human won this season before changing division.
+    palmares: [...career.palmares, ...titlesWonThisSeason(career, champ)],
   };
 }

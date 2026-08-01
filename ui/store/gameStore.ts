@@ -24,6 +24,7 @@ import {
   serializeCareer,
   restoreCareer,
   generateBids,
+  expandStadium,
   buyPlayer,
   negotiateBuy,
   acceptCounter,
@@ -150,6 +151,7 @@ interface GameStore {
   promoteYouth: (playerId: string) => void;
   discardYouth: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
+  expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
@@ -281,6 +283,22 @@ export const useGameStore = create<GameStore>((set, get) => {
       }
       // The squad is unchanged (only the wage book + budget), so keep the season.
       set({ career: result.career, marketMessage: null });
+    },
+    expandStadium: () => {
+      const { career } = get();
+      if (!career) return;
+      const result = expandStadium(career);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'presupuesto'
+              ? 'No te llega el presupuesto para la ampliación.'
+              : 'El estadio ya está al máximo.',
+        });
+        return;
+      }
+      // Only budget + stadium change; the squad and in-progress season stay put.
+      set({ career: result.career, season: result.career.season, marketMessage: null });
     },
     continueCareer: () => {
       const { career, retainIds } = get();

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective } from '../career/board';
+import { DEFAULT_STADIUM } from '../career/stadium';
 import { advanceMatchday, currentStandings, newSeason } from '../season/season';
 import type { CareerState, SeasonSummary } from '../career/types';
 import {
@@ -29,7 +30,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
       ? { ...t, players: t.players.map((p) => ({ ...p, media: Math.max(1, p.media - 5) })) }
       : t,
   );
-  const meta: Omit<CareerState, 'season' | 'history'> = {
+  const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: base.seed,
     leagueId: base.leagueId,
     humanTeamId: base.humanTeamId,
@@ -47,6 +48,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
       }),
     },
     budget: base.budget,
+    stadium: DEFAULT_STADIUM,
     teams,
     contracts: base.contracts,
     youthProspects: base.youthProspects,
@@ -58,7 +60,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
   const history: SeasonSummary[] = [
     { seasonNumber: 1, temporada: base.temporada, championId: humanTeamId },
   ];
-  return { ...meta, season, history };
+  return { ...meta, season, history, palmares: [] };
 }
 
 describe('career save v2 (snapshot)', () => {
@@ -163,6 +165,20 @@ describe('career save v2 (snapshot)', () => {
     expect(() => CareerSaveSchema.parse({ ...good, version: 1 })).toThrow();
   });
 
+  it('round-trips the stadium expansion level', () => {
+    const career = { ...evolvedCareer(4), stadium: { capacityLevel: 3 } };
+    const restored = restoreCareer(serializeCareer(career), league);
+    expect(restored.stadium).toEqual({ capacityLevel: 3 });
+  });
+
+  it('defaults the stadium to the base ground for a pre-estadio save', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { stadium?: unknown }).stadium;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.stadium).toEqual(DEFAULT_STADIUM);
+  });
+
   it('round-trips the board objective and last verdict', () => {
     const career = evolvedCareer(4);
     const withVerdict: CareerState = {
@@ -199,6 +215,30 @@ describe('career save v2 (snapshot)', () => {
     delete (legacy as { training?: unknown }).training;
     const restored = restoreCareer(legacy, league);
     expect(restored.training).toEqual({ focus: 'equilibrado' });
+  });
+
+  it('round-trips the club palmarés exactly', () => {
+    const career = evolvedCareer(4);
+    const withPalmares: CareerState = {
+      ...career,
+      palmares: [
+        { competition: 'liga', division: 'segunda', seasonNumber: 1, temporada: '96/97' },
+        { competition: 'copa', seasonNumber: 2, temporada: '97/98' },
+        { competition: 'champions', seasonNumber: 2, temporada: '97/98' },
+      ],
+    };
+    const save = serializeCareer(withPalmares);
+    expect(save.palmares).toEqual(withPalmares.palmares);
+    const restored = restoreCareer(save, league);
+    expect(restored.palmares).toEqual(withPalmares.palmares);
+  });
+
+  it('defaults the palmarés to [] for a pre-palmarés save (no palmares field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { palmares?: unknown }).palmares;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.palmares).toEqual([]);
   });
 
   it('rejects a save from a different league', () => {
