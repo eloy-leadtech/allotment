@@ -26,6 +26,8 @@ import {
   negotiateBuy,
   acceptCounter,
   acceptBid,
+  promoteProspect,
+  discardProspect,
   formatEuros,
   toCompetitionTeam,
   runCareerCopa,
@@ -137,6 +139,8 @@ interface GameStore {
   watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
   setTactics: (tactics: CareerTactics) => void;
+  promoteYouth: (playerId: string) => void;
+  discardYouth: (playerId: string) => void;
   startTournament: (tournamentId: string, nationId: string) => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
@@ -236,6 +240,18 @@ export const useGameStore = create<GameStore>((set, get) => {
       const { career } = get();
       if (!career) return;
       const next = setCareerTactics(career, tactics);
+      set({ career: next, season: next.season });
+    },
+    promoteYouth: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const next = promoteProspect(career, playerId);
+      set({ career: next, season: next.season });
+    },
+    discardYouth: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const next = discardProspect(career, playerId);
       set({ career: next, season: next.season });
     },
     continueCareer: () => {

@@ -8,6 +8,7 @@ export type Screen =
   | 'seasonEnd'
   | 'market'
   | 'squad'
+  | 'youth'
   | 'tactics'
   | 'tournament'
   | 'copa'

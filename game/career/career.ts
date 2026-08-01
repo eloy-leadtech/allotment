@@ -4,6 +4,7 @@ import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/s
 import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { initialBudget } from './market';
 import { seasonStartYear } from './development';
+import { generateYouthBatch } from './cantera';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history). */
 type CareerMeta = Omit<CareerState, 'season' | 'history'>;
@@ -74,6 +75,13 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     division: 'primera',
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
+    // Season 1's opening hornada of juveniles.
+    youthProspects: generateYouthBatch({
+      seed,
+      seasonNumber: 1,
+      temporada: league.temporada,
+      humanTeamId,
+    }),
   };
   return { ...meta, season: seasonFromCareer(meta), history: [] };
 }

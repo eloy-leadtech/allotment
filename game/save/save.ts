@@ -63,6 +63,12 @@ const SeasonSummarySchema = z.object({
   championId: z.string().min(1),
 });
 
+/** A youth-academy prospect: its full player data plus its entry season. */
+const YouthProspectSchema = z.object({
+  player: PlayerSchema,
+  entrySeason: z.number().int().min(1),
+});
+
 export const CareerSaveSchema = z.object({
   version: z.literal(CAREER_SAVE_VERSION),
   seed: z.number().int(),
@@ -84,6 +90,8 @@ export const CareerSaveSchema = z.object({
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
+  /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
+  youthProspects: z.array(YouthProspectSchema).default([]),
   history: z.array(SeasonSummarySchema),
   /** Next matchday to play in the in-progress season (1-indexed). */
   currentMatchday: z.number().int().min(1),
@@ -119,6 +127,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     tactics: career.tactics,
     budget: career.budget,
     teams,
+    youthProspects: career.youthProspects,
     history,
     // The in-progress season is derived from `teams`; only its resume point is saved.
     currentMatchday: career.season.currentMatchday,
@@ -139,6 +148,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     tactics: save.tactics,
     budget: save.budget,
     teams: save.teams,
+    youthProspects: save.youthProspects,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
   return { ...meta, season, history: save.history };

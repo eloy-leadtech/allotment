@@ -3,6 +3,7 @@ export * from './career';
 export * from './development';
 export * from './transition';
 export * from './scouting';
+export * from './cantera';
 export * from './market';
 export * from './promotion';
 export * from './competitions';
