@@ -5,3 +5,4 @@ export * from './calendar';
 export * from './standings';
 export * from './match';
 export * from './competition';
+export * from './trophies';

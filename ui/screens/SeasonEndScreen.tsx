@@ -4,6 +4,7 @@ import {
   careerOutcome,
   nextDivision,
   currentStandings,
+  currentSeasonAwards,
   endOfSeasonEvaluation,
 } from '@game';
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
@@ -34,6 +35,7 @@ export function SeasonEndScreen() {
 
   const name = (id: string): string => careerTeamName(career, id);
   const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
+  const awards = currentSeasonAwards(career);
 
   const outcome = careerOutcome(career);
   const evaluation = endOfSeasonEvaluation(career);
@@ -59,6 +61,25 @@ export function SeasonEndScreen() {
       </header>
 
       <p className="champion">🏆 Campeón: {name(champion)}</p>
+
+      <RetroPanel title="Trofeos individuales">
+        {awards.pichichi ? (
+          <p className="trophy trophy--pichichi">
+            ⚽ Pichichi: <strong>{awards.pichichi.playerName}</strong> ({name(awards.pichichi.teamId)}){' '}
+            — {awards.pichichi.goals}{' '}
+            {awards.pichichi.goals === 1 ? 'gol' : 'goles'}
+          </p>
+        ) : (
+          <p className="hint">Aún no hay goleadores registrados.</p>
+        )}
+        {awards.zamora ? (
+          <p className="trophy trophy--zamora">
+            🧤 Zamora: <strong>{awards.zamora.playerName}</strong> ({name(awards.zamora.teamId)}){' '}
+            — {awards.zamora.goalsConceded} encajados en {awards.zamora.matches}{' '}
+            {awards.zamora.matches === 1 ? 'partido' : 'partidos'}
+          </p>
+        ) : null}
+      </RetroPanel>
 
       <RetroPanel title="Balance de la directiva">
         <p className="board-objective">
@@ -88,6 +109,12 @@ export function SeasonEndScreen() {
             {career.history.map((h) => (
               <li key={h.seasonNumber}>
                 {h.temporada}: <strong>{name(h.championId)}</strong>
+                {h.pichichi ? (
+                  <span className="palmares-trophy"> · ⚽ {h.pichichi.playerName} ({h.pichichi.goals})</span>
+                ) : null}
+                {h.zamora ? (
+                  <span className="palmares-trophy"> · 🧤 {h.zamora.playerName} ({h.zamora.goalsConceded})</span>
+                ) : null}
               </li>
             ))}
           </ul>

@@ -62,10 +62,29 @@ const CareerTeamSchema = z.object({
   players: z.array(PlayerSchema),
 });
 
+/** Season top scorer (Pichichi); optional so pre-trophies saves still load. */
+const PichichiSchema = z.object({
+  playerId: z.string().min(1),
+  playerName: z.string().min(1),
+  teamId: z.string().min(1),
+  goals: z.number().int().min(0),
+});
+
+/** Season least-conceded keeper (Zamora); optional for pre-trophies saves. */
+const ZamoraSchema = z.object({
+  playerId: z.string().min(1),
+  playerName: z.string().min(1),
+  teamId: z.string().min(1),
+  goalsConceded: z.number().int().min(0),
+  matches: z.number().int().min(0),
+});
+
 const SeasonSummarySchema = z.object({
   seasonNumber: z.number().int(),
   temporada: z.string().min(1),
   championId: z.string().min(1),
+  pichichi: PichichiSchema.optional(),
+  zamora: ZamoraSchema.optional(),
 });
 
 /** A squad contract: annual salary and full seasons remaining. */

@@ -15,3 +15,4 @@ export * from './competitions';
 export * from './europa';
 export * from './finances';
 export * from './stadium';
+export * from './awards';

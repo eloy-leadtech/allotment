@@ -11,7 +11,7 @@
  *
  * Pure and deterministic: retained players age via the seeded development curve.
  */
-import { computeStandings, type StandingRow } from '@engine';
+import { computeSeasonAwards, computeStandings, type StandingRow } from '@engine';
 import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { seasonFromCareer } from './career';
@@ -66,12 +66,17 @@ function humanPosition(career: CareerState): number {
 
 /** The finished-season history line, including the human's finish (for Europe). */
 function finishedSummary(career: CareerState, championId: string) {
+  // Individual trophies are derived from the season's results/rosters at the
+  // moment it closes, so the palmarés can show each season's Pichichi/Zamora.
+  const awards = computeSeasonAwards(career.season.results, career.season.teams);
   return {
     seasonNumber: career.seasonNumber,
     temporada: career.temporada,
     championId,
     division: career.division,
     humanPosition: humanPosition(career),
+    pichichi: awards.pichichi ?? undefined,
+    zamora: awards.zamora ?? undefined,
   };
 }
 
