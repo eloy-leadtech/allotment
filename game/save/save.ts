@@ -107,6 +107,12 @@ const YouthProspectSchema = z.object({
   entrySeason: z.number().int().min(1),
 });
 
+/** A rival-scouting record: how many times and when the player was ojeado. */
+const ScoutingRecordSchema = z.object({
+  observations: z.number().int().min(0),
+  lastSeason: z.number().int().min(0),
+});
+
 const BoardObjectiveSchema = z.object({
   type: z.enum(['title', 'europe', 'promotion', 'mid-table', 'avoid-relegation']),
   targetPosition: z.number().int().min(1),
@@ -158,6 +164,8 @@ export const CareerSaveSchema = z.object({
   contracts: z.record(z.string(), ContractSchema).default({}),
   /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
   youthProspects: z.array(YouthProspectSchema).default([]),
+  /** Rival-scouting reports by player id; defaults to {} for pre-ojeo saves. */
+  scouting: z.record(z.string(), ScoutingRecordSchema).default({}),
   history: z.array(SeasonSummarySchema),
   /** The club's palmarés; defaults to [] for pre-palmarés saves. */
   palmares: z.array(PalmaresTitleSchema).default([]),
@@ -201,6 +209,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
+    scouting: career.scouting,
     history,
     palmares,
     // The in-progress season is derived from `teams`; only its resume point is saved.
@@ -246,6 +255,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,
+    // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
+    scouting: save.scouting,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
   return { ...meta, season, history: save.history, palmares: save.palmares };

@@ -9,6 +9,7 @@ export type Screen =
   | 'market'
   | 'squad'
   | 'youth'
+  | 'ojeo'
   | 'tactics'
   | 'training'
   | 'stadium'

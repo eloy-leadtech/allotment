@@ -52,6 +52,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     teams,
     contracts: base.contracts,
     youthProspects: base.youthProspects,
+    scouting: base.scouting,
   };
   let season = seasonFromCareer(meta);
   for (let i = 0; i < playedMatchdays; i += 1) {
@@ -88,6 +89,27 @@ describe('career save v2 (snapshot)', () => {
     const restored = restoreCareer(serializeCareer(career), league);
     expect(career.youthProspects.length).toBeGreaterThan(0);
     expect(restored.youthProspects).toEqual(career.youthProspects);
+  });
+
+  it('round-trips rival-scouting reports (observations + lastSeason)', () => {
+    const base = evolvedCareer(4);
+    const rivalId = base.teams.find((t) => t.id !== humanTeamId)!.players[0]!.id;
+    const career: CareerState = {
+      ...base,
+      scouting: { [rivalId]: { observations: 2, lastSeason: 2 } },
+    };
+    const save = serializeCareer(career);
+    expect(save.scouting).toEqual({ [rivalId]: { observations: 2, lastSeason: 2 } });
+    const restored = restoreCareer(save, league);
+    expect(restored.scouting).toEqual(career.scouting);
+  });
+
+  it('defaults scouting to {} for a pre-ojeo save (no scouting field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { scouting?: unknown }).scouting;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.scouting).toEqual({});
   });
 
   it('round-trips the squad contracts (salario + años) exactly', () => {

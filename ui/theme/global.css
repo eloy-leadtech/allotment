@@ -962,6 +962,12 @@ h1 {
   gap: 6px;
 }
 
+.market-scout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .offer-input {
   width: 5.5em;
   padding: 4px 6px;

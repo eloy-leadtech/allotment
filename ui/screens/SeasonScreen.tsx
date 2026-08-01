@@ -109,6 +109,10 @@ export function SeasonScreen() {
           <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
           <span className="despacho-tile__label">Cantera</span>
         </button>
+        <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('ojeo')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
+          <span className="despacho-tile__label">Ojeo</span>
+        </button>
         <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
           <span className="despacho-tile__icon" aria-hidden="true">📋</span>
           <span className="despacho-tile__label">Táctica</span>

@@ -235,6 +235,8 @@ export function applyTransition(
       temporada: temporadaNext,
       humanTeamId: career.humanTeamId,
     }),
+    // Your scouting reports are a decision: they carry forward and keep deepening.
+    scouting: career.scouting,
   };
 
   return {
@@ -357,6 +359,8 @@ export function applyDivisionChange(
       temporada: temporadaNext,
       humanTeamId: career.humanTeamId,
     }),
+    // Your scouting reports are a decision: they carry forward and keep deepening.
+    scouting: career.scouting,
   };
   const champ = championOf(career);
   return {
