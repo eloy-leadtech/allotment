@@ -115,7 +115,7 @@ export function StadiumScreen() {
       </RetroPanel>
 
       <div className="season-actions">
-        <RetroButton onClick={() => goTo('season')}>Atrás</RetroButton>
+        <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
       </div>
     </main>
   );
