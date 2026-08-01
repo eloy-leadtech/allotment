@@ -27,6 +27,12 @@ import {
   type BoardState,
   type ObjectiveEvaluation,
 } from './board';
+import {
+  applyConfianza,
+  confianzaProvocaCese,
+  DEFAULT_CONFIANZA,
+  type ConfianzaState,
+} from './confianza';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -220,6 +226,8 @@ export function applyTransition(
     // Same-division advance keeps the human where they were.
     division: career.division,
     board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
@@ -267,6 +275,38 @@ export function endOfSeasonEvaluation(career: CareerState): ObjectiveEvaluation 
     career.board.objective,
     humanPosition(career),
     careerOutcome(career),
+  );
+}
+
+/**
+ * The confianza meters the career would carry into the NEXT season: the running
+ * meters folded with the just-finished season's verdict (objective satisfaction,
+ * shortfall, promotion/relegation and whether the human won their league).
+ *
+ * This is the single source of truth for the evolved value — the season
+ * transition stores exactly this, and the UI/continue logic reads it to decide
+ * the soft cese and to show where the meters are heading. Pure and deterministic.
+ */
+export function endOfSeasonConfianza(career: CareerState): ConfianzaState {
+  const evaluation = endOfSeasonEvaluation(career);
+  return applyConfianza(career.confianza ?? DEFAULT_CONFIANZA, {
+    satisfaction: evaluation.satisfaction,
+    shortfall: evaluation.shortfall,
+    outcome: careerOutcome(career),
+    championLeague: championOf(career) === career.humanTeamId,
+  });
+}
+
+/**
+ * Whether the manager is dismissed at the end of the in-progress season. Two
+ * routes, both faithful to the classic game: the board's HARD verdict on the
+ * objective (relegation or a big shortfall — see `evaluateObjective`), or the
+ * directiva confianza meter collapsing to the sack line after this season.
+ */
+export function isManagerDismissed(career: CareerState): boolean {
+  return (
+    endOfSeasonEvaluation(career).dismissed ||
+    confianzaProvocaCese(endOfSeasonConfianza(career))
   );
 }
 
@@ -347,6 +387,8 @@ export function applyDivisionChange(
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
     board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
     // The training focus carries into the next season (the manager may change it).
     training: career.training,
     budget: career.budget,

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import type { Attributes, League, Player } from '@data';
 import { newCareer } from './career';
-import { previewTransition, applyTransition } from './transition';
+import { previewTransition, applyTransition, endOfSeasonConfianza } from './transition';
 import { advanceMatchday, currentStandings } from '../season/season';
 
 const HUMAN = 'barcelona';
@@ -298,6 +298,15 @@ describe('applyTransition palmarés accumulation', () => {
 
   it('starts a fresh career with an empty palmarés', () => {
     expect(newCareer(season1, 'you', 7).palmares).toEqual([]);
+  });
+
+  it('carries an evolving confianza across the transition (equals endOfSeasonConfianza)', () => {
+    const career = newCareer(season1, 'you', 7);
+    expect(career.confianza).toEqual({ directiva: 50, aficion: 50 });
+    const projected = endOfSeasonConfianza(career);
+    const next = applyTransition(career, season2, new Set());
+    // The stored meters are exactly the projected end-of-season value, carried on.
+    expect(next.confianza).toEqual(projected);
   });
 
   it('records a league title exactly when the human tops the final table', () => {

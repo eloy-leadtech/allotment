@@ -3,6 +3,7 @@ import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective, type BoardState } from '../career/board';
+import { DEFAULT_CONFIANZA, type ConfianzaState } from '../career/confianza';
 import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
@@ -131,6 +132,12 @@ const BoardStateSchema = z.object({
     .optional(),
 });
 
+/** The two institutional confidence meters; defaults to 50/50 for pre-confianza saves. */
+const ConfianzaSchema = z.object({
+  directiva: z.number().int().min(0).max(100),
+  aficion: z.number().int().min(0).max(100),
+});
+
 /** One press-conference decision: the matchday, question and chosen option. */
 const PressAnswerSchema = z.object({
   matchday: z.number().int().min(1),
@@ -156,6 +163,8 @@ export const CareerSaveSchema = z.object({
   division: z.enum(['primera', 'segunda']).default('primera'),
   /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
   board: BoardStateSchema.optional(),
+  /** Institutional confidence meters; absent in pre-confianza saves (defaults 50/50 on load). */
+  confianza: ConfianzaSchema.optional(),
   /** Press-conference decisions this season; defaults to none for pre-rueda saves. */
   press: PressStateSchema.default({ answers: [] }),
   /** Human's tactics; absent means neutral auto-XI. */
@@ -222,6 +231,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     relegationSpots: career.relegationSpots,
     division: career.division,
     board: career.board,
+    confianza: career.confianza ?? DEFAULT_CONFIANZA,
     press: career.press ?? { answers: [] },
     tactics: career.tactics,
     training: career.training,
@@ -259,6 +269,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
       ? save.contracts
       : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
   const press: PressState = save.press ?? { answers: [] };
+  // Pre-confianza saves have no meters persisted: default to a neutral 50/50.
+  const confianza: ConfianzaState = save.confianza ?? DEFAULT_CONFIANZA;
   const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -269,6 +281,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     relegationSpots: save.relegationSpots,
     division: save.division,
     board,
+    confianza,
     press,
     tactics: save.tactics,
     // Pre-training saves default to a balanced focus so training is always present.

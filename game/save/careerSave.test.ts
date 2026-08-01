@@ -129,6 +129,23 @@ describe('career save v2 (snapshot)', () => {
     expect(restored.sponsor).toEqual({ sponsorId: 'basico' });
   });
 
+  it('round-trips the confianza meters (directiva + afición) exactly', () => {
+    const base = evolvedCareer(4);
+    const career: CareerState = { ...base, confianza: { directiva: 72, aficion: 41 } };
+    const save = serializeCareer(career);
+    expect(save.confianza).toEqual({ directiva: 72, aficion: 41 });
+    const restored = restoreCareer(save, league);
+    expect(restored.confianza).toEqual({ directiva: 72, aficion: 41 });
+  });
+
+  it('defaults to neutral 50/50 confianza for a pre-confianza save (no confianza field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { confianza?: unknown }).confianza;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.confianza).toEqual({ directiva: 50, aficion: 50 });
+  });
+
   it('round-trips the squad contracts (salario + años) exactly', () => {
     const career = evolvedCareer(4);
     expect(Object.keys(career.contracts).length).toBeGreaterThan(0);
