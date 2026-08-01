@@ -116,6 +116,13 @@ describe('simulateMatch', () => {
   });
 
   it('averages a plausible number of goals per game (~2.6)', () => {
+    // Faithful "por lances" model (see config.ts): per half each team's chances
+    // are the line differential + noise, HARD-CAPPED at PCF5's `3 - rand()%3`, then
+    // a differential-aware geometric tail; each chance is filtered by the rival
+    // keeper (`keeperEfficacy` is the sanctioned calibration knob, §7.2). With two
+    // elite (78) keepers this settles at ~2.6 goals/game — the documented target.
+    // The band stays wide because the keeper is the regulator: weaker keepers push
+    // the average up (that keeper-sensitivity is the whole point of PCF's filter).
     const samples = 400;
     let totalGoals = 0;
     for (let seed = 0; seed < samples; seed += 1) {

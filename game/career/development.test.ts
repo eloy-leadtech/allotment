@@ -155,8 +155,8 @@ describe('developPlayer', () => {
     let gkRetired = 0;
     let ofRetired = 0;
     for (let i = 0; i < N; i += 1) {
-      const gk = makePlayer({ birthYear: 1962, id: `gk-${i}`, esPortero: true, posicion: 'POR' }); // age 35
-      const of = makePlayer({ birthYear: 1962, id: `of-${i}`, esPortero: false }); // age 35
+      const gk = makePlayer({ birthYear: 1958, id: `gk-${i}`, esPortero: true, posicion: 'POR' }); // age 39: GK plays on (<41)
+      const of = makePlayer({ birthYear: 1958, id: `of-${i}`, esPortero: false }); // age 39: outfield retires (>=39)
       if (developPlayer(gk, ctx({ seed: 3000 + i })).retired) gkRetired += 1;
       if (developPlayer(of, ctx({ seed: 3000 + i })).retired) ofRetired += 1;
     }
