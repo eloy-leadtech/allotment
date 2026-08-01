@@ -81,7 +81,10 @@ function attachCopa(career: CareerState): CareerState {
       : getSeasonByTemporada(career.temporada);
   const otherTeams = other ? other.load().equipos.map(toCompetitionTeam) : [];
   const domestic = [...career.season.teams, ...otherTeams];
-  return { ...career, copa: runCareerCopa(career.seed, career.seasonNumber, domestic) };
+  return {
+    ...career,
+    copa: runCareerCopa(career.seed, career.seasonNumber, domestic, career.humanTeamId),
+  };
 }
 
 /**

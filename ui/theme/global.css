@@ -670,6 +670,49 @@ h1 {
   color: var(--c-accent-2);
 }
 
+/* Human cup run (round-by-round, expandable teletipo) */
+.ko-path-step {
+  display: block;
+}
+
+.ko-path-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.ko-path-round {
+  text-transform: capitalize;
+  color: var(--c-ink-dim);
+  font-size: 12px;
+  min-width: 84px;
+}
+
+.ko-path-score {
+  font-variant-numeric: tabular-nums;
+}
+
+.ko-out {
+  font-weight: 700;
+  color: var(--c-ink-dim);
+}
+
+.ko-path-live {
+  margin: 8px 0 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--c-border);
+}
+
+.scoreboard--mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
 /* Stadium banner */
 .stadium {
   margin: 0 0 12px;
