@@ -103,13 +103,20 @@ function ageTrend(age: number): { phys: number; tech: number } {
 const GK_TREND_FACTOR = 0.6;
 
 /**
- * Retirement probability this season. The window opens later for goalkeepers,
- * who play on longer, and ramps to certainty across a few seasons.
+ * Retirement age. PCF5 retires by a HARD age cutoff at end of season
+ * (`FUN_005bd3b0`/`FUN_005bd720`: `if (edad < umbral) sigue; else se retira`),
+ * with `umbral = 35` for the default population — [CÓDIGO], confianza Alta.
+ * The decompiled game also has a second threshold of 33 gated by a per-player
+ * flag whose meaning is unconfirmed ([HIPÓTESIS]); we render it as goalkeepers
+ * playing on a touch longer (37), which keeps keepers on the pitch past field
+ * players without contradicting the one confirmed number.
  */
-function retirementChance(age: number, esPortero: boolean): number {
-  const over = age - (esPortero ? 36 : 33);
-  if (over <= 0) return 0;
-  return Math.min(1, over * 0.22);
+const RETIREMENT_AGE_OUTFIELD = 35;
+const RETIREMENT_AGE_GK = 37;
+
+/** The hard retirement age for a player: 35 outfield ([CÓDIGO]), 37 GK ([HIPÓTESIS]). */
+function retirementAge(esPortero: boolean): number {
+  return esPortero ? RETIREMENT_AGE_GK : RETIREMENT_AGE_OUTFIELD;
 }
 
 /** Apply one season of drift to a single (non-null) attribute value. */
@@ -132,7 +139,9 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
   // Unknown age: hold steady (no evolution, no retirement).
   if (age === null) return { player, retired: false, age: null };
 
-  if (rng.next01() < retirementChance(age, player.esPortero)) {
+  // Retirement is a deterministic HARD age cutoff (PCF5), decided before any
+  // attribute drift so a retiring player is returned untouched.
+  if (age >= retirementAge(player.esPortero)) {
     return { player, retired: true, age };
   }
 
