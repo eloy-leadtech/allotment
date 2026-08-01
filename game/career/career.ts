@@ -10,6 +10,7 @@ import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
+import { deriveHumanDesires } from './desires';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history/palmarés). */
 type CareerMeta = Omit<CareerState, 'season' | 'history' | 'palmares'>;
@@ -41,7 +42,7 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
   });
   // Each career season gets its own deterministic seed derived from the master seed.
   const seed = hashSeed(meta.seed, 'season', meta.seasonNumber);
-  return newSeasonFromTeams(
+  const season = newSeasonFromTeams(
     teams,
     {
       leagueId: meta.leagueId,
@@ -52,6 +53,10 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
     },
     seed,
   );
+  // Attach the human squad's individual wishes, DERIVED from the season-start
+  // situation (contracts/age/media/board). Re-derived identically on load, so it is
+  // never persisted — it drives a small per-matchday morale drift (see desires.ts).
+  return { ...season, humanDesires: deriveHumanDesires(meta) };
 }
 
 /** Start a new career: the human manages `humanTeamId` from season 1. */

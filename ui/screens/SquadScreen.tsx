@@ -6,7 +6,10 @@ import {
   availabilityStatus,
   squadWageBill,
   formatEuros,
+  deriveHumanDesires,
+  desireInfo,
   type AvailabilityStatus,
+  type DesireKind,
 } from '@game';
 import { scoreTier, squadMorale, fatigueTier, NEUTRAL_FORM, NEUTRAL_MORALE, FRESH_FATIGUE } from '@engine';
 import type { Player, Position } from '@data';
@@ -72,6 +75,17 @@ function MoraleBar({ morale }: { morale: number }) {
   );
 }
 
+/** A player's individual wish (deseo) as a small retro badge with a tooltip. */
+function DesireBadge({ kind }: { kind: DesireKind }) {
+  const info = desireInfo(kind);
+  return (
+    <span className={`desire-badge desire-badge--${info.tone}`} title={info.label}>
+      <span className="desire-badge__icon" aria-hidden="true">{info.icon}</span>
+      {info.label}
+    </span>
+  );
+}
+
 /** Spanish label for a 0..3 physical-condition tier. */
 const FATIGUE_LABEL = ['Fresco', 'Algo cansado', 'Cansado', 'Reventado'] as const;
 
@@ -118,6 +132,10 @@ export function SquadScreen() {
   const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
   const vestuario = squadMorale(seasonPlayers);
 
+  // Each key player's wish (deseo): derived from his situation (contrato/minutos/
+  // edad/ambición). The live season carries the same map; fall back to deriving it.
+  const desires = career.season.humanDesires ?? deriveHumanDesires(career);
+
   return (
     <main className="screen">
       <section className="squad-card">
@@ -153,6 +171,7 @@ export function SquadScreen() {
                 <th>Físico</th>
                 <th>Forma</th>
                 <th>Moral</th>
+                <th>Deseo</th>
                 <th>Sueldo</th>
                 <th>Contrato</th>
                 <th>Potencial ojeado</th>
@@ -189,6 +208,7 @@ export function SquadScreen() {
                     <td><FatigueBar fatigue={fatigue} /></td>
                     <td><FormArrow form={form} /></td>
                     <td><MoraleBar morale={morale} /></td>
+                    <td><DesireBadge kind={desires[p.id] ?? 'contento'} /></td>
                     <td className="squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
                     <td>
                       {contract ? (
