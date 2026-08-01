@@ -5,6 +5,8 @@ export * from './transition';
 export * from './scouting';
 export * from './market';
 export * from './promotion';
+export * from './board';
+export * from './press';
 export * from './competitions';
 export * from './europa';
 export * from './finances';

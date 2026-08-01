@@ -1,9 +1,17 @@
-import { previewTransition, careerTeamName, careerOutcome, nextDivision, currentStandings } from '@game';
+import {
+  previewTransition,
+  careerTeamName,
+  careerOutcome,
+  nextDivision,
+  currentStandings,
+  endOfSeasonEvaluation,
+} from '@game';
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 const divisionName = (d: 'primera' | 'segunda'): string =>
   d === 'primera' ? 'Primera División' : 'Segunda División';
@@ -28,6 +36,8 @@ export function SeasonEndScreen() {
   const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
 
   const outcome = careerOutcome(career);
+  const evaluation = endOfSeasonEvaluation(career);
+  const objective = career.board.objective;
   const toDivision = nextDivision(career.division, outcome);
   const changing = toDivision !== career.division;
 
@@ -49,6 +59,21 @@ export function SeasonEndScreen() {
       </header>
 
       <p className="champion">🏆 Campeón: {name(champion)}</p>
+
+      <RetroPanel title="Balance de la directiva">
+        <p className="board-objective">
+          🎯 Objetivo: {objectiveLabel(objective.type)}{' '}
+          <span className="hint">(no peor que el puesto {objective.targetPosition})</span>
+        </p>
+        <p className={`board-mood board-mood--${evaluation.satisfaction}`}>
+          {satisfactionIcon(evaluation.satisfaction)} {satisfactionLabel(evaluation.satisfaction)}
+        </p>
+        {evaluation.dismissed ? (
+          <p className="fate fate--down">
+            ⛔ La directiva te DESTITUYE. Aquí termina tu etapa en el club.
+          </p>
+        ) : null}
+      </RetroPanel>
 
       {outcome === 'relegated' ? (
         <p className="fate fate--down">⬇️ Desciendes a Segunda División. Tu equipo baja contigo.</p>
@@ -96,7 +121,7 @@ export function SeasonEndScreen() {
         )
       ) : null}
 
-      {targetEntry ? (
+      {targetEntry && !evaluation.dismissed ? (
         <div className="season-actions">
           <RetroButton variant="primary" onClick={continueCareer}>
             <span className="team-cell">
@@ -108,7 +133,11 @@ export function SeasonEndScreen() {
         </div>
       ) : (
         <>
-          <p className="hint">No hay datos de la temporada siguiente: fin de la carrera disponible.</p>
+          <p className="hint">
+            {evaluation.dismissed
+              ? 'Fin de tu carrera en el club: la directiva ha prescindido de ti.'
+              : 'No hay datos de la temporada siguiente: fin de la carrera disponible.'}
+          </p>
           <div className="season-actions">
             <RetroButton onClick={() => goTo('slots')}>Guardar / Cargar</RetroButton>
             <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
