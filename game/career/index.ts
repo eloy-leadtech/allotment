@@ -13,6 +13,7 @@ export * from './board';
 export * from './press';
 export * from './competitions';
 export * from './europa';
+export * from './palmares';
 export * from './finances';
 export * from './stadium';
 export * from './awards';

@@ -6,6 +6,9 @@ import {
   currentStandings,
   currentSeasonAwards,
   endOfSeasonEvaluation,
+  titlesWonThisSeason,
+  palmaresCompetitionLabel,
+  palmaresCompetitionIcon,
 } from '@game';
 import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
@@ -36,6 +39,9 @@ export function SeasonEndScreen() {
   const name = (id: string): string => careerTeamName(career, id);
   const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
   const awards = currentSeasonAwards(career);
+  // Titles the human just won this season (not yet committed to `palmares`, which
+  // is appended at the transition). Computed live so the banner is immediate.
+  const titlesThisSeason = titlesWonThisSeason(career, champion);
 
   const outcome = careerOutcome(career);
   const evaluation = endOfSeasonEvaluation(career);
@@ -80,6 +86,18 @@ export function SeasonEndScreen() {
           </p>
         ) : null}
       </RetroPanel>
+      {titlesThisSeason.length > 0 ? (
+        <RetroPanel title="¡Títulos de esta temporada!">
+          <ul className="palmares">
+            {titlesThisSeason.map((t) => (
+              <li key={t.competition}>
+                {palmaresCompetitionIcon(t.competition)}{' '}
+                <strong>{palmaresCompetitionLabel(t.competition, t.division)}</strong>
+              </li>
+            ))}
+          </ul>
+        </RetroPanel>
+      ) : null}
 
       <RetroPanel title="Balance de la directiva">
         <p className="board-objective">
@@ -104,7 +122,7 @@ export function SeasonEndScreen() {
       ) : null}
 
       {career.history.length > 0 ? (
-        <RetroPanel title="Palmarés">
+        <RetroPanel title="Campeones de Liga">
           <ul className="palmares">
             {career.history.map((h) => (
               <li key={h.seasonNumber}>
@@ -119,6 +137,12 @@ export function SeasonEndScreen() {
             ))}
           </ul>
         </RetroPanel>
+      ) : null}
+
+      {career.palmares.length > 0 || titlesThisSeason.length > 0 ? (
+        <div className="season-actions">
+          <RetroButton onClick={() => goTo('palmares')}>Ver palmarés del club 🏅</RetroButton>
+        </div>
       ) : null}
 
       {preview && targetEntry ? (
