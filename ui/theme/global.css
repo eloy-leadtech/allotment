@@ -875,6 +875,37 @@ h1 {
   opacity: 0.85;
 }
 
+/* Estado físico (fatiga): barra que se llena y se "calienta" con el desgaste;
+   fresco = verde, cansado = ámbar, reventado = rojo. */
+.fatigue-bar {
+  display: inline-block;
+  width: 70px;
+  height: 8px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.fatigue-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.9;
+}
+.fatigue--0 {
+  color: var(--c-accent-2);
+}
+.fatigue--1 {
+  color: #b7c24a;
+}
+.fatigue--2 {
+  color: #d8901f;
+}
+.fatigue--3 {
+  color: var(--c-danger);
+}
+
 .vestuario {
   display: block;
   font-family: var(--font-data);

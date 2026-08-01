@@ -1,10 +1,20 @@
 import type { MatchPlayer } from './types';
 import { performanceMultiplier } from './morale';
+import { fatigueMultiplier } from './fatigue';
 
 export interface TeamStrength {
   attack: number;
   defense: number;
   keeper: number;
+}
+
+/**
+ * An outfield player's combined performance multiplier: form/morale streak times
+ * the fatigue penalty. Exactly 1 when neutral+fresh, so a squad with no streak or
+ * fatigue data behaves exactly as before. Fatigue only ever pulls it below 1.
+ */
+function outfieldMultiplier(p: MatchPlayer): number {
+  return performanceMultiplier(p.form, p.morale) * fatigueMultiplier(p.fatigue);
 }
 
 function mean(values: readonly number[]): number {
@@ -25,18 +35,20 @@ function keeperEffective(porteria: number, mult: number): number {
 /**
  * Reduce a starting XI to the three ratings the simulation reasons about:
  * attack (mean of ofensivo+remate over outfielders), defense (mean of entrada)
- * and keeper (the goalkeeper's porteria). Each player's contribution is scaled
- * by their form/morale performance multiplier (exactly 1 when neutral, so a
- * squad with no streak data behaves exactly as before).
+ * and keeper (the goalkeeper's porteria). Outfielders are scaled by their
+ * combined form/morale + fatigue multiplier (exactly 1 when neutral and fresh, so
+ * a squad with no streak/fatigue data behaves exactly as before). The keeper —
+ * the real regulator of the scoreline — takes only the form/morale multiplier,
+ * NOT fatigue: since both teams tire symmetrically, a fatigue penalty on the
+ * outfield barely moves the goal count, but penalising the keeper's shot-stopping
+ * would inflate scoring and break the ~2.6 goals/game balance.
  */
 export function computeStrength(xi: readonly MatchPlayer[]): TeamStrength {
   const outfield = xi.filter((p) => !p.esPortero);
   const goalkeeper = xi.find((p) => p.esPortero);
   return {
-    attack: mean(
-      outfield.map((p) => ((p.ofensivo + p.remate) / 2) * performanceMultiplier(p.form, p.morale)),
-    ),
-    defense: mean(outfield.map((p) => p.entrada * performanceMultiplier(p.form, p.morale))),
+    attack: mean(outfield.map((p) => ((p.ofensivo + p.remate) / 2) * outfieldMultiplier(p))),
+    defense: mean(outfield.map((p) => p.entrada * outfieldMultiplier(p))),
     keeper: goalkeeper
       ? keeperEffective(goalkeeper.porteria, performanceMultiplier(goalkeeper.form, goalkeeper.morale))
       : mean(xi.map((p) => p.porteria)),

@@ -1,4 +1,5 @@
 import { nextHumanFixture, teamName, availabilityStatus } from '@game';
+import { fatigueTier, FRESH_FATIGUE } from '@engine';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
@@ -26,6 +27,13 @@ export function PrematchScreen() {
         .map((p) => ({ p, st: availabilityStatus(season.availability[p.id], season.currentMatchday) }))
         .filter(({ st }) => st.status !== 'fit')
     : [];
+
+  // Tired players (fatigue tier 2+): the pre-match nudge to rotate before kickoff.
+  const seasonPlayers = season?.teams.find((t) => t.id === season.humanTeamId)?.players ?? [];
+  const tired = seasonPlayers
+    .map((p) => ({ nombre: p.nombre, fatigue: p.fatigue ?? FRESH_FATIGUE }))
+    .filter((p) => fatigueTier(p.fatigue) >= 2)
+    .sort((a, b) => b.fatigue - a.fatigue);
   if (!season || !fixture) {
     return (
       <main className="screen">
@@ -77,6 +85,23 @@ export function PrematchScreen() {
             ))}
           </ul>
         )}
+      </RetroPanel>
+
+      <RetroPanel title="Estado físico">
+        {tired.length === 0 ? (
+          <p className="hint">Plantilla en forma: nadie acusa el desgaste.</p>
+        ) : (
+          <ul className="ticker">
+            {tired.map((p) => (
+              <li key={p.nombre} className="ticker__line">
+                {fatigueTier(p.fatigue) >= 3 ? 'Reventado' : 'Cansado'}: {p.nombre} (fatiga {p.fatigue})
+              </li>
+            ))}
+          </ul>
+        )}
+        {tired.length > 0 ? (
+          <p className="hint">Rota a los más cargados: forzarlos les baja el rendimiento.</p>
+        ) : null}
       </RetroPanel>
 
       <div className="season-actions">

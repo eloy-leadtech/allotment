@@ -31,6 +31,17 @@ export {
   type PlayerMatchContext,
 } from './morale';
 export {
+  FRESH_FATIGUE,
+  FATIGUE_MIN,
+  FATIGUE_MAX,
+  clampFatigue,
+  playerFatigue,
+  fatigueMultiplier,
+  nextFatigue,
+  updateTeamFatigue,
+  fatigueTier,
+} from './fatigue';
+export {
   FORMATIONS,
   FORMATION_LIST,
   DEFAULT_FORMATION,
