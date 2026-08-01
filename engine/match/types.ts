@@ -14,6 +14,14 @@ export interface MatchPlayer {
   pase: number;
   entrada: number;
   porteria: number;
+  /**
+   * Short-term streak (0-100, 50 neutral): rises with wins/goals/playing, falls
+   * with defeats and benching. Optional so existing fixtures stay valid; when
+   * absent the player is treated as neutral (no effect on the pitch).
+   */
+  form?: number;
+  /** Player morale (0-100, 50 neutral): medium-term, moved by results and minutes. */
+  morale?: number;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */

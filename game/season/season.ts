@@ -2,6 +2,8 @@ import {
   buildCalendar,
   simulateFixture,
   computeStandings,
+  NEUTRAL_FORM,
+  NEUTRAL_MORALE,
   type CompetitionTeam,
   type Fixture,
   type MatchPlayer,
@@ -15,6 +17,7 @@ import {
   isAvailable,
   type AvailabilityMap,
 } from '../career/availability';
+import { applyFormMorale } from './formMorale';
 
 export interface SeasonState {
   leagueId: string;
@@ -48,6 +51,9 @@ export function toMatchPlayer(p: Player): MatchPlayer {
     pase: p.atributos.pase,
     entrada: p.atributos.entrada,
     porteria: p.atributos.porteria,
+    // Every season starts neutral; form/morale evolve as matchdays are played.
+    form: NEUTRAL_FORM,
+    morale: NEUTRAL_MORALE,
   };
 }
 
@@ -172,9 +178,13 @@ export function advanceMatchday(state: SeasonState): { state: SeasonState; playe
     played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
   }
   const availability = applyMatchdayAvailability(state.availability, played, matchday);
+  // Evolve form/morale from the matchday just played (deterministic: replaying
+  // the season from its neutral start always rebuilds the same values).
+  const teams = applyFormMorale(state.teams, played);
   return {
     state: {
       ...state,
+      teams,
       results: [...state.results, ...played],
       currentMatchday: matchday + 1,
       availability,

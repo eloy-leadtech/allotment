@@ -6,6 +6,7 @@ import {
   availabilityStatus,
   type AvailabilityStatus,
 } from '@game';
+import { scoreTier, squadMorale, NEUTRAL_FORM, NEUTRAL_MORALE } from '@engine';
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -35,6 +36,40 @@ function byLineThenMedia(a: Player, b: Player): number {
   return line !== 0 ? line : b.media - a.media;
 }
 
+/** Arrow glyph for a -3..+3 streak tier. */
+function arrowFor(tier: number): string {
+  if (tier === 0) return '▬';
+  const glyph = tier > 0 ? '▲' : '▼';
+  return glyph.repeat(Math.abs(tier));
+}
+
+/** CSS modifier for a tier: positive = good, negative = bad, 0 = neutral. */
+function tierClass(tier: number): string {
+  if (tier > 0) return 'streak--up';
+  if (tier < 0) return 'streak--down';
+  return 'streak--flat';
+}
+
+/** Form as a coloured arrow reflecting the streak. */
+function FormArrow({ form }: { form: number }) {
+  const tier = scoreTier(form);
+  return (
+    <span className={`form-arrow ${tierClass(tier)}`} title={`Forma ${form}/100`}>
+      {arrowFor(tier)}
+    </span>
+  );
+}
+
+/** Morale as a compact coloured bar. */
+function MoraleBar({ morale }: { morale: number }) {
+  const tier = scoreTier(morale);
+  return (
+    <span className={`morale-bar ${tierClass(tier)}`} title={`Moral ${morale}/100`}>
+      <span className="morale-bar__fill" style={{ width: `${morale}%` }} />
+    </span>
+  );
+}
+
 export function SquadScreen() {
   const career = useGameStore((s) => s.career);
   const goTo = useGameStore((s) => s.goTo);
@@ -55,6 +90,12 @@ export function SquadScreen() {
   const availability = career.season.availability;
   const matchday = career.season.currentMatchday;
 
+  // Form/morale live on the in-progress season's players (they reset neutral each
+  // season and evolve matchday to matchday). Index them by player id for lookup.
+  const seasonPlayers = career.season.teams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
+  const vestuario = squadMorale(seasonPlayers);
+
   return (
     <main className="screen">
       <section className="squad-card">
@@ -64,6 +105,9 @@ export function SquadScreen() {
         <div className="squad-card__meta">
           <h1>{team?.nombre ?? career.humanTeamId}</h1>
           <span className="matchday">Plantilla · {career.temporada}</span>
+          <span className={`vestuario ${tierClass(scoreTier(vestuario))}`}>
+            Moral del vestuario: <strong>{vestuario}</strong>/100
+          </span>
         </div>
       </section>
 
@@ -79,6 +123,8 @@ export function SquadScreen() {
                 <th>Edad</th>
                 <th>Media</th>
                 <th>Estado</th>
+                <th>Forma</th>
+                <th>Moral</th>
                 <th>Potencial ojeado</th>
               </tr>
             </thead>
@@ -90,6 +136,9 @@ export function SquadScreen() {
                   ? scoutEstimate(p, synthesizePotential(p, career.seed), observedSeasons, career.seed)
                   : null;
                 const status = statusLabel(availabilityStatus(availability[p.id], matchday));
+                const streak = streakById.get(p.id);
+                const form = streak?.form ?? NEUTRAL_FORM;
+                const morale = streak?.morale ?? NEUTRAL_MORALE;
                 return (
                   <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
                     <td>{p.posicion}</td>
@@ -103,6 +152,8 @@ export function SquadScreen() {
                         <span className="hint">Disponible</span>
                       )}
                     </td>
+                    <td><FormArrow form={form} /></td>
+                    <td><MoraleBar morale={morale} /></td>
                     <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
                   </tr>
                 );
