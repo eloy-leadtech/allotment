@@ -16,7 +16,6 @@ import {
   applyTransition,
   applyDivisionChange,
   careerOutcome,
-  endOfSeasonEvaluation,
   economicDismissal,
   liquidateSeason,
   creditLimit,
