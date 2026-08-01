@@ -127,3 +127,61 @@ describe('simulateMatch', () => {
     expect(mean).toBeLessThan(3.6);
   });
 });
+
+describe('simulateMatch — derbis', () => {
+  // Same squads; only the team id decides whether it is a rivalry pairing.
+  const madrid = { ...makeTeam('real-madrid', 65, 78), id: 'real-madrid', nombre: 'Real Madrid' };
+  const barca = { ...makeTeam('barcelona', 65, 78), id: 'barcelona', nombre: 'Barcelona' };
+  const valencia = { ...makeTeam('valencia', 65, 78), id: 'valencia', nombre: 'Valencia' };
+
+  it('flags a rivalry pairing as a derby, and a normal pairing as not', () => {
+    expect(simulateMatch({ home: madrid, away: barca, seed: 1 }).derby).toBe(true);
+    expect(simulateMatch({ home: madrid, away: valencia, seed: 1 }).derby).toBe(false);
+  });
+
+  it('is deterministic for a derby (same seed replays identically)', () => {
+    const a = simulateMatch({ home: madrid, away: barca, seed: 42 });
+    const b = simulateMatch({ home: madrid, away: barca, seed: 42 });
+    expect(a).toEqual(b);
+  });
+
+  it('the motivation actually changes the simulation (given a strength gap)', () => {
+    // Big favourite: motivation amplifies the quality gap enough to change the sim.
+    const strong = { ...makeTeam('real-madrid', 81, 78), id: 'real-madrid', nombre: 'RM' };
+    const weakRival = { ...makeTeam('barcelona', 40, 78), id: 'barcelona', nombre: 'FCB' };
+    const weakOther = { ...makeTeam('valencia', 40, 78), id: 'valencia', nombre: 'VCF' };
+    let differed = false;
+    for (let seed = 0; seed < 50; seed += 1) {
+      const derby = simulateMatch({ home: strong, away: weakRival, seed });
+      const plain = simulateMatch({ home: strong, away: weakOther, seed });
+      // Compare the event streams (ids aside): the derby motivation shifts them.
+      const strip = (r: ReturnType<typeof simulateMatch>) =>
+        JSON.stringify(r.events.map((e) => ({ min: e.min, type: e.type, team: e.team })));
+      if (strip(derby) !== strip(plain)) differed = true;
+    }
+    expect(differed).toBe(true);
+  });
+
+  it('does NOT break the goals average: even-strength derby == non-derby goals', () => {
+    // With symmetric squads the motivation cancels in the chance differential and
+    // the keeper is untouched, so a derby yields the EXACT same scoreline stream.
+    for (let seed = 0; seed < 200; seed += 1) {
+      const derby = simulateMatch({ home: madrid, away: barca, seed });
+      const plain = simulateMatch({ home: madrid, away: valencia, seed });
+      expect(derby.homeGoals).toBe(plain.homeGoals);
+      expect(derby.awayGoals).toBe(plain.awayGoals);
+    }
+  });
+
+  it('keeps derby goals within the same plausible band (~2.6/game)', () => {
+    const samples = 400;
+    let totalGoals = 0;
+    for (let seed = 0; seed < samples; seed += 1) {
+      const r = simulateMatch({ home: madrid, away: barca, seed });
+      totalGoals += r.homeGoals + r.awayGoals;
+    }
+    const mean = totalGoals / samples;
+    expect(mean).toBeGreaterThan(1.8);
+    expect(mean).toBeLessThan(3.6);
+  });
+});

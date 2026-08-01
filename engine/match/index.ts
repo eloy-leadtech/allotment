@@ -51,3 +51,11 @@ export {
   type FormationMods,
 } from './formation';
 export { MATCH_CONFIG } from './config';
+export {
+  RIVALRIES,
+  canonicalClub,
+  derbyInfo,
+  derbyName,
+  isDerby,
+  type Rivalry,
+} from './rivalry';

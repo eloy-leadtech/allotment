@@ -1,5 +1,5 @@
 import type { MatchEvent, MatchResult } from '@engine';
-import { hashSeed } from '@engine';
+import { hashSeed, derbyInfo } from '@engine';
 
 /**
  * Deterministically pick one variant from a list, keyed on the event so replays
@@ -11,13 +11,21 @@ function variant(event: MatchEvent, variants: readonly string[]): string {
   return variants[idx] ?? variants[0] ?? '';
 }
 
-/** Turn one match event into a Spanish teletipo line. */
-export function narrateEvent(event: MatchEvent, homeName: string, awayName: string): string {
+/** Turn one match event into a Spanish teletipo line. In a derbi the big beats
+ * (goles) get a tenser phrasing; everything else reads the same. */
+export function narrateEvent(
+  event: MatchEvent,
+  homeName: string,
+  awayName: string,
+  derby = false,
+): string {
   const team = event.team === 'home' ? homeName : awayName;
   const p = event.playerName;
   switch (event.type) {
     case 'goal':
-      return `${event.min}' GOL de ${event.playerName} (${team})`;
+      return derby
+        ? `${event.min}' GOOOL de ${event.playerName} (${team})! ¡Estalla el derbi!`
+        : `${event.min}' GOL de ${event.playerName} (${team})`;
     case 'chance':
       return `${event.min}' Ocasion de ${event.playerName} (${team}), la despeja el portero`;
     case 'yellow':
@@ -68,9 +76,21 @@ export function narrateEvent(event: MatchEvent, homeName: string, awayName: stri
   }
 }
 
-/** Narrate a whole match as teletipo lines, closing with the final score. */
+/** Narrate a whole match as teletipo lines, closing with the final score. When
+ * the fixture is a derbi it opens with a tension banner and the goles read
+ * tenser. Derby detection comes from the result flag, falling back to the team
+ * ids so results built without the flag are still narrated correctly. */
 export function narrateMatch(result: MatchResult, homeName: string, awayName: string): string[] {
-  const lines = result.events.map((event) => narrateEvent(event, homeName, awayName));
+  const info = derbyInfo(result.homeId, result.awayId);
+  const derby = result.derby ?? info !== null;
+  const lines: string[] = [];
+  if (derby) {
+    const name = info?.name ?? 'Derbi';
+    lines.push(`DERBI - ${name}: ${homeName} vs ${awayName}, se masca la tension`);
+  }
+  for (const event of result.events) {
+    lines.push(narrateEvent(event, homeName, awayName, derby));
+  }
   lines.push(`FINAL: ${homeName} ${result.homeGoals}-${result.awayGoals} ${awayName}`);
   return lines;
 }

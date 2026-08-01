@@ -13,6 +13,7 @@ import type {
   MatchTeam,
 } from './types';
 import { FLAVOR_EVENT_TYPES } from './types';
+import { isDerby } from './rivalry';
 
 /** Roulette-wheel pick over a lineup, weighted per line. */
 function pickWeighted(
@@ -57,12 +58,28 @@ function effectiveStrength(team: MatchTeam, xi: readonly MatchPlayer[]): TeamStr
   };
 }
 
+/**
+ * Apply the derby motivation to a side's strength: both attack and defense are
+ * scaled by the same factor, the keeper is left untouched. Symmetric on both
+ * sides + keeper untouched => the goals/game average is preserved.
+ */
+function withMotivation(strength: TeamStrength, motivation: number): TeamStrength {
+  if (motivation === 1) return strength;
+  return {
+    attack: strength.attack * motivation,
+    defense: strength.defense * motivation,
+    keeper: strength.keeper,
+  };
+}
+
 export function simulateMatch(input: MatchInput): MatchResult {
   const rng = createRng(input.seed);
   const homeXI = lineupFor(input.home);
   const awayXI = lineupFor(input.away);
-  const homeStrength = effectiveStrength(input.home, homeXI);
-  const awayStrength = effectiveStrength(input.away, awayXI);
+  const derby = isDerby(input.home.id, input.away.id);
+  const motivation = derby ? 1 + MATCH_CONFIG.derbyMotivation : 1;
+  const homeStrength = withMotivation(effectiveStrength(input.home, homeXI), motivation);
+  const awayStrength = withMotivation(effectiveStrength(input.away, awayXI), motivation);
 
   const events: MatchEvent[] = [];
   const yellowCount = new Map<string, number>();
@@ -168,7 +185,7 @@ export function simulateMatch(input: MatchInput): MatchResult {
   }
 
   events.sort((a, b) => a.min - b.min);
-  return { homeId: input.home.id, awayId: input.away.id, homeGoals, awayGoals, events };
+  return { homeId: input.home.id, awayId: input.away.id, homeGoals, awayGoals, events, derby };
 }
 
 /** Roulette-wheel pick of a flavor event type, weighted by `flavorWeights`. */

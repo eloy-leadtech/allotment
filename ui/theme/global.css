@@ -282,6 +282,20 @@ h1 {
   font-weight: bold;
 }
 
+/* Derbi: banda roja de tensión antes del partido y sobre el marcador. */
+.derby-banner {
+  margin: 8px 0;
+  padding: 8px 14px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--c-danger);
+  border: 2px solid var(--c-ink);
+  border-radius: 6px;
+}
+
 /* Standings table — filas-cápsula metálicas del PCF7 (scr_026): cada equipo es
    una píldora biselada con rayado alterno; la posición va en un casquillo plateado
    y la fila del equipo humano se resalta con el acento rojo (estado activo). */
