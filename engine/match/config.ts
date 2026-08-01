@@ -1,4 +1,4 @@
-import type { Line } from './types';
+import type { FlavorEventType, Line } from './types';
 
 /**
  * Match calibration constants — the single place to tune the simulation.
@@ -39,4 +39,20 @@ export const MATCH_CONFIG = {
   scorerWeights: { POR: 0, DEF: 1, MED: 3, DEL: 5 } satisfies Record<Line, number>,
   /** Booking weights by line (defenders/midfielders foul more). */
   cardWeights: { POR: 1, DEF: 3, MED: 3, DEL: 1 } satisfies Record<Line, number>,
+  /**
+   * Flavor events (paradas, ocasiones falladas, córners, tiros al palo, faltas)
+   * add teletipo colour only. They are rolled on a DEDICATED, isolated RNG so
+   * they never perturb the goal/card/injury stream that decides the result.
+   * Per team per half we roll `flavorBase + rng.int(flavorSpread)` flavor beats.
+   */
+  flavorBase: 1,
+  flavorSpread: 4,
+  /**
+   * Type roulette for a flavor beat. `foul` picks a fouler via `cardWeights`;
+   * every other flavor type picks an attacker via `scorerWeights`.
+   */
+  flavorWeights: { saved: 5, offTarget: 4, corner: 5, post: 1, foul: 3 } satisfies Record<
+    FlavorEventType,
+    number
+  >,
 } as const;

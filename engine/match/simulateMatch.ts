@@ -3,7 +3,16 @@ import { MATCH_CONFIG } from './config';
 import { selectStartingXI } from './lineup';
 import { computeStrength, type TeamStrength } from './strength';
 import { formationMods } from './formation';
-import type { Line, MatchEvent, MatchInput, MatchPlayer, MatchResult, MatchTeam } from './types';
+import type {
+  FlavorEventType,
+  Line,
+  MatchEvent,
+  MatchInput,
+  MatchPlayer,
+  MatchResult,
+  MatchTeam,
+} from './types';
+import { FLAVOR_EVENT_TYPES } from './types';
 
 /** Roulette-wheel pick over a lineup, weighted per line. */
 function pickWeighted(
@@ -140,6 +149,36 @@ export function simulateMatch(input: MatchInput): MatchResult {
     }
   }
 
+  // Flavor beats (paradas, ocasiones falladas, córners, palos, faltas): rolled on
+  // a DEDICATED RNG derived from the seed so they are deterministic yet CANNOT
+  // perturb the goal/card/injury stream above. They only add teletipo colour and
+  // never touch homeGoals/awayGoals.
+  const flavorRng = createRng(hashSeed(input.seed, 'flavor'));
+  for (const phase of MATCH_CONFIG.phases) {
+    for (const side of sides) {
+      const beats = MATCH_CONFIG.flavorBase + flavorRng.int(MATCH_CONFIG.flavorSpread);
+      for (let b = 0; b < beats; b += 1) {
+        const type = pickFlavorType(flavorRng);
+        const weights = type === 'foul' ? MATCH_CONFIG.cardWeights : MATCH_CONFIG.scorerWeights;
+        const player = pickWeighted(side.xi, weights, flavorRng);
+        const min = phase.start + flavorRng.int(phase.length);
+        events.push({ min, type, team: side.key, playerId: player.id, playerName: player.nombre });
+      }
+    }
+  }
+
   events.sort((a, b) => a.min - b.min);
   return { homeId: input.home.id, awayId: input.away.id, homeGoals, awayGoals, events };
+}
+
+/** Roulette-wheel pick of a flavor event type, weighted by `flavorWeights`. */
+function pickFlavorType(rng: Rng): FlavorEventType {
+  let total = 0;
+  for (const t of FLAVOR_EVENT_TYPES) total += MATCH_CONFIG.flavorWeights[t];
+  let ticket = rng.int(total);
+  for (const t of FLAVOR_EVENT_TYPES) {
+    ticket -= MATCH_CONFIG.flavorWeights[t];
+    if (ticket < 0) return t;
+  }
+  return FLAVOR_EVENT_TYPES[0];
 }

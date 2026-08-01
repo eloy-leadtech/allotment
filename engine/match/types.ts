@@ -1,6 +1,33 @@
 export type Line = 'POR' | 'DEF' | 'MED' | 'DEL';
 
-export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red' | 'injury';
+/**
+ * Core event types drive the scoreline/discipline stream (goals, cards, injuries).
+ * The `flavor` types below are purely narrative colour — they NEVER change the
+ * result and are generated on an isolated RNG (see `simulateMatch`).
+ */
+export type EventType =
+  | 'goal'
+  | 'chance'
+  | 'yellow'
+  | 'secondYellow'
+  | 'red'
+  | 'injury'
+  // Flavor-only events (teletipo variety, no effect on the score):
+  | 'saved'
+  | 'offTarget'
+  | 'post'
+  | 'corner'
+  | 'foul';
+
+/** The purely-narrative event types: they add teletipo colour, never goals/cards. */
+export const FLAVOR_EVENT_TYPES = ['saved', 'offTarget', 'post', 'corner', 'foul'] as const;
+
+export type FlavorEventType = (typeof FLAVOR_EVENT_TYPES)[number];
+
+/** Whether an event type is flavor-only (does not affect the scoreline/discipline). */
+export function isFlavorEvent(type: EventType): type is FlavorEventType {
+  return (FLAVOR_EVENT_TYPES as readonly string[]).includes(type);
+}
 
 /** Minimal player view the match engine needs (mapped from the data Player). */
 export interface MatchPlayer {
