@@ -112,6 +112,23 @@ describe('career save v2 (snapshot)', () => {
     expect(restored.scouting).toEqual({});
   });
 
+  it('round-trips the chosen main sponsor (player decision)', () => {
+    const base = evolvedCareer(4);
+    const career: CareerState = { ...base, sponsor: { sponsorId: 'premium' } };
+    const save = serializeCareer(career);
+    expect(save.sponsor).toEqual({ sponsorId: 'premium' });
+    const restored = restoreCareer(save, league);
+    expect(restored.sponsor).toEqual({ sponsorId: 'premium' });
+  });
+
+  it('defaults to the basic sponsor for a pre-patrocinios save (no sponsor field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { sponsor?: unknown }).sponsor;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.sponsor).toEqual({ sponsorId: 'basico' });
+  });
+
   it('round-trips the squad contracts (salario + años) exactly', () => {
     const career = evolvedCareer(4);
     expect(Object.keys(career.contracts).length).toBeGreaterThan(0);

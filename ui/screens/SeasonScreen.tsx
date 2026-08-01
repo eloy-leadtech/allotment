@@ -135,6 +135,10 @@ export function SeasonScreen() {
           <span className="despacho-tile__icon" aria-hidden="true">🏟️</span>
           <span className="despacho-tile__label">Estadio</span>
         </button>
+        <button type="button" className="despacho-tile" onClick={() => goTo('sponsors')}>
+          <span className="despacho-tile__icon" aria-hidden="true">🤝</span>
+          <span className="despacho-tile__label">Patrocinio</span>
+        </button>
         <button type="button" className="despacho-tile" onClick={() => goTo('press')}>
           <span className="despacho-tile__icon" aria-hidden="true">🎙️</span>
           <span className="despacho-tile__label">Prensa</span>
@@ -152,6 +156,10 @@ export function SeasonScreen() {
         <button type="button" className="despacho-tile" onClick={() => goTo('palmares')}>
           <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
           <span className="despacho-tile__label">Palmarés</span>
+        </button>
+        <button type="button" className="despacho-tile" onClick={() => goTo('stats')}>
+          <span className="despacho-tile__icon" aria-hidden="true">📊</span>
+          <span className="despacho-tile__label">Estadísticas</span>
         </button>
         <button type="button" className="despacho-tile" onClick={() => goTo('slots')}>
           <span className="despacho-tile__icon" aria-hidden="true">💾</span>

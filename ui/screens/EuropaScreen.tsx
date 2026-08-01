@@ -5,6 +5,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { StandingsTable } from '@ui/components/StandingsTable';
+import { KnockoutPath } from '@ui/components/KnockoutPath';
 
 export function EuropaScreen() {
   const career = useGameStore((s) => s.career);
@@ -70,6 +71,13 @@ export function EuropaScreen() {
           <strong>{teamProgress(tab === 'champions' ? champions : uefa, me)}</strong>
         </p>
       ) : null}
+
+      <KnockoutPath
+        steps={(tab === 'champions' ? champions.humanPath : uefa.humanPath) ?? []}
+        me={me}
+        name={name}
+        title={`Tu recorrido en ${tab === 'champions' ? 'la Champions' : 'la UEFA'}`}
+      />
 
       {tab === 'champions' ? (
         <>

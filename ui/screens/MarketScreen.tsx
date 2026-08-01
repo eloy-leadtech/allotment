@@ -73,6 +73,9 @@ export function MarketScreen() {
             {lastIncome.europa > 0 ? (
               <li className="market-row"><span className="market-name">Competición europea</span><span className="hint">{formatEuros(lastIncome.europa)}</span></li>
             ) : null}
+            {lastIncome.sponsor > 0 ? (
+              <li className="market-row"><span className="market-name">Patrocinador principal</span><span className="hint">{formatEuros(lastIncome.sponsor)}</span></li>
+            ) : null}
             {lastWageBill != null ? (
               <li className="market-row">
                 <span className="market-name">Masa salarial (−)</span>

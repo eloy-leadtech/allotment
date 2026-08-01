@@ -15,6 +15,7 @@ export function runCareerCopa(
   seed: number,
   seasonNumber: number,
   domesticTeams: readonly CompetitionTeam[],
+  humanTeamId?: string,
 ): CopaResult {
-  return runCopa(domesticTeams, hashSeed(seed, 'copa', seasonNumber));
+  return runCopa(domesticTeams, hashSeed(seed, 'copa', seasonNumber), humanTeamId);
 }

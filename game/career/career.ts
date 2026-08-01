@@ -5,6 +5,7 @@ import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
 import { initialBudget } from './market';
 import { DEFAULT_STADIUM } from './stadium';
+import { DEFAULT_SPONSOR } from './sponsors';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
@@ -91,6 +92,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     // A fresh career starts with the base ground; enlarge it to grow the taquilla.
     stadium: DEFAULT_STADIUM,
+    // A fresh career signs the basic sponsor until the manager picks a better offer.
+    sponsor: DEFAULT_SPONSOR,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),

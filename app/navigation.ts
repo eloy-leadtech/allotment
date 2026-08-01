@@ -13,10 +13,12 @@ export type Screen =
   | 'tactics'
   | 'training'
   | 'stadium'
+  | 'sponsors'
   | 'tournament'
   | 'copa'
   | 'europa'
   | 'palmares'
+  | 'stats'
   | 'press'
   | 'match'
   | 'slots';

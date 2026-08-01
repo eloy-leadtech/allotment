@@ -226,6 +226,8 @@ export function applyTransition(
     budget: career.budget,
     // The stadium you built stays yours into the next season.
     stadium: career.stadium,
+    // The sponsor tier you signed carries forward (you can change it each season).
+    sponsor: career.sponsor,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -350,6 +352,8 @@ export function applyDivisionChange(
     budget: career.budget,
     // The stadium you built moves with you across divisions.
     stadium: career.stadium,
+    // The sponsor tier you signed carries forward across divisions too.
+    sponsor: career.sponsor,
     teams,
     contracts: advance.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.

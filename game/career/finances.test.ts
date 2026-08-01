@@ -23,8 +23,10 @@ describe('seasonIncome', () => {
     const position = table.findIndex((r) => r.teamId === 'barcelona') + 1;
     expect(income.leaguePrize).toBe((table.length - position + 1) * 1_200_000);
     expect(income.total).toBe(
-      income.tv + income.gate + income.leaguePrize + income.copa + income.europa,
+      income.tv + income.gate + income.leaguePrize + income.copa + income.europa + income.sponsor,
     );
+    // The basic sponsor (default) still pays a positive guaranteed cheque.
+    expect(income.sponsor).toBeGreaterThan(0);
   });
 
   it('pays a Segunda club the lower TV/gate tiers', () => {

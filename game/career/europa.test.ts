@@ -74,4 +74,29 @@ describe('runCareerEuropa', () => {
     const b = runCareerEuropa(career.seed, career.seasonNumber, career.temporada, europaClubs, arg);
     expect(a).toEqual(b);
   });
+
+  it("exposes the human's Champions run only in the comp they play", () => {
+    const inChampions = runCareerEuropa(career.seed, career.seasonNumber, career.temporada, europaClubs, {
+      team: human,
+      comp: 'champions',
+    });
+    // Human plays the Champions: that comp carries their run; the UEFA does not.
+    expect(inChampions.champions.humanPath).toBeDefined();
+    expect(inChampions.uefa.humanPath).toBeUndefined();
+    for (const step of inChampions.champions.humanPath ?? []) {
+      expect([step.match.homeId, step.match.awayId]).toContain(HUMAN);
+    }
+  });
+
+  it("exposes the human's UEFA run only in the comp they play", () => {
+    const inUefa = runCareerEuropa(career.seed, career.seasonNumber, career.temporada, europaClubs, {
+      team: human,
+      comp: 'uefa',
+    });
+    expect(inUefa.uefa.humanPath).toBeDefined();
+    expect(inUefa.champions.humanPath).toBeUndefined();
+    for (const step of inUefa.uefa.humanPath ?? []) {
+      expect([step.match.homeId, step.match.awayId]).toContain(HUMAN);
+    }
+  });
 });
