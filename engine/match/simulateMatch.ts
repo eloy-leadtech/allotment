@@ -96,16 +96,33 @@ export function simulateMatch(input: MatchInput): MatchResult {
     for (const side of sides) {
       const attack = side.strength.attack + side.homeBonus;
       const diff = attack - side.rival.defense;
-      const chances = Math.max(
-        0,
-        MATCH_CONFIG.chanceBase + rng.int(MATCH_CONFIG.chanceSpread) + Math.round(diff * MATCH_CONFIG.strengthSlope),
+      // Chances "por lances" (faithful to PC Fútbol §2.2): base + noise + the
+      // line-strength differential, HARD-CAPPED per half at `3 - rng.int(3)`
+      // (PCF5's `tope = 3 - rand()%3`), then extended by a geometric tail
+      // (`while rng.int(4)===0`, PCF5's `while rand()%4==0`) so the odd goleada
+      // still slips through. The RNG is consumed in a fixed order, so replaying a
+      // seed reproduces the match exactly (our determinism guarantee over PCF5).
+      const raw =
+        MATCH_CONFIG.chanceBase +
+        rng.int(MATCH_CONFIG.chanceNoise) +
+        Math.round(diff / MATCH_CONFIG.strengthDivisor);
+      const cap = MATCH_CONFIG.chanceCapBase - rng.int(MATCH_CONFIG.chanceCapSpread);
+      let chances = Math.max(0, Math.min(raw, cap));
+      // Geometric tail (PCF5 `while rand()%4==0`), made differential-aware so line
+      // strength keeps shaping the score above the hard cap (see config).
+      const tailProb = Math.min(
+        MATCH_CONFIG.tailProbMax,
+        Math.max(MATCH_CONFIG.tailProbMin, MATCH_CONFIG.tailProbBase + diff * MATCH_CONFIG.tailProbSlope),
       );
+      while (rng.next01() < tailProb) chances += 1;
 
       for (let c = 0; c < chances; c += 1) {
         const shooter = pickWeighted(side.xi, MATCH_CONFIG.scorerWeights, rng);
         const min = phase.start + rng.int(phase.length);
-        // Goalkeeper filter: the shot is a goal only if it beats the rival keeper.
-        const isGoal = rng.int(100) >= side.rival.keeper;
+        // Goalkeeper filter (PCF5 §2.3, the real regulator of the scoreline): the
+        // shot is a goal only if it beats the rival keeper; `keeperEfficacy` is the
+        // sanctioned calibration knob (§7.2) tuning the ~2.6 goals/game average.
+        const isGoal = rng.int(100) >= side.rival.keeper * MATCH_CONFIG.keeperEfficacy;
         if (isGoal) {
           if (side.key === 'home') homeGoals += 1;
           else awayGoals += 1;
