@@ -16,7 +16,8 @@ import { createRng, hashSeed, type Rng } from '@engine';
 import type { Attributes, Player, Position } from '@data';
 import type { CareerState, YouthProspect } from './types';
 import { synthesizePotential, potentialOverall, scoutEstimate, type ScoutRange } from './scouting';
-import { seasonStartYear } from './development';
+import { playerAge, seasonStartYear } from './development';
+import { initialContract } from './contracts';
 import { toMatchPlayer } from '../season/season';
 
 /** How many juveniles enter the academy each pretemporada (inclusive range). */
@@ -207,9 +208,18 @@ export function promoteProspect(career: CareerState, prospectId: string): Career
   const seasonTeams = career.season.teams.map((t) =>
     t.id === career.humanTeamId ? { ...t, players: [...t.players, matchPlayer] } : t,
   );
+  // A promoted canterano joins the first team on a fresh (modest) deal.
+  const startYear = seasonStartYear(career.temporada);
+  const contract = initialContract(
+    prospect.player,
+    playerAge(prospect.player, startYear),
+    career.seed,
+    career.seasonNumber,
+  );
   return {
     ...career,
     teams,
+    contracts: { ...career.contracts, [prospect.player.id]: contract },
     youthProspects: career.youthProspects.filter((p) => p.player.id !== prospectId),
     season: { ...career.season, teams: seasonTeams },
   };

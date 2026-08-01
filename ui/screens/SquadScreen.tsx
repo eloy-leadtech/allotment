@@ -4,6 +4,8 @@ import {
   playerAge,
   seasonStartYear,
   availabilityStatus,
+  squadWageBill,
+  formatEuros,
   type AvailabilityStatus,
 } from '@game';
 import { scoreTier, squadMorale, NEUTRAL_FORM, NEUTRAL_MORALE } from '@engine';
@@ -73,6 +75,8 @@ function MoraleBar({ morale }: { morale: number }) {
 export function SquadScreen() {
   const career = useGameStore((s) => s.career);
   const goTo = useGameStore((s) => s.goTo);
+  const renewPlayer = useGameStore((s) => s.renewPlayer);
+  const marketMessage = useGameStore((s) => s.marketMessage);
 
   if (!career) {
     return (
@@ -86,6 +90,7 @@ export function SquadScreen() {
   const team = career.teams.find((t) => t.id === career.humanTeamId);
   const players = [...(team?.players ?? [])].sort(byLineThenMedia);
   const startYear = seasonStartYear(career.temporada);
+  const masaSalarial = team ? squadWageBill(team, career.contracts) : 0;
   const observedSeasons = career.seasonNumber - 1;
   const availability = career.season.availability;
   const matchday = career.season.currentMatchday;
@@ -108,8 +113,13 @@ export function SquadScreen() {
           <span className={`vestuario ${tierClass(scoreTier(vestuario))}`}>
             Moral del vestuario: <strong>{vestuario}</strong>/100
           </span>
+          <span className="matchday">
+            Masa salarial: <strong>{formatEuros(masaSalarial)}</strong>/año · Presupuesto: {formatEuros(career.budget)}
+          </span>
         </div>
       </section>
+
+      {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
       <Stadium teamId={career.humanTeamId} />
 
@@ -125,7 +135,10 @@ export function SquadScreen() {
                 <th>Estado</th>
                 <th>Forma</th>
                 <th>Moral</th>
+                <th>Sueldo</th>
+                <th>Contrato</th>
                 <th>Potencial ojeado</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -139,6 +152,8 @@ export function SquadScreen() {
                 const streak = streakById.get(p.id);
                 const form = streak?.form ?? NEUTRAL_FORM;
                 const morale = streak?.morale ?? NEUTRAL_MORALE;
+                const contract = career.contracts[p.id];
+                const lastYear = contract?.yearsLeft === 1;
                 return (
                   <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
                     <td>{p.posicion}</td>
@@ -154,7 +169,22 @@ export function SquadScreen() {
                     </td>
                     <td><FormArrow form={form} /></td>
                     <td><MoraleBar morale={morale} /></td>
+                    <td className="squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
+                    <td>
+                      {contract ? (
+                        <span className={lastYear ? 'squad-status squad-status--suspended' : undefined}>
+                          {contract.yearsLeft} {contract.yearsLeft === 1 ? 'año' : 'años'}
+                        </span>
+                      ) : (
+                        '—'
+                      )}
+                    </td>
                     <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
+                    <td>
+                      {contract ? (
+                        <RetroButton onClick={() => renewPlayer(p.id)}>Renovar</RetroButton>
+                      ) : null}
+                    </td>
                   </tr>
                 );
               })}

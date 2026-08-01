@@ -10,6 +10,7 @@ import { createRng, hashSeed } from '@engine';
 import type { Player, Position } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { playerAge, seasonStartYear } from './development';
+import { initialContract } from './contracts';
 import { seasonFromCareer } from './career';
 
 /** Rating above this floor is what you actually pay for; below it is nominal. */
@@ -183,7 +184,15 @@ function applyPurchase(career: CareerState, ownerId: string, player: Player, pri
     if (team.id === career.humanTeamId) return { ...team, players: [...team.players, player] };
     return team;
   });
-  return withDerivedSeason({ ...career, teams, budget: career.budget - price });
+  // A new signing joins your wage book on a fresh, market-value-based deal.
+  const startYear = seasonStartYear(career.temporada);
+  const contract = initialContract(player, playerAge(player, startYear), career.seed, career.seasonNumber);
+  return withDerivedSeason({
+    ...career,
+    teams,
+    budget: career.budget - price,
+    contracts: { ...career.contracts, [player.id]: contract },
+  });
 }
 
 /** The outcome of making an offer for an AI club's player. */
@@ -287,7 +296,10 @@ export function sellPlayer(
     if (team.id === toClubId) return { ...team, players: [...team.players, sold] };
     return team;
   });
-  return { career: withDerivedSeason({ ...career, teams, budget: career.budget + amount }), ok: true };
+  // The sold player leaves your wage book with them.
+  const contracts = { ...career.contracts };
+  delete contracts[playerId];
+  return { career: withDerivedSeason({ ...career, teams, budget: career.budget + amount, contracts }), ok: true };
 }
 
 /** Accept an AI bid: sell the player to the bidding club for the offered amount. */

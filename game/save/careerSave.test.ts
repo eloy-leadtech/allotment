@@ -48,6 +48,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     },
     budget: base.budget,
     teams,
+    contracts: base.contracts,
     youthProspects: base.youthProspects,
   };
   let season = seasonFromCareer(meta);
@@ -85,6 +86,23 @@ describe('career save v2 (snapshot)', () => {
     const restored = restoreCareer(serializeCareer(career), league);
     expect(career.youthProspects.length).toBeGreaterThan(0);
     expect(restored.youthProspects).toEqual(career.youthProspects);
+  });
+
+  it('round-trips the squad contracts (salario + años) exactly', () => {
+    const career = evolvedCareer(4);
+    expect(Object.keys(career.contracts).length).toBeGreaterThan(0);
+    const restored = restoreCareer(serializeCareer(career), league);
+    expect(restored.contracts).toEqual(career.contracts);
+  });
+
+  it('recomputes contracts for a pre-contract save (no contracts field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { contracts?: unknown }).contracts;
+    const restored = restoreCareer(legacy, league);
+    const squadIds = restored.teams.find((t) => t.id === humanTeamId)!.players.map((p) => p.id).sort();
+    // Every squad player gets a freshly recomputed deal on load.
+    expect(Object.keys(restored.contracts).sort()).toEqual(squadIds);
   });
 
   it("does not fall back to the league's original squads", () => {

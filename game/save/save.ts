@@ -3,6 +3,8 @@ import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective, type BoardState } from '../career/board';
+import { initialContracts, type Contract } from '../career/contracts';
+import { seasonStartYear } from '../career/development';
 import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
@@ -64,6 +66,12 @@ const SeasonSummarySchema = z.object({
   championId: z.string().min(1),
 });
 
+/** A squad contract: annual salary and full seasons remaining. */
+const ContractSchema = z.object({
+  salary: z.number().int().min(0),
+  yearsLeft: z.number().int().min(1),
+});
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -109,6 +117,8 @@ export const CareerSaveSchema = z.object({
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
+  /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
+  contracts: z.record(z.string(), ContractSchema).default({}),
   /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
   youthProspects: z.array(YouthProspectSchema).default([]),
   history: z.array(SeasonSummarySchema),
@@ -147,6 +157,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     tactics: career.tactics,
     budget: career.budget,
     teams,
+    contracts: career.contracts,
     youthProspects: career.youthProspects,
     history,
     // The in-progress season is derived from `teams`; only its resume point is saved.
@@ -166,6 +177,13 @@ function restoreCareerV2(save: CareerSave): CareerState {
       relegationSpots: save.relegationSpots,
     }),
   };
+  // Pre-contract saves have no wage book: recompute deterministic initial deals
+  // from the snapshotted squad so the masa salarial is always present on load.
+  const humanPlayers = save.teams.find((t) => t.id === save.humanTeamId)?.players ?? [];
+  const contracts: Record<string, Contract> =
+    Object.keys(save.contracts).length > 0
+      ? save.contracts
+      : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
   const meta: Omit<CareerState, 'season' | 'history'> = {
     seed: save.seed,
     leagueId: save.leagueId,
@@ -179,6 +197,7 @@ function restoreCareerV2(save: CareerSave): CareerState {
     tactics: save.tactics,
     budget: save.budget,
     teams: save.teams,
+    contracts,
     youthProspects: save.youthProspects,
   };
   const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);

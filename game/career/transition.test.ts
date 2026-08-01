@@ -105,6 +105,40 @@ describe('applyTransition (real data)', () => {
     expect(a.teams).toEqual(b.teams);
     expect(a.season.fixtures).toEqual(b.season.fixtures);
   });
+
+  it('leaves the whole next-season squad under contract (no orphans, no gaps)', () => {
+    const career = careerAfterSomeMatches();
+    const next2 = applyTransition(career, next, new Set());
+    const squadIds = next2.teams.find((t) => t.id === HUMAN)!.players.map((p) => p.id).sort();
+    expect(Object.keys(next2.contracts).sort()).toEqual(squadIds);
+  });
+
+  it('ticks a continuing player’s contract down a season', () => {
+    const career = careerAfterSomeMatches();
+    // A stayer: in the squad now and still in the real 97/98 roster.
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams
+      .find((t) => t.id === HUMAN)!
+      .players.find((p) => !departures.has(p.id) && career.contracts[p.id]!.yearsLeft > 1)!;
+    const before = career.contracts[stayer.id]!.yearsLeft;
+    const next2 = applyTransition(career, next, new Set());
+    expect(next2.contracts[stayer.id]!.yearsLeft).toBe(before - 1);
+  });
+
+  it('releases a stayer whose deal hits 0 (VENCIMIENTO: leaves FREE)', () => {
+    const career = careerAfterSomeMatches();
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams.find((t) => t.id === HUMAN)!.players.find((p) => !departures.has(p.id))!;
+    // Force this stayer into the final year of their deal.
+    const expiring: typeof career = {
+      ...career,
+      contracts: { ...career.contracts, [stayer.id]: { salary: 1_000_000, yearsLeft: 1 } },
+    };
+    const next2 = applyTransition(expiring, next, new Set([stayer.id]));
+    const squad = next2.teams.find((t) => t.id === HUMAN)!;
+    expect(squad.players.some((p) => p.id === stayer.id)).toBe(false);
+    expect(next2.contracts[stayer.id]).toBeUndefined();
+  });
 });
 
 // --- Synthetic dedup case: retaining a player removes them from their new club.

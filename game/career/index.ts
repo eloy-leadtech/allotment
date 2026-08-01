@@ -6,6 +6,7 @@ export * from './transition';
 export * from './scouting';
 export * from './cantera';
 export * from './market';
+export * from './contracts';
 export * from './promotion';
 export * from './board';
 export * from './press';

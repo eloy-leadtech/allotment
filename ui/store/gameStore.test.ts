@@ -64,8 +64,39 @@ describe('gameStore career loop', () => {
     const s = useGameStore.getState();
     expect(s.lastIncome).not.toBeNull();
     expect(s.lastIncome!.total).toBeGreaterThan(0);
-    // Budget carried over plus this season's income (minus nothing yet).
+    // Budget = carried over + income − masa salarial; income outweighs wages here.
     expect(s.career!.budget).toBeGreaterThan(budgetBefore);
+  });
+
+  it('charges the masa salarial against the budget on continue and exposes it', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const budgetBefore = useGameStore.getState().career!.budget;
+    playToEnd();
+    useGameStore.getState().continueCareer();
+    const s = useGameStore.getState();
+    // The wage bill was booked and surfaced for the market screen.
+    expect(s.lastWageBill).not.toBeNull();
+    expect(s.lastWageBill!).toBeGreaterThan(0);
+    // Budget is exactly the carried-over pot plus income minus the wage bill.
+    expect(s.career!.budget).toBe(
+      Math.max(0, budgetBefore + s.lastIncome!.total - s.lastWageBill!),
+    );
+    // And wages genuinely bit into the gross (net < gross income).
+    expect(s.career!.budget - budgetBefore).toBeLessThan(s.lastIncome!.total);
+  });
+
+  it('renewPlayer resets a contract term, raises the wage and debits the budget', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const career = useGameStore.getState().career!;
+    const playerId = career.teams.find((t) => t.id === 'barcelona')!.players[0]!.id;
+    const before = career.contracts[playerId]!;
+    const budgetBefore = career.budget;
+
+    useGameStore.getState().renewPlayer(playerId);
+    const after = useGameStore.getState().career!;
+    expect(after.contracts[playerId]!.yearsLeft).toBeGreaterThanOrEqual(before.yearsLeft);
+    expect(after.contracts[playerId]!.salary).toBeGreaterThan(before.salary);
+    expect(after.budget).toBeLessThan(budgetBefore);
   });
 
   it('buys a player in the market: budget drops and the squad grows', () => {

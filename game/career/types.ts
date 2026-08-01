@@ -3,6 +3,7 @@ import type { Formation } from '@engine';
 import type { SeasonState } from '../season/season';
 import type { Division } from './promotion';
 import type { BoardState } from './board';
+import type { Contract } from './contracts';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 
@@ -72,6 +73,12 @@ export interface CareerState {
   /** The human club's transfer budget, in whole euros. */
   budget: number;
   teams: CareerTeam[];
+  /**
+   * Your squad's contracts (salario + años), keyed by player id. Only the human
+   * club's players are tracked, since only your masa salarial is charged against
+   * the budget. See contracts.ts.
+   */
+  contracts: Record<string, Contract>;
   /** Your club's youth-academy prospects awaiting promotion (see YouthProspect). */
   youthProspects: YouthProspect[];
   season: SeasonState;

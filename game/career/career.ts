@@ -4,6 +4,7 @@ import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/s
 import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { initialBudget } from './market';
 import { seasonStartYear } from './development';
+import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
 
@@ -85,6 +86,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     },
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
+    // Every squad player starts on a deal derived from their market value.
+    contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),
     // Season 1's opening hornada of juveniles.
     youthProspects: generateYouthBatch({
       seed,
