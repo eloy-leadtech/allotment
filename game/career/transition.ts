@@ -316,16 +316,29 @@ export function endOfSeasonConfianza(career: CareerState): ConfianzaState {
 }
 
 /**
- * Whether the manager is dismissed at the end of the in-progress season. Two
- * routes, both faithful to the classic game: the board's HARD verdict on the
- * objective (relegation or a big shortfall — see `evaluateObjective`), or the
- * directiva confianza meter collapsing to the sack line after this season.
+ * Whether the manager is dismissed at the end of the in-progress season.
+ *
+ * Faithful to the classic PC Fútbol, the board gave a manager MARGIN: a single
+ * missed objective is an aviso/enfado, never a cese. Two routes end the tenure:
+ *
+ *  - RELEGATION — the one disaster the board never tolerates, a sack even in the
+ *    very FIRST season (a big club going down). This is `evaluateObjective`'s
+ *    hard verdict (see board.ts) and mirrors `careerOutcome`.
+ *  - SUSTAINED sporting failure — the directiva confianza meter, folded season on
+ *    season, collapsing to the sack line. By construction (see confianza.ts) this
+ *    takes 2+ bad seasons, and never fires in the first season from a neutral
+ *    start, so the first season is protected against a mere objective miss.
+ *
+ * The first-season guard below is belt-and-braces: it makes the "no cese in year
+ * one bar relegation" rule explicit and robust to future confianza tuning.
  */
 export function isManagerDismissed(career: CareerState): boolean {
-  return (
-    endOfSeasonEvaluation(career).dismissed ||
-    confianzaProvocaCese(endOfSeasonConfianza(career))
-  );
+  // Relegation is the one disaster that sacks even a first-year manager.
+  if (endOfSeasonEvaluation(career).dismissed) return true;
+  // Otherwise the first season is never a cese for a missed objective.
+  if (career.seasonNumber <= 1) return false;
+  // From season 2 on, a sustained collapse of the directiva meter ends the tenure.
+  return confianzaProvocaCese(endOfSeasonConfianza(career));
 }
 
 /** The human's promotion/relegation outcome from their division's final table. */

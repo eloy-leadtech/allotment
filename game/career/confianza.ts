@@ -61,16 +61,25 @@ function clamp(value: number): number {
  * more emotionally — a título or an ascenso sends them into raptures, a descenso
  * turns them against the manager. Both are clamped to 0-100.
  *
+ * The directiva deltas are CALIBRATED for board patience (a faithful nod to the
+ * classic game): the worst single NON-relegation season from a neutral 50 lands
+ * at ~20 — inside the WARNING band but clear of the SACK line — so ONE missed
+ * objective is an aviso, never a cese. It takes a SECOND straight bad season to
+ * collapse the meter to the sack line. Relegation is handled as a hard verdict
+ * elsewhere (see board.ts), so it need not (and does not) sack via this meter.
+ *
  * Pure: integer arithmetic on deterministic inputs, no RNG, locale or Date.
  */
 export function applyConfianza(current: ConfianzaState, input: ConfianzaInput): ConfianzaState {
   const { satisfaction, shortfall, outcome, championLeague } = input;
 
-  const dirBase = satisfaction === 'contento' ? 14 : satisfaction === 'normal' ? 3 : -16;
+  const dirBase = satisfaction === 'contento' ? 14 : satisfaction === 'normal' ? 3 : -14;
   const afiBase = satisfaction === 'contento' ? 16 : satisfaction === 'normal' ? 0 : -14;
 
   // Proportional to how far the target was missed (penalty) or beaten (bonus).
-  const dirShort = shortfall > 0 ? -Math.min(shortfall, 10) * 2 : Math.min(-shortfall, 6) * 2;
+  // The directiva penalty is capped at 8 places so the worst single season stays
+  // survivable (a warning, not a cese) — sustained misses are what sink the meter.
+  const dirShort = shortfall > 0 ? -Math.min(shortfall, 8) * 2 : Math.min(-shortfall, 6) * 2;
   const afiShort = shortfall > 0 ? -Math.min(shortfall, 10) * 2 : Math.min(-shortfall, 6) * 3;
 
   const dirOutcome = outcome === 'promoted' ? 8 : outcome === 'relegated' ? -20 : 0;

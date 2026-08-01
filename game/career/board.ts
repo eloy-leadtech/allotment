@@ -9,7 +9,11 @@
  * your squad's strength relative to your rivals and sets a target — the worst
  * final position it will accept. At season's end your real finish is compared to
  * that target: beating it makes the board happy, just missing it is tolerated,
- * clearly missing it angers them and, in the worst cases, gets you sacked.
+ * and clearly missing it ANGERS them (an aviso/enfado). Faithful to the classic
+ * game, a single missed objective does NOT end your tenure — the board gave a
+ * manager margin, so anger accumulates via the confianza meter (see confianza.ts)
+ * and only SUSTAINED failure gets you sacked. The one exception is the clear
+ * DISASTER of RELEGATION, which the board never tolerates, even in year one.
  */
 import type { PromotionOutcome, Division } from './promotion';
 
@@ -54,8 +58,6 @@ export const EUROPEAN_SPOTS = 4;
 export const PROMOTION_SPOTS = 3;
 /** Missing the target by up to this many places is tolerated ("normal"). */
 export const TOLERANCE = 3;
-/** Falling this many places short of the target gets the manager sacked. */
-export const DISMISS_SHORTFALL = 8;
 
 /** A minimal squad view: only the media of each player is needed for a rating. */
 interface RatedSquad {
@@ -124,10 +126,15 @@ export function computeSeasonObjective(params: ObjectiveParams): BoardObjective 
 /**
  * The board's verdict on a finished season.
  *
- * - Relegation is always the worst case: the board is furious and sacks you.
+ * - RELEGATION is the one disaster the board never tolerates: it is furious and
+ *   the `dismissed` HARD verdict fires (a sack even in the very first season).
  * - Otherwise, beating or meeting the target pleases them, missing it by a
- *   little is tolerated, and missing it by a lot angers them; a very large
- *   shortfall (see `DISMISS_SHORTFALL`) also costs the manager the job.
+ *   little is tolerated ("normal"), and missing it by a lot ANGERS them
+ *   ("enfadado"). Crucially, a missed objective — however large the shortfall —
+ *   is NOT an immediate sack: the board gave the manager margin, so the anger is
+ *   folded into the confianza meter (see confianza.ts) and only sustained
+ *   failure across seasons ends the tenure. `dismissed` here means "the board's
+ *   HARD verdict on this one season", which without relegation is always false.
  */
 export function evaluateObjective(
   objective: BoardObjective,
@@ -142,6 +149,7 @@ export function evaluateObjective(
   if (shortfall <= 0) satisfaction = 'contento';
   else if (shortfall <= TOLERANCE) satisfaction = 'normal';
   else satisfaction = 'enfadado';
-  const dismissed = satisfaction === 'enfadado' && shortfall >= DISMISS_SHORTFALL;
-  return { satisfaction, dismissed, shortfall };
+  // A single missed objective never sacks on its own — only relegation (above)
+  // is a hard verdict. Sustained anger is carried by the confianza meter.
+  return { satisfaction, dismissed: false, shortfall };
 }
