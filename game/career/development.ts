@@ -103,18 +103,15 @@ function ageTrend(age: number): { phys: number; tech: number } {
 const GK_TREND_FACTOR = 0.6;
 
 /**
- * Retirement age. PCF5 retires by a HARD age cutoff at end of season
- * (`FUN_005bd3b0`/`FUN_005bd720`: `if (edad < umbral) sigue; else se retira`),
- * with `umbral = 35` for the default population — [CÓDIGO], confianza Alta.
- * The decompiled game also has a second threshold of 33 gated by a per-player
- * flag whose meaning is unconfirmed ([HIPÓTESIS]); we render it as goalkeepers
- * playing on a touch longer (37), which keeps keepers on the pitch past field
- * players without contradicting the one confirmed number.
+ * Retirement age — HARD age cutoff at end of season (as PCF5:
+ * `if (edad < umbral) sigue; else se retira`). PCF5's confirmed cutoff was 35,
+ * but the OWNER prefers realistic modern longevity: outfielders retire at 39 and
+ * goalkeepers a touch later at 41 (keepers routinely play into their forties).
  */
-const RETIREMENT_AGE_OUTFIELD = 35;
-const RETIREMENT_AGE_GK = 37;
+const RETIREMENT_AGE_OUTFIELD = 39;
+const RETIREMENT_AGE_GK = 41;
 
-/** The hard retirement age for a player: 35 outfield ([CÓDIGO]), 37 GK ([HIPÓTESIS]). */
+/** The hard retirement age for a player: 39 outfield, 41 goalkeeper (owner's realism choice). */
 function retirementAge(esPortero: boolean): number {
   return esPortero ? RETIREMENT_AGE_GK : RETIREMENT_AGE_OUTFIELD;
 }
