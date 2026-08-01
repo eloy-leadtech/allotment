@@ -8,6 +8,7 @@ import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import { DEFAULT_SPONSOR } from '../career/sponsors';
+import { DEFAULT_CREDIT } from '../career/credit';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
@@ -179,6 +180,13 @@ export const CareerSaveSchema = z.object({
   sponsor: z
     .object({ sponsorId: z.enum(['basico', 'estandar', 'ambicioso', 'premium']) })
     .default({ ...DEFAULT_SPONSOR }),
+  /** Human club's bank/board credit and debt; defaults to debt-free for pre-crédito saves. */
+  credit: z
+    .object({
+      loan: z.number().int().min(0),
+      seasonsOverLimit: z.number().int().min(0),
+    })
+    .default({ ...DEFAULT_CREDIT }),
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -228,6 +236,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     budget: career.budget,
     stadium: career.stadium,
     sponsor: career.sponsor ?? DEFAULT_SPONSOR,
+    credit: career.credit ?? DEFAULT_CREDIT,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -278,6 +287,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     stadium: save.stadium ?? DEFAULT_STADIUM,
     // Pre-patrocinios saves default to the basic sponsor so it is always present.
     sponsor: save.sponsor ?? DEFAULT_SPONSOR,
+    // Pre-crédito saves default to debt-free so the credit state is always present.
+    credit: save.credit ?? DEFAULT_CREDIT,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,
