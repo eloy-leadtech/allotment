@@ -7,6 +7,7 @@ import { PrematchScreen } from '@ui/screens/PrematchScreen';
 import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
 import { SquadScreen } from '@ui/screens/SquadScreen';
+import { YouthScreen } from '@ui/screens/YouthScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { TournamentScreen } from '@ui/screens/TournamentScreen';
 import { CopaScreen } from '@ui/screens/CopaScreen';
@@ -34,6 +35,8 @@ export function App() {
       return <MarketScreen />;
     case 'squad':
       return <SquadScreen />;
+    case 'youth':
+      return <YouthScreen />;
     case 'tactics':
       return <TacticsScreen />;
     case 'tournament':

@@ -39,6 +39,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     division: base.division,
     budget: base.budget,
     teams,
+    youthProspects: base.youthProspects,
   };
   let season = seasonFromCareer(meta);
   for (let i = 0; i < playedMatchdays; i += 1) {
@@ -68,6 +69,13 @@ describe('career save v2 (snapshot)', () => {
     // In-progress season is re-derived + replayed to the same point.
     expect(restored.season.currentMatchday).toBe(career.season.currentMatchday);
     expect(currentStandings(restored.season)).toEqual(currentStandings(career.season));
+  });
+
+  it('round-trips youth-academy prospects', () => {
+    const career = evolvedCareer(4);
+    const restored = restoreCareer(serializeCareer(career), league);
+    expect(career.youthProspects.length).toBeGreaterThan(0);
+    expect(restored.youthProspects).toEqual(career.youthProspects);
   });
 
   it("does not fall back to the league's original squads", () => {

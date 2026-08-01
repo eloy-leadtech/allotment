@@ -18,6 +18,7 @@ import { seasonFromCareer } from './career';
 import { developPlayer, seasonStartYear } from './development';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
+import { rolloverYouth } from './cantera';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -168,6 +169,13 @@ export function applyTransition(
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
     teams,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
   };
 
   return {
@@ -252,6 +260,13 @@ export function applyDivisionChange(
     division: targetDivision,
     budget: career.budget,
     teams,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
   };
   return {
     ...meta,
