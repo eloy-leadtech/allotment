@@ -4,7 +4,6 @@ import {
   evaluateObjective,
   EUROPEAN_SPOTS,
   PROMOTION_SPOTS,
-  DISMISS_SHORTFALL,
   type BoardObjective,
 } from './board';
 
@@ -88,11 +87,13 @@ describe('evaluateObjective', () => {
     expect(verdict.dismissed).toBe(true);
   });
 
-  it('sacks the manager on a catastrophic shortfall even without relegation', () => {
-    const actual = objective.targetPosition + DISMISS_SHORTFALL;
-    const verdict = evaluateObjective(objective, actual, 'stays');
+  it('does NOT sack on a catastrophic shortfall without relegation (aviso, not cese)', () => {
+    // Faithful to the classic game: a single missed objective — however large the
+    // shortfall — angers the board but never ends the tenure on its own. Only
+    // relegation is a hard verdict; sustained failure sinks the confianza meter.
+    const verdict = evaluateObjective(objective, objective.targetPosition + 12, 'stays');
     expect(verdict.satisfaction).toBe('enfadado');
-    expect(verdict.dismissed).toBe(true);
+    expect(verdict.dismissed).toBe(false);
   });
 
   it('does not sack for a merely disappointing season', () => {

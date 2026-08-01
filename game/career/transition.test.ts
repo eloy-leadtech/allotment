@@ -2,8 +2,27 @@ import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import type { Attributes, League, Player } from '@data';
 import { newCareer } from './career';
-import { previewTransition, applyTransition, endOfSeasonConfianza } from './transition';
-import { advanceMatchday, currentStandings } from '../season/season';
+import {
+  previewTransition,
+  applyTransition,
+  endOfSeasonConfianza,
+  endOfSeasonEvaluation,
+  isManagerDismissed,
+  careerOutcome,
+} from './transition';
+import { advanceMatchday, isSeasonOver, currentStandings } from '../season/season';
+import type { CareerState } from './types';
+
+/** Play the in-progress season to completion (deterministic for a fixed seed). */
+function playSeasonToEnd(career: CareerState): CareerState {
+  let season = career.season;
+  let guard = 0;
+  while (!isSeasonOver(season) && guard < 200) {
+    season = advanceMatchday(season).state;
+    guard += 1;
+  }
+  return { ...career, season };
+}
 
 const HUMAN = 'barcelona';
 
@@ -340,5 +359,52 @@ describe('applyTransition palmarés accumulation', () => {
       seasonNumber: 1,
       temporada: '98/99',
     });
+  });
+});
+
+/**
+ * The CESE (dismissal) is faithful to the classic PC Fútbol: the board gave a
+ * manager margin. A single missed objective in the first season is an aviso, not
+ * a cese; only the DISASTER of relegation sacks a first-year manager, and a
+ * SUSTAINED collapse of the directiva meter sacks from season two on.
+ *
+ * These run on the real 96/97 database with FIXED seeds (fully deterministic).
+ * Seed 8 gives a Barça that badly misses its "win the league" objective without
+ * going down; seed 21 gives a Barça that is relegated.
+ */
+describe('isManagerDismissed (cese fiel)', () => {
+  it('does NOT sack a first-year Barça that badly misses the objective (no descenso)', () => {
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 8));
+    const evaluation = endOfSeasonEvaluation(finished);
+    // A clear, angry miss — but not relegation.
+    expect(careerOutcome(finished)).not.toBe('relegated');
+    expect(evaluation.satisfaction).toBe('enfadado');
+    expect(evaluation.shortfall).toBeGreaterThanOrEqual(8);
+    // ...and yet the board keeps the manager: year one gets margin.
+    expect(evaluation.dismissed).toBe(false);
+    expect(isManagerDismissed(finished)).toBe(false);
+  });
+
+  it('DOES sack a first-year Barça that is relegated (the one disaster)', () => {
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 21));
+    expect(careerOutcome(finished)).toBe('relegated');
+    expect(endOfSeasonEvaluation(finished).dismissed).toBe(true);
+    expect(isManagerDismissed(finished)).toBe(true);
+  });
+
+  it('DOES sack on SUSTAINED failure: a second straight bad season collapses the meter', () => {
+    // Same bad season as seed 8, but now it is SEASON TWO and the directiva meter
+    // already sits low after a prior bad campaign. This second bad season folds it
+    // below the sack line, ending the tenure — proving a cese is not impossible.
+    const badSeason = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 8));
+    const secondBadYear: CareerState = {
+      ...badSeason,
+      seasonNumber: 2,
+      confianza: { directiva: 22, aficion: 30 },
+    };
+    expect(isManagerDismissed(secondBadYear)).toBe(true);
+    expect(endOfSeasonConfianza(secondBadYear).directiva).toBeLessThanOrEqual(15);
+    // The very same standings in the FIRST season would NOT sack (year-one margin).
+    expect(isManagerDismissed({ ...secondBadYear, seasonNumber: 1 })).toBe(false);
   });
 });

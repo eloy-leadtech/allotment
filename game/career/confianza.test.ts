@@ -86,6 +86,20 @@ describe('applyConfianza', () => {
     expect(confianzaProvocaCese(next)).toBe(false);
   });
 
+  it('even the WORST single non-relegation season from 50 stays above the sack line', () => {
+    // Recalibration goal: one missed objective, no matter how big the shortfall,
+    // must not drop the directiva below the cese threshold — it is an aviso.
+    const worst = applyConfianza(DEFAULT_CONFIANZA, {
+      satisfaction: 'enfadado',
+      shortfall: 30, // far beyond the penalty cap
+      outcome: 'stays',
+      championLeague: false,
+    });
+    expect(worst.directiva).toBeGreaterThan(CONFIANZA_SACK);
+    // ...but it IS a warning: the board is watching.
+    expect(directivaEnAviso(worst)).toBe(true);
+  });
+
   it('two straight bad seasons collapse the directiva meter to the sack line', () => {
     const bad: ConfianzaInput = {
       satisfaction: 'enfadado',
