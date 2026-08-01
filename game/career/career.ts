@@ -2,6 +2,7 @@ import { hashSeed, type CompetitionTeam, type MatchPlayer, type Tactics } from '
 import type { League } from '@data';
 import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/season';
 import type { CareerState, CareerTactics, CareerTeam } from './types';
+import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
 import { initialBudget } from './market';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
@@ -84,6 +85,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
         relegationSpots,
       }),
     },
+    // A fresh career trains with a balanced focus until the manager changes it.
+    training: { focus: DEFAULT_TRAINING_FOCUS },
     budget: initialBudget(humanTeam, seasonStartYear(league.temporada)),
     teams,
     // Every squad player starts on a deal derived from their market value.
@@ -114,4 +117,14 @@ export function setCareerTactics(career: CareerState, tactics: CareerTactics): C
     t.id === career.humanTeamId ? { ...t, tactics: tacticsForSquad(tactics, t.players) } : t,
   );
   return { ...career, tactics, season: { ...career.season, teams } };
+}
+
+/**
+ * Set the human's training focus for the season. This shapes how your squad's
+ * attributes develop at the NEXT season transition (see development.ts), so it
+ * never touches the in-progress season's results or matchday — nothing already
+ * played is replayed.
+ */
+export function setCareerTraining(career: CareerState, training: TrainingState): CareerState {
+  return { ...career, training };
 }

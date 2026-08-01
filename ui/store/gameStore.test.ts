@@ -99,6 +99,20 @@ describe('gameStore career loop', () => {
     expect(after.budget).toBeLessThan(budgetBefore);
   });
 
+  it('setTraining stores the focus without resetting played matchdays', () => {
+    useGameStore.getState().startCareer('barcelona');
+    useGameStore.getState().playNextMatchday();
+    useGameStore.getState().playNextMatchday();
+    const before = useGameStore.getState().career!;
+    expect(before.training?.focus).toBe('equilibrado'); // fresh-career default
+    useGameStore.getState().setTraining({ focus: 'ataque' });
+    const after = useGameStore.getState().career!;
+    expect(after.training?.focus).toBe('ataque');
+    // The in-progress season is untouched (no replay of what was already played).
+    expect(after.season.currentMatchday).toBe(before.season.currentMatchday);
+    expect(useGameStore.getState().season?.currentMatchday).toBe(before.season.currentMatchday);
+  });
+
   it('buys a player in the market: budget drops and the squad grows', () => {
     useGameStore.getState().startCareer('barcelona');
     playToEnd();

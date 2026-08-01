@@ -5,6 +5,7 @@ import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective, type BoardState } from '../career/board';
 import { initialContracts, type Contract } from '../career/contracts';
 import { seasonStartYear } from '../career/development';
+import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
 
 const SAVE_VERSION = 1;
@@ -114,6 +115,10 @@ export const CareerSaveSchema = z.object({
       xiIds: z.array(z.string()).optional(),
     })
     .optional(),
+  /** Human's training focus; absent in pre-training saves (defaults on load). */
+  training: z
+    .object({ focus: z.enum(['ataque', 'defensa', 'fisico', 'equilibrado']) })
+    .optional(),
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
   teams: z.array(CareerTeamSchema).min(2),
@@ -155,6 +160,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     division: career.division,
     board: career.board,
     tactics: career.tactics,
+    training: career.training,
     budget: career.budget,
     teams,
     contracts: career.contracts,
@@ -195,6 +201,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     division: save.division,
     board,
     tactics: save.tactics,
+    // Pre-training saves default to a balanced focus so training is always present.
+    training: save.training ?? { focus: DEFAULT_TRAINING_FOCUS },
     budget: save.budget,
     teams: save.teams,
     contracts,

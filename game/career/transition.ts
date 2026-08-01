@@ -166,13 +166,15 @@ export function applyTransition(
   const preview = previewTransition(career, nextWorld);
   const retained = preview.departures.filter((p) => retainIds.has(p.id));
 
-  // Age each retained player one season; drop those who retire.
+  // Age each retained player one season; drop those who retire. Retained players
+  // are yours, so this season's training focus shapes how they evolve.
   const developedRetained: Player[] = [];
   for (const player of retained) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
     });
     if (!result.retired) developedRetained.push(result.player);
   }
@@ -212,6 +214,8 @@ export function applyTransition(
     // Same-division advance keeps the human where they were.
     division: career.division,
     board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
     teams,
@@ -286,13 +290,15 @@ export function applyDivisionChange(
   const current = humanTeam?.players ?? [];
   const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
 
-  // The whole squad moves with you, aged one season; retirees drop out.
+  // The whole squad moves with you, aged one season; retirees drop out. It is
+  // your squad, so this season's training focus shapes how it evolves.
   const aged: Player[] = [];
   for (const player of current) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
     });
     if (!result.retired) aged.push(result.player);
   }
@@ -327,6 +333,8 @@ export function applyDivisionChange(
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
     board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     budget: career.budget,
     teams,
     contracts: advance.contracts,
