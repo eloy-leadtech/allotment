@@ -4,8 +4,11 @@
    y overlays posicionados en % sobre el lienzo 640x480 (helper place()).
    ========================================================================= */
 
-/* Viewport a pantalla completa (idéntico a .screen--despacho). */
-.pcf7screen {
+/* Viewport a pantalla completa (idéntico a .screen--despacho).
+   Selector compuesto .screen.pcf7screen para GANAR en especificidad a .screen
+   (pcf7-calco.css se importa antes, así que a igual especificidad .screen ganaba
+   y dejaba el contenedor en 720px → recortaba la consola). */
+.screen.pcf7screen {
   align-items: center;
   justify-content: center;
   max-width: none;
