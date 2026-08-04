@@ -16,6 +16,7 @@ export type Screen =
   | 'prospects'
   | 'tactics'
   | 'training'
+  | 'staff'
   | 'stadium'
   | 'sponsors'
   | 'tournament'

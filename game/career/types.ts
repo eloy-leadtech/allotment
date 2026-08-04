@@ -15,6 +15,7 @@ import type { CreditState } from './credit';
 import type { LoansState } from './loans';
 import type { HemerotecaEvent } from './hemeroteca';
 import type { WinterMarketState } from './winterMovements';
+import type { StaffState } from './staff';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -202,6 +203,15 @@ export interface CareerState {
    * stays the CURRENT (post-winter) squad and is never itself rewound.
    */
   winter?: WinterMarketState;
+  /**
+   * The club's technical STAFF (segundo entrenador, preparador físico, médico,
+   * ojeador), each an optional hired member with a level. A player DECISION →
+   * persisted in save v2. Optional so pre-staff saves and the many places that
+   * build a career meta stay valid; absent means no staff hired (see DEFAULT_STAFF).
+   * Each hired role feeds a bonus into an existing system and its salary into the
+   * season liquidation (see staff.ts).
+   */
+  staff?: StaffState;
   teams: CareerTeam[];
   /**
    * The club's hemeroteca: a chronological archive of the career's HITOS as press

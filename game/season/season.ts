@@ -17,6 +17,7 @@ import {
   applyMatchdayAvailability,
   isAvailable,
   type AvailabilityMap,
+  type MedicalStaff,
 } from '../career/availability';
 import { applyFormMorale } from './formMorale';
 import { applyFatigue } from './fatigue';
@@ -40,6 +41,13 @@ export interface SeasonState {
    * never persisted directly; empty at kick-off.
    */
   availability: AvailabilityMap;
+  /**
+   * The human club's MÉDICO effect on injuries, if any: it shortens the layoff for
+   * the human squad. DERIVED from the career's staff when the season is built (see
+   * career.ts seasonFromCareer), so it is reconstructed by the save/load replay and
+   * never persisted. Absent = no médico (normal recovery for everyone).
+   */
+  medical?: MedicalStaff;
 }
 
 export function toMatchPlayer(p: Player): MatchPlayer {
@@ -191,7 +199,7 @@ export function advanceMatchday(state: SeasonState): {
     const awayXI = fieldableTeam(away, state.availability, matchday);
     played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
   }
-  const availability = applyMatchdayAvailability(state.availability, played, matchday);
+  const availability = applyMatchdayAvailability(state.availability, played, matchday, state.medical);
   // Evolve form/morale and fatigue from the matchday just played (deterministic:
   // replaying the season from its neutral/fresh start always rebuilds the same
   // values, so neither has to be persisted). Fatigue after so it reads the same

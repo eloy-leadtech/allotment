@@ -24,6 +24,7 @@ import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
 import { DEFAULT_RENEWALS } from './renewals';
 import { titlesWonThisSeason } from './palmares';
+import { physioTrainingFactor } from './staff';
 import { returnLoans, DEFAULT_LOANS } from './loans';
 import { DEFAULT_WINTER } from './winterMovements';
 import {
@@ -222,6 +223,8 @@ export function applyTransition(
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
       training: career.training?.focus,
+      // A preparador físico amplifies how much your retained players progress.
+      physioFactor: physioTrainingFactor(career.staff),
     });
     if (result.retired) retirees.push(result.player);
     else developedRetained.push(result.player);
@@ -259,6 +262,7 @@ export function applyTransition(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
     training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
     humanTeamId: career.humanTeamId,
   });
   const teams = returned.teams;
@@ -292,6 +296,8 @@ export function applyTransition(
     // This season's winter movements are already baked into `teams`; the next
     // season opens with an untouched winter window.
     winter: DEFAULT_WINTER,
+    // The technical staff you hired stays with you into the next season.
+    staff: career.staff,
     teams,
     contracts: returned.contracts,
     // The renewal negotiations are settled by this transition (renewed deals were
@@ -435,6 +441,8 @@ export function applyDivisionChange(
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
       training: career.training?.focus,
+      // A preparador físico amplifies how much your squad progresses this move.
+      physioFactor: physioTrainingFactor(career.staff),
     });
     if (result.retired) retirees.push(result.player);
     else aged.push(result.player);
@@ -467,6 +475,7 @@ export function applyDivisionChange(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
     training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
     humanTeamId: career.humanTeamId,
   });
   const teams = returned.teams;
@@ -496,6 +505,8 @@ export function applyDivisionChange(
     loans: DEFAULT_LOANS,
     // Winter movements are baked into `teams`; open next season's window clean.
     winter: DEFAULT_WINTER,
+    // The technical staff you hired moves with you across divisions.
+    staff: career.staff,
     teams,
     contracts: returned.contracts,
     // Renewal negotiations are settled by the transition; start clean.

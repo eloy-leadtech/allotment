@@ -276,6 +276,26 @@ describe('career save v2 (snapshot)', () => {
     expect(restored.board.lastEvaluation).toBeUndefined();
   });
 
+  it('round-trips the technical staff (levels per role)', () => {
+    const base = evolvedCareer(4);
+    const career: CareerState = {
+      ...base,
+      staff: { segundo: { level: 3 }, preparador: { level: 2 }, medico: { level: 5 }, ojeador: { level: 1 } },
+    };
+    const save = serializeCareer(career);
+    expect(save.staff).toEqual(career.staff);
+    const restored = restoreCareer(save, league);
+    expect(restored.staff).toEqual(career.staff);
+  });
+
+  it('defaults the staff to none hired for a pre-staff save (no staff field)', () => {
+    const save = serializeCareer(evolvedCareer(2));
+    const legacy = { ...save };
+    delete (legacy as { staff?: unknown }).staff;
+    const restored = restoreCareer(legacy, league);
+    expect(restored.staff).toEqual({});
+  });
+
   it('round-trips the training focus', () => {
     const career = evolvedCareer(4);
     const withFocus: CareerState = { ...career, training: { focus: 'ataque' } };

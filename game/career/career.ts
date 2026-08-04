@@ -1,8 +1,14 @@
 import { hashSeed, type CompetitionTeam, type MatchPlayer, type Tactics } from '@engine';
 import type { League } from '@data';
 import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/season';
+import type { MedicalStaff } from './availability';
 import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
+import {
+  DEFAULT_STAFF,
+  assistantPerformanceBonus,
+  medicalRecoveryFactor,
+} from './staff';
 import { initialBudget } from './market';
 import { DEFAULT_STADIUM } from './stadium';
 import { DEFAULT_SPONSOR } from './sponsors';
@@ -35,6 +41,26 @@ export function tacticsForSquad(
   return xi.length === 11 ? { formation: tactics.formation, xi } : { formation: tactics.formation };
 }
 
+/** A clamped 0-99 rating (integer), matching the classic scale. */
+const clampRating = (v: number): number => Math.max(0, Math.min(99, Math.round(v)));
+
+/**
+ * Apply the segundo entrenador's flat performance bonus to one match player: it
+ * lifts the media and the on-pitch attributes the engine reads, so your side plays
+ * a touch better. Never mutates the input; clamped to the 0-99 scale.
+ */
+function boostMatchPlayer(p: MatchPlayer, bonus: number): MatchPlayer {
+  return {
+    ...p,
+    media: clampRating(p.media + bonus),
+    remate: clampRating(p.remate + bonus),
+    ofensivo: clampRating(p.ofensivo + bonus),
+    pase: clampRating(p.pase + bonus),
+    entrada: clampRating(p.entrada + bonus),
+    porteria: clampRating(p.porteria + bonus),
+  };
+}
+
 /**
  * Derive the in-progress SeasonState from the career's full-data teams.
  *
@@ -44,20 +70,30 @@ export function tacticsForSquad(
  * what was played. The winter-aware replay (see winterMarket.ts) then re-applies
  * the movements at the window matchday, so the second half uses the new squads.
  * With no winter movements this is the plain post-winter derivation as before.
+ *
+ * The technical staff also shapes the derived season: the segundo entrenador lifts
+ * the human squad's match rating (boostMatchPlayer) and, further down, the médico
+ * shortens the human squad's injuries (SeasonState.medical) — both on top of the
+ * winter derivation.
  */
 export function seasonFromCareer(meta: CareerMeta): SeasonState {
+  // Winter market: build the FRESH season from the PRE-winter rosters (movements undone).
   const movements = meta.winter?.movements ?? [];
   const baseTeams = movements.length ? reverseWinterMovements(meta.teams, movements) : meta.teams;
+  // The segundo entrenador lifts the human squad's match rating (0 = no segundo).
+  const bonus = assistantPerformanceBonus(meta.staff);
   const teams: CompetitionTeam[] = baseTeams.map((ct) => {
-    const players = ct.players.map(toMatchPlayer);
-    if (ct.id === meta.humanTeamId && meta.tactics) {
+    const isHuman = ct.id === meta.humanTeamId;
+    let players = ct.players.map(toMatchPlayer);
+    if (isHuman && bonus > 0) players = players.map((p) => boostMatchPlayer(p, bonus));
+    if (isHuman && meta.tactics) {
       return { id: ct.id, nombre: ct.nombre, players, tactics: tacticsForSquad(meta.tactics, players) };
     }
     return { id: ct.id, nombre: ct.nombre, players };
   });
   // Each career season gets its own deterministic seed derived from the master seed.
   const seed = hashSeed(meta.seed, 'season', meta.seasonNumber);
-  return newSeasonFromTeams(
+  const season = newSeasonFromTeams(
     teams,
     {
       leagueId: meta.leagueId,
@@ -68,6 +104,12 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
     },
     seed,
   );
+  // The médico shortens injuries for the human squad (factor 1 = no médico → skip).
+  const factor = medicalRecoveryFactor(meta.staff);
+  if (factor >= 1) return season;
+  const humanPlayers = meta.teams.find((t) => t.id === meta.humanTeamId)?.players ?? [];
+  const medical: MedicalStaff = { playerIds: new Set(humanPlayers.map((p) => p.id)), factor };
+  return { ...season, medical };
 }
 
 /** Start a new career: the human manages `humanTeamId` from season 1. */
@@ -118,6 +160,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     loans: DEFAULT_LOANS,
     // A fresh career has an untouched winter window (opens at the season midpoint).
     winter: DEFAULT_WINTER,
+    // A fresh career starts with no technical staff; hire them in the despacho.
+    staff: DEFAULT_STAFF,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),

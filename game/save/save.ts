@@ -14,6 +14,7 @@ import { DEFAULT_CREDIT } from '../career/credit';
 import { DEFAULT_LOANS } from '../career/loans';
 import { DEFAULT_WINTER } from '../career/winterMovements';
 import { replaySeasonCareer } from '../career/winterMarket';
+import { DEFAULT_STAFF, STAFF_MIN_LEVEL, STAFF_MAX_LEVEL, type StaffState } from '../career/staff';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 import type { HemerotecaEvent } from '../career/hemeroteca';
 
@@ -177,6 +178,21 @@ const WinterStateSchema = z
   })
   .default({ ...DEFAULT_WINTER });
 
+/** One hired staff member: a level on the classic 1-5 scale. */
+const StaffMemberSchema = z.object({
+  level: z.number().int().min(STAFF_MIN_LEVEL).max(STAFF_MAX_LEVEL),
+});
+
+/** The club's technical staff (each role optional); defaults to none hired. */
+const StaffStateSchema = z
+  .object({
+    segundo: StaffMemberSchema.optional(),
+    preparador: StaffMemberSchema.optional(),
+    medico: StaffMemberSchema.optional(),
+    ojeador: StaffMemberSchema.optional(),
+  })
+  .default({});
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -277,6 +293,8 @@ export const CareerSaveSchema = z.object({
   loans: LoansStateSchema,
   /** Winter transfer window (movements + closed); defaults to untouched for pre-invierno saves. */
   winter: WinterStateSchema,
+  /** Technical staff (segundo/preparador/médico/ojeador); defaults to none for pre-staff saves. */
+  staff: StaffStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -337,6 +355,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     credit: career.credit ?? DEFAULT_CREDIT,
     loans: career.loans ?? DEFAULT_LOANS,
     winter: career.winter ?? DEFAULT_WINTER,
+    staff: career.staff ?? DEFAULT_STAFF,
     teams,
     contracts: career.contracts,
     renewals: career.renewals ?? DEFAULT_RENEWALS,
@@ -399,6 +418,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     loans: save.loans,
     // Pre-invierno saves have no winter window: default to untouched (schema default).
     winter: save.winter,
+    // Pre-staff saves have no staff: default to none hired (schema default {}).
+    staff: save.staff as StaffState,
     teams: save.teams,
     // Pre-hemeroteca saves have no archive: default to empty (schema default []).
     hemeroteca: save.hemeroteca,
