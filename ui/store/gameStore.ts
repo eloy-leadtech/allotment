@@ -35,6 +35,13 @@ import {
   negotiateBuy,
   acceptCounter,
   acceptBid,
+  isWinterWindowOpen,
+  winterBuyPlayer,
+  winterNegotiateBuy,
+  winterAcceptCounter,
+  winterAcceptBid,
+  generateWinterBids,
+  closeWinterWindow,
   promoteProspect,
   discardProspect,
   observePlayer,
@@ -199,6 +206,18 @@ interface GameStore {
   acceptCounterOffer: () => void;
   dismissCounter: () => void;
   acceptMarketBid: (bid: Bid) => void;
+  /** Open the mid-season winter transfer window screen (snapshots AI bids). */
+  openWinterMarket: () => void;
+  /** Close the winter window and return to play the second half. */
+  closeWinterMarket: () => void;
+  /** Buy an AI player at the asking price during the winter window. */
+  winterBuy: (playerId: string) => void;
+  /** Make an offer for an AI player during the winter window. */
+  winterOffer: (playerId: string, amount: number) => void;
+  /** Accept a selling club's winter counter-offer. */
+  winterAcceptCounterOffer: () => void;
+  /** Accept an AI winter bid for one of your players. */
+  winterSell: (bid: Bid) => void;
   loanOut: (playerId: string) => void;
   loanIn: (playerId: string) => void;
   startSeasonFromMarket: () => void;
@@ -269,6 +288,12 @@ export const useGameStore = create<GameStore>((set, get) => {
     playNextMatchday: () => {
       const { career } = get();
       if (!career) return;
+      // At the season midpoint the winter window opens: you cannot play on until
+      // you have visited (and closed) it.
+      if (isWinterWindowOpen(career)) {
+        set({ screen: 'winterMarket', bids: generateWinterBids(career), marketMessage: null, counterOffer: null });
+        return;
+      }
       const step = advanceMatchday(career.season);
       set({
         career: { ...career, season: step.state },
@@ -280,6 +305,10 @@ export const useGameStore = create<GameStore>((set, get) => {
     watchNextMatchday: () => {
       const { career } = get();
       if (!career) return;
+      if (isWinterWindowOpen(career)) {
+        set({ screen: 'winterMarket', bids: generateWinterBids(career), marketMessage: null, counterOffer: null });
+        return;
+      }
       const step = advanceMatchday(career.season);
       // Show the human's own match live (teletype); the rest is simulated too.
       const mine =
@@ -573,6 +602,83 @@ export const useGameStore = create<GameStore>((set, get) => {
       const { career, bids } = get();
       if (!career) return;
       const result = acceptBid(career, bid);
+      if (!result.ok) return;
+      set({
+        career: result.career,
+        season: result.career.season,
+        bids: bids.filter((b) => b.playerId !== bid.playerId),
+        marketMessage: null,
+      });
+    },
+    openWinterMarket: () => {
+      const { career } = get();
+      if (!career) return;
+      set({ screen: 'winterMarket', bids: generateWinterBids(career), marketMessage: null, counterOffer: null });
+    },
+    closeWinterMarket: () => {
+      const { career } = get();
+      if (!career) return;
+      const next = closeWinterWindow(career);
+      set({ career: next, season: next.season, screen: 'season', marketMessage: null, counterOffer: null });
+    },
+    winterBuy: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = winterBuyPlayer(career, playerId);
+      if (!result.ok) {
+        set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega el presupuesto.' : 'No disponible.' });
+        return;
+      }
+      set({ career: result.career, season: result.career.season, marketMessage: null });
+    },
+    winterOffer: (playerId, amount) => {
+      const { career } = get();
+      if (!career) return;
+      const outcome = winterNegotiateBuy(career, playerId, amount);
+      switch (outcome.status) {
+        case 'accepted':
+          set({
+            career: outcome.career,
+            season: outcome.career.season,
+            marketMessage: `Fichaje de invierno cerrado por ${formatEuros(outcome.price)}.`,
+            counterOffer: null,
+          });
+          return;
+        case 'countered':
+          set({
+            marketMessage: `El club rechaza tu oferta pero acepta ${formatEuros(outcome.counter)}.`,
+            counterOffer: { playerId, counter: outcome.counter },
+          });
+          return;
+        case 'no-budget':
+          set({ marketMessage: 'No te llega el presupuesto para esa cifra.', counterOffer: null });
+          return;
+        case 'rejected':
+          set({ marketMessage: 'Oferta demasiado baja: el club la rechaza.', counterOffer: null });
+          return;
+        default:
+          set({ marketMessage: 'Jugador no disponible.', counterOffer: null });
+      }
+    },
+    winterAcceptCounterOffer: () => {
+      const { career, counterOffer } = get();
+      if (!career || !counterOffer) return;
+      const result = winterAcceptCounter(career, counterOffer.playerId, counterOffer.counter);
+      if (!result.ok) {
+        set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega el presupuesto.' : 'No disponible.' });
+        return;
+      }
+      set({
+        career: result.career,
+        season: result.career.season,
+        marketMessage: `Fichaje de invierno cerrado por ${formatEuros(counterOffer.counter)}.`,
+        counterOffer: null,
+      });
+    },
+    winterSell: (bid) => {
+      const { career, bids } = get();
+      if (!career) return;
+      const result = winterAcceptBid(career, bid);
       if (!result.ok) return;
       set({
         career: result.career,

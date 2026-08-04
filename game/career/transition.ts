@@ -25,6 +25,7 @@ import { rolloverYouth } from './cantera';
 import { DEFAULT_RENEWALS } from './renewals';
 import { titlesWonThisSeason } from './palmares';
 import { returnLoans, DEFAULT_LOANS } from './loans';
+import { DEFAULT_WINTER } from './winterMovements';
 import {
   computeSeasonObjective,
   evaluateObjective,
@@ -288,6 +289,9 @@ export function applyTransition(
     // Loans are settled by this transition (returnees folded in, loanees dropped):
     // the next season starts with an empty loan book.
     loans: DEFAULT_LOANS,
+    // This season's winter movements are already baked into `teams`; the next
+    // season opens with an untouched winter window.
+    winter: DEFAULT_WINTER,
     teams,
     contracts: returned.contracts,
     // The renewal negotiations are settled by this transition (renewed deals were
@@ -487,6 +491,8 @@ export function applyDivisionChange(
     credit: career.credit,
     // The loan book is settled by the transition; start clean.
     loans: DEFAULT_LOANS,
+    // Winter movements are baked into `teams`; open next season's window clean.
+    winter: DEFAULT_WINTER,
     teams,
     contracts: returned.contracts,
     // Renewal negotiations are settled by the transition; start clean.

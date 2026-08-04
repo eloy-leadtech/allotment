@@ -12,7 +12,8 @@ import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import { DEFAULT_SPONSOR } from '../career/sponsors';
 import { DEFAULT_CREDIT } from '../career/credit';
 import { DEFAULT_LOANS } from '../career/loans';
-import { replaySeasonWithPress } from '../career/pressConference';
+import { DEFAULT_WINTER } from '../career/winterMovements';
+import { replaySeasonCareer } from '../career/winterMarket';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 import type { HemerotecaEvent } from '../career/hemeroteca';
 
@@ -161,6 +162,21 @@ const RenewalsStateSchema = z
   })
   .default({ seasonNumber: 0, resolved: {} });
 
+/** One winter-window transfer: a player moving between two clubs at the midpoint. */
+const WinterMovementSchema = z.object({
+  playerId: z.string().min(1),
+  fromClubId: z.string().min(1),
+  toClubId: z.string().min(1),
+});
+
+/** The winter transfer window's state; defaults to untouched for pre-invierno saves. */
+const WinterStateSchema = z
+  .object({
+    movements: z.array(WinterMovementSchema).default([]),
+    closed: z.boolean().default(false),
+  })
+  .default({ ...DEFAULT_WINTER });
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -254,6 +270,8 @@ export const CareerSaveSchema = z.object({
     .default({ ...DEFAULT_CREDIT }),
   /** Loan book (out/in); defaults to empty for pre-cesiones saves. */
   loans: LoansStateSchema,
+  /** Winter transfer window (movements + closed); defaults to untouched for pre-invierno saves. */
+  winter: WinterStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -311,6 +329,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     sponsor: career.sponsor ?? DEFAULT_SPONSOR,
     credit: career.credit ?? DEFAULT_CREDIT,
     loans: career.loans ?? DEFAULT_LOANS,
+    winter: career.winter ?? DEFAULT_WINTER,
     teams,
     contracts: career.contracts,
     renewals: career.renewals ?? DEFAULT_RENEWALS,
@@ -370,6 +389,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     credit: save.credit ?? DEFAULT_CREDIT,
     // Pre-cesiones saves have no loan book: default to empty (schema default).
     loans: save.loans,
+    // Pre-invierno saves have no winter window: default to untouched (schema default).
+    winter: save.winter,
     teams: save.teams,
     // Pre-hemeroteca saves have no archive: default to empty (schema default []).
     hemeroteca: save.hemeroteca,
@@ -380,13 +401,17 @@ function restoreCareerV2(save: CareerSave): CareerState {
     // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
     scouting: save.scouting,
   };
-  // Interleave the persisted press morale bumps back into the replay so a loaded
-  // career reconstructs the live one exactly (with no answers this is a plain replay).
-  const season = replaySeasonWithPress(
+  // Interleave the persisted press morale bumps AND the winter roster swap back into
+  // the replay so a loaded career reconstructs the live one exactly. `seasonFromCareer`
+  // rebuilds the pre-winter fresh season; the replay re-applies the movements at the
+  // window matchday. With no answers or movements this is a plain matchday replay.
+  const season = replaySeasonCareer(
     seasonFromCareer(meta),
     save.currentMatchday,
     save.humanTeamId,
+    meta.tactics,
     press.answers,
+    meta.winter,
   );
   return { ...meta, season, history: save.history, palmares: save.palmares };
 }

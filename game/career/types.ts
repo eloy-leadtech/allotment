@@ -14,6 +14,7 @@ import type { SponsorState } from './sponsors';
 import type { CreditState } from './credit';
 import type { LoansState } from './loans';
 import type { HemerotecaEvent } from './hemeroteca';
+import type { WinterMarketState } from './winterMovements';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -177,6 +178,16 @@ export interface CareerState {
    * meta stay valid; absent means an empty loan book (see DEFAULT_LOANS).
    */
   loans?: LoansState;
+  /**
+   * The mid-season WINTER TRANSFER WINDOW: the movements made at the season's
+   * midpoint (which drive the season derivation — see winterMovements.ts) and
+   * whether it has been closed this season. A player DECISION → persisted in save
+   * v2. Optional so pre-invierno saves and every place that builds a career meta
+   * stay valid; absent means an untouched window (see DEFAULT_WINTER). Because the
+   * movements are how the derivation reconstructs the first/second halves, `teams`
+   * stays the CURRENT (post-winter) squad and is never itself rewound.
+   */
+  winter?: WinterMarketState;
   teams: CareerTeam[];
   /**
    * The club's hemeroteca: a chronological archive of the career's HITOS as press
