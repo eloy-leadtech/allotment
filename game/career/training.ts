@@ -63,16 +63,22 @@ const YOUTH_TRAIN_FACTOR = 1.5;
 
 /**
  * The trend delta training applies to one attribute this season. Deterministic
- * (no RNG): a pure function of focus, attribute and age. Neglect (negative) is
- * never amplified for youth — only the attributes being trained up get the boost.
+ * (no RNG): a pure function of focus, attribute, age and the preparador físico's
+ * multiplier. Neglect (negative) is never amplified — only the attributes being
+ * trained up get the youth boost and the physio boost.
+ *
+ * `physioFactor` (>= 1, default 1) is the preparador físico's amplifier on positive
+ * gains: a better preparador makes your squad progress more in training (see
+ * staff.ts `physioTrainingFactor`). It never worsens neglect.
  */
 export function trainingAttributeDelta(
   focus: TrainingFocus,
   key: keyof Attributes,
   age: number | null,
+  physioFactor = 1,
 ): number {
   const base = FOCUS_DELTAS[focus][key] ?? 0;
   if (base <= 0) return base;
   const youthFactor = age !== null && age <= YOUTH_TRAINABLE_AGE ? YOUTH_TRAIN_FACTOR : 1;
-  return base * youthFactor;
+  return base * youthFactor * physioFactor;
 }

@@ -4,6 +4,7 @@ import {
   teamName,
   latestHeadlines,
   selectPressQuestion,
+  isWinterWindowOpen,
   formatEuros,
 } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
@@ -21,7 +22,9 @@ export function SeasonScreen() {
   const division = useGameStore((s) => s.career?.division ?? 'primera');
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
+  const lastCallUp = useGameStore((s) => s.lastCallUp);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
+  const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const openMatch = useGameStore((s) => s.openMatch);
   const goTo = useGameStore((s) => s.goTo);
 
@@ -41,6 +44,8 @@ export function SeasonScreen() {
   const board = career?.board;
   const headlines = career ? latestHeadlines(career, 6) : [];
   const pressPending = career ? selectPressQuestion(career) : null;
+  // At the season midpoint the winter transfer window gates play until it is closed.
+  const winterOpen = career ? isWinterWindowOpen(career) : false;
 
   return (
     <main className="screen">
@@ -73,6 +78,16 @@ export function SeasonScreen() {
         <RetroButton variant="primary" onClick={() => goTo('seasonEnd')}>
           Fin de temporada →
         </RetroButton>
+      ) : winterOpen ? (
+        <RetroPanel title="❄️ Mercado de invierno">
+          <p className="press-notice">
+            Parón de mitad de temporada: la ventana de fichajes de invierno está abierta. Refuerza
+            la plantilla antes de seguir con la segunda vuelta.
+          </p>
+          <RetroButton variant="primary" onClick={openWinterMarket}>
+            Ir al mercado de invierno →
+          </RetroButton>
+        </RetroPanel>
       ) : (
         <div className="season-actions">
           <RetroButton variant="primary" onClick={() => goTo('prematch')}>
@@ -127,6 +142,26 @@ export function SeasonScreen() {
         </RetroPanel>
       ) : null}
 
+      {lastCallUp && lastCallUp.players.length > 0 ? (
+        <RetroPanel title="Parón de selecciones">
+          <p className="callup-notice">
+            ✈️ {lastCallUp.players.length}{' '}
+            {lastCallUp.players.length === 1 ? 'jugador convocado' : 'jugadores convocados'} por su
+            selección. Vuelven con fatiga extra:
+          </p>
+          <ul className="callup-list">
+            {lastCallUp.players.map((p) => (
+              <li key={p.id} className="callup-line">
+                <span className="callup-name">{p.nombre}</span>{' '}
+                <span className="hint">
+                  fatiga {p.fatigueBefore} → {p.fatigueAfter}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </RetroPanel>
+      ) : null}
+
       {lastResults.length > 0 ? (
         <RetroPanel title="Resultados de la última jornada">
           <ul className="results">
@@ -157,6 +192,10 @@ export function SeasonScreen() {
               <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
               <span className="despacho-tile__label">Entrenamiento</span>
             </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('staff')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🧑‍🏫</span>
+              <span className="despacho-tile__label">Cuerpo técnico</span>
+            </button>
             <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
               <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
               <span className="despacho-tile__label">Cantera</span>
@@ -164,6 +203,10 @@ export function SeasonScreen() {
             <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('ojeo')}>
               <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
               <span className="despacho-tile__label">Ojeo</span>
+            </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('prospects')}>
+              <span className="despacho-tile__icon" aria-hidden="true">⭐</span>
+              <span className="despacho-tile__label">Promesas</span>
             </button>
           </nav>
         </section>
@@ -188,6 +231,10 @@ export function SeasonScreen() {
             <button type="button" className="despacho-tile" onClick={() => goTo('palmares')}>
               <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
               <span className="despacho-tile__label">Palmarés</span>
+            </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('hemeroteca')}>
+              <span className="despacho-tile__icon" aria-hidden="true">📰</span>
+              <span className="despacho-tile__label">Hemeroteca</span>
             </button>
           </nav>
         </section>

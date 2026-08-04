@@ -937,6 +937,41 @@ h1 {
   font-weight: 600;
 }
 
+/* Renovaciones de contrato (fin de temporada): un jugador que acaba contrato,
+   su demanda y los botones aceptar / contraoferta / dejar libre. */
+.renewal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+
+.renewal-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.renewal-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.renewal-resolved {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 /* Ficha de plantilla: placa de acero con escudo enmarcado + nombre en Futura
    (findings/09 §6 "Ficha de jugador"). */
 .squad-card {
@@ -1305,6 +1340,78 @@ h1 {
   min-width: 2.2em;
   font-weight: 700;
   color: var(--c-accent);
+}
+
+/* Hemeroteca — archivo de prensa de la carrera (titulares agrupados por temporada) */
+.hemeroteca {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hemeroteca-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--sunken);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--c-border);
+  box-shadow: var(--inset-shadow);
+  line-height: 1.3;
+}
+
+.hemeroteca-icon {
+  flex: none;
+  width: 1.6em;
+  text-align: center;
+  font-size: 1.15rem;
+}
+
+.hemeroteca-text {
+  color: var(--c-ink);
+}
+
+/* Titulares destacados por tipo: gestas en oro, disgustos en rojo, mercado en azul. */
+.hemeroteca-line--titulo,
+.hemeroteca-line--ascenso {
+  border-left-color: var(--c-gold);
+}
+
+.hemeroteca-line--descenso,
+.hemeroteca-line--cese {
+  border-left-color: var(--c-danger);
+}
+
+.hemeroteca-line--fichaje,
+.hemeroteca-line--traspaso {
+  border-left-color: var(--c-accent);
+}
+
+/* Parón de selecciones — aviso de jugadores convocados y su fatiga extra */
+.callup-notice {
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.callup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.callup-line {
+  line-height: 1.3;
+}
+
+.callup-name {
+  font-weight: 700;
 }
 
 /* Estadísticas — panel de datos de temporada (goleadores, Zamora, récords) */
@@ -2766,4 +2873,241 @@ h1 {
   .match-ticker__feed {
     scroll-behavior: auto;
   }
+}
+
+/* ===== Comparativa de jugadores (pantalla COMPARA) ======================= */
+
+/* Selectores de jugador: uno por columna en ancho, apilados en móvil. */
+.compare-pickers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .compare-pickers {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+}
+
+.compare-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-picker__label {
+  font-family: var(--font-data);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+/* Desplegable con look de casquillo empotrado del acero azul. */
+.compare-select {
+  width: 100%;
+  padding: 8px 10px;
+  font-family: var(--font-data);
+  font-size: 14px;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, var(--c-bg-sunken), #12203f);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.compare-select:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 1px;
+}
+
+/* Cabeceras enfrentadas: dos tarjetas con crest, nombre, media y un "VS". */
+.compare-heads {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.compare-head-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--c-bg-raised), var(--c-bg-panel));
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow, inset 0 1px 0 var(--c-edge-light));
+}
+
+.compare-head-card--win {
+  border-color: var(--c-accent-2-hi);
+  box-shadow: 0 0 0 1px var(--c-accent-2-hi), 0 0 12px rgba(67, 194, 104, 0.35);
+}
+
+.compare-head-card__crest {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+}
+
+.compare-head-card__name {
+  font-family: var(--font-data);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-ink);
+  line-height: 1.15;
+}
+
+.compare-head-card__sub {
+  font-family: var(--font-data);
+  font-size: 11px;
+  color: var(--c-ink-soft);
+}
+
+.compare-head-card__media {
+  margin-top: 2px;
+  font-family: var(--font-data);
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+}
+
+.compare-head-card--win .compare-head-card__media {
+  color: var(--c-accent-2-hi);
+}
+
+.compare-vs {
+  align-self: center;
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--c-ink-soft);
+}
+
+.compare-verdict {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 14px;
+  color: var(--c-accent-2-hi);
+}
+
+.compare-verdict--tie {
+  color: var(--c-ink-dim);
+}
+
+/* Cuerpo de filas: barras espejadas que se encuentran en el rótulo central. */
+.compare-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr 108px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-num {
+  min-width: 34px;
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink-dim);
+}
+
+.compare-side--a .compare-num {
+  text-align: left;
+}
+
+.compare-side--b .compare-num {
+  text-align: right;
+}
+
+/* La barra crece desde el centro hacia fuera: A ancla a la derecha, B a la izquierda. */
+.compare-bar {
+  position: relative;
+  flex: 1;
+  height: 10px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.compare-bar__fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--c-accent);
+  opacity: 0.55;
+  transition: width 0.2s ease;
+}
+
+.compare-side--a .compare-bar__fill {
+  right: 0;
+}
+
+.compare-side--b .compare-bar__fill {
+  left: 0;
+}
+
+/* El lado ganador se ilumina en verde césped, número en negrita clara. */
+.compare-side--win .compare-num {
+  color: var(--c-accent-2-hi);
+}
+
+.compare-side--win .compare-bar__fill {
+  background: var(--c-accent-2-hi);
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(67, 194, 104, 0.6);
+}
+
+.compare-label {
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: var(--c-ink-dim);
+}
+
+/* Filas descriptivas (edad, posición, altura, peso): sin ganador. */
+.compare-inforow {
+  display: grid;
+  grid-template-columns: 1fr 108px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-info-val {
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.compare-inforow > .compare-info-val:first-child {
+  text-align: left;
+}
+
+.compare-inforow > .compare-info-val:last-child {
+  text-align: right;
 }
