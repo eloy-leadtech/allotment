@@ -8,6 +8,8 @@ export * from './scouting';
 export * from './ojeo';
 export * from './cantera';
 export * from './market';
+export * from './winterMovements';
+export * from './winterMarket';
 export * from './contracts';
 export * from './promotion';
 export * from './board';

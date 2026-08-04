@@ -308,7 +308,7 @@ export function acceptBid(career: CareerState, bid: Bid): TransferResult {
 }
 
 /** How likely a player of a given rating is to attract a bid this window. */
-function bidProbability(media: number): number {
+export function bidProbability(media: number): number {
   if (media >= 82) return 0.6;
   if (media >= 75) return 0.35;
   if (media >= 68) return 0.15;

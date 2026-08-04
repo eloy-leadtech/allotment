@@ -13,6 +13,7 @@ import { initialContracts } from './contracts';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
 import { DEFAULT_CONFIANZA } from './confianza';
+import { DEFAULT_WINTER, reverseWinterMovements } from './winterMovements';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history/palmarés). */
 type CareerMeta = Omit<CareerState, 'season' | 'history' | 'palmares'>;
@@ -33,9 +34,20 @@ export function tacticsForSquad(
   return xi.length === 11 ? { formation: tactics.formation, xi } : { formation: tactics.formation };
 }
 
-/** Derive the in-progress SeasonState from the career's full-data teams. */
+/**
+ * Derive the in-progress SeasonState from the career's full-data teams.
+ *
+ * `meta.teams` is the CURRENT (post-winter) squad. To keep the winter market from
+ * rewriting the first half, we build the FRESH season from the PRE-winter rosters
+ * (the movements undone), so replaying jornadas 1..(window-1) reproduces exactly
+ * what was played. The winter-aware replay (see winterMarket.ts) then re-applies
+ * the movements at the window matchday, so the second half uses the new squads.
+ * With no winter movements this is the plain post-winter derivation as before.
+ */
 export function seasonFromCareer(meta: CareerMeta): SeasonState {
-  const teams: CompetitionTeam[] = meta.teams.map((ct) => {
+  const movements = meta.winter?.movements ?? [];
+  const baseTeams = movements.length ? reverseWinterMovements(meta.teams, movements) : meta.teams;
+  const teams: CompetitionTeam[] = baseTeams.map((ct) => {
     const players = ct.players.map(toMatchPlayer);
     if (ct.id === meta.humanTeamId && meta.tactics) {
       return { id: ct.id, nombre: ct.nombre, players, tactics: tacticsForSquad(meta.tactics, players) };
@@ -103,6 +115,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     credit: DEFAULT_CREDIT,
     // A fresh career has nobody out or in on loan.
     loans: DEFAULT_LOANS,
+    // A fresh career has an untouched winter window (opens at the season midpoint).
+    winter: DEFAULT_WINTER,
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),

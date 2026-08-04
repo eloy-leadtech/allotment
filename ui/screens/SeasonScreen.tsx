@@ -4,6 +4,7 @@ import {
   teamName,
   latestHeadlines,
   selectPressQuestion,
+  isWinterWindowOpen,
   formatEuros,
 } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
@@ -22,6 +23,7 @@ export function SeasonScreen() {
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
+  const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const openMatch = useGameStore((s) => s.openMatch);
   const goTo = useGameStore((s) => s.goTo);
 
@@ -41,6 +43,8 @@ export function SeasonScreen() {
   const board = career?.board;
   const headlines = career ? latestHeadlines(career, 6) : [];
   const pressPending = career ? selectPressQuestion(career) : null;
+  // At the season midpoint the winter transfer window gates play until it is closed.
+  const winterOpen = career ? isWinterWindowOpen(career) : false;
 
   return (
     <main className="screen">
@@ -73,6 +77,16 @@ export function SeasonScreen() {
         <RetroButton variant="primary" onClick={() => goTo('seasonEnd')}>
           Fin de temporada →
         </RetroButton>
+      ) : winterOpen ? (
+        <RetroPanel title="❄️ Mercado de invierno">
+          <p className="press-notice">
+            Parón de mitad de temporada: la ventana de fichajes de invierno está abierta. Refuerza
+            la plantilla antes de seguir con la segunda vuelta.
+          </p>
+          <RetroButton variant="primary" onClick={openWinterMarket}>
+            Ir al mercado de invierno →
+          </RetroButton>
+        </RetroPanel>
       ) : (
         <div className="season-actions">
           <RetroButton variant="primary" onClick={() => goTo('prematch')}>

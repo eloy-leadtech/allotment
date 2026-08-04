@@ -7,6 +7,7 @@ export type Screen =
   | 'prematch'
   | 'seasonEnd'
   | 'market'
+  | 'winterMarket'
   | 'squad'
   | 'playerCard'
   | 'youth'
