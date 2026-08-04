@@ -21,6 +21,7 @@ export function SeasonScreen() {
   const division = useGameStore((s) => s.career?.division ?? 'primera');
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
+  const lastCallUp = useGameStore((s) => s.lastCallUp);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const openMatch = useGameStore((s) => s.openMatch);
   const goTo = useGameStore((s) => s.goTo);
@@ -121,6 +122,26 @@ export function SeasonScreen() {
             {headlines.map((h, i) => (
               <li key={`${h.matchday}-${i}`} className="press-line">
                 <span className="press-matchday">J{h.matchday}</span> {h.text}
+              </li>
+            ))}
+          </ul>
+        </RetroPanel>
+      ) : null}
+
+      {lastCallUp && lastCallUp.players.length > 0 ? (
+        <RetroPanel title="Parón de selecciones">
+          <p className="callup-notice">
+            ✈️ {lastCallUp.players.length}{' '}
+            {lastCallUp.players.length === 1 ? 'jugador convocado' : 'jugadores convocados'} por su
+            selección. Vuelven con fatiga extra:
+          </p>
+          <ul className="callup-list">
+            {lastCallUp.players.map((p) => (
+              <li key={p.id} className="callup-line">
+                <span className="callup-name">{p.nombre}</span>{' '}
+                <span className="hint">
+                  fatiga {p.fatigueBefore} → {p.fatigueAfter}
+                </span>
               </li>
             ))}
           </ul>

@@ -62,6 +62,7 @@ import {
   type SeasonState,
   type TournamentResult,
   type Bid,
+  type CallUpNotice,
 } from '@game';
 import type { MatchResult } from '@engine';
 import type { Screen } from '@app/navigation';
@@ -134,6 +135,12 @@ interface GameStore {
   season: SeasonState | null;
   /** Results of the most recently played matchday (for the season screen list). */
   lastResults: MatchResult[];
+  /**
+   * Aviso: the national-team call-ups from the last matchday, if it coincided with
+   * a parón and the human had players called up. Transient UI state (like
+   * `lastResults`): shown once, not persisted, cleared when leaving the season.
+   */
+  lastCallUp: CallUpNotice | null;
   viewingMatch: MatchResult | null;
   /** Current-squad player ids the human chose to RETAIN at season end. */
   retainIds: string[];
@@ -222,6 +229,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     career: null,
     season: null,
     lastResults: [],
+    lastCallUp: null,
     viewingMatch: null,
     retainIds: [],
     tournament: null,
@@ -250,6 +258,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         career,
         season: career.season,
         lastResults: [],
+        lastCallUp: null,
         viewingMatch: null,
         retainIds: [],
         bids: [],
@@ -261,7 +270,12 @@ export const useGameStore = create<GameStore>((set, get) => {
       const { career } = get();
       if (!career) return;
       const step = advanceMatchday(career.season);
-      set({ career: { ...career, season: step.state }, season: step.state, lastResults: step.played });
+      set({
+        career: { ...career, season: step.state },
+        season: step.state,
+        lastResults: step.played,
+        lastCallUp: step.callUp ?? null,
+      });
     },
     watchNextMatchday: () => {
       const { career } = get();
@@ -276,6 +290,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         career: { ...career, season: step.state },
         season: step.state,
         lastResults: step.played,
+        lastCallUp: step.callUp ?? null,
         viewingMatch: mine,
         screen: mine ? 'match' : 'season',
       });
@@ -494,6 +509,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         lastWageBill: wages,
         lastInterest: liq.interest,
         lastResults: [],
+        lastCallUp: null,
         viewingMatch: null,
         screen: 'market',
       });
@@ -635,6 +651,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         seasonId: entry.id,
         league,
         lastResults: [],
+        lastCallUp: null,
         viewingMatch: null,
         retainIds: [],
         bids: [],

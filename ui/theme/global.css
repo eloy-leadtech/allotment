@@ -1391,6 +1391,29 @@ h1 {
   border-left-color: var(--c-accent);
 }
 
+/* Parón de selecciones — aviso de jugadores convocados y su fatiga extra */
+.callup-notice {
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.callup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.callup-line {
+  line-height: 1.3;
+}
+
+.callup-name {
+  font-weight: 700;
+}
+
 /* Estadísticas — panel de datos de temporada (goleadores, Zamora, récords) */
 .stat-grid {
   display: flex;

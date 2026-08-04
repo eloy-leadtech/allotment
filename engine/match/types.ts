@@ -55,6 +55,13 @@ export interface MatchPlayer {
    * on the pitch). Feeds a small penalty multiplier into the effective ratings.
    */
   fatigue?: number;
+  /**
+   * ISO country/nationality string, or absent/empty when unknown (it is null for
+   * ~90% of the current dataset). Never affects the match itself; it is only a
+   * SIGNAL for the national-team call-up mechanic (see game/season/convocatorias),
+   * which must not depend on it in exclusive because it is so sparse.
+   */
+  nacionalidad?: string;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */

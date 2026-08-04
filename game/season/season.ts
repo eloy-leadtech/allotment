@@ -20,6 +20,7 @@ import {
 } from '../career/availability';
 import { applyFormMorale } from './formMorale';
 import { applyFatigue } from './fatigue';
+import { applyInternationalBreak, type CallUpNotice } from './convocatorias';
 
 export interface SeasonState {
   leagueId: string;
@@ -58,6 +59,9 @@ export function toMatchPlayer(p: Player): MatchPlayer {
     form: NEUTRAL_FORM,
     morale: NEUTRAL_MORALE,
     fatigue: FRESH_FATIGUE,
+    // Carried through purely as a call-up signal (see convocatorias); null becomes
+    // absent so a player with unknown nationality behaves as "no signal".
+    nacionalidad: p.nacionalidad ?? undefined,
   };
 }
 
@@ -164,7 +168,13 @@ function fieldableTeam(
 }
 
 /** Play the current matchday; returns the updated state and the results just played. */
-export function advanceMatchday(state: SeasonState): { state: SeasonState; played: MatchResult[] } {
+export function advanceMatchday(state: SeasonState): {
+  state: SeasonState;
+  played: MatchResult[];
+  /** Set only when the matchday just played coincided with a national-team parón
+   * and the human club had at least one player called up (see convocatorias). */
+  callUp?: CallUpNotice;
+} {
   if (isSeasonOver(state)) {
     return { state, played: [] };
   }
@@ -186,7 +196,16 @@ export function advanceMatchday(state: SeasonState): { state: SeasonState; playe
   // replaying the season from its neutral/fresh start always rebuilds the same
   // values, so neither has to be persisted). Fatigue after so it reads the same
   // fielded XI; the two updates touch independent player fields.
-  const teams = applyFatigue(applyFormMorale(state.teams, played), played);
+  const fatigued = applyFatigue(applyFormMorale(state.teams, played), played);
+  // On a national-team parón matchday the internationals return with extra fatigue
+  // stacked on top; a no-op on every other matchday. Deterministic and unpersisted
+  // just like fatigue, so the replay reconstructs it identically.
+  const { teams, notice } = applyInternationalBreak(fatigued, {
+    matchday,
+    seed: state.seed,
+    totalMatchdays: state.totalMatchdays,
+    humanTeamId: state.humanTeamId,
+  });
   return {
     state: {
       ...state,
@@ -196,6 +215,7 @@ export function advanceMatchday(state: SeasonState): { state: SeasonState; playe
       availability,
     },
     played,
+    ...(notice ? { callUp: notice } : {}),
   };
 }
 
