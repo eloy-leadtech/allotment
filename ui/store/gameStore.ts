@@ -45,6 +45,9 @@ import {
   promoteProspect,
   discardProspect,
   observePlayer,
+  followProspect,
+  unfollowProspect,
+  signProspect,
   renewContract,
   acceptRenewal,
   offerRenewal,
@@ -189,6 +192,9 @@ interface GameStore {
   promoteYouth: (playerId: string) => void;
   discardYouth: (playerId: string) => void;
   scoutPlayer: (playerId: string) => void;
+  followProspect: (playerId: string) => void;
+  unfollowProspect: (playerId: string) => void;
+  signProspect: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
   /** Accept an expiring player's full renewal demand (season-end negotiation). */
   acceptRenewal: (playerId: string) => void;
@@ -384,6 +390,51 @@ export const useGameStore = create<GameStore>((set, get) => {
         return;
       }
       // Scouting changes no rosters, only your reports; keep the season as-is.
+      set({ career: result.career, season: result.career.season, marketMessage: null });
+    },
+    followProspect: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = followProspect(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'ya-seguido'
+              ? 'Ya sigues a esta promesa.'
+              : result.reason === 'propio'
+                ? 'Es de tu plantilla: ya la conoces.'
+                : result.reason === 'no-promesa'
+                  ? 'Ese jugador no es una joven promesa.'
+                  : 'Jugador no disponible.',
+        });
+        return;
+      }
+      // Following changes no rosters, only your follow-list; keep the season as-is.
+      set({ career: result.career, marketMessage: null });
+    },
+    unfollowProspect: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = unfollowProspect(career, playerId);
+      if (!result.ok) return;
+      set({ career: result.career, marketMessage: null });
+    },
+    signProspect: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const result = signProspect(career, playerId);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'mercado-cerrado'
+              ? 'Solo puedes fichar en el mercado (antes de empezar la temporada).'
+              : result.reason === 'presupuesto'
+                ? 'No te llega el presupuesto para este fichaje.'
+                : 'Fichaje no disponible.',
+        });
+        return;
+      }
+      // The signing joined your squad and left the follow-list; refresh the season.
       set({ career: result.career, season: result.career.season, marketMessage: null });
     },
     renewPlayer: (playerId) => {

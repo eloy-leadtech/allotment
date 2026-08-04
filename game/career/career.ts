@@ -132,6 +132,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     }),
     // A fresh career has ojeado no rival yet; reports build as you assign scouts.
     scouting: {},
+    // A fresh career follows no rival promesa yet; the list builds as you seguir them.
+    prospectTracking: {},
   };
   return { ...meta, season: seasonFromCareer(meta), history: [], palmares: [] };
 }

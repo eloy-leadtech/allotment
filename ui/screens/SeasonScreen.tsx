@@ -200,6 +200,10 @@ export function SeasonScreen() {
               <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
               <span className="despacho-tile__label">Ojeo</span>
             </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('prospects')}>
+              <span className="despacho-tile__icon" aria-hidden="true">⭐</span>
+              <span className="despacho-tile__label">Promesas</span>
+            </button>
           </nav>
         </section>
 

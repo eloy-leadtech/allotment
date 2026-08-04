@@ -12,6 +12,7 @@ import { ComparativaScreen } from '@ui/screens/ComparativaScreen';
 import { PlayerCardScreen } from '@ui/screens/PlayerCardScreen';
 import { YouthScreen } from '@ui/screens/YouthScreen';
 import { OjeoScreen } from '@ui/screens/OjeoScreen';
+import { ScoutingProspectsScreen } from '@ui/screens/ScoutingProspectsScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { TrainingScreen } from '@ui/screens/TrainingScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
@@ -56,6 +57,8 @@ export function App() {
       return <YouthScreen />;
     case 'ojeo':
       return <OjeoScreen />;
+    case 'prospects':
+      return <ScoutingProspectsScreen />;
     case 'tactics':
       return <TacticsScreen />;
     case 'training':

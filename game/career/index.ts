@@ -6,6 +6,7 @@ export * from './availability';
 export * from './transition';
 export * from './scouting';
 export * from './ojeo';
+export * from './prospects';
 export * from './cantera';
 export * from './market';
 export * from './compare';
