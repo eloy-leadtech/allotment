@@ -11,6 +11,7 @@ export type Screen =
   | 'playerCard'
   | 'youth'
   | 'ojeo'
+  | 'prospects'
   | 'tactics'
   | 'training'
   | 'stadium'

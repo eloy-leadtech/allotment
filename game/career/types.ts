@@ -53,6 +53,20 @@ export interface ScoutingRecord {
   lastSeason: number;
 }
 
+/**
+ * A "seguimiento" of a rival PROMESA: the human DECISION to follow a young talent
+ * from another club so their fallible potential band narrows the longer you watch.
+ * It is your decision (not derivable from replay), so it is persisted in the save.
+ * Keyed by player id in `CareerState.prospectTracking`.
+ */
+export interface ProspectTracking {
+  /**
+   * 1-indexed career season you STARTED following this prospect. How many seasons
+   * you have observed them (which tightens the band) is `seasonNumber - since`.
+   */
+  since: number;
+}
+
 /** One line of the career league-champions roll. Grows with retirements/transfers later. */
 export interface SeasonSummary {
   seasonNumber: number;
@@ -190,6 +204,14 @@ export interface CareerState {
    * more you observe. A human DECISION → persisted in save v2 (empty by default).
    */
   scouting: Record<string, ScoutingRecord>;
+  /**
+   * Your "seguimiento" of rival PROMESAS, keyed by player id: which young talents
+   * from other clubs you follow, and since when, so their fallible potential band
+   * narrows the longer you track them (see prospects.ts). A human DECISION →
+   * persisted in save v2 (empty by default). Distinct from `scouting`, which is the
+   * per-season ojeo of ANY rival; this is the follow-list of curated youngsters.
+   */
+  prospectTracking: Record<string, ProspectTracking>;
   season: SeasonState;
   history: SeasonSummary[];
   /**

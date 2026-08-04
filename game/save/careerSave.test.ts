@@ -53,6 +53,7 @@ function evolvedCareer(playedMatchdays: number): CareerState {
     contracts: base.contracts,
     youthProspects: base.youthProspects,
     scouting: base.scouting,
+    prospectTracking: base.prospectTracking,
   };
   let season = seasonFromCareer(meta);
   for (let i = 0; i < playedMatchdays; i += 1) {

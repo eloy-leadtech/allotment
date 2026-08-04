@@ -265,6 +265,9 @@ export function applyTransition(
     }),
     // Your scouting reports are a decision: they carry forward and keep deepening.
     scouting: career.scouting,
+    // Following a promesa is a decision too: it carries forward so the band keeps
+    // narrowing season over season (the whole point of a multi-season seguimiento).
+    prospectTracking: career.prospectTracking,
   };
 
   return {
@@ -453,6 +456,9 @@ export function applyDivisionChange(
     }),
     // Your scouting reports are a decision: they carry forward and keep deepening.
     scouting: career.scouting,
+    // Following a promesa is a decision too: it carries forward so the band keeps
+    // narrowing season over season (the whole point of a multi-season seguimiento).
+    prospectTracking: career.prospectTracking,
   };
   const champ = championOf(career);
   return {
