@@ -14,8 +14,10 @@
 import { computeSeasonAwards, computeStandings, type StandingRow } from '@engine';
 import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
-import { seasonFromCareer } from './career';
+import { seasonFromCareer, careerTeamName } from './career';
 import { developPlayer, seasonStartYear } from './development';
+import { seasonHeadlines, type HemerotecaEvent } from './hemeroteca';
+import type { SeasonSummary, PalmaresTitle } from './types';
 import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
@@ -86,6 +88,34 @@ function finishedSummary(career: CareerState, championId: string) {
     pichichi: awards.pichichi ?? undefined,
     zamora: awards.zamora ?? undefined,
   };
+}
+
+/**
+ * The hemeroteca headlines the just-finished season contributes: it reuses the
+ * hito facts the transition already computes (the summary's Pichichi/Zamora, the
+ * titles won, the promotion/relegation outcome, the board's verdict and whether
+ * the manager was sacked) plus the cracks this transition retired. No hito is
+ * re-derived here — this only phrases them for the archive (see hemeroteca.ts).
+ */
+function finishedHeadlines(
+  career: CareerState,
+  summary: SeasonSummary,
+  titles: readonly PalmaresTitle[],
+  retirees: readonly Player[],
+): HemerotecaEvent[] {
+  return seasonHeadlines({
+    seasonNumber: career.seasonNumber,
+    temporada: career.temporada,
+    humanTeamId: career.humanTeamId,
+    teamName: careerTeamName(career, career.humanTeamId),
+    titles,
+    outcome: careerOutcome(career),
+    evaluation: endOfSeasonEvaluation(career),
+    dismissed: isManagerDismissed(career),
+    pichichi: summary.pichichi,
+    zamora: summary.zamora,
+    retirees,
+  });
 }
 
 /**
@@ -180,8 +210,10 @@ export function applyTransition(
   const retained = preview.departures.filter((p) => retainIds.has(p.id));
 
   // Age each retained player one season; drop those who retire. Retained players
-  // are yours, so this season's training focus shapes how they evolve.
+  // are yours, so this season's training focus shapes how they evolve. Retirees
+  // are captured so a departing crack makes the hemeroteca.
   const developedRetained: Player[] = [];
+  const retirees: Player[] = [];
   for (const player of retained) {
     const result = developPlayer(player, {
       seed: career.seed,
@@ -189,7 +221,8 @@ export function applyTransition(
       seasonStartYear: startYear,
       training: career.training?.focus,
     });
-    if (!result.retired) developedRetained.push(result.player);
+    if (result.retired) retirees.push(result.player);
+    else developedRetained.push(result.player);
   }
   const retainedKeys = new Set(retained.map(personKey));
 
@@ -267,12 +300,17 @@ export function applyTransition(
     scouting: career.scouting,
   };
 
+  const summary = finishedSummary(career, preview.championId);
+  const titles = titlesWonThisSeason(career, preview.championId);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, preview.championId)],
+    history: [...career.history, summary],
     // Record any title the human won this season before advancing.
-    palmares: [...career.palmares, ...titlesWonThisSeason(career, preview.championId)],
+    palmares: [...career.palmares, ...titles],
+    // Archive this season's hitos (titles, ascenso/descenso, trofeos, retiradas,
+    // veredicto de la directiva) as press headlines in the hemeroteca.
+    hemeroteca: [...(career.hemeroteca ?? []), ...finishedHeadlines(career, summary, titles, retirees)],
   };
 }
 
@@ -376,8 +414,10 @@ export function applyDivisionChange(
   const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
 
   // The whole squad moves with you, aged one season; retirees drop out. It is
-  // your squad, so this season's training focus shapes how it evolves.
+  // your squad, so this season's training focus shapes how it evolves. Retirees
+  // are captured so a departing crack makes the hemeroteca.
   const aged: Player[] = [];
+  const retirees: Player[] = [];
   for (const player of current) {
     const result = developPlayer(player, {
       seed: career.seed,
@@ -385,7 +425,8 @@ export function applyDivisionChange(
       seasonStartYear: startYear,
       training: career.training?.focus,
     });
-    if (!result.retired) aged.push(result.player);
+    if (result.retired) retirees.push(result.player);
+    else aged.push(result.player);
   }
   const humanKeys = new Set(current.map(personKey));
 
@@ -455,11 +496,15 @@ export function applyDivisionChange(
     scouting: career.scouting,
   };
   const champ = championOf(career);
+  const summary = finishedSummary(career, champ);
+  const titles = titlesWonThisSeason(career, champ);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, champ)],
+    history: [...career.history, summary],
     // Record any title the human won this season before changing division.
-    palmares: [...career.palmares, ...titlesWonThisSeason(career, champ)],
+    palmares: [...career.palmares, ...titles],
+    // Archive this season's hitos as press headlines in the hemeroteca.
+    hemeroteca: [...(career.hemeroteca ?? []), ...finishedHeadlines(career, summary, titles, retirees)],
   };
 }

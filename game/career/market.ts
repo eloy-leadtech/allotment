@@ -11,7 +11,8 @@ import type { Player, Position } from '@data';
 import type { CareerState, CareerTeam } from './types';
 import { playerAge, seasonStartYear } from './development';
 import { initialContract } from './contracts';
-import { seasonFromCareer } from './career';
+import { seasonFromCareer, careerTeamName } from './career';
+import { recordTransferHeadline } from './hemeroteca';
 
 /** Rating above this floor is what you actually pay for; below it is nominal. */
 const RATING_FLOOR = 40;
@@ -187,11 +188,21 @@ function applyPurchase(career: CareerState, ownerId: string, player: Player, pri
   // A new signing joins your wage book on a fresh, market-value-based deal.
   const startYear = seasonStartYear(career.temporada);
   const contract = initialContract(player, playerAge(player, startYear), career.seed, career.seasonNumber);
+  // A club-record purchase makes the hemeroteca the moment it closes.
+  const hemeroteca = recordTransferHeadline(career.hemeroteca, {
+    kind: 'compra',
+    seasonNumber: career.seasonNumber,
+    temporada: career.temporada,
+    teamName: careerTeamName(career, career.humanTeamId),
+    playerName: player.nombre,
+    amount: price,
+  });
   return withDerivedSeason({
     ...career,
     teams,
     budget: career.budget - price,
     contracts: { ...career.contracts, [player.id]: contract },
+    hemeroteca,
   });
 }
 
@@ -299,7 +310,19 @@ export function sellPlayer(
   // The sold player leaves your wage book with them.
   const contracts = { ...career.contracts };
   delete contracts[playerId];
-  return { career: withDerivedSeason({ ...career, teams, budget: career.budget + amount, contracts }), ok: true };
+  // A club-record sale makes the hemeroteca the moment it closes.
+  const hemeroteca = recordTransferHeadline(career.hemeroteca, {
+    kind: 'venta',
+    seasonNumber: career.seasonNumber,
+    temporada: career.temporada,
+    teamName: careerTeamName(career, career.humanTeamId),
+    playerName: sold.nombre,
+    amount,
+  });
+  return {
+    career: withDerivedSeason({ ...career, teams, budget: career.budget + amount, contracts, hemeroteca }),
+    ok: true,
+  };
 }
 
 /** Accept an AI bid: sell the player to the bidding club for the offered amount. */

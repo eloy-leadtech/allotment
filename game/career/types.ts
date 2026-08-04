@@ -12,6 +12,7 @@ import type { StadiumState } from './stadium';
 import type { SponsorState } from './sponsors';
 import type { CreditState } from './credit';
 import type { LoansState } from './loans';
+import type { HemerotecaEvent } from './hemeroteca';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -176,6 +177,15 @@ export interface CareerState {
    */
   loans?: LoansState;
   teams: CareerTeam[];
+  /**
+   * The club's hemeroteca: a chronological archive of the career's HITOS as press
+   * headlines (titles, ascensos/descensos, tus Pichichi/Zamora, retiradas de
+   * cracks, fichajes récord, veredictos de la directiva). Appended to at the
+   * season transition and at record transfers (see hemeroteca.ts). Optional so
+   * pre-hemeroteca saves and the many places that build a career meta stay valid;
+   * absent means an empty archive.
+   */
+  hemeroteca?: HemerotecaEvent[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human
    * club's players are tracked, since only your masa salarial is charged against

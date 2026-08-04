@@ -13,6 +13,7 @@ import { DEFAULT_CREDIT } from '../career/credit';
 import { DEFAULT_LOANS } from '../career/loans';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
+import type { HemerotecaEvent } from '../career/hemeroteca';
 
 const SAVE_VERSION = 1;
 const CAREER_SAVE_VERSION = 2;
@@ -90,6 +91,28 @@ const SeasonSummarySchema = z.object({
   championId: z.string().min(1),
   pichichi: PichichiSchema.optional(),
   zamora: ZamoraSchema.optional(),
+});
+
+/** One hemeroteca headline: a dated career hito phrased as press text. */
+const HemerotecaEventSchema = z.object({
+  seasonNumber: z.number().int().min(1),
+  temporada: z.string().min(1),
+  type: z.enum([
+    'titulo',
+    'ascenso',
+    'descenso',
+    'pichichi',
+    'zamora',
+    'retirada',
+    'fichaje',
+    'traspaso',
+    'objetivo',
+    'cese',
+    'confianza',
+  ]),
+  text: z.string().min(1),
+  /** Record-transfer fee, present only on 'fichaje'/'traspaso' headlines. */
+  amount: z.number().int().min(0).optional(),
 });
 
 /** One palmarés title: the competition won and the season it was won in. */
@@ -225,6 +248,8 @@ export const CareerSaveSchema = z.object({
   history: z.array(SeasonSummarySchema),
   /** The club's palmarés; defaults to [] for pre-palmarés saves. */
   palmares: z.array(PalmaresTitleSchema).default([]),
+  /** The club's hemeroteca (press archive of hitos); defaults to [] for pre-hemeroteca saves. */
+  hemeroteca: z.array(HemerotecaEventSchema).default([]),
   /** Next matchday to play in the in-progress season (1-indexed). */
   currentMatchday: z.number().int().min(1),
 });
@@ -247,6 +272,7 @@ export function serializeCareer(career: CareerState): CareerSave {
   const teams: CareerTeam[] = career.teams;
   const history: SeasonSummary[] = career.history;
   const palmares: PalmaresTitle[] = career.palmares;
+  const hemeroteca: HemerotecaEvent[] = career.hemeroteca ?? [];
   return {
     version: CAREER_SAVE_VERSION,
     seed: career.seed,
@@ -273,6 +299,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     scouting: career.scouting,
     history,
     palmares,
+    hemeroteca,
     // The in-progress season is derived from `teams`; only its resume point is saved.
     currentMatchday: career.season.currentMatchday,
   };
@@ -325,6 +352,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     // Pre-cesiones saves have no loan book: default to empty (schema default).
     loans: save.loans,
     teams: save.teams,
+    // Pre-hemeroteca saves have no archive: default to empty (schema default []).
+    hemeroteca: save.hemeroteca,
     contracts,
     youthProspects: save.youthProspects,
     // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
