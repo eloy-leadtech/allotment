@@ -43,6 +43,10 @@ import {
   loanOutPlayer,
   loanInPlayer,
   wageBill,
+  hireStaff,
+  fireStaff,
+  staffWageBill,
+  seasonFromCareer,
   formatEuros,
   toCompetitionTeam,
   runCareerCopa,
@@ -53,6 +57,7 @@ import {
   TOURNAMENTS,
   type SeasonIncome,
   type SponsorId,
+  type StaffRole,
   type CareerState,
   type CareerTactics,
   type TrainingState,
@@ -174,6 +179,10 @@ interface GameStore {
   scoutPlayer: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
   chooseSponsor: (sponsorId: SponsorId) => void;
+  /** Hire (or upgrade) a technical-staff role at a level; pretemporada only. */
+  hireStaffMember: (role: StaffRole, level: number) => void;
+  /** Dismiss the member in a technical-staff role. */
+  fireStaffMember: (role: StaffRole) => void;
   requestCredit: (amount: number) => void;
   expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
@@ -352,6 +361,42 @@ export const useGameStore = create<GameStore>((set, get) => {
       const next = chooseSponsor(career, sponsorId);
       set({ career: next, marketMessage: null });
     },
+    hireStaffMember: (role, level) => {
+      const { career } = get();
+      if (!career) return;
+      // Staff is a PRETEMPORADA decision: hiring re-derives the not-yet-started
+      // season so the bonuses apply from kickoff. Once matchdays have been played,
+      // changing staff would rewrite history, so it is locked until next season.
+      if (career.season.currentMatchday !== 1) {
+        set({ marketMessage: 'Solo puedes fichar cuerpo técnico en pretemporada.' });
+        return;
+      }
+      const result = hireStaff(career, role, level);
+      if (!result.ok) {
+        set({
+          marketMessage:
+            result.reason === 'presupuesto'
+              ? 'No te llega el presupuesto para la prima de contratación.'
+              : 'Nivel de contratación no válido.',
+        });
+        return;
+      }
+      // Re-derive the season with the new staff (safe at matchday 1: nothing to replay).
+      const season = seasonFromCareer(result.career);
+      set({ career: { ...result.career, season }, season, marketMessage: null });
+    },
+    fireStaffMember: (role) => {
+      const { career } = get();
+      if (!career) return;
+      if (career.season.currentMatchday !== 1) {
+        set({ marketMessage: 'Solo puedes gestionar el cuerpo técnico en pretemporada.' });
+        return;
+      }
+      const next = fireStaff(career, role);
+      // Re-derive the season so a removed médico/segundo bonus stops applying.
+      const season = seasonFromCareer(next);
+      set({ career: { ...next, season }, season, marketMessage: null });
+    },
     requestCredit: (amount) => {
       const { career } = get();
       if (!career) return;
@@ -404,8 +449,9 @@ export const useGameStore = create<GameStore>((set, get) => {
       // The finished season pays out: TV, gate, league prize and cup/European
       // bonuses, added to the budget carried into the transfer window.
       const income = seasonIncome(career);
-      // The finished squad's masa salarial is charged against the budget.
-      const wages = wageBill(career.contracts);
+      // The finished squad's masa salarial PLUS the technical staff's salaries are
+      // charged against the budget (see staff.ts / finances liquidation).
+      const wages = wageBill(career.contracts) + staffWageBill(career.staff);
       const transitioned = attachEuropa(
         attachCopa(
           toDivision === career.division

@@ -12,6 +12,7 @@ import { YouthScreen } from '@ui/screens/YouthScreen';
 import { OjeoScreen } from '@ui/screens/OjeoScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { TrainingScreen } from '@ui/screens/TrainingScreen';
+import { StaffScreen } from '@ui/screens/StaffScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
 import { SponsorsScreen } from '@ui/screens/SponsorsScreen';
 import { TournamentScreen } from '@ui/screens/TournamentScreen';
@@ -53,6 +54,8 @@ export function App() {
       return <TacticsScreen />;
     case 'training':
       return <TrainingScreen />;
+    case 'staff':
+      return <StaffScreen />;
     case 'stadium':
       return <StadiumScreen />;
     case 'sponsors':

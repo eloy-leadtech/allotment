@@ -11,6 +11,7 @@ import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
 import { DEFAULT_SPONSOR } from '../career/sponsors';
 import { DEFAULT_CREDIT } from '../career/credit';
 import { DEFAULT_LOANS } from '../career/loans';
+import { DEFAULT_STAFF, STAFF_MIN_LEVEL, STAFF_MAX_LEVEL, type StaffState } from '../career/staff';
 import { replaySeasonWithPress } from '../career/pressConference';
 import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
 
@@ -122,6 +123,21 @@ const LoansStateSchema = z
   })
   .default({ out: [], in: [] });
 
+/** One hired staff member: a level on the classic 1-5 scale. */
+const StaffMemberSchema = z.object({
+  level: z.number().int().min(STAFF_MIN_LEVEL).max(STAFF_MAX_LEVEL),
+});
+
+/** The club's technical staff (each role optional); defaults to none hired. */
+const StaffStateSchema = z
+  .object({
+    segundo: StaffMemberSchema.optional(),
+    preparador: StaffMemberSchema.optional(),
+    medico: StaffMemberSchema.optional(),
+    ojeador: StaffMemberSchema.optional(),
+  })
+  .default({});
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -215,6 +231,8 @@ export const CareerSaveSchema = z.object({
     .default({ ...DEFAULT_CREDIT }),
   /** Loan book (out/in); defaults to empty for pre-cesiones saves. */
   loans: LoansStateSchema,
+  /** Technical staff (segundo/preparador/médico/ojeador); defaults to none for pre-staff saves. */
+  staff: StaffStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
@@ -267,6 +285,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     sponsor: career.sponsor ?? DEFAULT_SPONSOR,
     credit: career.credit ?? DEFAULT_CREDIT,
     loans: career.loans ?? DEFAULT_LOANS,
+    staff: career.staff ?? DEFAULT_STAFF,
     teams,
     contracts: career.contracts,
     youthProspects: career.youthProspects,
@@ -324,6 +343,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     credit: save.credit ?? DEFAULT_CREDIT,
     // Pre-cesiones saves have no loan book: default to empty (schema default).
     loans: save.loans,
+    // Pre-staff saves have no staff: default to none hired (schema default {}).
+    staff: save.staff as StaffState,
     teams: save.teams,
     contracts,
     youthProspects: save.youthProspects,

@@ -13,6 +13,7 @@ export type Screen =
   | 'ojeo'
   | 'tactics'
   | 'training'
+  | 'staff'
   | 'stadium'
   | 'sponsors'
   | 'tournament'

@@ -68,6 +68,26 @@ export function availabilityStatus(
   return { status: 'fit', matchesOut: 0 };
 }
 
+/**
+ * The club MÉDICO's effect on injuries: a recovery multiplier applied to the injury
+ * length of the players it covers (the human squad). Deterministic, no RNG.
+ */
+export interface MedicalStaff {
+  /** Player ids the médico looks after (your squad); others heal at the normal rate. */
+  playerIds: ReadonlySet<string>;
+  /** Injury-length multiplier in (0,1]: <1 shortens the layoff. See staff.ts. */
+  factor: number;
+}
+
+/**
+ * The (possibly shortened) matchdays a player misses from an injury of `matchesOut`
+ * matches, given the médico multiplier. A better médico gets the player back sooner,
+ * but never in under one matchday. Deterministic and pure.
+ */
+export function recoveredMatchesOut(matchesOut: number, factor: number): number {
+  return Math.max(1, Math.round(matchesOut * factor));
+}
+
 /** Deterministic direct-red ban length (1 or 2 matches) for a player+matchday. */
 function redBanLength(result: MatchResult, matchday: number, playerId: string): number {
   const rng = createRng(hashSeed(result.homeId, result.awayId, matchday, playerId, 'redban'));
@@ -96,6 +116,7 @@ export function applyMatchdayAvailability(
   current: AvailabilityMap,
   results: readonly MatchResult[],
   matchday: number,
+  medical?: MedicalStaff,
 ): AvailabilityMap {
   const next: AvailabilityMap = {};
   // 1. Serve suspensions: everyone who sat out this matchday ticks down by one.
@@ -113,10 +134,15 @@ export function applyMatchdayAvailability(
       const hasRed = evs.some((e) => e.type === 'red');
       const hasSecondYellow = evs.some((e) => e.type === 'secondYellow');
 
-      // Injuries are independent of any card the same player may have seen.
+      // Injuries are independent of any card the same player may have seen. A club
+      // médico shortens the layoff for the players it covers (your squad).
       const injury = evs.find((e) => e.type === 'injury');
       if (injury?.matchesOut) {
-        a.injuredUntil = Math.max(a.injuredUntil ?? 0, matchday + injury.matchesOut);
+        const out =
+          medical && medical.playerIds.has(playerId)
+            ? recoveredMatchesOut(injury.matchesOut, medical.factor)
+            : injury.matchesOut;
+        a.injuredUntil = Math.max(a.injuredUntil ?? 0, matchday + out);
       }
 
       if (hasRed) {

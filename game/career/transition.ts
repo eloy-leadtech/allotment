@@ -21,6 +21,7 @@ import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
 import { titlesWonThisSeason } from './palmares';
+import { physioTrainingFactor } from './staff';
 import { returnLoans, DEFAULT_LOANS } from './loans';
 import {
   computeSeasonObjective,
@@ -188,6 +189,8 @@ export function applyTransition(
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
       training: career.training?.focus,
+      // A preparador físico amplifies how much your retained players progress.
+      physioFactor: physioTrainingFactor(career.staff),
     });
     if (!result.retired) developedRetained.push(result.player);
   }
@@ -224,6 +227,7 @@ export function applyTransition(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
     training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
     humanTeamId: career.humanTeamId,
   });
   const teams = returned.teams;
@@ -254,6 +258,8 @@ export function applyTransition(
     // Loans are settled by this transition (returnees folded in, loanees dropped):
     // the next season starts with an empty loan book.
     loans: DEFAULT_LOANS,
+    // The technical staff you hired stays with you into the next season.
+    staff: career.staff,
     teams,
     contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.
@@ -384,6 +390,8 @@ export function applyDivisionChange(
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
       training: career.training?.focus,
+      // A preparador físico amplifies how much your squad progresses this move.
+      physioFactor: physioTrainingFactor(career.staff),
     });
     if (!result.retired) aged.push(result.player);
   }
@@ -415,6 +423,7 @@ export function applyDivisionChange(
     seasonNumber: seasonNumberNext,
     seasonStartYear: startYear,
     training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
     humanTeamId: career.humanTeamId,
   });
   const teams = returned.teams;
@@ -442,6 +451,8 @@ export function applyDivisionChange(
     credit: career.credit,
     // The loan book is settled by the transition; start clean.
     loans: DEFAULT_LOANS,
+    // The technical staff you hired moves with you across divisions.
+    staff: career.staff,
     teams,
     contracts: returned.contracts,
     // Age out overstaying prospects and breed the new pretemporada hornada.

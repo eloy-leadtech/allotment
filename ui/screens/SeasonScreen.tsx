@@ -157,6 +157,10 @@ export function SeasonScreen() {
               <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
               <span className="despacho-tile__label">Entrenamiento</span>
             </button>
+            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('staff')}>
+              <span className="despacho-tile__icon" aria-hidden="true">🧑‍🏫</span>
+              <span className="despacho-tile__label">Cuerpo técnico</span>
+            </button>
             <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
               <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
               <span className="despacho-tile__label">Cantera</span>
