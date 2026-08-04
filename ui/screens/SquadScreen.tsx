@@ -225,6 +225,9 @@ export function SquadScreen() {
       </RetroPanel>
 
       <div className="season-actions">
+        <RetroButton variant="primary" onClick={() => goTo('comparativa')}>
+          Comparar jugadores
+        </RetroButton>
         <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
       </div>
     </main>
