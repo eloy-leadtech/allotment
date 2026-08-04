@@ -18,6 +18,7 @@ export * from './pressConference';
 export * from './competitions';
 export * from './europa';
 export * from './palmares';
+export * from './hemeroteca';
 export * from './finances';
 export * from './stadium';
 export * from './sponsors';

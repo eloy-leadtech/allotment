@@ -189,6 +189,10 @@ export function SeasonScreen() {
               <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
               <span className="despacho-tile__label">Palmarés</span>
             </button>
+            <button type="button" className="despacho-tile" onClick={() => goTo('hemeroteca')}>
+              <span className="despacho-tile__icon" aria-hidden="true">📰</span>
+              <span className="despacho-tile__label">Hemeroteca</span>
+            </button>
           </nav>
         </section>
 
