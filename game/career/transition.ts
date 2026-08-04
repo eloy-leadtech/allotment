@@ -22,6 +22,7 @@ import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
 import { rolloverYouth } from './cantera';
+import { DEFAULT_RENEWALS } from './renewals';
 import { titlesWonThisSeason } from './palmares';
 import { returnLoans, DEFAULT_LOANS } from './loans';
 import {
@@ -289,6 +290,9 @@ export function applyTransition(
     loans: DEFAULT_LOANS,
     teams,
     contracts: returned.contracts,
+    // The renewal negotiations are settled by this transition (renewed deals were
+    // extended, un-renewed expiring players left FREE above): start clean.
+    renewals: DEFAULT_RENEWALS,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,
@@ -485,6 +489,8 @@ export function applyDivisionChange(
     loans: DEFAULT_LOANS,
     teams,
     contracts: returned.contracts,
+    // Renewal negotiations are settled by the transition; start clean.
+    renewals: DEFAULT_RENEWALS,
     // Age out overstaying prospects and breed the new pretemporada hornada.
     youthProspects: rolloverYouth(career.youthProspects, {
       seed: career.seed,

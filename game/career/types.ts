@@ -5,6 +5,7 @@ import type { Division } from './promotion';
 import type { BoardState } from './board';
 import type { ConfianzaState } from './confianza';
 import type { Contract } from './contracts';
+import type { RenewalsState } from './renewals';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
@@ -192,6 +193,14 @@ export interface CareerState {
    * the budget. See contracts.ts.
    */
   contracts: Record<string, Contract>;
+  /**
+   * This season's contract RENEWALS: the manager's decisions on players whose
+   * deal is in its final year (renew on new terms, or let them leave FREE). A
+   * player DECISION → persisted in save v2; reset each transition. Optional so
+   * pre-renovaciones saves and every place that builds a career meta stay valid;
+   * absent means no negotiations resolved yet (see DEFAULT_RENEWALS).
+   */
+  renewals?: RenewalsState;
   /** Your club's youth-academy prospects awaiting promotion (see YouthProspect). */
   youthProspects: YouthProspect[];
   /**

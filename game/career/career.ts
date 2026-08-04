@@ -10,6 +10,7 @@ import { DEFAULT_CREDIT } from './credit';
 import { DEFAULT_LOANS } from './loans';
 import { seasonStartYear } from './development';
 import { initialContracts } from './contracts';
+import { DEFAULT_RENEWALS } from './renewals';
 import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
 import { DEFAULT_CONFIANZA } from './confianza';
@@ -106,6 +107,8 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
     teams,
     // Every squad player starts on a deal derived from their market value.
     contracts: initialContracts(humanTeam.players, seed, 1, seasonStartYear(league.temporada)),
+    // A fresh career has resolved no renewal negotiations yet.
+    renewals: DEFAULT_RENEWALS,
     // Season 1's opening hornada of juveniles.
     youthProspects: generateYouthBatch({
       seed,

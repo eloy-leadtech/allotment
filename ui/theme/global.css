@@ -937,6 +937,41 @@ h1 {
   font-weight: 600;
 }
 
+/* Renovaciones de contrato (fin de temporada): un jugador que acaba contrato,
+   su demanda y los botones aceptar / contraoferta / dejar libre. */
+.renewal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+
+.renewal-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.renewal-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.renewal-resolved {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 /* Ficha de plantilla: placa de acero con escudo enmarcado + nombre en Futura
    (findings/09 §6 "Ficha de jugador"). */
 .squad-card {

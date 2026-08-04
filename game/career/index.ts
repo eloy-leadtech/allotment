@@ -10,6 +10,7 @@ export * from './cantera';
 export * from './market';
 export * from './compare';
 export * from './contracts';
+export * from './renewals';
 export * from './promotion';
 export * from './board';
 export * from './confianza';

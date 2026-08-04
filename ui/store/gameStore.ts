@@ -39,6 +39,9 @@ import {
   discardProspect,
   observePlayer,
   renewContract,
+  acceptRenewal,
+  offerRenewal,
+  letGoPlayer,
   chooseSponsor,
   loanOutPlayer,
   loanInPlayer,
@@ -173,6 +176,12 @@ interface GameStore {
   discardYouth: (playerId: string) => void;
   scoutPlayer: (playerId: string) => void;
   renewPlayer: (playerId: string) => void;
+  /** Accept an expiring player's full renewal demand (season-end negotiation). */
+  acceptRenewal: (playerId: string) => void;
+  /** Counter-offer a renewal at your own ficha (in euros) and term (in seasons). */
+  offerRenewal: (playerId: string, salary: number, years: number) => void;
+  /** Let an expiring player run down his deal and leave FREE (Bosman). */
+  letGoPlayer: (playerId: string) => void;
   chooseSponsor: (sponsorId: SponsorId) => void;
   requestCredit: (amount: number) => void;
   expandStadium: () => void;
@@ -343,6 +352,52 @@ export const useGameStore = create<GameStore>((set, get) => {
       }
       // The squad is unchanged (only the wage book + budget), so keep the season.
       set({ career: result.career, marketMessage: null });
+    },
+    acceptRenewal: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const outcome = acceptRenewal(career, playerId);
+      if (outcome.status !== 'renewed') {
+        set({
+          marketMessage:
+            outcome.status === 'presupuesto'
+              ? 'No te llega para la prima de renovación.'
+              : 'No se puede renovar a ese jugador.',
+        });
+        return;
+      }
+      // Only the wage book + budget change; the squad and season stay put.
+      set({ career: outcome.career, marketMessage: null });
+    },
+    offerRenewal: (playerId, salary, years) => {
+      const { career } = get();
+      if (!career) return;
+      const outcome = offerRenewal(career, playerId, salary, years);
+      switch (outcome.status) {
+        case 'renewed':
+          set({ career: outcome.career, marketMessage: null });
+          return;
+        case 'rejected':
+          set({
+            marketMessage: `Rechaza tu oferta: no baja de ${formatEuros(outcome.demand.minSalary)}/año.`,
+          });
+          return;
+        case 'presupuesto':
+          set({ marketMessage: 'No te llega para la prima de renovación.' });
+          return;
+        default:
+          set({ marketMessage: 'No se puede renovar a ese jugador.' });
+      }
+    },
+    letGoPlayer: (playerId) => {
+      const { career } = get();
+      if (!career) return;
+      const outcome = letGoPlayer(career, playerId);
+      if (outcome.status !== 'released') {
+        set({ marketMessage: 'No se puede gestionar a ese jugador.' });
+        return;
+      }
+      set({ career: outcome.career, marketMessage: 'Jugador no renovado: se marchará libre a final de temporada.' });
     },
     chooseSponsor: (sponsorId) => {
       const { career } = get();

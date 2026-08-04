@@ -5,6 +5,7 @@ import { newCareer, seasonFromCareer } from '../career/career';
 import { computeSeasonObjective, type BoardState } from '../career/board';
 import { DEFAULT_CONFIANZA, type ConfianzaState } from '../career/confianza';
 import { initialContracts, type Contract } from '../career/contracts';
+import { DEFAULT_RENEWALS } from '../career/renewals';
 import { seasonStartYear } from '../career/development';
 import { DEFAULT_TRAINING_FOCUS } from '../career/training';
 import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
@@ -145,6 +146,21 @@ const LoansStateSchema = z
   })
   .default({ out: [], in: [] });
 
+/** One resolved renewal decision: renewed (with agreed terms) or let go free. */
+const RenewalRecordSchema = z.object({
+  outcome: z.enum(['renewed', 'released']),
+  salary: z.number().int().min(0).optional(),
+  years: z.number().int().min(1).optional(),
+});
+
+/** This season's renewal negotiations; defaults to empty for pre-renovaciones saves. */
+const RenewalsStateSchema = z
+  .object({
+    seasonNumber: z.number().int().min(0),
+    resolved: z.record(z.string(), RenewalRecordSchema).default({}),
+  })
+  .default({ seasonNumber: 0, resolved: {} });
+
 /** A youth-academy prospect: its full player data plus its entry season. */
 const YouthProspectSchema = z.object({
   player: PlayerSchema,
@@ -241,6 +257,8 @@ export const CareerSaveSchema = z.object({
   teams: z.array(CareerTeamSchema).min(2),
   /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
   contracts: z.record(z.string(), ContractSchema).default({}),
+  /** This season's renewal negotiations; defaults to empty for pre-renovaciones saves. */
+  renewals: RenewalsStateSchema,
   /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
   youthProspects: z.array(YouthProspectSchema).default([]),
   /** Rival-scouting reports by player id; defaults to {} for pre-ojeo saves. */
@@ -295,6 +313,7 @@ export function serializeCareer(career: CareerState): CareerSave {
     loans: career.loans ?? DEFAULT_LOANS,
     teams,
     contracts: career.contracts,
+    renewals: career.renewals ?? DEFAULT_RENEWALS,
     youthProspects: career.youthProspects,
     scouting: career.scouting,
     history,
@@ -355,6 +374,8 @@ function restoreCareerV2(save: CareerSave): CareerState {
     // Pre-hemeroteca saves have no archive: default to empty (schema default []).
     hemeroteca: save.hemeroteca,
     contracts,
+    // Pre-renovaciones saves have no negotiations book: default to empty (schema default).
+    renewals: save.renewals,
     youthProspects: save.youthProspects,
     // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
     scouting: save.scouting,
