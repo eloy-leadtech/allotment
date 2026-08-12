@@ -10,6 +10,7 @@
  * touching this module.
  */
 import manifest from './catalog/catalog.json';
+import triviaData from './catalog/trivia.json';
 import { LeagueSchema, type League } from './schemas';
 
 /** One league-season in the catalogue manifest. */
@@ -88,4 +89,24 @@ export function cachedLeague(id: string): League | undefined {
 /** Test/seed hook: inject a league into the cache without fetching. */
 export function primeLeagueCache(id: string, league: League): void {
   cache.set(id, league);
+}
+
+/** A "¿Sabías que…?" trivia fact mined from the whole dataset. */
+export interface TriviaItem {
+  texto: string;
+  categoria: string;
+  ambito: string;
+}
+
+const TRIVIA = triviaData as TriviaItem[];
+
+/** All trivia facts (1000+), bundled so they show with no network. */
+export function allTrivia(): readonly TriviaItem[] {
+  return TRIVIA;
+}
+
+/** A random trivia fact (browser-side, non-deterministic — UI flavour only). */
+export function randomTrivia(): TriviaItem | undefined {
+  if (TRIVIA.length === 0) return undefined;
+  return TRIVIA[Math.floor(Math.random() * TRIVIA.length)];
 }

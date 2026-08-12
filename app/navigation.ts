@@ -2,6 +2,7 @@
 export type Screen =
   | 'title'
   | 'newGame'
+  | 'database'
   | 'teamSelect'
   | 'season'
   | 'standings'

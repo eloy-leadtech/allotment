@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { randomTrivia } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 
@@ -12,6 +14,12 @@ export function TitleScreen() {
   const hasCareer = useGameStore((s) => s.career != null);
   const bg = `${import.meta.env.BASE_URL}ui/pcf7/pcf7_title.png`;
 
+  const [fact, setFact] = useState(() => randomTrivia()?.texto ?? '');
+  useEffect(() => {
+    const t = setInterval(() => setFact(randomTrivia()?.texto ?? ''), 7000);
+    return () => clearInterval(t);
+  }, []);
+
   const onContinue = (): void => {
     goTo(hasCareer ? 'season' : 'slots');
   };
@@ -24,10 +32,12 @@ export function TitleScreen() {
             Nueva partida
           </RetroButton>
           <RetroButton onClick={onContinue}>Continuar</RetroButton>
+          <RetroButton onClick={() => goTo('database')}>Base de datos</RetroButton>
           <RetroButton onClick={() => goTo('tournament')}>Torneo</RetroButton>
         </div>
       </div>
       <h1 className="pcf7title__caption">PCFutbol Ultimate</h1>
+      {fact ? <p className="title-trivia">💡 {fact}</p> : null}
     </main>
   );
 }

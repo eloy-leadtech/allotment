@@ -1,6 +1,7 @@
 import { useGameStore } from '@ui/store/gameStore';
 import { TitleScreen } from '@ui/screens/TitleScreen';
 import { NewGameScreen } from '@ui/screens/NewGameScreen';
+import { DatabaseScreen } from '@ui/screens/DatabaseScreen';
 import { TeamSelectScreen } from '@ui/screens/TeamSelectScreen';
 import { SeasonScreen } from '@ui/screens/SeasonScreen';
 import { Despacho } from '@ui/screens/Despacho';
@@ -24,6 +25,8 @@ export function App() {
       return <TitleScreen />;
     case 'newGame':
       return <NewGameScreen />;
+    case 'database':
+      return <DatabaseScreen />;
     case 'teamSelect':
       return <TeamSelectScreen />;
     case 'season':

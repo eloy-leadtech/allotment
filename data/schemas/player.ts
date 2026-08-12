@@ -46,5 +46,9 @@ export const PlayerSchema = z.object({
   pesoKg: z.number().int().nullable(),
   nacionalidad: z.string().nullable(),
   clubAnterior: z.string().nullable(),
+  /** Original BDFutbol player id (for photos and cross-referencing). */
+  bdfId: z.string().optional(),
+  /** Auto-generated biographical comment, from real career facts. */
+  comentario: z.string().optional(),
 });
 export type Player = z.infer<typeof PlayerSchema>;

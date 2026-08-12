@@ -8,6 +8,9 @@ import {
   nextSeasonByTemporada,
   loadSeleccionEuro2000,
   loadSeleccionMundial98,
+  fetchLeague,
+  catalogEntry,
+  catalogFor,
   type League,
   type SeasonEntry,
 } from '@data';
@@ -103,6 +106,13 @@ interface GameStore {
   seed: number;
   /** League loaded for the chosen season (drives team select). */
   league: League;
+  /**
+   * True when the current/next game is a catalogue league (any of the 692), not
+   * one of the hand-built classic Spanish seasons. Catalogue careers skip the
+   * Spain-only cup/Europe attach and chain by the catalogue, not the SEASONS
+   * registry.
+   */
+  isCatalogCareer: boolean;
   /** The whole career (source of truth); null before a game starts. */
   career: CareerState | null;
   /** Mirror of `career.season`, the in-progress season (drives the season screens). */
@@ -130,9 +140,13 @@ interface GameStore {
   slots: Array<SlotInfo | null>;
   goTo: (screen: Screen) => void;
   chooseSeason: (id: string) => void;
+  /** Load a catalogue league by id (async) and go to team select. */
+  openCatalogLeague: (leagueId: string) => Promise<void>;
   setSeed: (seed: number) => void;
   randomizeSeed: () => void;
   startCareer: (teamId: string) => void;
+  /** Advance a catalogue career to the next season of the same country/division. */
+  continueCatalogCareer: () => void;
   playNextMatchday: () => void;
   watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
@@ -169,6 +183,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     seasonId: first.id,
     seed: randomSeed(),
     league: first.load(),
+    isCatalogCareer: false,
     career: null,
     season: null,
     lastResults: [],
@@ -185,13 +200,21 @@ export const useGameStore = create<GameStore>((set, get) => {
     goTo: (screen) => set({ screen }),
     chooseSeason: (id) => {
       const entry = getSeason(id);
-      if (entry) set({ seasonId: id, league: entry.load() });
+      if (entry) set({ seasonId: id, league: entry.load(), isCatalogCareer: false });
+    },
+    openCatalogLeague: async (leagueId) => {
+      const league = await fetchLeague(leagueId);
+      set({ seasonId: leagueId, league, isCatalogCareer: true, screen: 'teamSelect' });
     },
     setSeed: (seed) => set({ seed }),
     randomizeSeed: () => set({ seed: randomSeed() }),
     startCareer: (teamId) => {
-      const { league, seed } = get();
-      const career = attachEuropa(attachCopa(newCareer(league, teamId, seed)));
+      const { league, seed, isCatalogCareer } = get();
+      const base = newCareer(league, teamId, seed);
+      // Copa del Rey and European cups are wired to the Spanish registry only;
+      // a catalogue league (any country) plays its league season without them
+      // until foreign competitions arrive (Fase 3).
+      const career = isCatalogCareer ? base : attachEuropa(attachCopa(base));
       set({
         career,
         season: career.season,
@@ -202,6 +225,48 @@ export const useGameStore = create<GameStore>((set, get) => {
         marketMessage: null,
         screen: 'season',
       });
+    },
+    continueCatalogCareer: () => {
+      const { career, retainIds, seasonId } = get();
+      if (!career) return;
+      const cur = catalogEntry(seasonId);
+      if (!cur) return;
+      const chain = catalogFor(cur.country, cur.division)
+        .slice()
+        .sort((a, b) => a.season.localeCompare(b.season));
+      const idx = chain.findIndex((e) => e.id === seasonId);
+      const next = idx >= 0 ? chain[idx + 1] : undefined;
+      if (!next) {
+        set({ marketMessage: 'No hay más temporadas de esta liga en el catálogo.' });
+        return;
+      }
+      void (async () => {
+        try {
+          const targetLeague = await fetchLeague(next.id);
+          const income = seasonIncome(career);
+          const transitioned = applyTransition(career, targetLeague, new Set(retainIds));
+          const nextCareer = { ...transitioned, budget: transitioned.budget + income.total };
+          set({
+            career: nextCareer,
+            season: nextCareer.season,
+            seasonId: next.id,
+            league: targetLeague,
+            retainIds: [],
+            bids: generateBids(nextCareer),
+            marketMessage: null,
+            counterOffer: null,
+            lastIncome: income,
+            lastResults: [],
+            viewingMatch: null,
+            screen: 'market',
+          });
+        } catch {
+          set({
+            marketMessage:
+              'Tu club no aparece en la siguiente temporada de esta división (ascensos/descensos llegan en Fase 3).',
+          });
+        }
+      })();
     },
     playNextMatchday: () => {
       const { career } = get();
@@ -365,22 +430,30 @@ export const useGameStore = create<GameStore>((set, get) => {
     loadFromSlot: (slot) => {
       const info = readSlot(slot);
       if (!info) return;
-      const entry = getSeason(info.save.leagueId);
-      if (!entry) return;
-      const league = entry.load();
-      const career = attachEuropa(attachCopa(restoreCareer(info.save, league)));
-      set({
-        career,
-        season: career.season,
-        seasonId: entry.id,
-        league,
-        lastResults: [],
-        viewingMatch: null,
-        retainIds: [],
-        bids: [],
-        marketMessage: null,
-        screen: 'season',
-      });
+      const leagueId = info.save.leagueId;
+      const classic = getSeason(leagueId);
+      const enter = (league: League, isCatalog: boolean): void => {
+        const restored = restoreCareer(info.save, league);
+        const career = isCatalog ? restored : attachEuropa(attachCopa(restored));
+        set({
+          career,
+          season: career.season,
+          seasonId: leagueId,
+          league,
+          isCatalogCareer: isCatalog,
+          lastResults: [],
+          viewingMatch: null,
+          retainIds: [],
+          bids: [],
+          marketMessage: null,
+          screen: 'season',
+        });
+      };
+      if (classic) {
+        enter(classic.load(), false);
+      } else if (catalogEntry(leagueId)) {
+        void fetchLeague(leagueId).then((league) => enter(league, true));
+      }
     },
     deleteSlotAt: (slot) => {
       deleteSlot(slot);

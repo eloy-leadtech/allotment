@@ -1,5 +1,5 @@
 import { previewTransition, careerTeamName, careerOutcome, nextDivision, currentStandings } from '@game';
-import { nextSeasonByTemporada, getSegundaByTemporada } from '@data';
+import { nextSeasonByTemporada, getSegundaByTemporada, catalogEntry, catalogFor } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { Crest } from '@ui/components/Crest';
@@ -13,6 +13,8 @@ export function SeasonEndScreen() {
   const retainIds = useGameStore((s) => s.retainIds);
   const toggleRetain = useGameStore((s) => s.toggleRetain);
   const continueCareer = useGameStore((s) => s.continueCareer);
+  const isCatalogCareer = useGameStore((s) => s.isCatalogCareer);
+  const continueCatalogCareer = useGameStore((s) => s.continueCatalogCareer);
   const goTo = useGameStore((s) => s.goTo);
 
   if (!career) {
@@ -26,6 +28,59 @@ export function SeasonEndScreen() {
 
   const name = (id: string): string => careerTeamName(career, id);
   const champion = currentStandings(career.season)[0]?.teamId ?? career.humanTeamId;
+
+  // Catalogue careers chain by the catalogue (same country/division), without the
+  // Spain-only cup/Europe/promotion machinery. Kept separate so the classic path
+  // below is untouched.
+  if (isCatalogCareer) {
+    const cur = catalogEntry(career.leagueId);
+    const chain = cur
+      ? catalogFor(cur.country, cur.division)
+          .slice()
+          .sort((a, b) => a.season.localeCompare(b.season))
+      : [];
+    const i = chain.findIndex((e) => e.id === career.leagueId);
+    const nextCat = i >= 0 ? chain[i + 1] : undefined;
+    const footer = nextCat ? (
+      <>
+        <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={continueCatalogCareer}>
+          Continuar a {nextCat.temporada} →
+        </button>
+        <button type="button" className="pcf7flatbtn" onClick={() => goTo('season')}>Atrás</button>
+      </>
+    ) : (
+      <>
+        <button type="button" className="pcf7flatbtn" onClick={() => goTo('slots')}>Guardar / Cargar</button>
+        <button type="button" className="pcf7flatbtn" onClick={() => goTo('title')}>Menú</button>
+      </>
+    );
+    return (
+      <Pcf7Console title={`Fin de temporada ${career.temporada}`} status={cur?.nombre ?? ''} footer={footer}>
+        <p className="pcf7ovl pcf7title-ovl" style={{ position: 'static', justifyContent: 'flex-start', whiteSpace: 'normal', margin: 0 }}>
+          🏆 Campeón: {name(champion)}
+        </p>
+        {career.history.length > 0 ? (
+          <section className="pcf7card">
+            <div className="pcf7card__head">Palmarés</div>
+            <ul className="pcf7list">
+              {career.history.map((h) => (
+                <li key={h.seasonNumber}>
+                  <span className="pcf7list__grow">{h.temporada}</span>
+                  <strong>{name(h.championId)}</strong>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+        <span className="team-cell" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}>
+          <Crest teamId={career.humanTeamId} size={20} />
+          <span className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)' }}>
+            {nextCat ? 'Continúas con tu equipo la próxima temporada.' : 'Fin del catálogo para esta liga.'}
+          </span>
+        </span>
+      </Pcf7Console>
+    );
+  }
 
   const outcome = careerOutcome(career);
   const toDivision = nextDivision(career.division, outcome);
