@@ -10,6 +10,7 @@ import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
+import { PlayerPhoto } from '@ui/components/PlayerPhoto';
 
 const ATTR_LABELS: Array<[keyof Player['atributos'], string]> = [
   ['calidad', 'Calidad'],
@@ -169,13 +170,16 @@ export function DatabaseScreen() {
 
       {player && (
         <RetroPanel title={`Ficha · ${player.nombreCompleto}`}>
-          <p className="hint">
-            {player.posicion}
-            {player.nacionalidad ? ` · ${player.nacionalidad}` : ''}
-            {player.fechaNacimiento ? ` · nac. ${player.fechaNacimiento}` : ''}
-            {player.alturaCm ? ` · ${player.alturaCm} cm` : ''}
-            {player.pesoKg ? ` · ${player.pesoKg} kg` : ''}
-          </p>
+          <div className="ficha-head">
+            <PlayerPhoto bdfId={player.bdfId} size={104} />
+            <p className="hint" style={{ margin: 0 }}>
+              {player.posicion}
+              {player.nacionalidad ? ` · ${player.nacionalidad}` : ''}
+              {player.fechaNacimiento ? ` · nac. ${player.fechaNacimiento}` : ''}
+              {player.alturaCm ? ` · ${player.alturaCm} cm` : ''}
+              {player.pesoKg ? ` · ${player.pesoKg} kg` : ''}
+            </p>
+          </div>
           <div className="attr-grid">
             {ATTR_LABELS.map(([key, label]) => (
               <span key={key} className="attr-cell">

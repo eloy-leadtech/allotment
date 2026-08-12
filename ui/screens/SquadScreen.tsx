@@ -57,14 +57,18 @@ function PlayerPhoto({
 }) {
   const photo = useFichaPhoto(temporada, player.id);
   const [failed, setFailed] = useState(false);
-  if (!photo || failed) {
+  // Catalogue players carry their BDFutbol id, so the portrait resolves directly;
+  // classic Spanish seasons fall back to the temporada→id photo map.
+  const base =
+    (import.meta as { env?: Record<string, string> }).env?.VITE_PHOTO_BASE ?? '/fotos-bdf/';
+  const src = player.bdfId ? `${base}${player.bdfId}/${player.bdfId}.jpg` : photo?.src;
+  if (!src || failed) {
     return <Crest teamId={teamId} size={64} />;
   }
   return (
     <img
-      src={photo.src}
+      src={src}
       alt={player.nombre}
-      loading="lazy"
       onError={() => setFailed(true)}
       style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
     />
