@@ -5,6 +5,7 @@ import type { Division } from './promotion';
 import type { BoardState } from './board';
 import type { ConfianzaState } from './confianza';
 import type { Contract } from './contracts';
+import type { RenewalsState } from './renewals';
 import type { CopaResult } from '../tournament/copa';
 import type { EuropaResult } from './europa';
 import type { TrainingState } from './training';
@@ -12,6 +13,9 @@ import type { StadiumState } from './stadium';
 import type { SponsorState } from './sponsors';
 import type { CreditState } from './credit';
 import type { LoansState } from './loans';
+import type { HemerotecaEvent } from './hemeroteca';
+import type { WinterMarketState } from './winterMovements';
+import type { StaffState } from './staff';
 
 /** The human's chosen tactics, stored by player id so it survives evolution. */
 export interface CareerTactics {
@@ -51,6 +55,20 @@ export interface ScoutingRecord {
   observations: number;
   /** Last career season a scout was assigned to this player (1-indexed; 0 = never). */
   lastSeason: number;
+}
+
+/**
+ * A "seguimiento" of a rival PROMESA: the human DECISION to follow a young talent
+ * from another club so their fallible potential band narrows the longer you watch.
+ * It is your decision (not derivable from replay), so it is persisted in the save.
+ * Keyed by player id in `CareerState.prospectTracking`.
+ */
+export interface ProspectTracking {
+  /**
+   * 1-indexed career season you STARTED following this prospect. How many seasons
+   * you have observed them (which tightens the band) is `seasonNumber - since`.
+   */
+  since: number;
 }
 
 /** One line of the career league-champions roll. Grows with retirements/transfers later. */
@@ -175,13 +193,49 @@ export interface CareerState {
    * meta stay valid; absent means an empty loan book (see DEFAULT_LOANS).
    */
   loans?: LoansState;
+  /**
+   * The mid-season WINTER TRANSFER WINDOW: the movements made at the season's
+   * midpoint (which drive the season derivation — see winterMovements.ts) and
+   * whether it has been closed this season. A player DECISION → persisted in save
+   * v2. Optional so pre-invierno saves and every place that builds a career meta
+   * stay valid; absent means an untouched window (see DEFAULT_WINTER). Because the
+   * movements are how the derivation reconstructs the first/second halves, `teams`
+   * stays the CURRENT (post-winter) squad and is never itself rewound.
+   */
+  winter?: WinterMarketState;
+  /**
+   * The club's technical STAFF (segundo entrenador, preparador físico, médico,
+   * ojeador), each an optional hired member with a level. A player DECISION →
+   * persisted in save v2. Optional so pre-staff saves and the many places that
+   * build a career meta stay valid; absent means no staff hired (see DEFAULT_STAFF).
+   * Each hired role feeds a bonus into an existing system and its salary into the
+   * season liquidation (see staff.ts).
+   */
+  staff?: StaffState;
   teams: CareerTeam[];
+  /**
+   * The club's hemeroteca: a chronological archive of the career's HITOS as press
+   * headlines (titles, ascensos/descensos, tus Pichichi/Zamora, retiradas de
+   * cracks, fichajes récord, veredictos de la directiva). Appended to at the
+   * season transition and at record transfers (see hemeroteca.ts). Optional so
+   * pre-hemeroteca saves and the many places that build a career meta stay valid;
+   * absent means an empty archive.
+   */
+  hemeroteca?: HemerotecaEvent[];
   /**
    * Your squad's contracts (salario + años), keyed by player id. Only the human
    * club's players are tracked, since only your masa salarial is charged against
    * the budget. See contracts.ts.
    */
   contracts: Record<string, Contract>;
+  /**
+   * This season's contract RENEWALS: the manager's decisions on players whose
+   * deal is in its final year (renew on new terms, or let them leave FREE). A
+   * player DECISION → persisted in save v2; reset each transition. Optional so
+   * pre-renovaciones saves and every place that builds a career meta stay valid;
+   * absent means no negotiations resolved yet (see DEFAULT_RENEWALS).
+   */
+  renewals?: RenewalsState;
   /** Your club's youth-academy prospects awaiting promotion (see YouthProspect). */
   youthProspects: YouthProspect[];
   /**
@@ -190,6 +244,14 @@ export interface CareerState {
    * more you observe. A human DECISION → persisted in save v2 (empty by default).
    */
   scouting: Record<string, ScoutingRecord>;
+  /**
+   * Your "seguimiento" of rival PROMESAS, keyed by player id: which young talents
+   * from other clubs you follow, and since when, so their fallible potential band
+   * narrows the longer you track them (see prospects.ts). A human DECISION →
+   * persisted in save v2 (empty by default). Distinct from `scouting`, which is the
+   * per-season ojeo of ANY rival; this is the follow-list of curated youngsters.
+   */
+  prospectTracking: Record<string, ProspectTracking>;
   season: SeasonState;
   history: SeasonSummary[];
   /**

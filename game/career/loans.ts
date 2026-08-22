@@ -297,6 +297,8 @@ export interface LoanReturnContext {
   seasonStartYear: number;
   /** The human club's training focus (shapes how returning players evolve). */
   training?: TrainingFocus;
+  /** The preparador físico's training multiplier (>= 1; default 1 = none). */
+  physioFactor?: number;
   humanTeamId: string;
 }
 
@@ -336,6 +338,7 @@ export function returnLoans(
       seasonNumber: ctx.seasonNumber,
       seasonStartYear: ctx.seasonStartYear,
       training: ctx.training,
+      physioFactor: ctx.physioFactor,
     });
     if (result.retired) continue;
     returnedPlayers.push(result.player);

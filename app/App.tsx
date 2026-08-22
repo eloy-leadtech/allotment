@@ -6,18 +6,23 @@ import { SeasonScreen } from '@ui/screens/SeasonScreen';
 import { PrematchScreen } from '@ui/screens/PrematchScreen';
 import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
+import { WinterMarketScreen } from '@ui/screens/WinterMarketScreen';
 import { SquadScreen } from '@ui/screens/SquadScreen';
+import { ComparativaScreen } from '@ui/screens/ComparativaScreen';
 import { PlayerCardScreen } from '@ui/screens/PlayerCardScreen';
 import { YouthScreen } from '@ui/screens/YouthScreen';
 import { OjeoScreen } from '@ui/screens/OjeoScreen';
+import { ScoutingProspectsScreen } from '@ui/screens/ScoutingProspectsScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
 import { TrainingScreen } from '@ui/screens/TrainingScreen';
+import { StaffScreen } from '@ui/screens/StaffScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
 import { SponsorsScreen } from '@ui/screens/SponsorsScreen';
 import { TournamentScreen } from '@ui/screens/TournamentScreen';
 import { CopaScreen } from '@ui/screens/CopaScreen';
 import { EuropaScreen } from '@ui/screens/EuropaScreen';
 import { PalmaresScreen } from '@ui/screens/PalmaresScreen';
+import { HemerotecaScreen } from '@ui/screens/HemerotecaScreen';
 import { StatsScreen } from '@ui/screens/StatsScreen';
 import { PressScreen } from '@ui/screens/PressScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
@@ -41,18 +46,26 @@ export function App() {
       return <SeasonEndScreen />;
     case 'market':
       return <MarketScreen />;
+    case 'winterMarket':
+      return <WinterMarketScreen />;
     case 'squad':
       return <SquadScreen />;
+    case 'comparativa':
+      return <ComparativaScreen />;
     case 'playerCard':
       return <PlayerCardScreen />;
     case 'youth':
       return <YouthScreen />;
     case 'ojeo':
       return <OjeoScreen />;
+    case 'prospects':
+      return <ScoutingProspectsScreen />;
     case 'tactics':
       return <TacticsScreen />;
     case 'training':
       return <TrainingScreen />;
+    case 'staff':
+      return <StaffScreen />;
     case 'stadium':
       return <StadiumScreen />;
     case 'sponsors':
@@ -65,6 +78,8 @@ export function App() {
       return <EuropaScreen />;
     case 'palmares':
       return <PalmaresScreen />;
+    case 'hemeroteca':
+      return <HemerotecaScreen />;
     case 'stats':
       return <StatsScreen />;
     case 'press':

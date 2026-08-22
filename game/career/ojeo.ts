@@ -20,7 +20,8 @@
 import { createRng, hashSeed } from '@engine';
 import type { Player } from '@data';
 import type { CareerState, CareerTeam, ScoutingRecord } from './types';
-import { synthesizePotential, scoutEstimate, type ScoutRange } from './scouting';
+import { synthesizePotential, scoutEstimate, scoutPrecisionFactor, type ScoutRange } from './scouting';
+import { scoutPrecisionLevel } from './staff';
 
 /** Clamp to the classic 0-99 rating scale (integer). */
 const clampRating = (v: number): number => Math.max(0, Math.min(99, Math.round(v)));
@@ -47,16 +48,23 @@ const ABILITY_MAX_BIAS = 8;
  * The band can therefore sit off the true media and look more confident as it
  * narrows. Deterministic via `hashSeed(seed, 'ojeo-ability', player.id, ...)`.
  */
-export function abilityEstimate(player: Player, observations: number, seed: number): ScoutRange {
+export function abilityEstimate(
+  player: Player,
+  observations: number,
+  seed: number,
+  scoutLevel = 0,
+): ScoutRange {
   const truth = player.media;
+  // A hired ojeador tightens the band and shrinks the bias (1 = no ojeador).
+  const precision = scoutPrecisionFactor(scoutLevel);
 
   const biasRng = createRng(hashSeed(seed, 'ojeo-ability', player.id));
   const biasSign = biasRng.next01() < 0.5 ? -1 : 1;
   const biasMag = biasRng.next01() * ABILITY_MAX_BIAS;
-  const bias = biasSign * biasMag;
+  const bias = biasSign * biasMag * precision;
 
   const noiseRng = createRng(hashSeed(seed, 'ojeo-ability', player.id, observations));
-  const half = ABILITY_HALF_BASE / (1 + observations * ABILITY_NARROW_RATE);
+  const half = (ABILITY_HALF_BASE / (1 + observations * ABILITY_NARROW_RATE)) * precision;
   const jitter = (noiseRng.next01() * 2 - 1) * half * 0.4;
 
   const center = truth + bias + jitter;
@@ -102,8 +110,10 @@ export function playerScoutReport(career: CareerState, player: Player): ScoutRep
   const observations = rec?.observations ?? 0;
   const scoutedThisSeason = (rec?.lastSeason ?? 0) >= career.seasonNumber;
   const potencial = player.potencial ?? synthesizePotential(player, career.seed);
-  const potential = scoutEstimate(player, potencial, observations, career.seed);
-  const ability = abilityEstimate(player, observations, career.seed);
+  // A hired ojeador makes both bands (potential + current ability) more precise.
+  const scoutLevel = scoutPrecisionLevel(career.staff);
+  const potential = scoutEstimate(player, potencial, observations, career.seed, scoutLevel);
+  const ability = abilityEstimate(player, observations, career.seed, scoutLevel);
   const revealed = observations >= REVEAL_THRESHOLD;
   return {
     observations,

@@ -1,5 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { isSeasonOver, selectPressQuestion } from '@game';
+import {
+  isSeasonOver,
+  selectPressQuestion,
+  isWinterWindowOpen,
+  winterWindowMatchday,
+  winterBuyableListings,
+} from '@game';
 import type { Player } from '@data';
 import { useGameStore, nextSeasonEntry } from './gameStore';
 
@@ -29,11 +35,19 @@ function reset(): void {
   useGameStore.getState().chooseSeason('es-primera-9697');
 }
 
-/** Play the in-progress season to completion. */
+/**
+ * Play the in-progress season to completion, closing the mid-season winter window
+ * when it opens (it gates play until visited — see winterMarket.ts).
+ */
 function playToEnd(): void {
   let guard = 0;
   while (!isSeasonOver(useGameStore.getState().season!) && guard < 100) {
-    useGameStore.getState().playNextMatchday();
+    const st = useGameStore.getState();
+    if (st.career && isWinterWindowOpen(st.career)) {
+      st.closeWinterMarket();
+      continue;
+    }
+    st.playNextMatchday();
     guard += 1;
   }
 }
@@ -302,6 +316,64 @@ describe('gameStore career loop', () => {
     const s = useGameStore.getState();
     expect(s.career?.tactics?.formation).toBe('4-3-3');
     expect(s.season?.teams.find((t) => t.id === 'barcelona')?.tactics?.formation).toBe('4-3-3');
+  });
+
+  it('opens the winter window at the midpoint and gates play until it is closed', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const window = winterWindowMatchday(useGameStore.getState().season!.totalMatchdays);
+    let guard = 0;
+    while (useGameStore.getState().season!.currentMatchday < window && guard < 100) {
+      useGameStore.getState().playNextMatchday();
+      guard += 1;
+    }
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window);
+    // At the window, trying to play routes to the winter market and does NOT advance.
+    useGameStore.getState().playNextMatchday();
+    expect(useGameStore.getState().screen).toBe('winterMarket');
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window);
+    // Closing the window returns to the season and lets the second half resume.
+    useGameStore.getState().closeWinterMarket();
+    expect(useGameStore.getState().screen).toBe('season');
+    useGameStore.getState().playNextMatchday();
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window + 1);
+  });
+
+  it('a winter signing through the store only reshapes the second half and survives a slot', () => {
+    localStorage.clear();
+    useGameStore.getState().startCareer('barcelona');
+    // Bankroll the window so the top target is affordable.
+    useGameStore.setState({
+      career: { ...useGameStore.getState().career!, budget: 5_000_000_000 },
+    });
+    const window = winterWindowMatchday(useGameStore.getState().season!.totalMatchdays);
+    let guard = 0;
+    while (useGameStore.getState().season!.currentMatchday < window && guard < 100) {
+      useGameStore.getState().playNextMatchday();
+      guard += 1;
+    }
+    useGameStore.getState().openWinterMarket();
+    expect(useGameStore.getState().screen).toBe('winterMarket');
+    const firstHalf = useGameStore.getState().season!.results;
+    const target = winterBuyableListings(useGameStore.getState().career!)[0]!;
+    useGameStore.getState().winterBuy(target.player.id);
+    const after = useGameStore.getState().career!;
+    expect(after.teams.find((t) => t.id === 'barcelona')!.players.some((p) => p.id === target.player.id)).toBe(
+      true,
+    );
+    // The already-played first half is untouched by the signing.
+    expect(after.season.results).toEqual(firstHalf);
+
+    useGameStore.getState().closeWinterMarket();
+    useGameStore.getState().saveToSlot(3);
+    const before = useGameStore.getState().career!;
+    useGameStore.setState({ career: null, season: null });
+    useGameStore.getState().loadFromSlot(3);
+    const reloaded = useGameStore.getState().career!;
+    expect(reloaded.winter).toEqual(before.winter);
+    expect(reloaded.season.results).toEqual(before.season.results);
+    expect(reloaded.teams.find((t) => t.id === 'barcelona')!.players.map((p) => p.id)).toEqual(
+      before.teams.find((t) => t.id === 'barcelona')!.players.map((p) => p.id),
+    );
   });
 
   it('nextSeasonEntry chains the seasons and stops after the last', () => {

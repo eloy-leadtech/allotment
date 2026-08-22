@@ -42,6 +42,13 @@ export interface DevelopmentContext {
    * (see training.ts). Absent means no focus (AI clubs, or the neutral default).
    */
   training?: TrainingFocus;
+  /**
+   * The preparador físico's training multiplier for this player's club (>= 1;
+   * default 1 = no preparador). Amplifies the POSITIVE training gains only, so a
+   * better preparador makes the squad progress more (see staff.ts). Only ever
+   * passed alongside a human `training` focus.
+   */
+  physioFactor?: number;
 }
 
 export interface DevelopmentResult {
@@ -146,9 +153,10 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
   const factor = player.esPortero ? GK_TREND_FACTOR : 1;
   const before = { ...player.atributos };
   // Training focus (if any) adds a deterministic per-attribute nudge on top of
-  // the age trend; no focus (AI clubs / neutral default) means a zero delta.
+  // the age trend; no focus (AI clubs / neutral default) means a zero delta. A
+  // preparador físico (physioFactor > 1) amplifies the positive gains.
   const train = (key: keyof Attributes): number =>
-    ctx.training ? trainingAttributeDelta(ctx.training, key, age) : 0;
+    ctx.training ? trainingAttributeDelta(ctx.training, key, age, ctx.physioFactor ?? 1) : 0;
 
   const next: Attributes = { ...player.atributos };
   // Fixed attribute order for stable RNG consumption within this player.

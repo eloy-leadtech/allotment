@@ -21,6 +21,7 @@ import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
 import { ConfianzaMeters } from '@ui/components/ConfianzaMeters';
+import { RenewalsPanel } from '@ui/components/RenewalsPanel';
 import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
 
 const divisionName = (d: 'primera' | 'segunda'): string =>
@@ -168,6 +169,8 @@ export function SeasonEndScreen() {
           <RetroButton onClick={() => goTo('palmares')}>Ver palmarés del club 🏅</RetroButton>
         </div>
       ) : null}
+
+      {targetEntry && !dismissed ? <RenewalsPanel /> : null}
 
       {preview && targetEntry ? (
         preview.departures.length > 0 ? (

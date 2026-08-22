@@ -128,6 +128,20 @@ const HALF_BASE = 18;
 const NARROW_RATE = 0.5;
 /** Largest stable per-player over/undervaluation the scout carries. */
 const MAX_BIAS = 12;
+/** How much each ojeador level tightens the band and shrinks the bias. */
+const SCOUT_PRECISION_PER_LEVEL = 0.12;
+/** Floor on the precision factor so even an elite ojeador keeps some uncertainty. */
+const SCOUT_PRECISION_FLOOR = 0.4;
+
+/**
+ * The precision factor (in [floor, 1]) a hired OJEADOR of `scoutLevel` (0-5) applies
+ * to a scout report: it multiplies BOTH the report's half-width and its personal
+ * bias, so a better ojeador delivers a tighter band centred closer to the truth —
+ * less error. Level 0 (no ojeador) leaves the report untouched (factor 1).
+ */
+export function scoutPrecisionFactor(scoutLevel: number): number {
+  return Math.max(SCOUT_PRECISION_FLOOR, 1 - scoutLevel * SCOUT_PRECISION_PER_LEVEL);
+}
 
 /**
  * A fallible scout's estimate of `potentialOverall(potencial, posicion)`.
@@ -151,18 +165,21 @@ export function scoutEstimate(
   potencial: Attributes,
   observedSeasons: number,
   seed: number,
+  scoutLevel = 0,
 ): ScoutRange {
   const truth = potentialOverall(potencial, player.posicion);
+  // A hired ojeador tightens the band and shrinks the bias (1 = no ojeador).
+  const precision = scoutPrecisionFactor(scoutLevel);
 
   // Stable bias: independent of observedSeasons so it never "washes out".
   const biasRng: Rng = createRng(hashSeed(seed, 'scout', player.id));
   const biasSign = biasRng.next01() < 0.5 ? -1 : 1;
   const biasMag = biasRng.next01() * MAX_BIAS;
-  const bias = biasSign * biasMag;
+  const bias = biasSign * biasMag * precision;
 
   // Observation-dependent noise and width.
   const noiseRng: Rng = createRng(hashSeed(seed, 'scout', player.id, observedSeasons));
-  const half = HALF_BASE / (1 + observedSeasons * NARROW_RATE);
+  const half = (HALF_BASE / (1 + observedSeasons * NARROW_RATE)) * precision;
   const jitter = (noiseRng.next01() * 2 - 1) * half * 0.4;
 
   const center = truth + bias + jitter;

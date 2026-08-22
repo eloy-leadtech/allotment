@@ -33,6 +33,11 @@ export interface SourcePlayer {
   peso_kg?: number | null;
   nacionalidad?: string | null;
   club_anterior?: string | null;
+  // Explicit pitch-line byte from the player record (0=POR,1=DEF,2=MED,3=DEL):
+  // the authoritative position source (PCF5 PKF idx11 / PCF7–2000 FDI date−1, see
+  // analysis findings/13). Absent (null) only for the classic 93/94–94/95 packs,
+  // whose record hasn't been decoded — those fall back to the attribute heuristic.
+  linea?: number | null;
 }
 
 export interface SourceTeam {
@@ -57,11 +62,24 @@ export function toIsoDate(ddmmyyyy: string | null): string | null {
 }
 
 /**
- * Derive the coarse pitch line from attributes (the source demarcation codes are
- * not yet decoded). Goalkeepers are flagged directly; outfielders are classified
- * by which attribute group dominates.
+ * Derive the coarse pitch line. The authoritative source is the explicit line
+ * byte in the player record (`linea`: 0=POR,1=DEF,2=MED,3=DEL), reverse-engineered
+ * from the game binaries (see analysis findings/13). Only the classic 93/94–94/95
+ * packs lack it; those fall back to the old attribute heuristic (goalkeepers
+ * flagged directly, outfielders classified by which attribute group dominates).
  */
 export function derivePosition(p: SourcePlayer): Position {
+  switch (p.linea) {
+    case 0:
+      return 'POR';
+    case 1:
+      return 'DEF';
+    case 2:
+      return 'MED';
+    case 3:
+      return 'DEL';
+  }
+  // Fallback — classic seasons without a decoded line byte:
   if (p.es_portero) return 'POR';
   const a = p.atributos;
   const attack = a.remate * 0.6 + a.ofensivo * 0.4;
@@ -121,7 +139,9 @@ export function transformPlayer(src: SourcePlayer, teamId: string): Player {
     nombre: src.nombre,
     nombreCompleto,
     posicion: derivePosition(src),
-    esPortero: src.es_portero,
+    // Line byte 0 is a cleaner goalkeeper detector than the porteria attribute
+    // (findings/13); fall back to the source flag only when no line was decoded.
+    esPortero: src.linea != null ? src.linea === 0 : src.es_portero,
     demarcaciones: src.demarcaciones,
     atributos: sanitizeAttributes(src.atributos, `${teamId}/${src.nombre}`, baseline),
     media: src.media,

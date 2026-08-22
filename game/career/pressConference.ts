@@ -269,8 +269,12 @@ export function bumpSeasonMorale(
   return { ...season, teams };
 }
 
-/** The total morale bump from answers recorded AT a given matchday. */
-function moraleDeltaAt(answers: readonly PressAnswer[], matchday: number): number {
+/**
+ * The total morale bump from answers recorded AT a given matchday. Exported so the
+ * winter-market replay (winterMarket.ts) can interleave the same press bumps while
+ * also applying the winter roster swap at the window matchday.
+ */
+export function moraleDeltaAt(answers: readonly PressAnswer[], matchday: number): number {
   let delta = 0;
   for (const a of answers) {
     if (a.matchday !== matchday) continue;
