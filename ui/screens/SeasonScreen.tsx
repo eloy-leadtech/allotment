@@ -1,30 +1,57 @@
-import {
-  currentStandings,
-  isSeasonOver,
-  teamName,
-  latestHeadlines,
-  selectPressQuestion,
-  isWinterWindowOpen,
-  formatEuros,
-} from '@game';
+import type { StandingRow } from '@engine';
+import { currentStandings, isSeasonOver, teamName } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
-import { RetroPanel } from '@ui/components/RetroPanel';
-import { StandingsTable } from '@ui/components/StandingsTable';
-import { Crest } from '@ui/components/Crest';
-import { ConfianzaMeters } from '@ui/components/ConfianzaMeters';
-import { DEFAULT_CONFIANZA } from '@game';
-import { objectiveLabel, satisfactionLabel, satisfactionIcon } from './objectiveText';
+import { Pcf7Frame, place, type Rect } from '@ui/components/Pcf7Frame';
+
+/**
+ * CLASIFICACIÓN — calco de `scr_026`: píldora de título centrada arriba + dos
+ * columnas de filas-cápsula (≈10+10) con la tabla de liga en vivo superpuesta,
+ * y un recuadro de previsualización abajo con los resultados de la última
+ * jornada. Coordenadas sobre el lienzo 640×480 (findings/13 §4.2) — el humano
+ * afina estas constantes sobre el bitmap real.
+ */
+
+// Zonas sobre scr_026 (640×480). Ajustables por el humano.
+const TITLE: Rect = { x: 150, y: 56, w: 340, h: 28 };
+const SUBTITLE: Rect = { x: 150, y: 84, w: 340, h: 16 };
+const COL_LEFT: Rect = { x: 18, y: 104, w: 300, h: 168 };
+const COL_RIGHT: Rect = { x: 322, y: 104, w: 300, h: 168 };
+const PREVIEW: Rect = { x: 150, y: 286, w: 340, h: 92 };
+const BTN_PLAY: Rect = { x: 150, y: 392, w: 108, h: 30 };
+const BTN_SIM: Rect = { x: 266, y: 392, w: 108, h: 30 };
+const BTN_BACK: Rect = { x: 382, y: 392, w: 108, h: 30 };
+
+function StandingsColumn({ rows, rect, name, meId, offset }: {
+  rows: StandingRow[];
+  rect: Rect;
+  name: (id: string) => string;
+  meId: string;
+  offset: number;
+}) {
+  return (
+    <div className="pcf7standcol" style={place(rect)}>
+      {rows.map((row, i) => (
+        <div
+          key={row.teamId}
+          className={`pcf7standrow${row.teamId === meId ? ' pcf7standrow--me' : ''}`}
+        >
+          <span className="pcf7standrow__pos">{offset + i + 1}</span>
+          <span className="pcf7standrow__team">{name(row.teamId)}</span>
+          <span className="pcf7standrow__num">{row.played}</span>
+          <span className="pcf7standrow__num">{row.goalDiff > 0 ? `+${row.goalDiff}` : row.goalDiff}</span>
+          <span className="pcf7standrow__pts">{row.points}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function SeasonScreen() {
   const season = useGameStore((s) => s.season);
-  const career = useGameStore((s) => s.career);
   const division = useGameStore((s) => s.career?.division ?? 'primera');
-  const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const lastResults = useGameStore((s) => s.lastResults);
-  const lastCallUp = useGameStore((s) => s.lastCallUp);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
-  const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const openMatch = useGameStore((s) => s.openMatch);
   const goTo = useGameStore((s) => s.goTo);
 
@@ -41,236 +68,70 @@ export function SeasonScreen() {
   const table = currentStandings(season);
   const over = isSeasonOver(season);
   const champion = over ? table[0] : undefined;
-  const board = career?.board;
-  const headlines = career ? latestHeadlines(career, 6) : [];
-  const pressPending = career ? selectPressQuestion(career) : null;
-  // At the season midpoint the winter transfer window gates play until it is closed.
-  const winterOpen = career ? isWinterWindowOpen(career) : false;
+  const half = Math.ceil(table.length / 2);
+  const left = table.slice(0, half);
+  const right = table.slice(half);
 
   return (
-    <main className="screen">
-      <header className="despacho-head">
-        <div className="despacho-head__crest crest-frame">
-          <Crest teamId={season.humanTeamId} size={56} />
-        </div>
-        <div className="despacho-head__identity">
-          <h1>{name(season.humanTeamId)}</h1>
-          <span className="matchday">
-            {division === 'segunda' ? 'Segunda División' : 'Primera División'} · {season.temporada}
-          </span>
-        </div>
-        <div className="despacho-head__stats">
-          <div className="head-chip">
-            <span className="head-chip__label">Jornada</span>
-            <span className="head-chip__value">
-              {over ? 'Fin' : `${season.currentMatchday}/${season.totalMatchdays}`}
-            </span>
-          </div>
-          <div className="head-chip">
-            <span className="head-chip__label">Presupuesto</span>
-            <span className="head-chip__value">{formatEuros(career?.budget ?? 0)}</span>
-          </div>
-        </div>
-      </header>
-
-      {champion ? <p className="champion">🏆 Campeón: {name(champion.teamId)}</p> : null}
-      {over ? (
-        <RetroButton variant="primary" onClick={() => goTo('seasonEnd')}>
-          Fin de temporada →
-        </RetroButton>
-      ) : winterOpen ? (
-        <RetroPanel title="❄️ Mercado de invierno">
-          <p className="press-notice">
-            Parón de mitad de temporada: la ventana de fichajes de invierno está abierta. Refuerza
-            la plantilla antes de seguir con la segunda vuelta.
-          </p>
-          <RetroButton variant="primary" onClick={openWinterMarket}>
-            Ir al mercado de invierno →
-          </RetroButton>
-        </RetroPanel>
-      ) : (
-        <div className="season-actions">
-          <RetroButton variant="primary" onClick={() => goTo('prematch')}>
-            Jugar jornada
-          </RetroButton>
-          <RetroButton onClick={playNextMatchday}>Simular jornada</RetroButton>
-        </div>
-      )}
-
-      {pressPending ? (
-        <RetroPanel title="Rueda de prensa">
-          <p className="press-notice">🎙️ La prensa espera tus declaraciones.</p>
-          <RetroButton variant="primary" onClick={() => goTo('press')}>
-            Comparecer →
-          </RetroButton>
-        </RetroPanel>
-      ) : null}
-
-      {board ? (
-        <RetroPanel title="Objetivo de la directiva">
-          <p className="board-objective">
-            🎯 {objectiveLabel(board.objective.type)}{' '}
-            <span className="hint">(no peor que el puesto {board.objective.targetPosition})</span>
-          </p>
-          {board.lastEvaluation ? (
-            <p className={`board-mood board-mood--${board.lastEvaluation.satisfaction}`}>
-              {satisfactionIcon(board.lastEvaluation.satisfaction)}{' '}
-              {satisfactionLabel(board.lastEvaluation.satisfaction)}{' '}
-              <span className="hint">(temporada anterior)</span>
-            </p>
-          ) : null}
-        </RetroPanel>
-      ) : null}
-
-      {career ? (
-        <RetroPanel title="Junta directiva">
-          <ConfianzaMeters confianza={career.confianza ?? DEFAULT_CONFIANZA} />
-        </RetroPanel>
-      ) : null}
-
-      <StandingsTable rows={table} teamName={name} highlightTeamId={season.humanTeamId} />
-
-      {headlines.length > 0 ? (
-        <RetroPanel title="Prensa">
-          <ul className="press-feed">
-            {headlines.map((h, i) => (
-              <li key={`${h.matchday}-${i}`} className="press-line">
-                <span className="press-matchday">J{h.matchday}</span> {h.text}
-              </li>
-            ))}
-          </ul>
-        </RetroPanel>
-      ) : null}
-
-      {lastCallUp && lastCallUp.players.length > 0 ? (
-        <RetroPanel title="Parón de selecciones">
-          <p className="callup-notice">
-            ✈️ {lastCallUp.players.length}{' '}
-            {lastCallUp.players.length === 1 ? 'jugador convocado' : 'jugadores convocados'} por su
-            selección. Vuelven con fatiga extra:
-          </p>
-          <ul className="callup-list">
-            {lastCallUp.players.map((p) => (
-              <li key={p.id} className="callup-line">
-                <span className="callup-name">{p.nombre}</span>{' '}
-                <span className="hint">
-                  fatiga {p.fatigueBefore} → {p.fatigueAfter}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </RetroPanel>
-      ) : null}
-
-      {lastResults.length > 0 ? (
-        <RetroPanel title="Resultados de la última jornada">
-          <ul className="results">
-            {lastResults.map((r, i) => (
-              <li key={i}>
-                <button type="button" className="result-link" onClick={() => openMatch(r)}>
-                  {name(r.homeId)} {r.homeGoals}-{r.awayGoals} {name(r.awayId)}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </RetroPanel>
-      ) : null}
-
-      <div className="despacho-groups">
-        <section className="despacho-group">
-          <h2 className="despacho-group__label">Equipo</h2>
-          <nav className="despacho-nav" aria-label="Equipo">
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('squad')}>
-              <span className="despacho-tile__icon" aria-hidden="true">👥</span>
-              <span className="despacho-tile__label">Plantilla</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('tactics')}>
-              <span className="despacho-tile__icon" aria-hidden="true">📋</span>
-              <span className="despacho-tile__label">Táctica</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('training')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🏃</span>
-              <span className="despacho-tile__label">Entrenamiento</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('staff')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🧑‍🏫</span>
-              <span className="despacho-tile__label">Cuerpo técnico</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('youth')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🌱</span>
-              <span className="despacho-tile__label">Cantera</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('ojeo')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🔍</span>
-              <span className="despacho-tile__label">Ojeo</span>
-            </button>
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('prospects')}>
-              <span className="despacho-tile__icon" aria-hidden="true">⭐</span>
-              <span className="despacho-tile__label">Promesas</span>
-            </button>
-          </nav>
-        </section>
-
-        <section className="despacho-group">
-          <h2 className="despacho-group__label">Competición</h2>
-          <nav className="despacho-nav" aria-label="Competición">
-            <button type="button" className="despacho-tile" onClick={() => goTo('copa')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🏆</span>
-              <span className="despacho-tile__label">Copa</span>
-            </button>
-            {hasEuropa ? (
-              <button type="button" className="despacho-tile" onClick={() => goTo('europa')}>
-                <span className="despacho-tile__icon" aria-hidden="true">🌍</span>
-                <span className="despacho-tile__label">Europa</span>
-              </button>
-            ) : null}
-            <button type="button" className="despacho-tile" onClick={() => goTo('stats')}>
-              <span className="despacho-tile__icon" aria-hidden="true">📊</span>
-              <span className="despacho-tile__label">Estadísticas</span>
-            </button>
-            <button type="button" className="despacho-tile" onClick={() => goTo('palmares')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🏅</span>
-              <span className="despacho-tile__label">Palmarés</span>
-            </button>
-            <button type="button" className="despacho-tile" onClick={() => goTo('hemeroteca')}>
-              <span className="despacho-tile__icon" aria-hidden="true">📰</span>
-              <span className="despacho-tile__label">Hemeroteca</span>
-            </button>
-          </nav>
-        </section>
-
-        <section className="despacho-group">
-          <h2 className="despacho-group__label">Club y economía</h2>
-          <nav className="despacho-nav" aria-label="Club y economía">
-            <button type="button" className="despacho-tile despacho-tile--pitch" onClick={() => goTo('stadium')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🏟️</span>
-              <span className="despacho-tile__label">Estadio</span>
-            </button>
-            <button type="button" className="despacho-tile" onClick={() => goTo('sponsors')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🤝</span>
-              <span className="despacho-tile__label">Patrocinio</span>
-            </button>
-            <button type="button" className="despacho-tile" onClick={() => goTo('press')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🎙️</span>
-              <span className="despacho-tile__label">Prensa</span>
-            </button>
-          </nav>
-        </section>
-
-        <section className="despacho-group">
-          <h2 className="despacho-group__label">Partida</h2>
-          <nav className="despacho-nav" aria-label="Partida">
-            <button type="button" className="despacho-tile" onClick={() => goTo('slots')}>
-              <span className="despacho-tile__icon" aria-hidden="true">💾</span>
-              <span className="despacho-tile__label">Guardar</span>
-            </button>
-            <button type="button" className="despacho-tile" onClick={() => goTo('title')}>
-              <span className="despacho-tile__icon" aria-hidden="true">🏠</span>
-              <span className="despacho-tile__label">Menú</span>
-            </button>
-          </nav>
-        </section>
+    <Pcf7Frame bitmap="scr_026.png">
+      <div className="pcf7ovl pcf7title-ovl" style={place(TITLE)}>
+        {division === 'segunda' ? 'Segunda' : 'Primera'} · {season.temporada}
       </div>
-    </main>
+      <div className="pcf7ovl pcf7data-ovl" style={{ ...place(SUBTITLE), justifyContent: 'center' }}>
+        {over ? 'Temporada terminada' : `Jornada ${season.currentMatchday} / ${season.totalMatchdays}`}
+      </div>
+
+      <StandingsColumn rows={left} rect={COL_LEFT} name={name} meId={season.humanTeamId} offset={0} />
+      <StandingsColumn rows={right} rect={COL_RIGHT} name={name} meId={season.humanTeamId} offset={half} />
+
+      {/* Recuadro de previsualización: campeón o últimos resultados. */}
+      <div className="pcf7steel" style={place(PREVIEW)}>
+        <div className="pcf7steel__scroll">
+          {champion ? (
+            <p className="pcf7ovl pcf7title-ovl" style={{ position: 'static', padding: '0.5em', whiteSpace: 'normal' }}>
+              🏆 Campeón: {name(champion.teamId)}
+            </p>
+          ) : lastResults.length > 0 ? (
+            <ul className="pcf7list">
+              {lastResults.map((r, i) => (
+                <li key={i}>
+                  <button
+                    type="button"
+                    className="pcf7pick pcf7list__grow"
+                    style={{ borderBottom: 0 }}
+                    onClick={() => openMatch(r)}
+                  >
+                    {name(r.homeId)} {r.homeGoals}-{r.awayGoals} {name(r.awayId)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="pcf7data-ovl" style={{ padding: '0.6em', color: 'var(--c-ink-dim)' }}>
+              Aún no se ha jugado ninguna jornada.
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Acciones. */}
+      {over ? (
+        <button type="button" className="pcf7btn" style={place({ ...BTN_PLAY, w: 224 })} onClick={() => goTo('seasonEnd')}>
+          Fin de temporada →
+        </button>
+      ) : (
+        <>
+          <button type="button" className="pcf7btn" style={place(BTN_PLAY)} onClick={() => goTo('prematch')}>
+            Jugar
+          </button>
+          <button type="button" className="pcf7btn" style={place(BTN_SIM)} onClick={playNextMatchday}>
+            Simular
+          </button>
+        </>
+      )}
+      <button type="button" className="pcf7btn" style={place(BTN_BACK)} onClick={() => goTo('season')}>
+        Despacho
+      </button>
+    </Pcf7Frame>
   );
 }

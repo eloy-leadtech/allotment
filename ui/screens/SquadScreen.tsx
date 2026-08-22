@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   synthesizePotential,
   scoutEstimate,
@@ -12,10 +13,11 @@ import { scoreTier, squadMorale, fatigueTier, NEUTRAL_FORM, NEUTRAL_MORALE, FRES
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
-import { RetroPanel } from '@ui/components/RetroPanel';
-import { GestHeader } from '@ui/components/GestHeader';
+import { Crest } from '@ui/components/Crest';
 import { Stadium } from '@ui/components/Stadium';
 import { PotentialRange } from '@ui/components/PotentialRange';
+import { Pcf7Console } from '@ui/components/Pcf7Frame';
+import { useFichaPhoto } from '@ui/hooks/useFichaPhoto';
 
 /** Players at or under this age get a (fallible) scouted potential range. */
 const YOUTH_MAX_AGE = 23;
@@ -36,6 +38,24 @@ function statusLabel({ status, matchesOut }: AvailabilityStatus): { text: string
 function byLineThenMedia(a: Player, b: Player): number {
   const line = POSITION_ORDER[a.posicion] - POSITION_ORDER[b.posicion];
   return line !== 0 ? line : b.media - a.media;
+}
+
+/** The player's attributes as label/value pairs (skips the nullable calidad). */
+function attrRows(p: Player): Array<[string, number]> {
+  const a = p.atributos;
+  const pairs: Array<[string, number]> = [
+    ['Velocidad', a.velocidad],
+    ['Físico', a.fisico],
+    ['Resistencia', a.resistencia],
+    ['Remate', a.remate],
+    ['Ofensivo', a.ofensivo],
+    ['Pase', a.pase],
+    ['Entrada', a.entrada],
+    ['Agresividad', a.agresividad],
+    ['Portería', a.porteria],
+  ];
+  if (a.calidad != null) pairs.unshift(['Calidad', a.calidad]);
+  return pairs;
 }
 
 /** Arrow glyph for a -3..+3 streak tier. */
@@ -89,12 +109,47 @@ function FatigueBar({ fatigue }: { fatigue: number }) {
   );
 }
 
+/**
+ * The player's real BDFutbol portrait when we have a high-confidence match for
+ * this season, otherwise the club crest (the existing silhouette fallback). The
+ * `<img>` is a fixed 2/3-vertical `object-fit: cover` fill of the ficha frame.
+ */
+function PlayerPhoto({
+  temporada,
+  player,
+  teamId,
+}: {
+  temporada: string;
+  player: Player;
+  teamId: string;
+}) {
+  const photo = useFichaPhoto(temporada, player.id);
+  const [failed, setFailed] = useState(false);
+  // Catalogue players carry their BDFutbol id, so the portrait resolves directly;
+  // classic Spanish seasons fall back to the temporada→id photo map.
+  const base =
+    (import.meta as { env?: Record<string, string> }).env?.VITE_PHOTO_BASE ?? '/fotos-bdf/';
+  const src = player.bdfId ? `${base}${player.bdfId}/${player.bdfId}.jpg` : photo?.src;
+  if (!src || failed) {
+    return <Crest teamId={teamId} size={64} />;
+  }
+  return (
+    <img
+      src={src}
+      alt={player.nombre}
+      onError={() => setFailed(true)}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+    />
+  );
+}
+
 export function SquadScreen() {
   const career = useGameStore((s) => s.career);
   const goTo = useGameStore((s) => s.goTo);
   const openPlayer = useGameStore((s) => s.openPlayer);
   const renewPlayer = useGameStore((s) => s.renewPlayer);
   const marketMessage = useGameStore((s) => s.marketMessage);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   if (!career) {
     return (
@@ -118,33 +173,70 @@ export function SquadScreen() {
   const seasonPlayers = career.season.teams.find((t) => t.id === career.humanTeamId)?.players ?? [];
   const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
   const vestuario = squadMorale(seasonPlayers);
-
   const vestuarioTier = scoreTier(vestuario);
 
+  const teamLabel = team?.nombre ?? career.humanTeamId;
+  const selected = players.find((p) => p.id === selectedId) ?? null;
+
+  const footer = (
+    <>
+      <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={() => goTo('comparativa')}>
+        Comparar jugadores
+      </button>
+      <button type="button" className="pcf7flatbtn" onClick={() => goTo('season')}>
+        Volver al despacho
+      </button>
+    </>
+  );
+
   return (
-    <main className="screen">
-      <GestHeader
-        crestTeamId={career.humanTeamId}
-        title={team?.nombre ?? career.humanTeamId}
-        subtitle={`Plantilla · ${career.temporada}`}
-        chips={[
-          {
-            label: 'Moral vestuario',
-            value: `${vestuario}`,
-            tone: vestuarioTier > 0 ? 'good' : vestuarioTier < 0 ? 'danger' : undefined,
-          },
-          { label: 'Masa salarial', value: `${formatEuros(masaSalarial)}/año`, tone: 'danger' },
-          { label: 'Presupuesto', value: formatEuros(career.budget) },
-        ]}
-      />
+    <Pcf7Console title={teamLabel} status={`Plantilla · ${career.temporada}`} footer={footer}>
+      <div className="pcf7chiprow">
+        <span className={`pcf7chip${vestuarioTier > 0 ? ' pcf7chip--good' : vestuarioTier < 0 ? ' pcf7chip--bad' : ''}`}>
+          <span className="pcf7chip__label">Moral vestuario</span>
+          <span className="pcf7chip__value">{vestuario}</span>
+        </span>
+        <span className="pcf7chip pcf7chip--bad">
+          <span className="pcf7chip__label">Masa salarial</span>
+          <span className="pcf7chip__value">{formatEuros(masaSalarial)}/año</span>
+        </span>
+        <span className="pcf7chip">
+          <span className="pcf7chip__label">Presupuesto</span>
+          <span className="pcf7chip__value">{formatEuros(career.budget)}</span>
+        </span>
+      </div>
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
 
       <Stadium teamId={career.humanTeamId} />
 
-      <RetroPanel title="Plantilla">
-        <div className="squad-scroll">
-          <table className="squad-table table-steel">
+      {selected ? (
+        <section className="pcf7card">
+          <div className="pcf7card__head">
+            Ficha · {selected.nombre} · dorsal {selected.dorsal ?? '—'}
+          </div>
+          <div className="pcf7ficha" style={{ padding: '0.7em' }}>
+            <div className="pcf7ficha__photo">
+              <PlayerPhoto temporada={career.temporada} player={selected} teamId={career.humanTeamId} />
+            </div>
+            <table className="pcf7tbl">
+              <tbody>
+                <tr><td>Posición</td><td className="pcf7tbl__num">{selected.posicion}</td></tr>
+                <tr><td>Media</td><td className="pcf7tbl__num">{selected.media}</td></tr>
+                <tr><td>Edad</td><td className="pcf7tbl__num">{playerAge(selected, startYear) ?? '—'}</td></tr>
+                {attrRows(selected).map(([label, value]) => (
+                  <tr key={label}><td>{label}</td><td className="pcf7tbl__num">{value}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="pcf7card" style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
+        <div className="pcf7card__head">Plantilla</div>
+        <div className="pcf7steel__scroll">
+          <table className="pcf7tbl squad-table">
             <thead>
               <tr>
                 <th>Pos</th>
@@ -175,16 +267,32 @@ export function SquadScreen() {
                 const fatigue = streak?.fatigue ?? FRESH_FATIGUE;
                 const contract = career.contracts[p.id];
                 const lastYear = contract?.yearsLeft === 1;
+                const rowClass = [status ? 'squad-row--out' : '', p.id === selectedId ? 'pcf7tbl__me' : '']
+                  .filter(Boolean)
+                  .join(' ');
                 return (
-                  <tr key={p.id} className={status ? 'squad-row--out' : undefined}>
+                  <tr
+                    key={p.id}
+                    className={rowClass || undefined}
+                    onClick={() => setSelectedId(p.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <td><span className={`pos-badge pos-badge--${p.posicion}`}>{p.posicion}</span></td>
                     <td className="squad-name">
-                      <button type="button" className="player-link" onClick={() => openPlayer(p.id)}>
+                      <button
+                        type="button"
+                        className="player-link"
+                        onClick={(e) => {
+                          // The row click opens the inline ficha; the name opens the full card.
+                          e.stopPropagation();
+                          openPlayer(p.id);
+                        }}
+                      >
                         {p.nombre}
                       </button>
                     </td>
-                    <td>{age ?? '—'}</td>
-                    <td className="squad-media">{p.media}</td>
+                    <td className="pcf7tbl__num">{age ?? '—'}</td>
+                    <td className="pcf7tbl__num squad-media">{p.media}</td>
                     <td>
                       {status ? (
                         <span className={status.className}>{status.text}</span>
@@ -195,7 +303,7 @@ export function SquadScreen() {
                     <td><FatigueBar fatigue={fatigue} /></td>
                     <td><FormArrow form={form} /></td>
                     <td><MoraleBar morale={morale} /></td>
-                    <td className="squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
+                    <td className="pcf7tbl__num squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
                     <td>
                       {contract ? (
                         <span className={lastYear ? 'squad-status squad-status--suspended' : undefined}>
@@ -205,10 +313,19 @@ export function SquadScreen() {
                         '—'
                       )}
                     </td>
-                    <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
+                    <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="pcf7list__dim">—</span>}</td>
                     <td>
                       {contract ? (
-                        <RetroButton onClick={() => renewPlayer(p.id)}>Renovar</RetroButton>
+                        <button
+                          type="button"
+                          className="pcf7flatbtn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            renewPlayer(p.id);
+                          }}
+                        >
+                          Renovar
+                        </button>
                       ) : null}
                     </td>
                   </tr>
@@ -217,19 +334,12 @@ export function SquadScreen() {
             </tbody>
           </table>
         </div>
+      </section>
 
-        <p className="hint">
-          Pulsa el nombre de un jugador para ver su ficha completa. El ojeo es falible: el rango puede no
-          contener el valor real y se estrecha (que no acierta más) con el tiempo.
-        </p>
-      </RetroPanel>
-
-      <div className="season-actions">
-        <RetroButton variant="primary" onClick={() => goTo('comparativa')}>
-          Comparar jugadores
-        </RetroButton>
-        <RetroButton onClick={() => goTo('season')}>Volver a la liga</RetroButton>
-      </div>
-    </main>
+      <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', margin: 0 }}>
+        Toca un jugador para ver su ficha aquí mismo, o pulsa su nombre para la ficha completa. El ojeo es
+        falible: el rango puede no contener el valor real y se estrecha (que no acierta más) con el tiempo.
+      </p>
+    </Pcf7Console>
   );
 }

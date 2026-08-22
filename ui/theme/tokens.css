@@ -40,8 +40,8 @@
   /* Titulares: geométrica estilo Futura, en oblicua para los rótulos grandes.
      Datos/tablas: condensada estilo Oswald/Barlow. Sin dependencias externas:
      stacks del sistema que se acercan; fuentes bitmap propias = pulido posterior. */
-  --font-ui: 'Century Gothic', 'Futura', 'Jost', 'Trebuchet MS', system-ui, sans-serif;
-  --font-data: 'Roboto Condensed', 'Barlow Condensed', 'Oswald',
+  --font-ui: 'Jost', 'Century Gothic', 'Futura', 'Trebuchet MS', system-ui, sans-serif;
+  --font-data: 'Oswald', 'Barlow Condensed', 'Roboto Condensed',
     'Segoe UI Semilight', 'Arial Narrow', system-ui, sans-serif;
 
   --radius: 10px;           /* cápsula: cantos redondeados generosos */

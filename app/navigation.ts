@@ -2,8 +2,10 @@
 export type Screen =
   | 'title'
   | 'newGame'
+  | 'database'
   | 'teamSelect'
   | 'season'
+  | 'standings'
   | 'prematch'
   | 'seasonEnd'
   | 'market'
@@ -15,6 +17,7 @@ export type Screen =
   | 'ojeo'
   | 'prospects'
   | 'tactics'
+  | 'directiva'
   | 'training'
   | 'staff'
   | 'stadium'

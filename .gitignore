@@ -12,6 +12,7 @@ ios
 # Agent worktrees (not part of the project)
 .claude/worktrees/
 
-# Fotos reales BDFutbol: junction local a Pictures, no se commitean (no existen en la web desplegada)
+# Fotos reales BDFutbol: junction local a Pictures, no se commitean
+# (el enlace apunta fuera del repo y guarda miles de imagenes).
 public/fotos-bdf
 public/fotos-bdf/

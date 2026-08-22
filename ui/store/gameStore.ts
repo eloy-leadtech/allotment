@@ -8,6 +8,10 @@ import {
   nextSeasonByTemporada,
   loadSeleccionEuro2000,
   loadSeleccionMundial98,
+  fetchLeague,
+  catalogEntry,
+  catalogFor,
+  catalogCountries,
   type League,
   type SeasonEntry,
 } from '@data';
@@ -65,6 +69,8 @@ import {
   runCareerCopa,
   runCareerEuropa,
   europaQualification,
+  currentStandings,
+  humanFate,
   seasonIncome,
   runTournament,
   TOURNAMENTS,
@@ -136,6 +142,40 @@ function attachEuropa(career: CareerState): CareerState {
   };
 }
 
+/** Mean rating of a club's best 11, for seeding the European field. */
+function poolStrength(players: readonly { media: number }[]): number {
+  const best = [...players].map((p) => p.media).sort((a, b) => b - a).slice(0, 11);
+  return best.length ? best.reduce((s, m) => s + m, 0) / best.length : 0;
+}
+
+/**
+ * Assemble a European field for a catalogue season: the three strongest clubs
+ * of every country's Primera that year (ids namespaced by country so slugs from
+ * different leagues never collide in the draw). Fetches are cached, so the
+ * ~14 league loads only happen once per season.
+ */
+async function buildCatalogEuropaPool(seasonStr: string, excludeTeamId: string) {
+  const pool: ReturnType<typeof toCompetitionTeam>[] = [];
+  for (const c of catalogCountries()) {
+    const entry = catalogFor(c.code, '1').find((e) => e.season === seasonStr);
+    if (!entry) continue;
+    try {
+      const lg = await fetchLeague(entry.id);
+      const top = lg.equipos
+        .map(toCompetitionTeam)
+        .sort((a, b) => poolStrength(b.players) - poolStrength(a.players))
+        .slice(0, 3);
+      for (const t of top) {
+        if (t.id === excludeTeamId) continue;
+        pool.push({ ...t, id: `${c.code}-${t.id}` });
+      }
+    } catch {
+      /* liga ausente ese año: se omite */
+    }
+  }
+  return pool;
+}
+
 interface GameStore {
   screen: Screen;
   /** Season chosen for the next new game. */
@@ -144,6 +184,15 @@ interface GameStore {
   seed: number;
   /** League loaded for the chosen season (drives team select). */
   league: League;
+  /**
+   * True when the current/next game is a catalogue league (any of the 692), not
+   * one of the hand-built classic Spanish seasons. Catalogue careers skip the
+   * Spain-only cup/Europe attach and chain by the catalogue, not the SEASONS
+   * registry.
+   */
+  isCatalogCareer: boolean;
+  /** id→nombre for the European field of a catalogue career (ids are namespaced). */
+  europaNames: Record<string, string>;
   /** The whole career (source of truth); null before a game starts. */
   career: CareerState | null;
   /** Mirror of `career.season`, the in-progress season (drives the season screens). */
@@ -185,9 +234,13 @@ interface GameStore {
   /** Open a player's rich card (ficha) from the squad list. */
   openPlayer: (playerId: string) => void;
   chooseSeason: (id: string) => void;
+  /** Load a catalogue league by id (async) and go to team select. */
+  openCatalogLeague: (leagueId: string) => Promise<void>;
   setSeed: (seed: number) => void;
   randomizeSeed: () => void;
   startCareer: (teamId: string) => void;
+  /** Advance a catalogue career to the next season of the same country/division. */
+  continueCatalogCareer: () => void;
   playNextMatchday: () => void;
   watchNextMatchday: () => void;
   toggleRetain: (playerId: string) => void;
@@ -260,6 +313,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     seasonId: first.id,
     seed: randomSeed(),
     league: first.load(),
+    isCatalogCareer: false,
+    europaNames: {},
     career: null,
     season: null,
     lastResults: [],
@@ -281,13 +336,21 @@ export const useGameStore = create<GameStore>((set, get) => {
     openPlayer: (playerId) => set({ selectedPlayerId: playerId, screen: 'playerCard' }),
     chooseSeason: (id) => {
       const entry = getSeason(id);
-      if (entry) set({ seasonId: id, league: entry.load() });
+      if (entry) set({ seasonId: id, league: entry.load(), isCatalogCareer: false });
+    },
+    openCatalogLeague: async (leagueId) => {
+      const league = await fetchLeague(leagueId);
+      set({ seasonId: leagueId, league, isCatalogCareer: true, screen: 'teamSelect' });
     },
     setSeed: (seed) => set({ seed }),
     randomizeSeed: () => set({ seed: randomSeed() }),
     startCareer: (teamId) => {
-      const { league, seed } = get();
-      const career = attachEuropa(attachCopa(newCareer(league, teamId, seed)));
+      const { league, seed, isCatalogCareer } = get();
+      const base = newCareer(league, teamId, seed);
+      // Copa del Rey and European cups are wired to the Spanish registry only;
+      // a catalogue league (any country) plays its league season without them
+      // until foreign competitions arrive (Fase 3).
+      const career = isCatalogCareer ? base : attachEuropa(attachCopa(base));
       set({
         career,
         season: career.season,
@@ -299,6 +362,106 @@ export const useGameStore = create<GameStore>((set, get) => {
         marketMessage: null,
         screen: 'season',
       });
+    },
+    continueCatalogCareer: () => {
+      const { career, retainIds, league } = get();
+      if (!career) return;
+      const cur = catalogEntry(career.leagueId);
+      if (!cur) return;
+      const byYear = (list: typeof cur[]) => list.slice().sort((a, b) => a.season.localeCompare(b.season));
+      const div1 = byYear(catalogFor(cur.country, '1'));
+      const div2 = byYear(catalogFor(cur.country, '2'));
+      const curChain = cur.division === '2' ? div2 : div1;
+      const idx = curChain.findIndex((e) => e.id === career.leagueId);
+      const nextSeasonStr = idx >= 0 ? curChain[idx + 1]?.season : undefined;
+      if (!nextSeasonStr) {
+        set({ marketMessage: 'No hay más temporadas de esta liga en el catálogo.' });
+        return;
+      }
+      // Promotion/relegation from the finished table.
+      const relegationSpots = league.competicion.relegationSpots || 3;
+      const finishedStandings = currentStandings(career.season);
+      const humanPos = finishedStandings.findIndex((r) => r.teamId === career.humanTeamId) + 1;
+      const outcome = humanFate({
+        division: cur.division === '2' ? 'segunda' : 'primera',
+        standings: finishedStandings,
+        humanTeamId: career.humanTeamId,
+        relegationSpots,
+        promotionSpots: relegationSpots,
+      });
+      let targetDiv = cur.division;
+      if (outcome === 'relegated' && cur.division === '1') targetDiv = '2';
+      if (outcome === 'promoted' && cur.division === '2') targetDiv = '1';
+      let targetEntry = (targetDiv === '2' ? div2 : div1).find((e) => e.season === nextSeasonStr);
+      let changedDiv = targetDiv !== cur.division;
+      if (!targetEntry) {
+        // Target division has no data that year: stay in the current one.
+        targetEntry = curChain.find((e) => e.season === nextSeasonStr);
+        changedDiv = false;
+        targetDiv = cur.division;
+      }
+      if (!targetEntry) {
+        set({ marketMessage: 'No hay más temporadas de esta liga en el catálogo.' });
+        return;
+      }
+      const target = targetEntry;
+      const finalDiv = targetDiv;
+      void (async () => {
+        try {
+          const targetLeague = await fetchLeague(target.id);
+          const income = seasonIncome(career);
+          const transitioned = changedDiv
+            ? applyDivisionChange(career, finalDiv === '2' ? 'segunda' : 'primera', targetLeague)
+            : applyTransition(career, targetLeague, new Set(retainIds));
+          let nextCareer = { ...transitioned, budget: transitioned.budget + income.total };
+          let europaNames: Record<string, string> = {};
+          // European qualification from the finished Primera season.
+          try {
+            const comp = europaQualification(cur.division === '1' ? 'primera' : 'segunda', humanPos);
+            const humanTeam = nextCareer.season.teams.find((t) => t.id === nextCareer.humanTeamId);
+            if (comp && humanTeam) {
+              const pool = await buildCatalogEuropaPool(target.season, nextCareer.humanTeamId);
+              if (pool.length >= 8) {
+                europaNames = Object.fromEntries(pool.map((t) => [t.id, t.nombre]));
+                nextCareer = {
+                  ...nextCareer,
+                  europa: runCareerEuropa(
+                    nextCareer.seed,
+                    nextCareer.seasonNumber,
+                    nextCareer.temporada,
+                    pool,
+                    { team: humanTeam, comp },
+                  ),
+                };
+              }
+            }
+          } catch {
+            /* Europa es opcional: si falla, la temporada sigue sin ella */
+          }
+          set({
+            career: nextCareer,
+            season: nextCareer.season,
+            seasonId: target.id,
+            league: targetLeague,
+            isCatalogCareer: true,
+            europaNames,
+            retainIds: [],
+            bids: generateBids(nextCareer),
+            marketMessage: changedDiv
+              ? finalDiv === '1'
+                ? '¡Ascenso a Primera División!'
+                : 'Desciendes a Segunda División.'
+              : null,
+            counterOffer: null,
+            lastIncome: income,
+            lastResults: [],
+            viewingMatch: null,
+            screen: 'market',
+          });
+        } catch {
+          set({ marketMessage: 'No se pudo avanzar a la siguiente temporada.' });
+        }
+      })();
     },
     playNextMatchday: () => {
       const { career } = get();
@@ -844,23 +1007,31 @@ export const useGameStore = create<GameStore>((set, get) => {
     loadFromSlot: (slot) => {
       const info = readSlot(slot);
       if (!info) return;
-      const entry = getSeason(info.save.leagueId);
-      if (!entry) return;
-      const league = entry.load();
-      const career = attachEuropa(attachCopa(restoreCareer(info.save, league)));
-      set({
-        career,
-        season: career.season,
-        seasonId: entry.id,
-        league,
-        lastResults: [],
-        lastCallUp: null,
-        viewingMatch: null,
-        retainIds: [],
-        bids: [],
-        marketMessage: null,
-        screen: 'season',
-      });
+      const leagueId = info.save.leagueId;
+      const classic = getSeason(leagueId);
+      const enter = (league: League, isCatalog: boolean): void => {
+        const restored = restoreCareer(info.save, league);
+        const career = isCatalog ? restored : attachEuropa(attachCopa(restored));
+        set({
+          career,
+          season: career.season,
+          seasonId: leagueId,
+          league,
+          isCatalogCareer: isCatalog,
+          lastResults: [],
+          lastCallUp: null,
+          viewingMatch: null,
+          retainIds: [],
+          bids: [],
+          marketMessage: null,
+          screen: 'season',
+        });
+      };
+      if (classic) {
+        enter(classic.load(), false);
+      } else if (catalogEntry(leagueId)) {
+        void fetchLeague(leagueId).then((league) => enter(league, true));
+      }
     },
     deleteSlotAt: (slot) => {
       deleteSlot(slot);

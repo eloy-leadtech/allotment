@@ -1,8 +1,10 @@
 import { useGameStore } from '@ui/store/gameStore';
 import { TitleScreen } from '@ui/screens/TitleScreen';
 import { NewGameScreen } from '@ui/screens/NewGameScreen';
+import { DatabaseScreen } from '@ui/screens/DatabaseScreen';
 import { TeamSelectScreen } from '@ui/screens/TeamSelectScreen';
 import { SeasonScreen } from '@ui/screens/SeasonScreen';
+import { Despacho } from '@ui/screens/Despacho';
 import { PrematchScreen } from '@ui/screens/PrematchScreen';
 import { SeasonEndScreen } from '@ui/screens/SeasonEndScreen';
 import { MarketScreen } from '@ui/screens/MarketScreen';
@@ -14,6 +16,7 @@ import { YouthScreen } from '@ui/screens/YouthScreen';
 import { OjeoScreen } from '@ui/screens/OjeoScreen';
 import { ScoutingProspectsScreen } from '@ui/screens/ScoutingProspectsScreen';
 import { TacticsScreen } from '@ui/screens/TacticsScreen';
+import { DirectivaScreen } from '@ui/screens/DirectivaScreen';
 import { TrainingScreen } from '@ui/screens/TrainingScreen';
 import { StaffScreen } from '@ui/screens/StaffScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
@@ -36,9 +39,13 @@ export function App() {
       return <TitleScreen />;
     case 'newGame':
       return <NewGameScreen />;
+    case 'database':
+      return <DatabaseScreen />;
     case 'teamSelect':
       return <TeamSelectScreen />;
     case 'season':
+      return <Despacho />;
+    case 'standings':
       return <SeasonScreen />;
     case 'prematch':
       return <PrematchScreen />;
@@ -62,6 +69,8 @@ export function App() {
       return <ScoutingProspectsScreen />;
     case 'tactics':
       return <TacticsScreen />;
+    case 'directiva':
+      return <DirectivaScreen />;
     case 'training':
       return <TrainingScreen />;
     case 'staff':

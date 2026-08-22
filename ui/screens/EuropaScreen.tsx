@@ -9,19 +9,22 @@ import { KnockoutPath } from '@ui/components/KnockoutPath';
 
 export function EuropaScreen() {
   const career = useGameStore((s) => s.career);
+  const europaNames = useGameStore((s) => s.europaNames);
   const goTo = useGameStore((s) => s.goTo);
   const [tab, setTab] = useState<'champions' | 'uefa'>('champions');
 
-  // Team id -> name: the continental clubs plus the human's own club.
+  // Team id -> name: the continental clubs plus the human's own club. For a
+  // catalogue career the field comes from `europaNames` (namespaced ids).
   const nameById = useMemo(() => {
     const map = new Map<string, string>();
     if (career) {
       const entry = getEuropaByTemporada(career.temporada);
       if (entry) for (const t of entry.load().equipos) map.set(t.id, t.nombre);
+      for (const [id, nombre] of Object.entries(europaNames)) map.set(id, nombre);
       for (const t of career.season.teams) map.set(t.id, t.nombre);
     }
     return map;
-  }, [career]);
+  }, [career, europaNames]);
 
   if (!career || !career.europa) {
     return (
