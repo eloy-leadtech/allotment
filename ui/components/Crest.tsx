@@ -24,6 +24,9 @@ export function Crest({ teamId, size = 20 }: CrestProps) {
       width={size}
       height={size}
       alt=""
+      loading="lazy"
+      decoding="async"
+      draggable={false}
       onError={() => setFailed(true)}
     />
   );

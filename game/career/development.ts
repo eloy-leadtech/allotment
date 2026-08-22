@@ -11,6 +11,7 @@
  */
 import { createRng, hashSeed, type Rng } from '@engine';
 import type { Attributes, Player, Position } from '@data';
+import { trainingAttributeDelta, type TrainingFocus } from './training';
 
 /** Attributes that fade with age (athleticism). */
 const PHYSICAL: readonly (keyof Attributes)[] = ['agresividad', 'resistencia', 'velocidad', 'fisico'];
@@ -35,6 +36,19 @@ export interface DevelopmentContext {
   seasonNumber: number;
   /** Calendar start year of that season, e.g. 1997 for "97/98". */
   seasonStartYear: number;
+  /**
+   * The human club's training focus this season, if this player belongs to it.
+   * Layers a MODERATE, deterministic trend nudge on top of the aging curve
+   * (see training.ts). Absent means no focus (AI clubs, or the neutral default).
+   */
+  training?: TrainingFocus;
+  /**
+   * The preparador físico's training multiplier for this player's club (>= 1;
+   * default 1 = no preparador). Amplifies the POSITIVE training gains only, so a
+   * better preparador makes the squad progress more (see staff.ts). Only ever
+   * passed alongside a human `training` focus.
+   */
+  physioFactor?: number;
 }
 
 export interface DevelopmentResult {
@@ -96,13 +110,17 @@ function ageTrend(age: number): { phys: number; tech: number } {
 const GK_TREND_FACTOR = 0.6;
 
 /**
- * Retirement probability this season. The window opens later for goalkeepers,
- * who play on longer, and ramps to certainty across a few seasons.
+ * Retirement age — HARD age cutoff at end of season (as PCF5:
+ * `if (edad < umbral) sigue; else se retira`). PCF5's confirmed cutoff was 35,
+ * but the OWNER prefers realistic modern longevity: outfielders retire at 39 and
+ * goalkeepers a touch later at 41 (keepers routinely play into their forties).
  */
-function retirementChance(age: number, esPortero: boolean): number {
-  const over = age - (esPortero ? 36 : 33);
-  if (over <= 0) return 0;
-  return Math.min(1, over * 0.22);
+const RETIREMENT_AGE_OUTFIELD = 39;
+const RETIREMENT_AGE_GK = 41;
+
+/** The hard retirement age for a player: 39 outfield, 41 goalkeeper (owner's realism choice). */
+function retirementAge(esPortero: boolean): number {
+  return esPortero ? RETIREMENT_AGE_GK : RETIREMENT_AGE_OUTFIELD;
 }
 
 /** Apply one season of drift to a single (non-null) attribute value. */
@@ -125,13 +143,20 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
   // Unknown age: hold steady (no evolution, no retirement).
   if (age === null) return { player, retired: false, age: null };
 
-  if (rng.next01() < retirementChance(age, player.esPortero)) {
+  // Retirement is a deterministic HARD age cutoff (PCF5), decided before any
+  // attribute drift so a retiring player is returned untouched.
+  if (age >= retirementAge(player.esPortero)) {
     return { player, retired: true, age };
   }
 
   const trend = ageTrend(age);
   const factor = player.esPortero ? GK_TREND_FACTOR : 1;
   const before = { ...player.atributos };
+  // Training focus (if any) adds a deterministic per-attribute nudge on top of
+  // the age trend; no focus (AI clubs / neutral default) means a zero delta. A
+  // preparador físico (physioFactor > 1) amplifies the positive gains.
+  const train = (key: keyof Attributes): number =>
+    ctx.training ? trainingAttributeDelta(ctx.training, key, age, ctx.physioFactor ?? 1) : 0;
 
   const next: Attributes = { ...player.atributos };
   // Fixed attribute order for stable RNG consumption within this player.
@@ -139,17 +164,17 @@ export function developPlayer(player: Player, ctx: DevelopmentContext): Developm
     const value = before[key];
     if (value === null) continue; // physical attrs are never null; guard for the type
     const ceil = player.potencial ? player.potencial[key] : null;
-    next[key] = driftValue(value, trend.phys * factor, ceil, rng);
+    next[key] = driftValue(value, trend.phys * factor + train(key), ceil, rng);
   }
   for (const key of TECHNICAL) {
     const value = before[key];
     if (value === null) continue; // technical attrs are never null; guard for the type
     const ceil = player.potencial ? player.potencial[key] : null;
-    next[key] = driftValue(value, trend.tech * factor, ceil, rng);
+    next[key] = driftValue(value, trend.tech * factor + train(key), ceil, rng);
   }
   if (before.calidad !== null) {
     const ceil = player.potencial ? player.potencial.calidad : null;
-    next.calidad = driftValue(before.calidad, trend.tech * factor, ceil, rng);
+    next.calidad = driftValue(before.calidad, trend.tech * factor + train('calidad'), ceil, rng);
   }
 
   // Move media by the SAME delta the position-weighted core moved (never absolute).

@@ -40,7 +40,7 @@
           "fechaNacimiento": "1973-01-12",
           "alturaCm": 194,
           "pesoKg": 89,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid B (96)"
         },
         {
@@ -69,7 +69,7 @@
           "fechaNacimiento": "1972-09-06",
           "alturaCm": 192,
           "pesoKg": 87,
-          "nacionalidad": null,
+          "nacionalidad": "Rusia",
           "clubAnterior": "CSKA Moscú (96)"
         },
         {
@@ -99,7 +99,7 @@
           "fechaNacimiento": "1972-12-13",
           "alturaCm": 183,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Almería (95)"
         },
         {
@@ -131,14 +131,14 @@
           "fechaNacimiento": "1970-11-15",
           "alturaCm": 186,
           "pesoKg": 82,
-          "nacionalidad": "Ex-Yugoslavia",
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Osasuna (96)"
         },
         {
           "id": "albacete-jose-maria-cabrera-menendez-1963",
           "nombre": "Menéndez",
           "nombreCompleto": "José María Cabrera MENENDEZ",
-          "posicion": "MED",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             2,
@@ -162,7 +162,7 @@
           "fechaNacimiento": "1963-12-29",
           "alturaCm": 177,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Betis (96)"
         },
         {
@@ -223,7 +223,7 @@
           "fechaNacimiento": "1962-07-22",
           "alturaCm": 186,
           "pesoKg": 86,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hércules (96)"
         },
         {
@@ -254,7 +254,7 @@
           "fechaNacimiento": "1960-04-20",
           "alturaCm": 183,
           "pesoKg": 76,
-          "nacionalidad": "1",
+          "nacionalidad": "España",
           "clubAnterior": "Sevilla (96)"
         },
         {
@@ -283,7 +283,7 @@
           "fechaNacimiento": "1970-11-19",
           "alturaCm": 180,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Lleida (94)"
         },
         {
@@ -312,7 +312,7 @@
           "fechaNacimiento": "1970-09-10",
           "alturaCm": 177,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "At. Madrid (95)"
         },
         {
@@ -344,14 +344,14 @@
           "fechaNacimiento": "1975-01-06",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hellín Deportivo (95)"
         },
         {
           "id": "albacete-david-de-las-heras-banos-1966",
           "nombre": "David",
           "nombreCompleto": "DAVID de las Heras Baños",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -376,14 +376,14 @@
           "fechaNacimiento": "1966-10-06",
           "alturaCm": 182,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hércules (96)"
         },
         {
           "id": "albacete-juan-carlos-centurian-baez-1971",
           "nombre": "Centurión",
           "nombreCompleto": "Juan Carlos CENTURIaN Báez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -406,14 +406,14 @@
           "fechaNacimiento": "1971-11-24",
           "alturaCm": 182,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "Paraguay",
           "clubAnterior": "Guaraní (96)"
         },
         {
           "id": "albacete-vicente-blanco-sanchez-tito-1971",
           "nombre": "Tito",
           "nombreCompleto": "Vicente Blanco Sánchez, TITO",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -436,14 +436,14 @@
           "fechaNacimiento": "1971-07-15",
           "alturaCm": 176,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Toledo (96)"
         },
         {
           "id": "albacete-manuel-salvador-serra-manolo-1963",
           "nombre": "Manolo",
           "nombreCompleto": "Manuel Salvador Serra, MANOLO",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -466,14 +466,14 @@
           "fechaNacimiento": "1963-11-27",
           "alturaCm": 175,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Marbella (95)"
         },
         {
           "id": "albacete-juan-luis-bernal-cuellar-1972",
           "nombre": "Juanlu",
           "nombreCompleto": "JUAN LUis Bernal Cúellar",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -496,14 +496,14 @@
           "fechaNacimiento": "1972-11-07",
           "alturaCm": 182,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Écija (96)"
         },
         {
           "id": "albacete-miguel-angel-brau-puente-1975",
           "nombre": "Brau",
           "nombreCompleto": "Miguel Angel BRAU Puente",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -527,7 +527,7 @@
           "fechaNacimiento": "1975-06-21",
           "alturaCm": 181,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete B (94)"
         },
         {
@@ -556,14 +556,14 @@
           "fechaNacimiento": "1976-01-01",
           "alturaCm": 179,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete B (95)"
         },
         {
           "id": "albacete-javier-alejandro-esp-nola-1972",
           "nombre": "Espínola",
           "nombreCompleto": "Javier Alejandro ESP+NOLA",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             11,
@@ -594,7 +594,7 @@
           "id": "albacete-francisco-javier-luke-bermudez-1968",
           "nombre": "Luke",
           "nombreCompleto": "Francisco Javier LUKE Bermúdez",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -616,14 +616,14 @@
           "fechaNacimiento": "1968-02-20",
           "alturaCm": 177,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Almería (96)"
         },
         {
           "id": "albacete-daniel-toribio-aquino-1965",
           "nombre": "Aquino",
           "nombreCompleto": "Daniel Toribio AQUINO",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -646,7 +646,7 @@
           "fechaNacimiento": "1965-06-09",
           "alturaCm": 175,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Rayo Vallecano (96)"
         },
         {
@@ -676,14 +676,14 @@
           "fechaNacimiento": "1974-08-22",
           "alturaCm": 185,
           "pesoKg": 81,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hércules (96)"
         },
         {
           "id": "albacete-xavier-escaich-ferrer-1968",
           "nombre": "Escaich",
           "nombreCompleto": "Xavier ESCAICH Ferrer",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -705,14 +705,14 @@
           "fechaNacimiento": "1968-09-06",
           "alturaCm": 173,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona (95)"
         },
         {
           "id": "albacete-francisco-javier-aguilera-blanco-luna-1971",
           "nombre": "Luna",
           "nombreCompleto": "Francisco Javier Aguilera Blanco, LUNA",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8,
@@ -736,7 +736,7 @@
           "fechaNacimiento": "1971-09-23",
           "alturaCm": 182,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Almería (95)"
         }
       ]
@@ -771,7 +771,7 @@
           "fechaNacimiento": "1971-05-12",
           "alturaCm": 192,
           "pesoKg": 83,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": "Tenerife (96)"
         },
         {
@@ -800,7 +800,7 @@
           "fechaNacimiento": "1963-11-13",
           "alturaCm": 183,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting (94)"
         },
         {
@@ -829,7 +829,7 @@
           "fechaNacimiento": "1970-10-24",
           "alturaCm": 180,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Balaguer (91)"
         },
         {
@@ -860,7 +860,7 @@
           "fechaNacimiento": "1973-01-07",
           "alturaCm": 183,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic de Bilbao (96)"
         },
         {
@@ -890,7 +890,7 @@
           "fechaNacimiento": "1972-02-11",
           "alturaCm": 176,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": "Ferro Carril Oeste (96)"
         },
         {
@@ -920,7 +920,7 @@
           "fechaNacimiento": "1971-10-31",
           "alturaCm": 180,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": "Guaraní (96)"
         },
         {
@@ -952,7 +952,7 @@
           "fechaNacimiento": "1968-08-13",
           "alturaCm": 174,
           "pesoKg": 63,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Oviedo  (96)"
         },
         {
@@ -983,7 +983,7 @@
           "fechaNacimiento": "1973-03-30",
           "alturaCm": 183,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Logroñés (95)"
         },
         {
@@ -1013,7 +1013,7 @@
           "fechaNacimiento": "1966-08-06",
           "alturaCm": 178,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Zaragoza (95)"
         },
         {
@@ -1042,14 +1042,14 @@
           "fechaNacimiento": "1969-09-01",
           "alturaCm": 178,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Levante (95)"
         },
         {
           "id": "lleida-gerardo-garcia-leon-1974",
           "nombre": "Gerardo",
           "nombreCompleto": "GERARDO García León",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -1073,14 +1073,14 @@
           "fechaNacimiento": "1974-12-07",
           "alturaCm": 174,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Leganés (96)"
         },
         {
           "id": "lleida-oscar-luis-arias-suarez-1966",
           "nombre": "Oscar",
           "nombreCompleto": "OSCAR Luis Arias Suárez",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -1103,14 +1103,14 @@
           "fechaNacimiento": "1966-01-05",
           "alturaCm": 180,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Alavés (96)"
         },
         {
           "id": "lleida-antonio-roa-sanchez-1970",
           "nombre": "Roa",
           "nombreCompleto": "Antonio ROA Sánchez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -1134,14 +1134,14 @@
           "fechaNacimiento": "1970-09-22",
           "alturaCm": 171,
           "pesoKg": 71,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida (94)"
         },
         {
           "id": "lleida-gaizka-garitano-agirre-1975",
           "nombre": "Garitano",
           "nombreCompleto": "Gaizka GARITANO Agirre",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -1164,7 +1164,7 @@
           "fechaNacimiento": "1975-07-09",
           "alturaCm": 175,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic \"B\" (96)"
         },
         {
@@ -1195,7 +1195,7 @@
           "fechaNacimiento": "1967-06-02",
           "alturaCm": 179,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Rayo Vallecano (96)"
         },
         {
@@ -1225,7 +1225,7 @@
           "fechaNacimiento": "1975-09-17",
           "alturaCm": 185,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Espanyol sub-19 (94)"
         },
         {
@@ -1256,14 +1256,14 @@
           "fechaNacimiento": "1972-02-16",
           "alturaCm": 185,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "Bosnia Herzegovina",
           "clubAnterior": "RAD de Belgrado (95)"
         },
         {
           "id": "lleida-angel-luis-fernandez-serrano-1970",
           "nombre": "Angel Luis",
           "nombreCompleto": "ANGEL LUIS Fernández Serrano",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -1286,14 +1286,14 @@
           "fechaNacimiento": "1970-02-26",
           "alturaCm": 184,
           "pesoKg": 85,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida (96)"
         },
         {
           "id": "lleida-gorka-bidaurrazaga-rebolledo-1972",
           "nombre": "Bidaurrázaga",
           "nombreCompleto": "Gorka BIDAURRAZAGA Rebolledo",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             16,
@@ -1317,14 +1317,14 @@
           "fechaNacimiento": "1972-09-20",
           "alturaCm": 180,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic B (96)"
         },
         {
           "id": "lleida-lluis-gonzalez-pujol-1969",
           "nombre": "Lluis",
           "nombreCompleto": "LLUIS González Pujol",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -1346,14 +1346,14 @@
           "fechaNacimiento": "1969-06-30",
           "alturaCm": 185,
           "pesoKg": 85,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida (96)"
         },
         {
           "id": "lleida-estefan-julia-garcia-1972",
           "nombre": "Estefan",
           "nombreCompleto": "ESTEFAN Juliá García",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -1375,7 +1375,7 @@
           "fechaNacimiento": "1972-08-31",
           "alturaCm": 181,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sant Andreu (96)"
         },
         {
@@ -1404,7 +1404,7 @@
           "fechaNacimiento": "1971-01-02",
           "alturaCm": 183,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Partizán de Belgado (96)"
         },
         {
@@ -1434,14 +1434,14 @@
           "fechaNacimiento": "1972-05-26",
           "alturaCm": 184,
           "pesoKg": 85,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Gimnástic (96)"
         },
         {
           "id": "lleida-julio-rodr-guez-seco-1968",
           "nombre": "Rodríguez",
           "nombreCompleto": "Julio RODR+GUEZ Seco",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -1500,7 +1500,7 @@
           "fechaNacimiento": "1975-09-22",
           "alturaCm": 185,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (93)"
         },
         {
@@ -1529,7 +1529,7 @@
           "fechaNacimiento": "1976-04-08",
           "alturaCm": 185,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna B (96)"
         },
         {
@@ -1558,7 +1558,7 @@
           "fechaNacimiento": "1974-11-29",
           "alturaCm": 185,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna  Promesas (96)"
         },
         {
@@ -1587,7 +1587,7 @@
           "fechaNacimiento": "1968-02-09",
           "alturaCm": 173,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Salamanca (96)"
         },
         {
@@ -1618,7 +1618,7 @@
           "fechaNacimiento": "1969-07-01",
           "alturaCm": 183,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete (96)"
         },
         {
@@ -1647,7 +1647,7 @@
           "fechaNacimiento": "1975-01-23",
           "alturaCm": 182,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (96)"
         },
         {
@@ -1676,7 +1676,7 @@
           "fechaNacimiento": "1977-02-25",
           "alturaCm": 185,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (96)"
         },
         {
@@ -1706,14 +1706,14 @@
           "fechaNacimiento": "1966-10-27",
           "alturaCm": 183,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic de Bilbao (94)"
         },
         {
           "id": "osasuna-eduardo-perez-ferre-1970",
           "nombre": "Eduardo",
           "nombreCompleto": "EDUARDO Pérez Ferré",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -1736,7 +1736,7 @@
           "fechaNacimiento": "1970-06-11",
           "alturaCm": 175,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona B (94)"
         },
         {
@@ -1767,14 +1767,14 @@
           "fechaNacimiento": "1976-03-18",
           "alturaCm": 185,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Prom. (95)"
         },
         {
           "id": "osasuna-jesus-maria-lacruz-gomez-1978",
           "nombre": "Lacruz",
           "nombreCompleto": "Jesús María LACRUZ Gómez",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             2
@@ -1796,14 +1796,14 @@
           "fechaNacimiento": "1978-04-25",
           "alturaCm": 182,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Prom. (95)"
         },
         {
           "id": "osasuna-robert-ullathorne-1971",
           "nombre": "Ullathorne",
           "nombreCompleto": "Robert ULLATHORNE",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             2,
@@ -1827,14 +1827,14 @@
           "fechaNacimiento": "1971-10-11",
           "alturaCm": 173,
           "pesoKg": 67,
-          "nacionalidad": null,
+          "nacionalidad": "Inglaterra",
           "clubAnterior": "Norwich City (96)"
         },
         {
           "id": "osasuna-david-caneda-perez-1970",
           "nombre": "Caneda",
           "nombreCompleto": "David CANEDA Pérez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -1857,14 +1857,14 @@
           "fechaNacimiento": "1970-01-30",
           "alturaCm": 174,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Castellón (96)"
         },
         {
           "id": "osasuna-dimitri-kuznetsov-1965",
           "nombre": "Kuznetsov",
           "nombreCompleto": "Dimitri KUZNETSOV",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -1895,7 +1895,7 @@
           "id": "osasuna-txomin-nagore-arbizu-1974",
           "nombre": "Nagore",
           "nombreCompleto": "Txomin NAGORE Arbizu",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -1918,14 +1918,14 @@
           "fechaNacimiento": "1974-08-26",
           "alturaCm": 184,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (95)"
         },
         {
           "id": "osasuna-jamie-pollock-1974",
           "nombre": "Pollock",
           "nombreCompleto": "Jamie POLLOCK",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6
@@ -1947,14 +1947,14 @@
           "fechaNacimiento": "1974-02-16",
           "alturaCm": 178,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "Inglaterra",
           "clubAnterior": "Middlesbrough (96)"
         },
         {
           "id": "osasuna-alfonso-lobeiras-sanchez-fredi-1974",
           "nombre": "Fredi",
           "nombreCompleto": "Alfonso Lobeiras Sánchez, FREDI",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -1977,7 +1977,7 @@
           "fechaNacimiento": "1974-05-07",
           "alturaCm": 182,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Lleida (96)"
         },
         {
@@ -2008,14 +2008,14 @@
           "fechaNacimiento": "1974-10-19",
           "alturaCm": 185,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (94)"
         },
         {
           "id": "osasuna-jose-maria-yanguas-calleja-1972",
           "nombre": "Yanguas",
           "nombreCompleto": "José María YANGUAS Calleja",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -2039,14 +2039,14 @@
           "fechaNacimiento": "1972-06-20",
           "alturaCm": 172,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Calahorra (93)"
         },
         {
           "id": "osasuna-antonio-diaz-jurado-1969",
           "nombre": "Díaz",
           "nombreCompleto": "Antonio DIAZ Jurado",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -2069,7 +2069,7 @@
           "fechaNacimiento": "1969-08-11",
           "alturaCm": 181,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Salamanca (95)"
         },
         {
@@ -2127,14 +2127,14 @@
           "fechaNacimiento": "1972-08-28",
           "alturaCm": 185,
           "pesoKg": 86,
-          "nacionalidad": "No",
+          "nacionalidad": "Holanda",
           "clubAnterior": "Bolton Wanderers (96)"
         },
         {
           "id": "osasuna-jose-miguel-lopez-josemi-1974",
           "nombre": "Josemi",
           "nombreCompleto": "José Miguel López, JOSEMI",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             15,
@@ -2160,7 +2160,7 @@
           "fechaNacimiento": "1974-08-06",
           "alturaCm": 173,
           "pesoKg": 63,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Rayo Vallecano  (96)"
         },
         {
@@ -2189,14 +2189,14 @@
           "fechaNacimiento": "1971-09-05",
           "alturaCm": 175,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Alavés (95)"
         },
         {
           "id": "osasuna-jerry-simons-1969",
           "nombre": "Simons",
           "nombreCompleto": "Jerry SIMONS",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8,
@@ -2219,7 +2219,7 @@
           "fechaNacimiento": "1969-08-29",
           "alturaCm": 180,
           "pesoKg": 83,
-          "nacionalidad": null,
+          "nacionalidad": "Holanda",
           "clubAnterior": "Vitesse (96)"
         },
         {
@@ -2250,7 +2250,7 @@
           "fechaNacimiento": "1972-04-29",
           "alturaCm": 172,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna Promesas (95)"
         }
       ]
@@ -2285,7 +2285,7 @@
           "fechaNacimiento": "1963-08-09",
           "alturaCm": 181,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Palamós (91)"
         },
         {
@@ -2314,7 +2314,7 @@
           "fechaNacimiento": "1970-12-22",
           "alturaCm": 179,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona B (95)"
         },
         {
@@ -2345,7 +2345,7 @@
           "fechaNacimiento": "1970-06-18",
           "alturaCm": 180,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Logroñés (96)"
         },
         {
@@ -2375,7 +2375,7 @@
           "fechaNacimiento": "1966-09-13",
           "alturaCm": 175,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Burgos (94)"
         },
         {
@@ -2405,14 +2405,14 @@
           "fechaNacimiento": "1967-01-17",
           "alturaCm": 182,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Logroñés (95)"
         },
         {
           "id": "toledo-javier-ruiz-otxoa-1973",
           "nombre": "Ruiz Otxoa",
           "nombreCompleto": "Javier RUIZ OTXOA",
-          "posicion": "MED",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -2435,14 +2435,14 @@
           "fechaNacimiento": "1973-03-12",
           "alturaCm": 175,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic B (95)"
         },
         {
           "id": "toledo-santiago-cuesta-diaz-1971",
           "nombre": "Santi Cuesta",
           "nombreCompleto": "SANTIago CUESTA Díaz",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             2,
@@ -2465,14 +2465,14 @@
           "fechaNacimiento": "1971-08-11",
           "alturaCm": 182,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Valladolid (95)"
         },
         {
           "id": "toledo-juan-manuel-alamillos-rodriguez-1973",
           "nombre": "Juanma",
           "nombreCompleto": "JUAN MAnuel Alamillos Rodríguez",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -2495,14 +2495,14 @@
           "fechaNacimiento": "1973-05-05",
           "alturaCm": 177,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "At. Madrid B (94)"
         },
         {
           "id": "toledo-david-garcia-cortes-1972",
           "nombre": "David",
           "nombreCompleto": "DAVID García Cortés",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             5,
@@ -2525,14 +2525,14 @@
           "fechaNacimiento": "1972-11-09",
           "alturaCm": 178,
           "pesoKg": 67,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting (95)"
         },
         {
           "id": "toledo-aleksandar-radovic-1973",
           "nombre": "Radovic",
           "nombreCompleto": "Aleksandar RADOVIC",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -2556,7 +2556,7 @@
           "fechaNacimiento": "1973-10-04",
           "alturaCm": 182,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "Croacia",
           "clubAnterior": "Slobodan Uzice (96)"
         },
         {
@@ -2587,14 +2587,14 @@
           "fechaNacimiento": "1973-02-24",
           "alturaCm": 165,
           "pesoKg": 64,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Elche (96)"
         },
         {
           "id": "toledo-fabrice-henry-1968",
           "nombre": "F. Henry",
           "nombreCompleto": "Fabrice HENRY",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             7,
@@ -2618,14 +2618,14 @@
           "fechaNacimiento": "1968-02-13",
           "alturaCm": 174,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "Francia",
           "clubAnterior": "Toulouse (96)"
         },
         {
           "id": "toledo-jose-david-larrosa-nartinez-1973",
           "nombre": "Larrosa",
           "nombreCompleto": "José David LARROSA Nartínez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6
@@ -2647,7 +2647,7 @@
           "fechaNacimiento": "1973-08-14",
           "alturaCm": 178,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Lorca (96)"
         },
         {
@@ -2677,7 +2677,7 @@
           "fechaNacimiento": "1971-11-03",
           "alturaCm": 179,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Sociedad (96)"
         },
         {
@@ -2708,14 +2708,14 @@
           "fechaNacimiento": "1963-06-14",
           "alturaCm": 179,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Atco. Tomelloso (90)"
         },
         {
           "id": "toledo-alberto-benito-castaneda-1972",
           "nombre": "Benito",
           "nombreCompleto": "Alberto BENITO Castañeda",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -2739,14 +2739,14 @@
           "fechaNacimiento": "1972-05-17",
           "alturaCm": 177,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Valencia (94)"
         },
         {
           "id": "toledo-javier-delgado-lopez-1972",
           "nombre": "Delgado",
           "nombreCompleto": "Javier DELGADO López",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -2770,14 +2770,14 @@
           "fechaNacimiento": "1972-07-03",
           "alturaCm": 177,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Logroñés (95)"
         },
         {
           "id": "toledo-francisco-javier-casquero-paredes-1976",
           "nombre": "Casquero",
           "nombreCompleto": "Francisco Javier CASQUERO Paredes",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             12
@@ -2799,14 +2799,14 @@
           "fechaNacimiento": "1976-08-19",
           "alturaCm": 174,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid (93)"
         },
         {
           "id": "toledo-fco-j-dominguez-gonzalez-cipri-1973",
           "nombre": "Cipri",
           "nombreCompleto": "Fco. J. Domínguez González, CIPRI",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -2830,7 +2830,7 @@
           "fechaNacimiento": "1973-09-14",
           "alturaCm": 178,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sevilla B (96)"
         },
         {
@@ -2859,14 +2859,14 @@
           "fechaNacimiento": "1975-07-11",
           "alturaCm": 182,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "Croacia",
           "clubAnterior": "Dínamo Pancevo (96)"
         },
         {
           "id": "toledo-crescencio-cuellar-tainta-1970",
           "nombre": "Cuéllar",
           "nombreCompleto": "Crescencio CUELLAR Tainta",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -2888,14 +2888,14 @@
           "fechaNacimiento": "1970-01-02",
           "alturaCm": 175,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida (95)"
         },
         {
           "id": "toledo-juan-carlos-de-diego-rica-1966",
           "nombre": "De Diego",
           "nombreCompleto": "Juan Carlos DE DIEGO Rica",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -2917,14 +2917,14 @@
           "fechaNacimiento": "1966-08-07",
           "alturaCm": 183,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hércules (94)"
         },
         {
           "id": "toledo-francisco-j-fernandez-santos-1974",
           "nombre": "Fran",
           "nombreCompleto": "FRANcisco J. Fernández Santos",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -2946,7 +2946,7 @@
           "fechaNacimiento": "1974-03-11",
           "alturaCm": 180,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Villacañas (94)"
         }
       ]
@@ -2981,7 +2981,7 @@
           "fechaNacimiento": "1970-05-24",
           "alturaCm": 182,
           "pesoKg": 81,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Alavés (95)"
         },
         {
@@ -3010,7 +3010,7 @@
           "fechaNacimiento": "1971-01-20",
           "alturaCm": 189,
           "pesoKg": 82,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic (95)"
         },
         {
@@ -3041,14 +3041,14 @@
           "fechaNacimiento": "1969-11-28",
           "alturaCm": 178,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Eibar (95)"
         },
         {
           "id": "mallorca-lluis-carreras-ferrer-1972",
           "nombre": "Carreras",
           "nombreCompleto": "Lluis CARRERAS Ferrer",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             4,
@@ -3075,7 +3075,7 @@
           "fechaNacimiento": "1972-09-24",
           "alturaCm": 185,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona (96)"
         },
         {
@@ -3104,7 +3104,7 @@
           "fechaNacimiento": "1972-01-23",
           "alturaCm": 165,
           "pesoKg": 67,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mallorca B (93)"
         },
         {
@@ -3133,7 +3133,7 @@
           "fechaNacimiento": "1971-08-13",
           "alturaCm": 178,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting  (96)"
         },
         {
@@ -3163,7 +3163,7 @@
           "fechaNacimiento": "1971-09-26",
           "alturaCm": 188,
           "pesoKg": 84,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting B (94)"
         },
         {
@@ -3194,7 +3194,7 @@
           "fechaNacimiento": "1968-05-09",
           "alturaCm": 178,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Leganés (96)"
         },
         {
@@ -3224,14 +3224,14 @@
           "fechaNacimiento": "1962-06-23",
           "alturaCm": 175,
           "pesoKg": 73,
-          "nacionalidad": "4",
+          "nacionalidad": "España",
           "clubAnterior": "Deportivo (96)"
         },
         {
           "id": "mallorca-francisco-vilanova-bayo-1968",
           "nombre": "Vilanova",
           "nombreCompleto": "Francisco VILANOVA Bayo",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             7,
@@ -3255,14 +3255,14 @@
           "fechaNacimiento": "1968-09-17",
           "alturaCm": 182,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Badajoz (96)"
         },
         {
           "id": "mallorca-francisco-copado-1974",
           "nombre": "Copado",
           "nombreCompleto": "Francisco COPADO",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -3286,7 +3286,7 @@
           "fechaNacimiento": "1974-07-19",
           "alturaCm": 170,
           "pesoKg": 62,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hamburgo (95)"
         },
         {
@@ -3325,7 +3325,7 @@
           "id": "mallorca-jovan-stankovic-1971",
           "nombre": "Stankovic",
           "nombreCompleto": "Jovan STANKOVIC",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -3356,7 +3356,7 @@
           "id": "mallorca-jose-manuel-colmenero-crespo-1973",
           "nombre": "José Manuel",
           "nombreCompleto": "JOSE MANUEL Colmenero Crespo",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -3379,14 +3379,14 @@
           "fechaNacimiento": "1973-11-29",
           "alturaCm": 175,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting (96)"
         },
         {
           "id": "mallorca-francisco-soler-atencia-1970",
           "nombre": "Soler",
           "nombreCompleto": "Francisco SOLER Atencia",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -3409,7 +3409,7 @@
           "fechaNacimiento": "1970-03-05",
           "alturaCm": 170,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mallorca B (90)"
         },
         {
@@ -3439,7 +3439,7 @@
           "fechaNacimiento": "1974-06-03",
           "alturaCm": 187,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sevilla (96)"
         },
         {
@@ -3528,14 +3528,14 @@
           "fechaNacimiento": "1970-12-14",
           "alturaCm": 176,
           "pesoKg": 71,
-          "nacionalidad": null,
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Getafe (96)"
         },
         {
           "id": "mallorca-ramon-suarez-del-valle-monchu-1968",
           "nombre": "Monchu",
           "nombreCompleto": "Ramón Suárez del Valle, MONCHU",
-          "posicion": "DEF",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -3557,7 +3557,7 @@
           "fechaNacimiento": "1968-11-28",
           "alturaCm": 184,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sevilla (96)"
         },
         {
@@ -3589,7 +3589,7 @@
           "fechaNacimiento": "1964-02-09",
           "alturaCm": 169,
           "pesoKg": 61,
-          "nacionalidad": "1",
+          "nacionalidad": "España",
           "clubAnterior": "Athletic (96)"
         }
       ]
@@ -3624,7 +3624,7 @@
           "fechaNacimiento": "1978-04-02",
           "alturaCm": 186,
           "pesoKg": 86,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": "Argentinos Juniors (96)"
         },
         {
@@ -3653,7 +3653,7 @@
           "fechaNacimiento": "1973-11-29",
           "alturaCm": 180,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid sub-19 (94)"
         },
         {
@@ -3682,7 +3682,7 @@
           "fechaNacimiento": "1975-04-23",
           "alturaCm": 184,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
@@ -3712,7 +3712,7 @@
           "fechaNacimiento": "1974-10-19",
           "alturaCm": 170,
           "pesoKg": 66,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (96)"
         },
         {
@@ -3742,7 +3742,7 @@
           "fechaNacimiento": "1976-05-15",
           "alturaCm": 170,
           "pesoKg": 66,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (96)"
         },
         {
@@ -3772,7 +3772,7 @@
           "fechaNacimiento": "1977-05-15",
           "alturaCm": 176,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": "Maranahu Atlético (96)"
         },
         {
@@ -3803,7 +3803,7 @@
           "fechaNacimiento": "1974-09-29",
           "alturaCm": 182,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (94)"
         },
         {
@@ -3832,7 +3832,7 @@
           "fechaNacimiento": "1976-05-09",
           "alturaCm": 176,
           "pesoKg": 66,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
@@ -3863,14 +3863,14 @@
           "fechaNacimiento": "1975-01-23",
           "alturaCm": 173,
           "pesoKg": 62,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
           "id": "real-madrid-b-alberto-rivera-pizarro-1978",
           "nombre": "Rivera",
           "nombreCompleto": "Alberto RIVERA Pizarro",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -3894,14 +3894,14 @@
           "fechaNacimiento": "1978-02-19",
           "alturaCm": 170,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (96)"
         },
         {
           "id": "real-madrid-b-heitor-besora-capell-1977",
           "nombre": "Besora",
           "nombreCompleto": "Heitor BESORA Capell",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -3925,14 +3925,14 @@
           "fechaNacimiento": "1977-07-26",
           "alturaCm": 178,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Lleida (96)"
         },
         {
           "id": "real-madrid-b-javier-gracia-perez-1977",
           "nombre": "Gracia",
           "nombreCompleto": "Javier GRACIA Pérez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             7
@@ -3954,14 +3954,14 @@
           "fechaNacimiento": "1977-01-05",
           "alturaCm": 179,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Lleida (96)"
         },
         {
           "id": "real-madrid-b-esteban-matias-cambiasso-deleau-1980",
           "nombre": "E.Cambiasso",
           "nombreCompleto": "Esteban Matias CAMBIASSO Deleau",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -3987,14 +3987,14 @@
           "fechaNacimiento": "1980-05-18",
           "alturaCm": 178,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": "Argentinos Juniors (96)"
         },
         {
           "id": "real-madrid-b-rui-cesar-andrade-lopes-1977",
           "nombre": "Rui",
           "nombreCompleto": "RUI- Cesar Andrade Lopes",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9
@@ -4016,14 +4016,14 @@
           "fechaNacimiento": "1977-11-04",
           "alturaCm": 176,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "Portugal",
           "clubAnterior": "Oporto (95)"
         },
         {
           "id": "real-madrid-b-roberto-rojas-gonzalez-1974",
           "nombre": "Rojas",
           "nombreCompleto": "Roberto ROJAS González",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -4046,14 +4046,14 @@
           "fechaNacimiento": "1974-11-17",
           "alturaCm": 175,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
           "id": "real-madrid-b-enrique-torres-martin-1975",
           "nombre": "Torres",
           "nombreCompleto": "Enrique TORRES Martín",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -4076,7 +4076,7 @@
           "fechaNacimiento": "1975-10-28",
           "alturaCm": 175,
           "pesoKg": 64,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
@@ -4108,14 +4108,14 @@
           "fechaNacimiento": "1975-11-10",
           "alturaCm": 171,
           "pesoKg": 60,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (94)"
         },
         {
           "id": "real-madrid-b-manuel-silva-correia-tinaia-1979",
           "nombre": "Tinaia",
           "nombreCompleto": "Manuel Silva Correia, TINAIA",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -4140,14 +4140,14 @@
           "fechaNacimiento": "1979-10-05",
           "alturaCm": 174,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "Portugal",
           "clubAnterior": "Oporto (95)"
         },
         {
           "id": "real-madrid-b-ismael-marchal-razquin-1975",
           "nombre": "Ismael",
           "nombreCompleto": "ISMAEL Marchal Razquin",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -4169,7 +4169,7 @@
           "fechaNacimiento": "1975-03-21",
           "alturaCm": 174,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (96)"
         },
         {
@@ -4199,14 +4199,14 @@
           "fechaNacimiento": "1976-10-22",
           "alturaCm": 173,
           "pesoKg": 63,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (96)"
         },
         {
           "id": "real-madrid-b-pedro-iarley-lima-1974",
           "nombre": "Iarley",
           "nombreCompleto": "Pedro IARLEY Lima",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -4230,14 +4230,14 @@
           "fechaNacimiento": "1974-03-29",
           "alturaCm": 174,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": "Foyos (96)"
         },
         {
           "id": "real-madrid-b-ignacio-arteaga-zardoya-1972",
           "nombre": "Arteaga",
           "nombreCompleto": "Ignacio ARTEAGA Zardoya",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -4259,7 +4259,7 @@
           "fechaNacimiento": "1972-08-23",
           "alturaCm": 180,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (94)"
         },
         {
@@ -4290,7 +4290,7 @@
           "fechaNacimiento": "1976-04-27",
           "alturaCm": 173,
           "pesoKg": 62,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid C (95)"
         },
         {
@@ -4319,7 +4319,7 @@
           "fechaNacimiento": "1978-08-27",
           "alturaCm": 175,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "Portugal",
           "clubAnterior": "Oporto (95)"
         }
       ]
@@ -4354,7 +4354,7 @@
           "fechaNacimiento": "1975-03-23",
           "alturaCm": 185,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (95)"
         },
         {
@@ -4383,7 +4383,7 @@
           "fechaNacimiento": "1976-01-06",
           "alturaCm": 185,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (96)"
         },
         {
@@ -4415,7 +4415,7 @@
           "fechaNacimiento": "1975-03-12",
           "alturaCm": 183,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "Bosnia Herzegovina",
           "clubAnterior": "Estrella Roja (96)"
         },
         {
@@ -4444,7 +4444,7 @@
           "fechaNacimiento": "1974-09-09",
           "alturaCm": 181,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (96)"
         },
         {
@@ -4474,7 +4474,7 @@
           "fechaNacimiento": "1977-02-02",
           "alturaCm": 175,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (96)"
         },
         {
@@ -4505,7 +4505,7 @@
           "fechaNacimiento": "1974-01-19",
           "alturaCm": 176,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (94)"
         },
         {
@@ -4536,7 +4536,7 @@
           "fechaNacimiento": "1973-08-30",
           "alturaCm": 188,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Gimnástic (95)"
         },
         {
@@ -4566,7 +4566,7 @@
           "fechaNacimiento": "1975-06-07",
           "alturaCm": 174,
           "pesoKg": 71,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona sub-19 (94)"
         },
         {
@@ -4596,7 +4596,7 @@
           "fechaNacimiento": "1974-04-23",
           "alturaCm": 190,
           "pesoKg": 82,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Celta Turista (94)"
         },
         {
@@ -4629,7 +4629,7 @@
           "fechaNacimiento": "1975-07-20",
           "alturaCm": 180,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona sub-19 (93)"
         },
         {
@@ -4660,7 +4660,7 @@
           "fechaNacimiento": "1974-06-12",
           "alturaCm": 183,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Atlético Malagueño (93)"
         },
         {
@@ -4690,14 +4690,14 @@
           "fechaNacimiento": "1977-06-10",
           "alturaCm": 177,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (95)"
         },
         {
           "id": "barcelona-b-jose-a-de-la-sagra-fermin-1976",
           "nombre": "De la Sagra",
           "nombreCompleto": "José A. DE LA SAGRA Fermín",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -4722,14 +4722,14 @@
           "fechaNacimiento": "1976-04-01",
           "alturaCm": 177,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Atlético de Madrid (96)"
         },
         {
           "id": "barcelona-b-d-marcellus-machado-1979",
           "nombre": "D'Marcellus",
           "nombreCompleto": "D'MARCELLUS Machado",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -4754,14 +4754,14 @@
           "fechaNacimiento": "1979-02-05",
           "alturaCm": 181,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": "Gremio  de Portoalegre (96)"
         },
         {
           "id": "barcelona-b-goran-vucevic-1971",
           "nombre": "Vucevic",
           "nombreCompleto": "Goran VUCEVIC",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -4793,7 +4793,7 @@
           "id": "barcelona-b-silvio-villar-noval-1976",
           "nombre": "Silvio",
           "nombreCompleto": "SILVIO Villar Noval",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             13,
@@ -4816,14 +4816,14 @@
           "fechaNacimiento": "1976-04-09",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Espanyol (96)"
         },
         {
           "id": "barcelona-b-agustin-vacas-alonso-1972",
           "nombre": "Vacas",
           "nombreCompleto": "Agustín VACAS Alonso",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -4846,7 +4846,7 @@
           "fechaNacimiento": "1972-11-18",
           "alturaCm": 180,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Terrassa (96)"
         },
         {
@@ -4877,14 +4877,14 @@
           "fechaNacimiento": "1976-11-20",
           "alturaCm": 178,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (95)"
         },
         {
           "id": "barcelona-b-xavier-molist-berga-1977",
           "nombre": "Molist",
           "nombreCompleto": "Xavier MOLIST Berga",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6
@@ -4906,14 +4906,14 @@
           "fechaNacimiento": "1977-02-06",
           "alturaCm": 176,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (96)"
         },
         {
           "id": "barcelona-b-gerard-lopez-segu-1979",
           "nombre": "Gerard",
           "nombreCompleto": "GERARD López Segú",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -4936,14 +4936,14 @@
           "fechaNacimiento": "1979-03-12",
           "alturaCm": 186,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Juvenil (96)"
         },
         {
           "id": "barcelona-b-pep-pages-berga-1974",
           "nombre": "Pep Pagés",
           "nombreCompleto": "PEP PAGES Berga",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -4966,7 +4966,7 @@
           "fechaNacimiento": "1974-05-28",
           "alturaCm": 178,
           "pesoKg": 64,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona \"C\"(95)"
         },
         {
@@ -4997,14 +4997,14 @@
           "fechaNacimiento": "1975-05-22",
           "alturaCm": 176,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (95)"
         },
         {
           "id": "barcelona-b-josep-setvalls-morera-1974",
           "nombre": "Setvalls",
           "nombreCompleto": "Josep SETVALLS Morera",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -5028,14 +5028,14 @@
           "fechaNacimiento": "1974-08-20",
           "alturaCm": 180,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (95)"
         },
         {
           "id": "barcelona-b-patrick-herve-suffo-kengne-1978",
           "nombre": "Patrick",
           "nombreCompleto": "PATRICK Herve Suffo Kengne",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -5057,7 +5057,7 @@
           "fechaNacimiento": "1978-01-17",
           "alturaCm": 180,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Camerún",
           "clubAnterior": "Nantes (96)"
         },
         {
@@ -5086,7 +5086,7 @@
           "fechaNacimiento": "1974-09-10",
           "alturaCm": 178,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona C (95)"
         },
         {
@@ -5116,14 +5116,14 @@
           "fechaNacimiento": "1978-02-21",
           "alturaCm": 177,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Juvenil (96)"
         },
         {
           "id": "barcelona-b-juan-jose-carricondo-perez-1977",
           "nombre": "Juanjo",
           "nombreCompleto": "JUAN JOsé Carricondo Pérez",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             13,
@@ -5147,7 +5147,7 @@
           "fechaNacimiento": "1977-05-04",
           "alturaCm": 174,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Juvenil (95)"
         },
         {
@@ -5178,7 +5178,7 @@
           "fechaNacimiento": "1977-02-11",
           "alturaCm": 189,
           "pesoKg": 71,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona sub 19 (95)"
         },
         {
@@ -5209,14 +5209,14 @@
           "fechaNacimiento": "1975-04-19",
           "alturaCm": 172,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona Amateur (95)"
         },
         {
           "id": "barcelona-b-jon-bakero-escudero-1971",
           "nombre": "Bakero",
           "nombreCompleto": "Jon BAKERO Escudero",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -5239,7 +5239,7 @@
           "fechaNacimiento": "1971-07-16",
           "alturaCm": 172,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Almería (96)"
         }
       ]
@@ -5274,7 +5274,7 @@
           "fechaNacimiento": "1966-05-06",
           "alturaCm": 184,
           "pesoKg": 82,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete (96)"
         },
         {
@@ -5303,7 +5303,7 @@
           "fechaNacimiento": "1964-07-23",
           "alturaCm": 192,
           "pesoKg": 83,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Atco. Marbella (93)"
         },
         {
@@ -5332,7 +5332,7 @@
           "fechaNacimiento": "1974-02-27",
           "alturaCm": 182,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Extremadura (94)"
         },
         {
@@ -5364,7 +5364,7 @@
           "fechaNacimiento": "1970-04-13",
           "alturaCm": 182,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Polideportivo Almería (96)"
         },
         {
@@ -5394,14 +5394,14 @@
           "fechaNacimiento": "1970-09-19",
           "alturaCm": 170,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Celta (96)"
         },
         {
           "id": "merida-jose-luis-baroja-galan-1970",
           "nombre": "Baroja",
           "nombreCompleto": "José Luis BAROJA Galán",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             3,
@@ -5425,7 +5425,7 @@
           "fechaNacimiento": "1970-05-21",
           "alturaCm": 181,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Rayo Vallecano (96)"
         },
         {
@@ -5455,7 +5455,7 @@
           "fechaNacimiento": "1974-02-10",
           "alturaCm": 180,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid B (96)"
         },
         {
@@ -5485,14 +5485,14 @@
           "fechaNacimiento": "1966-06-25",
           "alturaCm": 173,
           "pesoKg": 69,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Espanyol (95)"
         },
         {
           "id": "merida-manuel-ortega-momparlet-1966",
           "nombre": "Momparlet",
           "nombreCompleto": "Manuel Ortega MOMPARLET",
-          "posicion": "MED",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             3,
@@ -5515,7 +5515,7 @@
           "fechaNacimiento": "1966-11-18",
           "alturaCm": 182,
           "pesoKg": 81,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Rayo Vallecano (94)"
         },
         {
@@ -5547,7 +5547,7 @@
           "fechaNacimiento": "1969-04-04",
           "alturaCm": 192,
           "pesoKg": 84,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Betis (95)"
         },
         {
@@ -5578,7 +5578,7 @@
           "fechaNacimiento": "1965-12-07",
           "alturaCm": 180,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting Gijón (94)"
         },
         {
@@ -5608,14 +5608,14 @@
           "fechaNacimiento": "1966-06-13",
           "alturaCm": 174,
           "pesoKg": 71,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Andorra (89)"
         },
         {
           "id": "merida-luis-miguel-olivar-garcia-1973",
           "nombre": "Olivar",
           "nombreCompleto": "Luis Miguel OLIVAR García",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             7
@@ -5637,7 +5637,7 @@
           "fechaNacimiento": "1973-03-23",
           "alturaCm": 177,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Fuenlabrada (96)"
         },
         {
@@ -5667,14 +5667,14 @@
           "fechaNacimiento": "1974-02-12",
           "alturaCm": 175,
           "pesoKg": 65,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona B (95)"
         },
         {
           "id": "merida-carlos-gabriel-correa-viana-1968",
           "nombre": "Correa",
           "nombreCompleto": "Carlos Gabriel CORREA Viana",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -5726,14 +5726,14 @@
           "fechaNacimiento": "1972-03-23",
           "alturaCm": 178,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida Promesas (96)"
         },
         {
           "id": "merida-manuel-canabal-fiestras-1974",
           "nombre": "Canabal",
           "nombreCompleto": "Manuel CANABAL Fiestras",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -5755,7 +5755,7 @@
           "fechaNacimiento": "1974-11-10",
           "alturaCm": 195,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida Promesas (96)"
         },
         {
@@ -5786,7 +5786,7 @@
           "fechaNacimiento": "1965-01-17",
           "alturaCm": 170,
           "pesoKg": 65,
-          "nacionalidad": "30",
+          "nacionalidad": "España",
           "clubAnterior": "Atlético de Madrid (95)"
         },
         {
@@ -5817,7 +5817,7 @@
           "fechaNacimiento": "1972-12-29",
           "alturaCm": 170,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona B (95)"
         },
         {
@@ -5847,14 +5847,14 @@
           "fechaNacimiento": "1967-04-06",
           "alturaCm": 171,
           "pesoKg": 66,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": "Servette, SUI (95)"
         },
         {
           "id": "merida-goran-milojevic-1968",
           "nombre": "Milojevic",
           "nombreCompleto": "Goran MILOJEVIC",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -5876,14 +5876,14 @@
           "fechaNacimiento": "1968-12-06",
           "alturaCm": 182,
           "pesoKg": 76,
-          "nacionalidad": "Ex-Yugoslavia",
+          "nacionalidad": "Serbia",
           "clubAnterior": "Celta (96)"
         },
         {
           "id": "merida-nikola-radmanovic-1969",
           "nombre": "Radmanovic",
           "nombreCompleto": "Nikola RADMANOVIC",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             7,
@@ -5908,7 +5908,7 @@
           "fechaNacimiento": "1969-03-01",
           "alturaCm": 180,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Estrella Roja (96)"
         },
         {
@@ -5938,14 +5938,14 @@
           "fechaNacimiento": "1969-12-08",
           "alturaCm": 170,
           "pesoKg": 64,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Ferrol (96)"
         },
         {
           "id": "merida-sladjan-scepovic-1965",
           "nombre": "Scepovic",
           "nombreCompleto": "Sladjan SCEPOVIC",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -5967,14 +5967,14 @@
           "fechaNacimiento": "1965-12-05",
           "alturaCm": 185,
           "pesoKg": 83,
-          "nacionalidad": null,
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Apollon Limassol (96)"
         },
         {
           "id": "merida-jerzy-podbrozny-1966",
           "nombre": "Podbrozny",
           "nombreCompleto": "Jerzy PODBROZNY",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8,
@@ -6033,7 +6033,7 @@
           "fechaNacimiento": "1960-04-04",
           "alturaCm": 177,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Hernani (78)"
         },
         {
@@ -6062,7 +6062,7 @@
           "fechaNacimiento": "1972-01-21",
           "alturaCm": 182,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mérida (95)"
         },
         {
@@ -6092,14 +6092,14 @@
           "fechaNacimiento": "1971-01-13",
           "alturaCm": 183,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Alavés (96)"
         },
         {
           "id": "eibar-koldo-arce-saralegi-1975",
           "nombre": "Koldo Arce",
           "nombreCompleto": "KOLDO ARCE Saralegi",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             2,
@@ -6122,7 +6122,7 @@
           "fechaNacimiento": "1975-06-12",
           "alturaCm": 178,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sestao (96)"
         },
         {
@@ -6154,14 +6154,14 @@
           "fechaNacimiento": "1975-08-23",
           "alturaCm": 175,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic de Bilbao \"B\" (96)"
         },
         {
           "id": "eibar-jokin-aguinaga-amubieta-1971",
           "nombre": "Aguinaga",
           "nombreCompleto": "Jokin AGUINAGA Amubieta",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -6184,7 +6184,7 @@
           "fechaNacimiento": "1971-10-27",
           "alturaCm": 175,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Sociedad B (93)"
         },
         {
@@ -6213,7 +6213,7 @@
           "fechaNacimiento": "1972-10-16",
           "alturaCm": 175,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "C. D. Durango (93)"
         },
         {
@@ -6243,7 +6243,7 @@
           "fechaNacimiento": "1973-08-16",
           "alturaCm": 182,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Unión de Irún (94)"
         },
         {
@@ -6272,14 +6272,14 @@
           "fechaNacimiento": "1972-02-15",
           "alturaCm": 184,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Amurrio (95)"
         },
         {
           "id": "eibar-mikel-kortina-bertol-1974",
           "nombre": "M. Kortina",
           "nombreCompleto": "Mikel KORTINA Bertol",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -6304,14 +6304,14 @@
           "fechaNacimiento": "1974-03-26",
           "alturaCm": 175,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic de Bilbao B (96)"
         },
         {
           "id": "eibar-jon-solaun-acarregui-1974",
           "nombre": "Solaun",
           "nombreCompleto": "Jon SOLAUN Acarregui",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9
@@ -6333,14 +6333,14 @@
           "fechaNacimiento": "1974-12-03",
           "alturaCm": 184,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sestao (96)"
         },
         {
           "id": "eibar-koldo-sarasua-gamazo-1972",
           "nombre": "Sarasua",
           "nombreCompleto": "Koldo SARASUA Gamazo",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -6363,14 +6363,14 @@
           "fechaNacimiento": "1972-03-18",
           "alturaCm": 181,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic B (95)"
         },
         {
           "id": "eibar-oscar-artetxe-pascual-1966",
           "nombre": "Artetxe",
           "nombreCompleto": "Oscar ARTETXE Pascual",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9,
@@ -6394,14 +6394,14 @@
           "fechaNacimiento": "1966-12-18",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Aurrerá (90)"
         },
         {
           "id": "eibar-bixente-oyarzabal-odriozola-1964",
           "nombre": "Bixente",
           "nombreCompleto": "BIXENTE Oyarzábal Odriozola",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -6425,14 +6425,14 @@
           "fechaNacimiento": "1964-08-14",
           "alturaCm": 181,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Anaitasuna (89)"
         },
         {
           "id": "eibar-inigo-arriola-diez-1967",
           "nombre": "Arriola",
           "nombreCompleto": "Iñigo ARRIOLA Díez",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -6456,14 +6456,14 @@
           "fechaNacimiento": "1967-10-03",
           "alturaCm": 179,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Elgóibar (91)"
         },
         {
           "id": "eibar-peio-olano-odriozola-1969",
           "nombre": "Olano",
           "nombreCompleto": "Peio OLANO Odriozola",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             16,
@@ -6486,7 +6486,7 @@
           "fechaNacimiento": "1969-08-06",
           "alturaCm": 172,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Beasáin (95)"
         },
         {
@@ -6516,14 +6516,14 @@
           "fechaNacimiento": "1974-02-11",
           "alturaCm": 182,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Athletic de Bilbao B (94)"
         },
         {
           "id": "eibar-mikel-maria-loinaz-balda-1968",
           "nombre": "Loinaz",
           "nombreCompleto": "Mikel María LOINAZ Balda",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -6545,7 +6545,7 @@
           "fechaNacimiento": "1968-03-28",
           "alturaCm": 184,
           "pesoKg": 86,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Villarreal (94)"
         },
         {
@@ -6575,7 +6575,7 @@
           "fechaNacimiento": "1974-02-07",
           "alturaCm": 170,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Unión (95)"
         },
         {
@@ -6604,14 +6604,14 @@
           "fechaNacimiento": "1972-08-09",
           "alturaCm": 189,
           "pesoKg": 87,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Mallorca (96)"
         },
         {
           "id": "eibar-juan-jose-rodriguez-aguado-1973",
           "nombre": "Juanjo",
           "nombreCompleto": "JUAN JOsé Rodríguez Aguado",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -6633,7 +6633,7 @@
           "fechaNacimiento": "1973-05-15",
           "alturaCm": 179,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sestao (96)"
         },
         {
@@ -6664,7 +6664,7 @@
           "fechaNacimiento": "1974-05-30",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Ath.Bilbao B (96)"
         }
       ]
@@ -6699,7 +6699,7 @@
           "fechaNacimiento": "1968-08-15",
           "alturaCm": 176,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Getafe (95)"
         },
         {
@@ -6728,14 +6728,14 @@
           "fechaNacimiento": "1965-07-09",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "C.D.Leganés (96)"
         },
         {
           "id": "badajoz-aurelio-santos-rodriguez-1974",
           "nombre": "Aurelio",
           "nombreCompleto": "AURELIO Santos Rodríguez",
-          "posicion": "DEL",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             2
@@ -6757,7 +6757,7 @@
           "fechaNacimiento": "1974-10-07",
           "alturaCm": 178,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Betis B (96)"
         },
         {
@@ -6786,7 +6786,7 @@
           "fechaNacimiento": "1966-01-17",
           "alturaCm": 185,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Cantera (90)"
         },
         {
@@ -6817,14 +6817,14 @@
           "fechaNacimiento": "1966-02-27",
           "alturaCm": 184,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Cantera (88)"
         },
         {
           "id": "badajoz-manuel-pinto-garrido-1967",
           "nombre": "Pinto",
           "nombreCompleto": "Manuel PINTO Garrido",
-          "posicion": "MED",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             1,
@@ -6849,7 +6849,7 @@
           "fechaNacimiento": "1967-11-17",
           "alturaCm": 178,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Extremadura (94)"
         },
         {
@@ -6880,7 +6880,7 @@
           "fechaNacimiento": "1961-06-20",
           "alturaCm": 191,
           "pesoKg": 89,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Compostela (96)"
         },
         {
@@ -6910,7 +6910,7 @@
           "fechaNacimiento": "1975-01-14",
           "alturaCm": 172,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sub-19 (94)"
         },
         {
@@ -6940,7 +6940,7 @@
           "fechaNacimiento": "1974-09-29",
           "alturaCm": 176,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sub-19 (94)"
         },
         {
@@ -6971,14 +6971,14 @@
           "fechaNacimiento": "1970-09-12",
           "alturaCm": 185,
           "pesoKg": 84,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Espanyol (95)"
         },
         {
           "id": "badajoz-oscar-adelantado-gauchia-1976",
           "nombre": "Adelantado",
           "nombreCompleto": "Oscar ADELANTADO Gauchía",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -7003,7 +7003,7 @@
           "fechaNacimiento": "1976-05-31",
           "alturaCm": 176,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Valencia B (96)"
         },
         {
@@ -7035,14 +7035,14 @@
           "fechaNacimiento": "1975-02-16",
           "alturaCm": 179,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting  (96)"
         },
         {
           "id": "badajoz-jose-luis-aguirre-beldarrain-1965",
           "nombre": "Aguirre",
           "nombreCompleto": "José Luis AGUIRRE Beldarrain",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -7067,14 +7067,14 @@
           "fechaNacimiento": "1965-09-14",
           "alturaCm": 178,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Sociedad (94)"
         },
         {
           "id": "badajoz-jose-maria-sala-boix-1964",
           "nombre": "Sala",
           "nombreCompleto": "José María SALA Boix",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -7098,7 +7098,7 @@
           "fechaNacimiento": "1964-04-24",
           "alturaCm": 175,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete (95)"
         },
         {
@@ -7129,14 +7129,14 @@
           "fechaNacimiento": "1969-01-02",
           "alturaCm": 170,
           "pesoKg": 66,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Burgos (94)"
         },
         {
           "id": "badajoz-pedro-ignacio-cordero-sanchez-1968",
           "nombre": "Cordero",
           "nombreCompleto": "Pedro Ignacio CORDERO Sánchez",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             10,
@@ -7159,7 +7159,7 @@
           "fechaNacimiento": "1968-08-17",
           "alturaCm": 176,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Albacete (95)"
         },
         {
@@ -7190,14 +7190,14 @@
           "fechaNacimiento": "1968-03-20",
           "alturaCm": 181,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Paraguay",
           "clubAnterior": "Extremadura (96)"
         },
         {
           "id": "badajoz-marcos-sequeiros-estevez-1973",
           "nombre": "Sequeiros",
           "nombreCompleto": "Marcos SEQUEIROS Estévez",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             13,
@@ -7220,14 +7220,14 @@
           "fechaNacimiento": "1973-12-12",
           "alturaCm": 180,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sporting B (96)"
         },
         {
           "id": "badajoz-zdenko-muff-1971",
           "nombre": "Muff",
           "nombreCompleto": "Zdenko MUFF",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -7249,7 +7249,7 @@
           "fechaNacimiento": "1971-07-21",
           "alturaCm": 179,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "Yugoslavia",
           "clubAnterior": "Gianina (Grecia) (96)"
         },
         {
@@ -7280,14 +7280,14 @@
           "fechaNacimiento": "1973-09-04",
           "alturaCm": 173,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Barcelona B (96)"
         },
         {
           "id": "badajoz-rafael-pozo-reinoso-1967",
           "nombre": "Pozo",
           "nombreCompleto": "Rafael POZO Reinoso",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -7309,7 +7309,7 @@
           "fechaNacimiento": "1967-04-25",
           "alturaCm": 170,
           "pesoKg": 63,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Sevilla (90)"
         },
         {
@@ -7339,7 +7339,7 @@
           "fechaNacimiento": "1970-07-08",
           "alturaCm": 170,
           "pesoKg": 70,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Eibar (95)"
         },
         {
@@ -7369,7 +7369,7 @@
           "fechaNacimiento": "1970-07-19",
           "alturaCm": 175,
           "pesoKg": 68,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Real Madrid B (96)"
         }
       ]
@@ -8018,7 +8018,7 @@
           "id": "leganes-moises-garcia-leon-1971",
           "nombre": "Moisés",
           "nombreCompleto": "MOISES García León",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -8040,7 +8040,7 @@
           "fechaNacimiento": "1971-07-10",
           "alturaCm": 185,
           "pesoKg": 84,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": "Osasuna (96)"
         },
         {
@@ -9154,7 +9154,7 @@
           "id": "almeria-diego-lopez-santos-na",
           "nombre": "Diego",
           "nombreCompleto": "DIEGO López Santos",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9
@@ -9176,7 +9176,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -9328,7 +9328,7 @@
           "id": "almeria-francisco-javier-aguilera-blanco-luna-na",
           "nombre": "Luna",
           "nombreCompleto": "Francisco Javier Aguilera Blanco, LUNA",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8
@@ -9350,7 +9350,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -9386,7 +9386,7 @@
           "id": "almeria-jon-bakero-escudero-na",
           "nombre": "Bakero",
           "nombreCompleto": "Jon BAKERO Escudero",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             12
@@ -9408,7 +9408,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         }
       ]
@@ -9421,7 +9421,7 @@
           "id": "at-madrid-b-luis-garcia-tevenet-1974",
           "nombre": "Tevenet",
           "nombreCompleto": "Luis García TEVENET",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             6,
@@ -9445,7 +9445,7 @@
           "fechaNacimiento": "1974-05-08",
           "alturaCm": 178,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -9479,7 +9479,7 @@
           "fechaNacimiento": "1974-11-25",
           "alturaCm": 182,
           "pesoKg": 81,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -9518,7 +9518,7 @@
           "id": "at-madrid-b-quinton-fortune-1977",
           "nombre": "Fortune",
           "nombreCompleto": "Quinton FORTUNE",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             15,
@@ -9542,7 +9542,7 @@
           "fechaNacimiento": "1977-05-21",
           "alturaCm": 185,
           "pesoKg": 75,
-          "nacionalidad": null,
+          "nacionalidad": "Sudáfrica",
           "clubAnterior": null
         },
         {
@@ -9610,7 +9610,7 @@
           "id": "at-madrid-b-marcos-sequeiros-estevez-1973",
           "nombre": "Sequeiros",
           "nombreCompleto": "Marcos SEQUEIROS Estévez",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             8,
@@ -9633,7 +9633,7 @@
           "fechaNacimiento": "1973-12-12",
           "alturaCm": 181,
           "pesoKg": 76,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -9737,7 +9737,7 @@
           "id": "at-madrid-b-lorenzo-del-pino-morales-loren-1974",
           "nombre": "Loren",
           "nombreCompleto": "Lorenzo del Pino Morales, LOREN",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -9761,7 +9761,7 @@
           "fechaNacimiento": "1974-06-17",
           "alturaCm": 182,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -10466,7 +10466,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -10495,7 +10495,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -10756,14 +10756,14 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
           "id": "alaves-oscar-luis-arias-suarez-na",
           "nombre": "Oscar",
           "nombreCompleto": "OSCAR Luis Arias Suárez",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9
@@ -10785,7 +10785,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -10821,7 +10821,7 @@
           "id": "alaves-dimitri-kuznetsov-na",
           "nombre": "Kuznetsov",
           "nombreCompleto": "Dimitri KUZNETSOV",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             9
@@ -10843,7 +10843,7 @@
           "fechaNacimiento": null,
           "alturaCm": null,
           "pesoKg": null,
-          "nacionalidad": null,
+          "nacionalidad": "Rusia",
           "clubAnterior": null
         },
         {
@@ -11610,7 +11610,7 @@
           "fechaNacimiento": "1966-11-24",
           "alturaCm": 180,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -11641,14 +11641,14 @@
           "fechaNacimiento": "1970-12-06",
           "alturaCm": 179,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
           "id": "las-palmas-oscar-luis-celada-1966",
           "nombre": "Óscar",
           "nombreCompleto": "ÓSCAR Luis Celada",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             5,
@@ -11674,14 +11674,14 @@
           "fechaNacimiento": "1966-03-09",
           "alturaCm": 183,
           "pesoKg": 81,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
           "id": "las-palmas-antonio-segura-robaina-1974",
           "nombre": "Robaina",
           "nombreCompleto": "Antonio Segura ROBAINA",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             17,
@@ -11706,7 +11706,7 @@
           "fechaNacimiento": "1974-11-30",
           "alturaCm": 176,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -11740,7 +11740,7 @@
           "fechaNacimiento": "1971-08-20",
           "alturaCm": 181,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Croacia",
           "clubAnterior": null
         },
         {
@@ -11773,7 +11773,7 @@
           "fechaNacimiento": "1966-10-02",
           "alturaCm": 180,
           "pesoKg": 79,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -11805,7 +11805,7 @@
           "fechaNacimiento": "1969-04-22",
           "alturaCm": 185,
           "pesoKg": 84,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -11838,14 +11838,14 @@
           "fechaNacimiento": "1972-04-04",
           "alturaCm": 182,
           "pesoKg": 72,
-          "nacionalidad": null,
+          "nacionalidad": "Polonia",
           "clubAnterior": null
         },
         {
           "id": "las-palmas-koldo-sarasua-gamazo-1972",
           "nombre": "Sarasúa",
           "nombreCompleto": "Koldo SARASÚA Gamazo",
-          "posicion": "DEF",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             4,
@@ -11871,7 +11871,7 @@
           "fechaNacimiento": "1972-03-18",
           "alturaCm": 182,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -12031,7 +12031,7 @@
           "fechaNacimiento": "1975-01-06",
           "alturaCm": 177,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -12127,7 +12127,7 @@
           "fechaNacimiento": "1971-12-17",
           "alturaCm": 190,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": null
         },
         {
@@ -12158,7 +12158,7 @@
           "fechaNacimiento": "1970-03-19",
           "alturaCm": 174,
           "pesoKg": 65,
-          "nacionalidad": null,
+          "nacionalidad": "Brasil",
           "clubAnterior": null
         },
         {
@@ -12420,7 +12420,7 @@
           "fechaNacimiento": "1970-11-19",
           "alturaCm": 180,
           "pesoKg": 77,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -12451,7 +12451,7 @@
           "fechaNacimiento": "1964-12-31",
           "alturaCm": 182,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -13157,14 +13157,14 @@
           "fechaNacimiento": "1966-06-14",
           "alturaCm": 180,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
           "id": "salamanca-jesus-enrique-velasco-munoz-1972",
           "nombre": "Velasco",
           "nombreCompleto": "Jesús Enrique VELASCO Muñoz",
-          "posicion": "MED",
+          "posicion": "DEF",
           "esPortero": false,
           "demarcaciones": [
             12,
@@ -13189,7 +13189,7 @@
           "fechaNacimiento": "1972-01-16",
           "alturaCm": 174,
           "pesoKg": 73,
-          "nacionalidad": null,
+          "nacionalidad": "España",
           "clubAnterior": null
         },
         {
@@ -13350,7 +13350,7 @@
           "fechaNacimiento": "1967-11-28",
           "alturaCm": 185,
           "pesoKg": 80,
-          "nacionalidad": null,
+          "nacionalidad": "Croacia",
           "clubAnterior": null
         },
         {
@@ -13579,7 +13579,7 @@
           "id": "salamanca-walter-gustavo-silvani-rios-1971",
           "nombre": "Silvani",
           "nombreCompleto": "Walter Gustavo SILVANI Ríos",
-          "posicion": "MED",
+          "posicion": "DEL",
           "esPortero": false,
           "demarcaciones": [
             15,
@@ -13602,14 +13602,14 @@
           "fechaNacimiento": "1971-05-11",
           "alturaCm": 185,
           "pesoKg": 78,
-          "nacionalidad": null,
+          "nacionalidad": "Argentina",
           "clubAnterior": null
         },
         {
           "id": "salamanca-sandro-miguel-laranjeira-mendes-1977",
           "nombre": "Sandro",
           "nombreCompleto": "SANDRO Miguel Laranjeira Mendes",
-          "posicion": "DEL",
+          "posicion": "MED",
           "esPortero": false,
           "demarcaciones": [
             14,
@@ -13635,7 +13635,7 @@
           "fechaNacimiento": "1977-02-04",
           "alturaCm": 180,
           "pesoKg": 74,
-          "nacionalidad": null,
+          "nacionalidad": "Portugal",
           "clubAnterior": null
         },
         {

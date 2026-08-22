@@ -180,7 +180,7 @@ export function DatabaseScreen() {
               {player.pesoKg ? ` · ${player.pesoKg} kg` : ''}
             </p>
           </div>
-          <div className="attr-grid">
+          <div className="cat-attr-grid">
             {ATTR_LABELS.map(([key, label]) => (
               <span key={key} className="attr-cell">
                 <span className="attr-cell__label">{label}</span>

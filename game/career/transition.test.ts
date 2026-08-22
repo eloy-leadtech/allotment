@@ -2,8 +2,27 @@ import { describe, it, expect } from 'vitest';
 import { loadPrimera9697, loadPrimera9798 } from '@data';
 import type { Attributes, League, Player } from '@data';
 import { newCareer } from './career';
-import { previewTransition, applyTransition } from './transition';
-import { advanceMatchday, currentStandings } from '../season/season';
+import {
+  previewTransition,
+  applyTransition,
+  endOfSeasonConfianza,
+  endOfSeasonEvaluation,
+  isManagerDismissed,
+  careerOutcome,
+} from './transition';
+import { advanceMatchday, isSeasonOver, currentStandings } from '../season/season';
+import type { CareerState } from './types';
+
+/** Play the in-progress season to completion (deterministic for a fixed seed). */
+function playSeasonToEnd(career: CareerState): CareerState {
+  let season = career.season;
+  let guard = 0;
+  while (!isSeasonOver(season) && guard < 200) {
+    season = advanceMatchday(season).state;
+    guard += 1;
+  }
+  return { ...career, season };
+}
 
 const HUMAN = 'barcelona';
 
@@ -105,6 +124,40 @@ describe('applyTransition (real data)', () => {
     expect(a.teams).toEqual(b.teams);
     expect(a.season.fixtures).toEqual(b.season.fixtures);
   });
+
+  it('leaves the whole next-season squad under contract (no orphans, no gaps)', () => {
+    const career = careerAfterSomeMatches();
+    const next2 = applyTransition(career, next, new Set());
+    const squadIds = next2.teams.find((t) => t.id === HUMAN)!.players.map((p) => p.id).sort();
+    expect(Object.keys(next2.contracts).sort()).toEqual(squadIds);
+  });
+
+  it('ticks a continuing player’s contract down a season', () => {
+    const career = careerAfterSomeMatches();
+    // A stayer: in the squad now and still in the real 97/98 roster.
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams
+      .find((t) => t.id === HUMAN)!
+      .players.find((p) => !departures.has(p.id) && career.contracts[p.id]!.yearsLeft > 1)!;
+    const before = career.contracts[stayer.id]!.yearsLeft;
+    const next2 = applyTransition(career, next, new Set());
+    expect(next2.contracts[stayer.id]!.yearsLeft).toBe(before - 1);
+  });
+
+  it('releases a stayer whose deal hits 0 (VENCIMIENTO: leaves FREE)', () => {
+    const career = careerAfterSomeMatches();
+    const departures = new Set(previewTransition(career, next).departures.map((p) => p.id));
+    const stayer = career.teams.find((t) => t.id === HUMAN)!.players.find((p) => !departures.has(p.id))!;
+    // Force this stayer into the final year of their deal.
+    const expiring: typeof career = {
+      ...career,
+      contracts: { ...career.contracts, [stayer.id]: { salary: 1_000_000, yearsLeft: 1 } },
+    };
+    const next2 = applyTransition(expiring, next, new Set([stayer.id]));
+    const squad = next2.teams.find((t) => t.id === HUMAN)!;
+    expect(squad.players.some((p) => p.id === stayer.id)).toBe(false);
+    expect(next2.contracts[stayer.id]).toBeUndefined();
+  });
 });
 
 // --- Synthetic dedup case: retaining a player removes them from their new club.
@@ -192,6 +245,41 @@ describe('applyTransition dedup (synthetic)', () => {
     expect(noPersonInTwoClubs(next.teams)).toBe(true);
   });
 
+  it('applies the training focus to a retained player and carries the focus forward', () => {
+    // A YOUNG departure (age 19 in 99/00) so the focus clearly moves attributes.
+    const season1 = league('t-9899', '98/99', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-kid-1980', 'Kid', '1980-01-01')] },
+      { id: 'rival', nombre: 'Rival', jugadores: [player('rival-guy-1979', 'RivalGuy', '1979-01-01')] },
+    ]);
+    const season2 = league('t-9900', '99/00', [
+      { id: 'you', nombre: 'You', jugadores: [player('you-new-1982', 'New', '1982-01-01')] },
+      {
+        id: 'rival',
+        nombre: 'Rival',
+        jugadores: [
+          player('rival-guy-1979', 'RivalGuy', '1979-01-01'),
+          player('rival-kid-1980', 'Kid', '1980-01-01'), // Kid moved to rival
+        ],
+      },
+    ]);
+    const base = newCareer(season1, 'you', 7);
+    const retain = new Set(['you-kid-1980']);
+
+    const atk = applyTransition({ ...base, training: { focus: 'ataque' } }, season2, retain);
+    const def = applyTransition({ ...base, training: { focus: 'defensa' } }, season2, retain);
+
+    const kidAtk = atk.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    const kidDef = def.teams.find((t) => t.id === 'you')?.players.find((p) => p.nombre === 'Kid');
+    expect(kidAtk).toBeDefined();
+    expect(kidDef).toBeDefined();
+    // Attacking training grows shooting more; defensive training grows tackling more.
+    expect(kidAtk!.atributos.remate).toBeGreaterThan(kidDef!.atributos.remate);
+    expect(kidDef!.atributos.entrada).toBeGreaterThan(kidAtk!.atributos.entrada);
+    // The chosen focus is carried into the next season.
+    expect(atk.training?.focus).toBe('ataque');
+    expect(def.training?.focus).toBe('defensa');
+  });
+
   it('releasing (not retaining) leaves the real world untouched', () => {
     const season1 = league('t-9899', '98/99', [
       { id: 'you', nombre: 'You', jugadores: [player('you-nomad-1978', 'Nomad', '1978-01-01')] },
@@ -214,5 +302,111 @@ describe('applyTransition dedup (synthetic)', () => {
     const rival = next.teams.find((t) => t.id === 'rival');
     expect(you?.players.map((p) => p.nombre)).toEqual(['Kid']);
     expect(rival?.players.map((p) => p.nombre).sort()).toEqual(['Nomad', 'RivalGuy']);
+  });
+});
+
+describe('applyTransition palmarés accumulation', () => {
+  const season1 = league('t-9899', '98/99', [
+    { id: 'you', nombre: 'You', jugadores: [player('you-a-1980', 'A', '1980-01-01')] },
+    { id: 'rival', nombre: 'Rival', jugadores: [player('rival-b-1979', 'B', '1979-01-01')] },
+  ]);
+  const season2 = league('t-9900', '99/00', [
+    { id: 'you', nombre: 'You', jugadores: [player('you-a-1980', 'A', '1980-01-01')] },
+    { id: 'rival', nombre: 'Rival', jugadores: [player('rival-b-1979', 'B', '1979-01-01')] },
+  ]);
+
+  it('starts a fresh career with an empty palmarés', () => {
+    expect(newCareer(season1, 'you', 7).palmares).toEqual([]);
+  });
+
+  it('carries an evolving confianza across the transition (equals endOfSeasonConfianza)', () => {
+    const career = newCareer(season1, 'you', 7);
+    expect(career.confianza).toEqual({ directiva: 50, aficion: 50 });
+    const projected = endOfSeasonConfianza(career);
+    const next = applyTransition(career, season2, new Set());
+    // The stored meters are exactly the projected end-of-season value, carried on.
+    expect(next.confianza).toEqual(projected);
+  });
+
+  it('records a league title exactly when the human tops the final table', () => {
+    const career = newCareer(season1, 'you', 7);
+    // The transition uses the league leader as champion; mirror that here without
+    // playing matches (the synthetic 1-player squads cannot field an XI).
+    const champion = currentStandings(career.season)[0]?.teamId;
+    const next = applyTransition(career, season2, new Set());
+    const ligaTitles = next.palmares.filter((t) => t.competition === 'liga');
+    if (champion === 'you') {
+      expect(ligaTitles).toEqual([
+        { competition: 'liga', division: 'primera', seasonNumber: 1, temporada: '98/99' },
+      ]);
+    } else {
+      expect(ligaTitles).toEqual([]);
+    }
+  });
+
+  it('appends a Copa title won this season and preserves the prior palmarés', () => {
+    const base = newCareer(season1, 'you', 7);
+    const prior = { competition: 'copa' as const, seasonNumber: 0, temporada: 'prev' };
+    const career = {
+      ...base,
+      copa: { knockout: [], championId: 'you' },
+      palmares: [prior],
+    };
+    const next = applyTransition(career, season2, new Set());
+    expect(next.palmares[0]).toEqual(prior); // prior title preserved, in order
+    expect(next.palmares).toContainEqual({
+      competition: 'copa',
+      seasonNumber: 1,
+      temporada: '98/99',
+    });
+  });
+});
+
+/**
+ * The CESE (dismissal) is faithful to the classic PC Fútbol: the board gave a
+ * manager margin. A single missed objective in the first season is an aviso, not
+ * a cese; only the DISASTER of relegation sacks a first-year manager, and a
+ * SUSTAINED collapse of the directiva meter sacks from season two on.
+ *
+ * These run on the real 96/97 database with FIXED seeds (fully deterministic).
+ * Seed 9 gives a Barça that badly misses its "win the league" objective without
+ * going down; seed 140 gives a Barça that is relegated. (Seeds re-picked after
+ * the data-fidelity pass corrected player positions from the real line byte,
+ * which shifted the deterministic simulation; the dismissal rules are unchanged.)
+ */
+describe('isManagerDismissed (cese fiel)', () => {
+  it('does NOT sack a first-year Barça that badly misses the objective (no descenso)', () => {
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 9));
+    const evaluation = endOfSeasonEvaluation(finished);
+    // A clear, angry miss — but not relegation.
+    expect(careerOutcome(finished)).not.toBe('relegated');
+    expect(evaluation.satisfaction).toBe('enfadado');
+    expect(evaluation.shortfall).toBeGreaterThanOrEqual(8);
+    // ...and yet the board keeps the manager: year one gets margin.
+    expect(evaluation.dismissed).toBe(false);
+    expect(isManagerDismissed(finished)).toBe(false);
+  });
+
+  it('DOES sack a first-year Barça that is relegated (the one disaster)', () => {
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 140));
+    expect(careerOutcome(finished)).toBe('relegated');
+    expect(endOfSeasonEvaluation(finished).dismissed).toBe(true);
+    expect(isManagerDismissed(finished)).toBe(true);
+  });
+
+  it('DOES sack on SUSTAINED failure: a second straight bad season collapses the meter', () => {
+    // Same bad season as seed 8, but now it is SEASON TWO and the directiva meter
+    // already sits low after a prior bad campaign. This second bad season folds it
+    // below the sack line, ending the tenure — proving a cese is not impossible.
+    const badSeason = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 8));
+    const secondBadYear: CareerState = {
+      ...badSeason,
+      seasonNumber: 2,
+      confianza: { directiva: 22, aficion: 30 },
+    };
+    expect(isManagerDismissed(secondBadYear)).toBe(true);
+    expect(endOfSeasonConfianza(secondBadYear).directiva).toBeLessThanOrEqual(15);
+    // The very same standings in the FIRST season would NOT sack (year-one margin).
+    expect(isManagerDismissed({ ...secondBadYear, seasonNumber: 1 })).toBe(false);
   });
 });

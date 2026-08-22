@@ -53,4 +53,47 @@ describe('runCopa', () => {
     expect(r.championId).toBe('t1');
     expect(r.knockout).toHaveLength(0);
   });
+
+  describe('humanPath', () => {
+    it('is omitted entirely when no human id is given', () => {
+      const r = runCopa(field(8), 2024);
+      expect(r.humanPath).toBeUndefined();
+    });
+
+    it('does NOT change the bracket or champion (results are invariant)', () => {
+      const plain = runCopa(field(16), 99);
+      const withHuman = runCopa(field(16), 99, 't1');
+      // Same knockout, same champion — only the extra view field differs.
+      expect(withHuman.knockout).toEqual(plain.knockout);
+      expect(withHuman.championId).toBe(plain.championId);
+    });
+
+    it("records the human's ties with a full match matching the bracket score", () => {
+      const r = runCopa(field(8), 2024, 't1');
+      expect(r.humanPath).toBeDefined();
+      const path = r.humanPath!;
+      // Every recorded step involves the human and carries a full match + events.
+      for (const step of path) {
+        const m = step.match;
+        expect([m.homeId, m.awayId]).toContain('t1');
+        expect(Array.isArray(m.events)).toBe(true);
+        // The step's score is exactly the one stored in the corresponding tie.
+        const tie = r.knockout
+          .flatMap((round) => round.ties)
+          .find((t) => t.homeId === m.homeId && t.awayId === m.awayId)!;
+        expect(m.homeGoals).toBe(tie.homeGoals);
+        expect(m.awayGoals).toBe(tie.awayGoals);
+        expect(step.winnerId).toBe(tie.winnerId);
+        expect(step.onPenalties).toBe(tie.onPenalties);
+      }
+      // The run stops exactly when the human first fails to advance (single-elim).
+      const losses = path.filter((s) => s.winnerId !== 't1');
+      expect(losses.length).toBeLessThanOrEqual(1);
+    });
+
+    it('is an empty run (never undefined) when a human id yields no played ties', () => {
+      const r = runCopa(field(1), 1, 't1');
+      expect(r.humanPath).toEqual([]);
+    });
+  });
 });

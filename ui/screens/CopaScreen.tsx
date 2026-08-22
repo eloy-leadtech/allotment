@@ -4,6 +4,7 @@ import { teamProgress } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
 import { RetroPanel } from '@ui/components/RetroPanel';
+import { KnockoutPath } from '@ui/components/KnockoutPath';
 
 export function CopaScreen() {
   const career = useGameStore((s) => s.career);
@@ -47,6 +48,8 @@ export function CopaScreen() {
       <p className="champion">
         {name(me)} — <strong>{teamProgress(copa, me)}</strong>
       </p>
+
+      <KnockoutPath steps={copa.humanPath ?? []} me={me} name={name} title="Tu recorrido en Copa" />
 
       {copa.knockout.map((round) => (
         <RetroPanel key={round.nombre} title={round.nombre}>

@@ -1,21 +1,53 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { isSeasonOver } from '@game';
+import {
+  isSeasonOver,
+  selectPressQuestion,
+  isWinterWindowOpen,
+  winterWindowMatchday,
+  winterBuyableListings,
+} from '@game';
 import type { Player } from '@data';
 import { useGameStore, nextSeasonEntry } from './gameStore';
 
 const personKey = (p: Player): string => `${p.nombreCompleto}|${p.fechaNacimiento ?? '?'}`;
 
-/** Reset the singleton store to a clean 96/97 pre-game state. */
+/**
+ * A FIXED seed for the career-loop tests. The production store seeds every new
+ * game from the CSPRNG (`randomSeed`), which is right for the game but makes these
+ * tests non-deterministic: the season simulation is seed-driven, and for a share
+ * of seeds Barcelona legitimately misses the board objective and gets sacked after
+ * season 1, so `continueCareer` correctly refuses to advance. Pinning the seed
+ * removes that randomness (the outcome is now the same on every run and in CI)
+ * without touching any game behaviour — it is purely test setup.
+ */
+const TEST_SEED = 7;
+
+/** Reset the singleton store to a clean, DETERMINISTIC 96/97 pre-game state. */
 function reset(): void {
-  useGameStore.setState({ career: null, season: null, retainIds: [], lastResults: [], screen: 'title' });
+  useGameStore.setState({
+    career: null,
+    season: null,
+    retainIds: [],
+    lastResults: [],
+    screen: 'title',
+    seed: TEST_SEED,
+  });
   useGameStore.getState().chooseSeason('es-primera-9697');
 }
 
-/** Play the in-progress season to completion. */
+/**
+ * Play the in-progress season to completion, closing the mid-season winter window
+ * when it opens (it gates play until visited — see winterMarket.ts).
+ */
 function playToEnd(): void {
   let guard = 0;
   while (!isSeasonOver(useGameStore.getState().season!) && guard < 100) {
-    useGameStore.getState().playNextMatchday();
+    const st = useGameStore.getState();
+    if (st.career && isWinterWindowOpen(st.career)) {
+      st.closeWinterMarket();
+      continue;
+    }
+    st.playNextMatchday();
     guard += 1;
   }
 }
@@ -64,8 +96,79 @@ describe('gameStore career loop', () => {
     const s = useGameStore.getState();
     expect(s.lastIncome).not.toBeNull();
     expect(s.lastIncome!.total).toBeGreaterThan(0);
-    // Budget carried over plus this season's income (minus nothing yet).
+    // Budget = carried over + income − masa salarial; income outweighs wages here.
     expect(s.career!.budget).toBeGreaterThan(budgetBefore);
+  });
+
+  it('charges the masa salarial against the budget on continue and exposes it', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const budgetBefore = useGameStore.getState().career!.budget;
+    playToEnd();
+    useGameStore.getState().continueCareer();
+    const s = useGameStore.getState();
+    // The wage bill was booked and surfaced for the market screen.
+    expect(s.lastWageBill).not.toBeNull();
+    expect(s.lastWageBill!).toBeGreaterThan(0);
+    // Budget is exactly the carried-over pot plus income minus the wage bill.
+    expect(s.career!.budget).toBe(
+      Math.max(0, budgetBefore + s.lastIncome!.total - s.lastWageBill!),
+    );
+    // And wages genuinely bit into the gross (net < gross income).
+    expect(s.career!.budget - budgetBefore).toBeLessThan(s.lastIncome!.total);
+  });
+
+  it('lets the budget go into the red on continue (no clamp) and charges interest', () => {
+    useGameStore.getState().startCareer('barcelona');
+    playToEnd();
+    // Force a deeply overdrawn finish so income can't cover it: the club stays red.
+    const finished = useGameStore.getState().career!;
+    useGameStore.setState({ career: { ...finished, budget: -1_000_000_000 } });
+    useGameStore.getState().continueCareer();
+    const s = useGameStore.getState();
+    // The clamp-to-zero is gone: the club carries real debt into the new season.
+    expect(s.career!.budget).toBeLessThan(0);
+    // Interest was charged on the carried debt and surfaced for the market screen.
+    expect(s.lastInterest).not.toBeNull();
+    expect(s.lastInterest!).toBeGreaterThan(0);
+    // Sitting far past the credit limit starts the economic-sacking counter.
+    expect(s.career!.credit!.seasonsOverLimit).toBeGreaterThan(0);
+  });
+
+  it('requestCredit advances cash into the budget and books the loan', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const before = useGameStore.getState().career!;
+    useGameStore.getState().requestCredit(1_000_000);
+    const after = useGameStore.getState().career!;
+    expect(after.budget).toBe(before.budget + 1_000_000);
+    expect(after.credit!.loan).toBe((before.credit?.loan ?? 0) + 1_000_000);
+  });
+
+  it('renewPlayer resets a contract term, raises the wage and debits the budget', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const career = useGameStore.getState().career!;
+    const playerId = career.teams.find((t) => t.id === 'barcelona')!.players[0]!.id;
+    const before = career.contracts[playerId]!;
+    const budgetBefore = career.budget;
+
+    useGameStore.getState().renewPlayer(playerId);
+    const after = useGameStore.getState().career!;
+    expect(after.contracts[playerId]!.yearsLeft).toBeGreaterThanOrEqual(before.yearsLeft);
+    expect(after.contracts[playerId]!.salary).toBeGreaterThan(before.salary);
+    expect(after.budget).toBeLessThan(budgetBefore);
+  });
+
+  it('setTraining stores the focus without resetting played matchdays', () => {
+    useGameStore.getState().startCareer('barcelona');
+    useGameStore.getState().playNextMatchday();
+    useGameStore.getState().playNextMatchday();
+    const before = useGameStore.getState().career!;
+    expect(before.training?.focus).toBe('equilibrado'); // fresh-career default
+    useGameStore.getState().setTraining({ focus: 'ataque' });
+    const after = useGameStore.getState().career!;
+    expect(after.training?.focus).toBe('ataque');
+    // The in-progress season is untouched (no replay of what was already played).
+    expect(after.season.currentMatchday).toBe(before.season.currentMatchday);
+    expect(useGameStore.getState().season?.currentMatchday).toBe(before.season.currentMatchday);
   });
 
   it('buys a player in the market: budget drops and the squad grows', () => {
@@ -172,12 +275,105 @@ describe('gameStore career loop', () => {
     expect(useGameStore.getState().career?.europa).toBeUndefined();
   });
 
+  it('answerPress records the decision, lifts morale and returns to the season screen', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const career = useGameStore.getState().career!;
+    const pending = selectPressQuestion(career);
+    expect(pending).not.toBeNull();
+    // The first season-start option is a confident +3 morale answer.
+    const option = pending!.question.options[0]!;
+    useGameStore.getState().answerPress(option.id);
+    const after = useGameStore.getState().career!;
+    expect(after.press?.answers).toHaveLength(1);
+    expect(after.press?.answers[0]?.questionId).toBe(pending!.question.id);
+    expect(useGameStore.getState().screen).toBe('season');
+    // Every human player's morale rose off neutral by the option's morale effect.
+    const players = after.season.teams.find((t) => t.id === 'barcelona')!.players;
+    expect(players.every((p) => (p.morale ?? 50) === 50 + option.effect.morale)).toBe(true);
+    // Answering again this matchday is refused (one conference per jornada).
+    expect(selectPressQuestion(after)).toBeNull();
+  });
+
+  it('press decisions round-trip through a save slot', () => {
+    localStorage.clear();
+    useGameStore.getState().startCareer('barcelona');
+    const pending = selectPressQuestion(useGameStore.getState().career!)!;
+    useGameStore.getState().answerPress(pending.question.options[0]!.id);
+    useGameStore.getState().playNextMatchday();
+    const before = useGameStore.getState().career!;
+    useGameStore.getState().saveToSlot(2);
+
+    useGameStore.setState({ career: null, season: null });
+    useGameStore.getState().loadFromSlot(2);
+    const after = useGameStore.getState().career!;
+    expect(after.press).toEqual(before.press);
+    expect(after.season.results).toEqual(before.season.results);
+  });
+
   it('setTactics stores the human formation and applies it to the live season', () => {
     useGameStore.getState().startCareer('barcelona');
     useGameStore.getState().setTactics({ formation: '4-3-3' });
     const s = useGameStore.getState();
     expect(s.career?.tactics?.formation).toBe('4-3-3');
     expect(s.season?.teams.find((t) => t.id === 'barcelona')?.tactics?.formation).toBe('4-3-3');
+  });
+
+  it('opens the winter window at the midpoint and gates play until it is closed', () => {
+    useGameStore.getState().startCareer('barcelona');
+    const window = winterWindowMatchday(useGameStore.getState().season!.totalMatchdays);
+    let guard = 0;
+    while (useGameStore.getState().season!.currentMatchday < window && guard < 100) {
+      useGameStore.getState().playNextMatchday();
+      guard += 1;
+    }
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window);
+    // At the window, trying to play routes to the winter market and does NOT advance.
+    useGameStore.getState().playNextMatchday();
+    expect(useGameStore.getState().screen).toBe('winterMarket');
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window);
+    // Closing the window returns to the season and lets the second half resume.
+    useGameStore.getState().closeWinterMarket();
+    expect(useGameStore.getState().screen).toBe('season');
+    useGameStore.getState().playNextMatchday();
+    expect(useGameStore.getState().season!.currentMatchday).toBe(window + 1);
+  });
+
+  it('a winter signing through the store only reshapes the second half and survives a slot', () => {
+    localStorage.clear();
+    useGameStore.getState().startCareer('barcelona');
+    // Bankroll the window so the top target is affordable.
+    useGameStore.setState({
+      career: { ...useGameStore.getState().career!, budget: 5_000_000_000 },
+    });
+    const window = winterWindowMatchday(useGameStore.getState().season!.totalMatchdays);
+    let guard = 0;
+    while (useGameStore.getState().season!.currentMatchday < window && guard < 100) {
+      useGameStore.getState().playNextMatchday();
+      guard += 1;
+    }
+    useGameStore.getState().openWinterMarket();
+    expect(useGameStore.getState().screen).toBe('winterMarket');
+    const firstHalf = useGameStore.getState().season!.results;
+    const target = winterBuyableListings(useGameStore.getState().career!)[0]!;
+    useGameStore.getState().winterBuy(target.player.id);
+    const after = useGameStore.getState().career!;
+    expect(after.teams.find((t) => t.id === 'barcelona')!.players.some((p) => p.id === target.player.id)).toBe(
+      true,
+    );
+    // The already-played first half is untouched by the signing.
+    expect(after.season.results).toEqual(firstHalf);
+
+    useGameStore.getState().closeWinterMarket();
+    useGameStore.getState().saveToSlot(3);
+    const before = useGameStore.getState().career!;
+    useGameStore.setState({ career: null, season: null });
+    useGameStore.getState().loadFromSlot(3);
+    const reloaded = useGameStore.getState().career!;
+    expect(reloaded.winter).toEqual(before.winter);
+    expect(reloaded.season.results).toEqual(before.season.results);
+    expect(reloaded.teams.find((t) => t.id === 'barcelona')!.players.map((p) => p.id)).toEqual(
+      before.teams.find((t) => t.id === 'barcelona')!.players.map((p) => p.id),
+    );
   });
 
   it('nextSeasonEntry chains the seasons and stops after the last', () => {

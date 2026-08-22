@@ -39,4 +39,19 @@ describe('runCareerCopa', () => {
     const s2 = runCareerCopa(career.seed, 2, domesticField(career));
     expect(s1.championId === s2.championId && JSON.stringify(s1) === JSON.stringify(s2)).toBe(false);
   });
+
+  it("exposes the human's cup run without changing the bracket", () => {
+    const field = domesticField(career);
+    const plain = runCareerCopa(career.seed, career.seasonNumber, field);
+    const withHuman = runCareerCopa(career.seed, career.seasonNumber, field, HUMAN);
+    // The bracket and champion are byte-identical: only the view field is added.
+    expect(withHuman.knockout).toEqual(plain.knockout);
+    expect(withHuman.championId).toBe(plain.championId);
+    // The human plays at least one tie, each with a full match for the teletipo.
+    expect(withHuman.humanPath && withHuman.humanPath.length).toBeGreaterThan(0);
+    for (const step of withHuman.humanPath!) {
+      expect([step.match.homeId, step.match.awayId]).toContain(HUMAN);
+      expect(step.match.events.length).toBeGreaterThanOrEqual(0);
+    }
+  });
 });

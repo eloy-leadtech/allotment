@@ -25,6 +25,13 @@ describe('SquadScreen', () => {
     expect(screen.getAllByText('Barcelona').length).toBeGreaterThan(0);
   });
 
+  it('shows a physical-condition (fatiga) indicator per player', () => {
+    const { container } = render(<SquadScreen />);
+    expect(screen.getByText('Físico')).toBeInTheDocument();
+    // A fatigue bar is rendered for the squad rows.
+    expect(container.querySelectorAll('.fatigue-bar').length).toBeGreaterThan(0);
+  });
+
   it('renders a menu fallback when there is no career', () => {
     useGameStore.setState({ career: null, season: null });
     render(<SquadScreen />);

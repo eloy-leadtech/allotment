@@ -107,10 +107,33 @@ export interface KnockoutRound {
   ties: KnockoutTie[];
 }
 
+/**
+ * One knockout tie the human actually played, kept with its FULL match (so the UI
+ * can replay the teletipo live, exactly like a league fixture). Purely a
+ * presentation view: it re-uses the very `MatchResult` the bracket already
+ * simulated for this tie, so the score/winner never differ from `knockout`.
+ */
+export interface HumanKnockoutStep {
+  /** Round name this tie belonged to (e.g. "cuartos", "final"). */
+  ronda: string;
+  /** The full simulated match (score + events) for the teletipo. */
+  match: MatchResult;
+  /** Who went through (may differ from the scoreline on penalties). */
+  winnerId: string;
+  /** True when the level tie was settled by a shootout. */
+  onPenalties: boolean;
+}
+
 export interface TournamentResult {
   groups: GroupResult[];
   knockout: KnockoutRound[];
   championId: string;
+  /**
+   * The human's round-by-round knockout run WITH full matches, present only when
+   * a `humanTeamId` was supplied to the runner. Omitted otherwise, so the plain
+   * (spectator/national-team) result is byte-identical to before.
+   */
+  humanPath?: HumanKnockoutStep[];
 }
 
 /** Deterministic Fisher–Yates shuffle of ids. */
@@ -155,13 +178,18 @@ function runGroup(teamIds: string[], byId: Map<string, CompetitionTeam>, seed: n
   return { teamIds, standings, results };
 }
 
-/** Play one knockout tie; a level score is settled by a seeded shootout. */
-export function playKnockoutTie(
+/**
+ * Play one knockout tie AND keep the full match. A level score is settled by a
+ * seeded shootout. This is the single source of tie resolution; the RNG usage is
+ * identical whether or not the caller keeps the returned `match`, so results are
+ * unchanged. `playKnockoutTie` is the thin backward-compatible wrapper.
+ */
+export function resolveKnockoutTie(
   homeId: string,
   awayId: string,
   byId: Map<string, CompetitionTeam>,
   seed: number,
-): KnockoutTie {
+): { tie: KnockoutTie; match: MatchResult } {
   const home = byId.get(homeId);
   const away = byId.get(awayId);
   if (!home || !away) throw new Error(`Unknown knockout team: ${homeId} vs ${awayId}`);
@@ -174,7 +202,20 @@ export function playKnockoutTie(
     onPenalties = true;
     winnerId = createRng(hashSeed(seed, 'pens')).next01() < 0.5 ? homeId : awayId;
   }
-  return { homeId, awayId, homeGoals: r.homeGoals, awayGoals: r.awayGoals, winnerId, onPenalties };
+  return {
+    tie: { homeId, awayId, homeGoals: r.homeGoals, awayGoals: r.awayGoals, winnerId, onPenalties },
+    match: r,
+  };
+}
+
+/** Play one knockout tie; a level score is settled by a seeded shootout. */
+export function playKnockoutTie(
+  homeId: string,
+  awayId: string,
+  byId: Map<string, CompetitionTeam>,
+  seed: number,
+): KnockoutTie {
+  return resolveKnockoutTie(homeId, awayId, byId, seed).tie;
 }
 
 const ROUND_NAMES: Record<number, string> = {
@@ -212,6 +253,7 @@ export function runTournament(
   teams: readonly CompetitionTeam[],
   seed: number,
   numGroups = 4,
+  humanTeamId?: string,
 ): TournamentResult {
   const byId = new Map(teams.map((t) => [t.id, t]));
   const groupsIds = drawGroups(teams.map((t) => t.id), numGroups, seed);
@@ -223,16 +265,22 @@ export function runTournament(
   let alive = bracketOrder(winners, runners);
 
   const knockout: KnockoutRound[] = [];
+  const humanPath: HumanKnockoutStep[] = [];
   let round = 0;
   while (alive.length > 1) {
+    const nombre = roundName(alive.length);
     const ties: KnockoutTie[] = [];
     for (let i = 0; i < alive.length; i += 2) {
-      ties.push(playKnockoutTie(alive[i]!, alive[i + 1]!, byId, hashSeed(seed, 'ko', round, i)));
+      const { tie, match } = resolveKnockoutTie(alive[i]!, alive[i + 1]!, byId, hashSeed(seed, 'ko', round, i));
+      ties.push(tie);
+      if (humanTeamId && (tie.homeId === humanTeamId || tie.awayId === humanTeamId)) {
+        humanPath.push({ ronda: nombre, match, winnerId: tie.winnerId, onPenalties: tie.onPenalties });
+      }
     }
-    knockout.push({ nombre: roundName(alive.length), ties });
+    knockout.push({ nombre, ties });
     alive = ties.map((t) => t.winnerId);
     round += 1;
   }
 
-  return { groups, knockout, championId: alive[0]! };
+  return { groups, knockout, championId: alive[0]!, ...(humanTeamId !== undefined ? { humanPath } : {}) };
 }

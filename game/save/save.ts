@@ -2,7 +2,21 @@ import { z } from 'zod';
 import { PlayerSchema, TeamColorsSchema, type League } from '@data';
 import { advanceMatchday, isSeasonOver, newSeason, type SeasonState } from '../season/season';
 import { newCareer, seasonFromCareer } from '../career/career';
-import type { CareerState, CareerTeam, SeasonSummary } from '../career/types';
+import { computeSeasonObjective, type BoardState } from '../career/board';
+import { DEFAULT_CONFIANZA, type ConfianzaState } from '../career/confianza';
+import { initialContracts, type Contract } from '../career/contracts';
+import { DEFAULT_RENEWALS } from '../career/renewals';
+import { seasonStartYear } from '../career/development';
+import { DEFAULT_TRAINING_FOCUS } from '../career/training';
+import { DEFAULT_STADIUM, MAX_STADIUM_LEVEL } from '../career/stadium';
+import { DEFAULT_SPONSOR } from '../career/sponsors';
+import { DEFAULT_CREDIT } from '../career/credit';
+import { DEFAULT_LOANS } from '../career/loans';
+import { DEFAULT_WINTER } from '../career/winterMovements';
+import { replaySeasonCareer } from '../career/winterMarket';
+import { DEFAULT_STAFF, STAFF_MIN_LEVEL, STAFF_MAX_LEVEL, type StaffState } from '../career/staff';
+import type { CareerState, CareerTeam, PalmaresTitle, PressState, SeasonSummary } from '../career/types';
+import type { HemerotecaEvent } from '../career/hemeroteca';
 
 const SAVE_VERSION = 1;
 const CAREER_SAVE_VERSION = 2;
@@ -57,10 +71,177 @@ const CareerTeamSchema = z.object({
   players: z.array(PlayerSchema),
 });
 
+/** Season top scorer (Pichichi); optional so pre-trophies saves still load. */
+const PichichiSchema = z.object({
+  playerId: z.string().min(1),
+  playerName: z.string().min(1),
+  teamId: z.string().min(1),
+  goals: z.number().int().min(0),
+});
+
+/** Season least-conceded keeper (Zamora); optional for pre-trophies saves. */
+const ZamoraSchema = z.object({
+  playerId: z.string().min(1),
+  playerName: z.string().min(1),
+  teamId: z.string().min(1),
+  goalsConceded: z.number().int().min(0),
+  matches: z.number().int().min(0),
+});
+
 const SeasonSummarySchema = z.object({
   seasonNumber: z.number().int(),
   temporada: z.string().min(1),
   championId: z.string().min(1),
+  pichichi: PichichiSchema.optional(),
+  zamora: ZamoraSchema.optional(),
+});
+
+/** One hemeroteca headline: a dated career hito phrased as press text. */
+const HemerotecaEventSchema = z.object({
+  seasonNumber: z.number().int().min(1),
+  temporada: z.string().min(1),
+  type: z.enum([
+    'titulo',
+    'ascenso',
+    'descenso',
+    'pichichi',
+    'zamora',
+    'retirada',
+    'fichaje',
+    'traspaso',
+    'objetivo',
+    'cese',
+    'confianza',
+  ]),
+  text: z.string().min(1),
+  /** Record-transfer fee, present only on 'fichaje'/'traspaso' headlines. */
+  amount: z.number().int().min(0).optional(),
+});
+
+/** One palmarés title: the competition won and the season it was won in. */
+const PalmaresTitleSchema = z.object({
+  competition: z.enum(['liga', 'copa', 'champions', 'uefa']),
+  seasonNumber: z.number().int().min(1),
+  temporada: z.string().min(1),
+  division: z.enum(['primera', 'segunda']).optional(),
+});
+
+/** A squad contract: annual salary and full seasons remaining. */
+const ContractSchema = z.object({
+  salary: z.number().int().min(0),
+  yearsLeft: z.number().int().min(1),
+});
+
+/** A player away on loan: his snapshot + set-aside deal, the club and season. */
+const LoanedOutSchema = z.object({
+  player: PlayerSchema,
+  contract: ContractSchema,
+  toClubId: z.string().min(1),
+  seasonNumber: z.number().int().min(1),
+});
+
+/** The club's loan book; defaults to empty for pre-cesiones saves. */
+const LoansStateSchema = z
+  .object({
+    out: z.array(LoanedOutSchema).default([]),
+    in: z.array(z.string()).default([]),
+  })
+  .default({ out: [], in: [] });
+
+/** One resolved renewal decision: renewed (with agreed terms) or let go free. */
+const RenewalRecordSchema = z.object({
+  outcome: z.enum(['renewed', 'released']),
+  salary: z.number().int().min(0).optional(),
+  years: z.number().int().min(1).optional(),
+});
+
+/** This season's renewal negotiations; defaults to empty for pre-renovaciones saves. */
+const RenewalsStateSchema = z
+  .object({
+    seasonNumber: z.number().int().min(0),
+    resolved: z.record(z.string(), RenewalRecordSchema).default({}),
+  })
+  .default({ seasonNumber: 0, resolved: {} });
+
+/** One winter-window transfer: a player moving between two clubs at the midpoint. */
+const WinterMovementSchema = z.object({
+  playerId: z.string().min(1),
+  fromClubId: z.string().min(1),
+  toClubId: z.string().min(1),
+});
+
+/** The winter transfer window's state; defaults to untouched for pre-invierno saves. */
+const WinterStateSchema = z
+  .object({
+    movements: z.array(WinterMovementSchema).default([]),
+    closed: z.boolean().default(false),
+  })
+  .default({ ...DEFAULT_WINTER });
+
+/** One hired staff member: a level on the classic 1-5 scale. */
+const StaffMemberSchema = z.object({
+  level: z.number().int().min(STAFF_MIN_LEVEL).max(STAFF_MAX_LEVEL),
+});
+
+/** The club's technical staff (each role optional); defaults to none hired. */
+const StaffStateSchema = z
+  .object({
+    segundo: StaffMemberSchema.optional(),
+    preparador: StaffMemberSchema.optional(),
+    medico: StaffMemberSchema.optional(),
+    ojeador: StaffMemberSchema.optional(),
+  })
+  .default({});
+
+/** A youth-academy prospect: its full player data plus its entry season. */
+const YouthProspectSchema = z.object({
+  player: PlayerSchema,
+  entrySeason: z.number().int().min(1),
+});
+
+/** A rival-scouting record: how many times and when the player was ojeado. */
+const ScoutingRecordSchema = z.object({
+  observations: z.number().int().min(0),
+  lastSeason: z.number().int().min(0),
+});
+
+/** A prospect "seguimiento": the season you started following a rival promesa. */
+const ProspectTrackingSchema = z.object({
+  since: z.number().int().min(1),
+});
+
+const BoardObjectiveSchema = z.object({
+  type: z.enum(['title', 'europe', 'promotion', 'mid-table', 'avoid-relegation']),
+  targetPosition: z.number().int().min(1),
+});
+
+const BoardStateSchema = z.object({
+  objective: BoardObjectiveSchema,
+  lastEvaluation: z
+    .object({
+      satisfaction: z.enum(['contento', 'normal', 'enfadado']),
+      dismissed: z.boolean(),
+      shortfall: z.number().int(),
+    })
+    .optional(),
+});
+
+/** The two institutional confidence meters; defaults to 50/50 for pre-confianza saves. */
+const ConfianzaSchema = z.object({
+  directiva: z.number().int().min(0).max(100),
+  aficion: z.number().int().min(0).max(100),
+});
+
+/** One press-conference decision: the matchday, question and chosen option. */
+const PressAnswerSchema = z.object({
+  matchday: z.number().int().min(1),
+  questionId: z.string().min(1),
+  optionId: z.string().min(1),
+});
+
+/** The season's press-conference decisions; defaults to none for pre-rueda saves. */
+const PressStateSchema = z.object({
+  answers: z.array(PressAnswerSchema).default([]),
 });
 
 export const CareerSaveSchema = z.object({
@@ -74,6 +255,12 @@ export const CareerSaveSchema = z.object({
   relegationSpots: z.number().int().min(0),
   /** Human's division; defaults to primera for pre-pyramid saves. */
   division: z.enum(['primera', 'segunda']).default('primera'),
+  /** Board objective + last verdict; absent in pre-board saves (recomputed on load). */
+  board: BoardStateSchema.optional(),
+  /** Institutional confidence meters; absent in pre-confianza saves (defaults 50/50 on load). */
+  confianza: ConfianzaSchema.optional(),
+  /** Press-conference decisions this season; defaults to none for pre-rueda saves. */
+  press: PressStateSchema.default({ answers: [] }),
   /** Human's tactics; absent means neutral auto-XI. */
   tactics: z
     .object({
@@ -81,10 +268,49 @@ export const CareerSaveSchema = z.object({
       xiIds: z.array(z.string()).optional(),
     })
     .optional(),
+  /** Human's training focus; absent in pre-training saves (defaults on load). */
+  training: z
+    .object({ focus: z.enum(['ataque', 'defensa', 'fisico', 'equilibrado']) })
+    .optional(),
   /** Human club's transfer budget; defaults to 0 for pre-market saves. */
   budget: z.number().int().min(0).default(0),
+  /** Human club's stadium; defaults to the base ground for pre-estadio saves. */
+  stadium: z
+    .object({ capacityLevel: z.number().int().min(0).max(MAX_STADIUM_LEVEL) })
+    .default({ ...DEFAULT_STADIUM }),
+  /** Human club's chosen sponsor; defaults to the basic tier for pre-patrocinios saves. */
+  sponsor: z
+    .object({ sponsorId: z.enum(['basico', 'estandar', 'ambicioso', 'premium']) })
+    .default({ ...DEFAULT_SPONSOR }),
+  /** Human club's bank/board credit and debt; defaults to debt-free for pre-crédito saves. */
+  credit: z
+    .object({
+      loan: z.number().int().min(0),
+      seasonsOverLimit: z.number().int().min(0),
+    })
+    .default({ ...DEFAULT_CREDIT }),
+  /** Loan book (out/in); defaults to empty for pre-cesiones saves. */
+  loans: LoansStateSchema,
+  /** Winter transfer window (movements + closed); defaults to untouched for pre-invierno saves. */
+  winter: WinterStateSchema,
+  /** Technical staff (segundo/preparador/médico/ojeador); defaults to none for pre-staff saves. */
+  staff: StaffStateSchema,
   teams: z.array(CareerTeamSchema).min(2),
+  /** Squad contracts by player id; defaults to {} for pre-contract saves (recomputed on load). */
+  contracts: z.record(z.string(), ContractSchema).default({}),
+  /** This season's renewal negotiations; defaults to empty for pre-renovaciones saves. */
+  renewals: RenewalsStateSchema,
+  /** Youth-academy prospects; defaults to [] for pre-cantera saves. */
+  youthProspects: z.array(YouthProspectSchema).default([]),
+  /** Rival-scouting reports by player id; defaults to {} for pre-ojeo saves. */
+  scouting: z.record(z.string(), ScoutingRecordSchema).default({}),
+  /** Followed rival promesas by player id; defaults to {} for pre-promesas saves. */
+  prospectTracking: z.record(z.string(), ProspectTrackingSchema).default({}),
   history: z.array(SeasonSummarySchema),
+  /** The club's palmarés; defaults to [] for pre-palmarés saves. */
+  palmares: z.array(PalmaresTitleSchema).default([]),
+  /** The club's hemeroteca (press archive of hitos); defaults to [] for pre-hemeroteca saves. */
+  hemeroteca: z.array(HemerotecaEventSchema).default([]),
   /** Next matchday to play in the in-progress season (1-indexed). */
   currentMatchday: z.number().int().min(1),
 });
@@ -106,6 +332,8 @@ function replaySeasonTo(state: SeasonState, targetMatchday: number): SeasonState
 export function serializeCareer(career: CareerState): CareerSave {
   const teams: CareerTeam[] = career.teams;
   const history: SeasonSummary[] = career.history;
+  const palmares: PalmaresTitle[] = career.palmares;
+  const hemeroteca: HemerotecaEvent[] = career.hemeroteca ?? [];
   return {
     version: CAREER_SAVE_VERSION,
     seed: career.seed,
@@ -116,10 +344,27 @@ export function serializeCareer(career: CareerState): CareerSave {
     pointsForWin: career.pointsForWin,
     relegationSpots: career.relegationSpots,
     division: career.division,
+    board: career.board,
+    confianza: career.confianza ?? DEFAULT_CONFIANZA,
+    press: career.press ?? { answers: [] },
     tactics: career.tactics,
+    training: career.training,
     budget: career.budget,
+    stadium: career.stadium,
+    sponsor: career.sponsor ?? DEFAULT_SPONSOR,
+    credit: career.credit ?? DEFAULT_CREDIT,
+    loans: career.loans ?? DEFAULT_LOANS,
+    winter: career.winter ?? DEFAULT_WINTER,
+    staff: career.staff ?? DEFAULT_STAFF,
     teams,
+    contracts: career.contracts,
+    renewals: career.renewals ?? DEFAULT_RENEWALS,
+    youthProspects: career.youthProspects,
+    scouting: career.scouting,
+    prospectTracking: career.prospectTracking,
     history,
+    palmares,
+    hemeroteca,
     // The in-progress season is derived from `teams`; only its resume point is saved.
     currentMatchday: career.season.currentMatchday,
   };
@@ -127,7 +372,27 @@ export function serializeCareer(career: CareerState): CareerSave {
 
 /** Rebuild the full CareerState from a validated v2 save (self-contained snapshot). */
 function restoreCareerV2(save: CareerSave): CareerState {
-  const meta: Omit<CareerState, 'season' | 'history'> = {
+  // Pre-board saves have no objective persisted: recompute it deterministically
+  // from the snapshotted squads so the board relationship is always present.
+  const board: BoardState = save.board ?? {
+    objective: computeSeasonObjective({
+      teams: save.teams,
+      division: save.division,
+      humanTeamId: save.humanTeamId,
+      relegationSpots: save.relegationSpots,
+    }),
+  };
+  // Pre-contract saves have no wage book: recompute deterministic initial deals
+  // from the snapshotted squad so the masa salarial is always present on load.
+  const humanPlayers = save.teams.find((t) => t.id === save.humanTeamId)?.players ?? [];
+  const contracts: Record<string, Contract> =
+    Object.keys(save.contracts).length > 0
+      ? save.contracts
+      : initialContracts(humanPlayers, save.seed, save.seasonNumber, seasonStartYear(save.temporada));
+  const press: PressState = save.press ?? { answers: [] };
+  // Pre-confianza saves have no meters persisted: default to a neutral 50/50.
+  const confianza: ConfianzaState = save.confianza ?? DEFAULT_CONFIANZA;
+  const meta: Omit<CareerState, 'season' | 'history' | 'palmares'> = {
     seed: save.seed,
     leagueId: save.leagueId,
     humanTeamId: save.humanTeamId,
@@ -136,12 +401,50 @@ function restoreCareerV2(save: CareerSave): CareerState {
     pointsForWin: save.pointsForWin,
     relegationSpots: save.relegationSpots,
     division: save.division,
+    board,
+    confianza,
+    press,
     tactics: save.tactics,
+    // Pre-training saves default to a balanced focus so training is always present.
+    training: save.training ?? { focus: DEFAULT_TRAINING_FOCUS },
     budget: save.budget,
+    // Pre-estadio saves default to the base ground so the stadium is always present.
+    stadium: save.stadium ?? DEFAULT_STADIUM,
+    // Pre-patrocinios saves default to the basic sponsor so it is always present.
+    sponsor: save.sponsor ?? DEFAULT_SPONSOR,
+    // Pre-crédito saves default to debt-free so the credit state is always present.
+    credit: save.credit ?? DEFAULT_CREDIT,
+    // Pre-cesiones saves have no loan book: default to empty (schema default).
+    loans: save.loans,
+    // Pre-invierno saves have no winter window: default to untouched (schema default).
+    winter: save.winter,
+    // Pre-staff saves have no staff: default to none hired (schema default {}).
+    staff: save.staff as StaffState,
     teams: save.teams,
+    // Pre-hemeroteca saves have no archive: default to empty (schema default []).
+    hemeroteca: save.hemeroteca,
+    contracts,
+    // Pre-renovaciones saves have no negotiations book: default to empty (schema default).
+    renewals: save.renewals,
+    youthProspects: save.youthProspects,
+    // Pre-ojeo saves have no scouting reports: default to none (schema default {}).
+    scouting: save.scouting,
+    // Pre-promesas saves have no follow-list: default to none (schema default {}).
+    prospectTracking: save.prospectTracking,
   };
-  const season = replaySeasonTo(seasonFromCareer(meta), save.currentMatchday);
-  return { ...meta, season, history: save.history };
+  // Interleave the persisted press morale bumps AND the winter roster swap back into
+  // the replay so a loaded career reconstructs the live one exactly. `seasonFromCareer`
+  // rebuilds the pre-winter fresh season; the replay re-applies the movements at the
+  // window matchday. With no answers or movements this is a plain matchday replay.
+  const season = replaySeasonCareer(
+    seasonFromCareer(meta),
+    save.currentMatchday,
+    save.humanTeamId,
+    meta.tactics,
+    press.answers,
+    meta.winter,
+  );
+  return { ...meta, season, history: save.history, palmares: save.palmares };
 }
 
 /**

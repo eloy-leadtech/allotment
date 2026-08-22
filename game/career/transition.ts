@@ -11,13 +11,34 @@
  *
  * Pure and deterministic: retained players age via the seeded development curve.
  */
-import { computeStandings, type StandingRow } from '@engine';
+import { computeSeasonAwards, computeStandings, type StandingRow } from '@engine';
 import type { League, Player } from '@data';
 import type { CareerState, CareerTeam } from './types';
-import { seasonFromCareer } from './career';
+import { seasonFromCareer, careerTeamName } from './career';
 import { developPlayer, seasonStartYear } from './development';
+import { seasonHeadlines, type HemerotecaEvent } from './hemeroteca';
+import type { SeasonSummary, PalmaresTitle } from './types';
+import { advanceContracts } from './contracts';
 import { currentStandings } from '../season/season';
 import { humanFate, type Division, type PromotionOutcome } from './promotion';
+import { rolloverYouth } from './cantera';
+import { DEFAULT_RENEWALS } from './renewals';
+import { titlesWonThisSeason } from './palmares';
+import { physioTrainingFactor } from './staff';
+import { returnLoans, DEFAULT_LOANS } from './loans';
+import { DEFAULT_WINTER } from './winterMovements';
+import {
+  computeSeasonObjective,
+  evaluateObjective,
+  type BoardState,
+  type ObjectiveEvaluation,
+} from './board';
+import {
+  applyConfianza,
+  confianzaProvocaCese,
+  DEFAULT_CONFIANZA,
+  type ConfianzaState,
+} from './confianza';
 
 /** Club-independent identity for the same real person across seasons/clubs. */
 function personKey(p: Player): string {
@@ -58,12 +79,71 @@ function humanPosition(career: CareerState): number {
 
 /** The finished-season history line, including the human's finish (for Europe). */
 function finishedSummary(career: CareerState, championId: string) {
+  // Individual trophies are derived from the season's results/rosters at the
+  // moment it closes, so the palmarés can show each season's Pichichi/Zamora.
+  const awards = computeSeasonAwards(career.season.results, career.season.teams);
   return {
     seasonNumber: career.seasonNumber,
     temporada: career.temporada,
     championId,
     division: career.division,
     humanPosition: humanPosition(career),
+    pichichi: awards.pichichi ?? undefined,
+    zamora: awards.zamora ?? undefined,
+  };
+}
+
+/**
+ * The hemeroteca headlines the just-finished season contributes: it reuses the
+ * hito facts the transition already computes (the summary's Pichichi/Zamora, the
+ * titles won, the promotion/relegation outcome, the board's verdict and whether
+ * the manager was sacked) plus the cracks this transition retired. No hito is
+ * re-derived here — this only phrases them for the archive (see hemeroteca.ts).
+ */
+function finishedHeadlines(
+  career: CareerState,
+  summary: SeasonSummary,
+  titles: readonly PalmaresTitle[],
+  retirees: readonly Player[],
+): HemerotecaEvent[] {
+  return seasonHeadlines({
+    seasonNumber: career.seasonNumber,
+    temporada: career.temporada,
+    humanTeamId: career.humanTeamId,
+    teamName: careerTeamName(career, career.humanTeamId),
+    titles,
+    outcome: careerOutcome(career),
+    evaluation: endOfSeasonEvaluation(career),
+    dismissed: isManagerDismissed(career),
+    pichichi: summary.pichichi,
+    zamora: summary.zamora,
+    retirees,
+  });
+}
+
+/**
+ * The board state for the NEXT season: a fresh objective from the incoming
+ * squads/division plus the board's verdict on the season just finished (compared
+ * against the objective that WAS set for it).
+ */
+function nextBoardState(
+  finishedCareer: CareerState,
+  nextTeams: readonly CareerTeam[],
+  division: Division,
+  relegationSpots: number,
+): BoardState {
+  return {
+    objective: computeSeasonObjective({
+      teams: nextTeams,
+      division,
+      humanTeamId: finishedCareer.humanTeamId,
+      relegationSpots,
+    }),
+    lastEvaluation: evaluateObjective(
+      finishedCareer.board.objective,
+      humanPosition(finishedCareer),
+      careerOutcome(finishedCareer),
+    ),
   };
 }
 
@@ -132,20 +212,27 @@ export function applyTransition(
   const preview = previewTransition(career, nextWorld);
   const retained = preview.departures.filter((p) => retainIds.has(p.id));
 
-  // Age each retained player one season; drop those who retire.
+  // Age each retained player one season; drop those who retire. Retained players
+  // are yours, so this season's training focus shapes how they evolve. Retirees
+  // are captured so a departing crack makes the hemeroteca.
   const developedRetained: Player[] = [];
+  const retirees: Player[] = [];
   for (const player of retained) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
+      // A preparador físico amplifies how much your retained players progress.
+      physioFactor: physioTrainingFactor(career.staff),
     });
-    if (!result.retired) developedRetained.push(result.player);
+    if (result.retired) retirees.push(result.player);
+    else developedRetained.push(result.player);
   }
   const retainedKeys = new Set(retained.map(personKey));
 
   const base = worldTeams(nextWorld);
-  const teams: CareerTeam[] = base.map((team) => {
+  const rawTeams: CareerTeam[] = base.map((team) => {
     if (team.id === career.humanTeamId) {
       // Your real next roster plus the retained (aged) players.
       return { ...team, players: [...team.players, ...developedRetained] };
@@ -154,6 +241,31 @@ export function applyTransition(
     if (retainedKeys.size === 0) return team;
     return { ...team, players: team.players.filter((p) => !retainedKeys.has(personKey(p))) };
   });
+
+  // Tick every deal down a season: expired players leave FREE, new arrivals are
+  // handed a fresh contract, so your wage book always matches your squad.
+  const humanRaw = rawTeams.find((t) => t.id === career.humanTeamId)?.players ?? [];
+  const advance = advanceContracts(humanRaw, career.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+  });
+  const rebuiltTeams: CareerTeam[] = rawTeams.map((team) =>
+    team.id === career.humanTeamId ? { ...team, players: advance.players } : team,
+  );
+
+  // Players you loaned out come home now — aged a season, deal restored — while
+  // players brought in on loan are dropped by the real-world rebuild above. With
+  // an empty loan book this is a no-op.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -165,15 +277,57 @@ export function applyTransition(
     relegationSpots: nextWorld.competicion.relegationSpots,
     // Same-division advance keeps the human where they were.
     division: career.division,
+    board: nextBoardState(career, teams, career.division, nextWorld.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     // Budget carries over untouched; the market phase is what moves it.
     budget: career.budget,
+    // The stadium you built stays yours into the next season.
+    stadium: career.stadium,
+    // The sponsor tier you signed carries forward (you can change it each season).
+    sponsor: career.sponsor,
+    // The bank/board credit and debt carry forward; the liquidation settles them.
+    credit: career.credit,
+    // Loans are settled by this transition (returnees folded in, loanees dropped):
+    // the next season starts with an empty loan book.
+    loans: DEFAULT_LOANS,
+    // This season's winter movements are already baked into `teams`; the next
+    // season opens with an untouched winter window.
+    winter: DEFAULT_WINTER,
+    // The technical staff you hired stays with you into the next season.
+    staff: career.staff,
     teams,
+    contracts: returned.contracts,
+    // The renewal negotiations are settled by this transition (renewed deals were
+    // extended, un-renewed expiring players left FREE above): start clean.
+    renewals: DEFAULT_RENEWALS,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
+    // Your scouting reports are a decision: they carry forward and keep deepening.
+    scouting: career.scouting,
+    // Following a promesa is a decision too: it carries forward so the band keeps
+    // narrowing season over season (the whole point of a multi-season seguimiento).
+    prospectTracking: career.prospectTracking,
   };
 
+  const summary = finishedSummary(career, preview.championId);
+  const titles = titlesWonThisSeason(career, preview.championId);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, preview.championId)],
+    history: [...career.history, summary],
+    // Record any title the human won this season before advancing.
+    palmares: [...career.palmares, ...titles],
+    // Archive this season's hitos (titles, ascenso/descenso, trofeos, retiradas,
+    // veredicto de la directiva) as press headlines in the hemeroteca.
+    hemeroteca: [...(career.hemeroteca ?? []), ...finishedHeadlines(career, summary, titles, retirees)],
   };
 }
 
@@ -182,6 +336,65 @@ export function applyTransition(
 /** Standard promotion and relegation places for the career pyramid. */
 export const RELEGATION_PLACES = 3;
 export const PROMOTION_PLACES = 3;
+
+/**
+ * The board's verdict on the in-progress (finished) season: compares the human's
+ * real final position and promotion/relegation outcome against the objective the
+ * board set for it. Drives the season-end satisfaction banner and the dismissal
+ * decision, and matches the `lastEvaluation` the next season carries forward.
+ */
+export function endOfSeasonEvaluation(career: CareerState): ObjectiveEvaluation {
+  return evaluateObjective(
+    career.board.objective,
+    humanPosition(career),
+    careerOutcome(career),
+  );
+}
+
+/**
+ * The confianza meters the career would carry into the NEXT season: the running
+ * meters folded with the just-finished season's verdict (objective satisfaction,
+ * shortfall, promotion/relegation and whether the human won their league).
+ *
+ * This is the single source of truth for the evolved value — the season
+ * transition stores exactly this, and the UI/continue logic reads it to decide
+ * the soft cese and to show where the meters are heading. Pure and deterministic.
+ */
+export function endOfSeasonConfianza(career: CareerState): ConfianzaState {
+  const evaluation = endOfSeasonEvaluation(career);
+  return applyConfianza(career.confianza ?? DEFAULT_CONFIANZA, {
+    satisfaction: evaluation.satisfaction,
+    shortfall: evaluation.shortfall,
+    outcome: careerOutcome(career),
+    championLeague: championOf(career) === career.humanTeamId,
+  });
+}
+
+/**
+ * Whether the manager is dismissed at the end of the in-progress season.
+ *
+ * Faithful to the classic PC Fútbol, the board gave a manager MARGIN: a single
+ * missed objective is an aviso/enfado, never a cese. Two routes end the tenure:
+ *
+ *  - RELEGATION — the one disaster the board never tolerates, a sack even in the
+ *    very FIRST season (a big club going down). This is `evaluateObjective`'s
+ *    hard verdict (see board.ts) and mirrors `careerOutcome`.
+ *  - SUSTAINED sporting failure — the directiva confianza meter, folded season on
+ *    season, collapsing to the sack line. By construction (see confianza.ts) this
+ *    takes 2+ bad seasons, and never fires in the first season from a neutral
+ *    start, so the first season is protected against a mere objective miss.
+ *
+ * The first-season guard below is belt-and-braces: it makes the "no cese in year
+ * one bar relegation" rule explicit and robust to future confianza tuning.
+ */
+export function isManagerDismissed(career: CareerState): boolean {
+  // Relegation is the one disaster that sacks even a first-year manager.
+  if (endOfSeasonEvaluation(career).dismissed) return true;
+  // Otherwise the first season is never a cese for a missed objective.
+  if (career.seasonNumber <= 1) return false;
+  // From season 2 on, a sustained collapse of the directiva meter ends the tenure.
+  return confianzaProvocaCese(endOfSeasonConfianza(career));
+}
 
 /** The human's promotion/relegation outcome from their division's final table. */
 export function careerOutcome(career: CareerState): PromotionOutcome {
@@ -217,29 +430,55 @@ export function applyDivisionChange(
   const current = humanTeam?.players ?? [];
   const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
 
-  // The whole squad moves with you, aged one season; retirees drop out.
+  // The whole squad moves with you, aged one season; retirees drop out. It is
+  // your squad, so this season's training focus shapes how it evolves. Retirees
+  // are captured so a departing crack makes the hemeroteca.
   const aged: Player[] = [];
+  const retirees: Player[] = [];
   for (const player of current) {
     const result = developPlayer(player, {
       seed: career.seed,
       seasonNumber: seasonNumberNext,
       seasonStartYear: startYear,
+      training: career.training?.focus,
+      // A preparador físico amplifies how much your squad progresses this move.
+      physioFactor: physioTrainingFactor(career.staff),
     });
-    if (!result.retired) aged.push(result.player);
+    if (result.retired) retirees.push(result.player);
+    else aged.push(result.player);
   }
   const humanKeys = new Set(current.map(personKey));
 
+  // Tick every deal down a season alongside the squad's move up/down a division.
+  const advance = advanceContracts(aged, career.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+  });
+
   let humanPresent = false;
-  const teams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
+  const rebuiltTeams: CareerTeam[] = worldTeams(targetLeague).map((team) => {
     if (team.id === career.humanTeamId) {
       humanPresent = true;
-      return { ...team, players: aged };
+      return { ...team, players: advance.players };
     }
     return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
   });
   if (!humanPresent) {
-    teams.push({ id: career.humanTeamId, nombre: humanNombre, players: aged });
+    rebuiltTeams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
   }
+
+  // Loanees return (aged, deal restored) even across a division change; players
+  // brought in on loan are dropped by the rebuild. No-op with an empty loan book.
+  const returned = returnLoans(career.loans, rebuiltTeams, advance.contracts, {
+    seed: career.seed,
+    seasonNumber: seasonNumberNext,
+    seasonStartYear: startYear,
+    training: career.training?.focus,
+    physioFactor: physioTrainingFactor(career.staff),
+    humanTeamId: career.humanTeamId,
+  });
+  const teams = returned.teams;
 
   const meta = {
     seed: career.seed,
@@ -250,12 +489,51 @@ export function applyDivisionChange(
     pointsForWin: targetLeague.competicion.pointsForWin,
     relegationSpots: targetLeague.competicion.relegationSpots,
     division: targetDivision,
+    board: nextBoardState(career, teams, targetDivision, targetLeague.competicion.relegationSpots),
+    // Fold this season's verdict into the running confianza meters, carried forward.
+    confianza: endOfSeasonConfianza(career),
+    // The training focus carries into the next season (the manager may change it).
+    training: career.training,
     budget: career.budget,
+    // The stadium you built moves with you across divisions.
+    stadium: career.stadium,
+    // The sponsor tier you signed carries forward across divisions too.
+    sponsor: career.sponsor,
+    // The bank/board credit and debt move with you across divisions.
+    credit: career.credit,
+    // The loan book is settled by the transition; start clean.
+    loans: DEFAULT_LOANS,
+    // Winter movements are baked into `teams`; open next season's window clean.
+    winter: DEFAULT_WINTER,
+    // The technical staff you hired moves with you across divisions.
+    staff: career.staff,
     teams,
+    contracts: returned.contracts,
+    // Renewal negotiations are settled by the transition; start clean.
+    renewals: DEFAULT_RENEWALS,
+    // Age out overstaying prospects and breed the new pretemporada hornada.
+    youthProspects: rolloverYouth(career.youthProspects, {
+      seed: career.seed,
+      seasonNumber: seasonNumberNext,
+      temporada: temporadaNext,
+      humanTeamId: career.humanTeamId,
+    }),
+    // Your scouting reports are a decision: they carry forward and keep deepening.
+    scouting: career.scouting,
+    // Following a promesa is a decision too: it carries forward so the band keeps
+    // narrowing season over season (the whole point of a multi-season seguimiento).
+    prospectTracking: career.prospectTracking,
   };
+  const champ = championOf(career);
+  const summary = finishedSummary(career, champ);
+  const titles = titlesWonThisSeason(career, champ);
   return {
     ...meta,
     season: seasonFromCareer(meta),
-    history: [...career.history, finishedSummary(career, championOf(career))],
+    history: [...career.history, summary],
+    // Record any title the human won this season before changing division.
+    palmares: [...career.palmares, ...titles],
+    // Archive this season's hitos as press headlines in the hemeroteca.
+    hemeroteca: [...(career.hemeroteca ?? []), ...finishedHeadlines(career, summary, titles, retirees)],
   };
 }

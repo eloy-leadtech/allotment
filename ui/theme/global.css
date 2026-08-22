@@ -12,14 +12,21 @@
 body {
   margin: 0;
   font-family: var(--font-ui);
-  /* Consola de acero azul: azul base con viñeteado radial a azul profundo
-     y un destello frío alto-centro (la "foto de estadio difuminada" del PCF7). */
+  /* Consola de acero azul: azul base con viñeteado radial a azul profundo,
+     un destello frío alto-centro (la "foto de estadio difuminada" del PCF7) y
+     un rayado técnico muy tenue (scanlines) que da textura de panel. */
   background:
-    radial-gradient(120% 80% at 50% 22%, rgba(127, 159, 255, 0.14) 0%, transparent 45%),
-    radial-gradient(140% 120% at 50% 40%, var(--c-bg-base) 0%, var(--c-bg) 100%);
+    repeating-linear-gradient(180deg,
+      rgba(127, 159, 255, 0.03) 0px, rgba(127, 159, 255, 0.03) 1px,
+      transparent 1px, transparent 4px),
+    radial-gradient(120% 80% at 50% 20%, rgba(127, 159, 255, 0.16) 0%, transparent 46%),
+    radial-gradient(90% 70% at 50% 4%, rgba(150, 180, 255, 0.10) 0%, transparent 40%),
+    radial-gradient(150% 130% at 50% 38%, var(--c-bg-base) 0%, var(--c-bg) 72%, #05050f 100%);
   background-attachment: fixed;
   color: var(--c-ink);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .screen {
@@ -46,16 +53,45 @@ body {
   position: fixed;
   top: 34%;
   left: 50%;
-  width: min(70vw, 520px);
-  height: min(70vw, 520px);
+  width: min(78vw, 560px);
+  height: min(78vw, 560px);
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle,
-    rgba(200, 220, 255, 0.9) 0%,
-    rgba(127, 159, 255, 0.35) 18%,
-    rgba(42, 63, 170, 0.18) 38%,
-    transparent 68%);
+  background:
+    radial-gradient(circle,
+      rgba(230, 240, 255, 0.95) 0%,
+      rgba(200, 220, 255, 0.7) 9%,
+      rgba(127, 159, 255, 0.34) 20%,
+      rgba(42, 63, 170, 0.16) 40%,
+      transparent 70%);
   pointer-events: none;
   z-index: 0;
+  animation: flare-breathe 6s ease-in-out infinite;
+}
+
+/* Rayos horizontales del lens-flare (el destello alargado del despacho PCF7). */
+.screen--title::after {
+  content: '';
+  position: fixed;
+  top: 34%;
+  left: 50%;
+  width: min(96vw, 900px);
+  height: 3px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(180, 205, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.9) 50%, rgba(180, 205, 255, 0.55) 55%, transparent 100%);
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes flare-breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen--title::before { animation: none; }
 }
 
 .screen--title > * {
@@ -66,13 +102,16 @@ body {
 /* Placa de título metálica con casquillos (barra del despacho). */
 .title-plate {
   display: inline-block;
-  padding: 10px 40px;
-  background: var(--bevel);
+  padding: 12px 44px;
+  background:
+    var(--sheen),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius-pill);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
   position: relative;
+  isolation: isolate;
 }
 
 /* Casquillos plateados en los extremos de la placa. */
@@ -81,15 +120,16 @@ body {
   content: '';
   position: absolute;
   top: 50%;
-  width: 16px;
-  height: 62%;
+  width: 17px;
+  height: 64%;
   transform: translateY(-50%);
-  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  background: var(--cap-metal);
   border-radius: var(--radius-pill);
-  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 var(--c-metal-hi), inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.5);
 }
-.title-plate::before { left: 8px; }
-.title-plate::after { right: 8px; }
+.title-plate::before { left: 9px; }
+.title-plate::after { right: 9px; }
 
 .title-menu {
   display: flex;
@@ -129,7 +169,20 @@ h1 {
   text-transform: uppercase;
   font-style: italic; /* rótulos grandes en oblicua, estilo Futura del PCF7 */
   font-weight: 800;
-  text-shadow: 0 1px 0 var(--c-edge-dark), 0 0 18px rgba(127, 159, 255, 0.5);
+  /* Titular con leve degradado de acero-cristal para que "brille" el texto. */
+  background: linear-gradient(180deg, #ffffff 0%, #e6eeff 52%, #b9cbf0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 var(--c-edge-dark), 0 0 20px rgba(127, 159, 255, 0.45);
+}
+
+/* Fallback si background-clip:text no pinta (mantiene el texto legible). */
+@supports not (background-clip: text) {
+  h1 {
+    color: var(--c-ink);
+    background: none;
+  }
 }
 
 .tagline {
@@ -140,15 +193,16 @@ h1 {
 
 /* Buttons — placa de acero biselada. Touch targets >= 48px */
 .retro-btn {
+  position: relative;
   min-height: var(--tap);
-  padding: 0 20px;
+  padding: 0 22px;
   font-family: var(--font-ui);
   font-size: 15px;
   font-weight: 700;
   font-style: italic;
   letter-spacing: 0.5px;
   color: var(--c-ink);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border: none;
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
@@ -156,27 +210,43 @@ h1 {
   box-shadow: var(--bevel-shadow);
   cursor: pointer;
   text-transform: uppercase;
-  transition: filter 0.12s ease, transform 0.05s ease;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transition: filter 0.14s ease, transform 0.06s ease, box-shadow 0.14s ease;
 }
 
 .retro-btn:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.16);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .retro-btn:active {
   transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--c-edge-light);
+}
+
+.retro-btn:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
 }
 
 /* Primario: casquillo con acento rojo del PCF7 (estado activo). */
 .retro-btn--primary {
-  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  background: var(--sheen), var(--cap-danger);
   border-top-color: #ff9c9c;
   color: var(--c-ink);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55);
+}
+
+.retro-btn--primary:hover {
+  box-shadow: var(--bevel-shadow), 0 0 14px rgba(200, 30, 30, 0.5);
 }
 
 .retro-panel {
-  background: var(--bevel);
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, transparent 22%),
+    var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
@@ -185,16 +255,28 @@ h1 {
 }
 
 .retro-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0 0 var(--space);
   color: var(--c-ink);
   font-size: 14px;
   font-style: italic;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  /* pequeño acento rojo a la izquierda del título, como los casquillos */
-  border-left: 4px solid var(--c-danger);
-  padding-left: 8px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Casquillo rojo del PCF7 a la izquierda del título (estado/marca de sección). */
+.retro-panel__title::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 15px;
+  border-radius: var(--radius-pill);
+  background: var(--cap-danger);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 8px rgba(200, 30, 30, 0.5);
 }
 
 /* Cabecera centrada con placa de título (píldora central del PCF7). */
@@ -231,25 +313,34 @@ h1 {
 }
 
 .team-tile:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.14);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .team-tile:active {
   transform: translateY(1px);
 }
 
-/* Marco biselado de 2px alrededor del escudo (findings/09 §4 "marcos de icono").
+.team-tile:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* Marco biselado alrededor del escudo (findings/09 §4 "marcos de icono"): metal
+   con hueco interior iluminado, como las miniaturas-foto del despacho PCF7.
    Base reutilizable; cada uso fija su tamaño. */
 .crest-frame,
 .team-tile__crest {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
-  border-top: 2px solid var(--c-edge-light);
+  background:
+    radial-gradient(circle at 50% 30%, #35508c 0%, #1a2c52 60%, #0e1a33 100%);
+  border-top: 2px solid var(--c-steel-hi);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 4px var(--c-edge-dark),
+    inset 0 0 10px rgba(127, 159, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .team-tile__crest {
@@ -281,6 +372,20 @@ h1 {
 .champion {
   color: var(--c-accent);
   font-weight: bold;
+}
+
+/* Derbi: banda roja de tensión antes del partido y sobre el marcador. */
+.derby-banner {
+  margin: 8px 0;
+  padding: 8px 14px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--c-danger);
+  border: 2px solid var(--c-ink);
+  border-radius: 6px;
 }
 
 /* Standings table — filas-cápsula metálicas del PCF7 (scr_026): cada equipo es
@@ -317,11 +422,16 @@ h1 {
   background: var(--bevel);
   box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
     0 2px 5px rgba(0, 0, 0, 0.45);
+  transition: filter 0.12s ease;
 }
 
 /* Rayado alterno: cápsula un punto más clara para legibilidad. */
 .standings tbody tr:nth-child(even) {
-  background: linear-gradient(180deg, #6c8ec0 0%, #24407a 55%, #16264a 100%);
+  background: var(--bevel-raised);
+}
+
+.standings tbody tr:hover {
+  filter: brightness(1.12);
 }
 
 .standings tbody td {
@@ -355,24 +465,26 @@ h1 {
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
-  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  background: var(--cap-metal);
   color: #10142a;
   font-weight: 700;
   border-radius: var(--radius-pill);
-  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 var(--c-metal-hi), inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .standings__pts {
   color: var(--c-accent);
   font-weight: bold;
+  text-shadow: 0 0 8px rgba(127, 159, 255, 0.4);
 }
 
 /* Fila del equipo humano: casquillo rojo del PCF7 (mismo acento que el botón
    primario), para leer de un vistazo "este eres tú". */
 .standings__row--me {
-  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  background: var(--cap-danger);
   box-shadow: inset 0 1px 0 #ff9c9c, inset 0 -2px 3px #5a0c0c,
-    0 2px 6px rgba(0, 0, 0, 0.5);
+    0 2px 8px rgba(200, 30, 30, 0.35);
 }
 
 .standings__row--me .standings__pts {
@@ -424,11 +536,11 @@ h1 {
   letter-spacing: normal;
   text-transform: none;
   text-shadow: none;
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
-  box-shadow: var(--bevel-shadow);
+  box-shadow: var(--bevel-shadow-lg);
 }
 
 .scoreboard__side {
@@ -461,10 +573,9 @@ h1 {
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
   color: #ff5a5a;
-  background: linear-gradient(180deg, #0a0a28, #05050f);
+  background: var(--sunken);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(127, 159, 255, 0.15),
-    0 0 10px rgba(200, 30, 30, 0.35);
+  box-shadow: var(--inset-shadow), 0 0 10px rgba(200, 30, 30, 0.35);
   text-shadow: 0 0 8px rgba(255, 60, 60, 0.6);
 }
 
@@ -562,47 +673,77 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  min-height: 84px;
-  padding: 12px 6px;
+  gap: 7px;
+  min-height: 92px;
+  padding: 12px 6px 11px;
   cursor: pointer;
   color: var(--c-ink);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border: none;
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
   box-shadow: var(--bevel-shadow);
-  transition: filter 0.12s ease, transform 0.05s ease;
+  transition: filter 0.14s ease, transform 0.06s ease, box-shadow 0.14s ease;
 }
 
 .despacho-tile:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.13);
+  transform: translateY(-1px);
+  box-shadow: var(--bevel-shadow), var(--glow-cool);
 }
 
 .despacho-tile:active {
   transform: translateY(1px);
 }
 
+.despacho-tile:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* Icono enmarcado: la miniatura-foto en marco metálico del despacho PCF7. */
 .despacho-tile__icon {
-  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  font-size: 23px;
   line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  background: radial-gradient(circle at 50% 32%, #35508c 0%, #16264a 68%, #0c1730 100%);
+  border-top: 1px solid var(--c-steel-hi);
+  border-bottom: 1px solid var(--c-edge-dark);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark),
+    0 1px 2px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 }
 
 .despacho-tile__label {
   font-family: var(--font-data);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
-/* Variante "de campo": borde superior verde césped. */
+/* Variante "de campo": borde superior verde césped + halo del marco de icono. */
 .despacho-tile--pitch {
-  border-top-color: var(--c-accent-2);
-  box-shadow: inset 0 1px 0 var(--c-accent-2), inset 0 -2px 3px var(--c-edge-dark),
+  border-top-color: var(--c-accent-2-hi);
+  box-shadow: inset 0 1px 0 var(--c-accent-2-hi), inset 0 -2px 3px var(--c-edge-dark),
     0 3px 8px rgba(0, 0, 0, 0.55);
+}
+
+.despacho-tile--pitch:hover {
+  box-shadow: inset 0 1px 0 var(--c-accent-2-hi), inset 0 -2px 3px var(--c-edge-dark),
+    0 3px 8px rgba(0, 0, 0, 0.55), 0 0 14px rgba(42, 157, 74, 0.45);
+}
+
+.despacho-tile--pitch .despacho-tile__icon {
+  background: radial-gradient(circle at 50% 32%, #1f6d3a 0%, #124827 66%, #0a2417 100%);
+  border-top-color: var(--c-accent-2-hi);
 }
 
 /* Crests */
@@ -669,6 +810,49 @@ h1 {
 
 .copa-me {
   color: var(--c-accent-2);
+}
+
+/* Human cup run (round-by-round, expandable teletipo) */
+.ko-path-step {
+  display: block;
+}
+
+.ko-path-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.ko-path-round {
+  text-transform: capitalize;
+  color: var(--c-ink-dim);
+  font-size: 12px;
+  min-width: 84px;
+}
+
+.ko-path-score {
+  font-variant-numeric: tabular-nums;
+}
+
+.ko-out {
+  font-weight: 700;
+  color: var(--c-ink-dim);
+}
+
+.ko-path-live {
+  margin: 8px 0 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--c-border);
+}
+
+.scoreboard--mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 15px;
 }
 
 /* Stadium banner */
@@ -754,6 +938,41 @@ h1 {
   font-weight: 600;
 }
 
+/* Renovaciones de contrato (fin de temporada): un jugador que acaba contrato,
+   su demanda y los botones aceptar / contraoferta / dejar libre. */
+.renewal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+
+.renewal-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.renewal-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.renewal-resolved {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 /* Ficha de plantilla: placa de acero con escudo enmarcado + nombre en Futura
    (findings/09 §6 "Ficha de jugador"). */
 .squad-card {
@@ -761,7 +980,7 @@ h1 {
   align-items: center;
   gap: var(--space);
   padding: var(--space);
-  background: var(--bevel);
+  background: var(--sheen), var(--bevel);
   border-top: 1px solid var(--c-edge-light);
   border-bottom: 2px solid var(--c-edge-dark);
   border-radius: var(--radius);
@@ -822,6 +1041,165 @@ h1 {
 
 .squad-name {
   font-weight: 600;
+}
+
+/* Estado de disponibilidad: lesionado (rojo) / sancionado (ambar). */
+.squad-status {
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.squad-status--injured {
+  color: #ff6b6b;
+}
+.squad-status--suspended {
+  color: #ffb454;
+}
+.squad-row--out {
+  opacity: 0.72;
+}
+/* Forma (racha) y moral: flechas y barra con acento frío/verde/rojo. */
+.streak--up {
+  color: var(--c-accent-2);
+}
+.streak--down {
+  color: var(--c-danger);
+}
+.streak--flat {
+  color: var(--c-ink-dim);
+}
+
+.form-arrow {
+  font-family: var(--font-data);
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.morale-bar {
+  display: inline-block;
+  width: 70px;
+  height: 8px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.morale-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+/* Confianza de la directiva y ánimo de la afición: dos medidores 0-100 con
+   banda de color (verde sano / ámbar preocupante / rojo crítico) y su aviso. */
+.confianza-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.confianza-meter {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-accent-2-hi);
+}
+.confianza-meter--ok {
+  color: var(--c-accent-2-hi);
+}
+.confianza-meter--warning {
+  color: #d8901f;
+}
+.confianza-meter--critical {
+  color: var(--c-danger-hi);
+}
+.confianza-meter__label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  color: var(--c-ink-dim);
+}
+.confianza-bar {
+  display: inline-block;
+  width: 120px;
+  height: 10px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 5px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.confianza-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.9;
+  transition: width 0.2s ease;
+}
+.confianza-meter__value {
+  min-width: 28px;
+  text-align: right;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: currentColor;
+}
+.confianza-alert {
+  margin: 4px 0 0;
+  font-family: var(--font-data);
+  font-size: 13px;
+}
+.confianza-alert--warning {
+  color: #d8901f;
+}
+.confianza-alert--sack {
+  color: var(--c-danger-hi);
+  font-weight: 700;
+}
+
+/* Estado físico (fatiga): barra que se llena y se "calienta" con el desgaste;
+   fresco = verde, cansado = ámbar, reventado = rojo. */
+.fatigue-bar {
+  display: inline-block;
+  width: 70px;
+  height: 8px;
+  background: var(--c-bg-raised);
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.fatigue-bar__fill {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.9;
+}
+.fatigue--0 {
+  color: var(--c-accent-2);
+}
+.fatigue--1 {
+  color: #b7c24a;
+}
+.fatigue--2 {
+  color: #d8901f;
+}
+.fatigue--3 {
+  color: var(--c-danger);
+}
+
+.vestuario {
+  display: block;
+  font-family: var(--font-data);
+  font-size: 13px;
+  color: var(--c-ink-dim);
+}
+.vestuario strong {
+  font-variant-numeric: tabular-nums;
 }
 
 .potrange {
@@ -901,6 +1279,12 @@ h1 {
   gap: 6px;
 }
 
+.market-scout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .offer-input {
   width: 5.5em;
   padding: 4px 6px;
@@ -951,6 +1335,514 @@ h1 {
   right: 6%;
   top: 26%;
   width: 44%;
+/* Board objective + satisfaction */
+.board-objective {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.board-mood {
+  margin: 0;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+}
+.board-mood--contento {
+  color: var(--c-bg);
+  background: var(--c-accent-2);
+}
+.board-mood--normal {
+  color: var(--c-ink);
+  border: 1px solid var(--c-ink-dim);
+}
+.board-mood--enfadado {
+  color: var(--c-ink);
+  background: var(--c-danger);
+}
+
+/* Press feed (newspaper ticker) */
+.press-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.press-line {
+  line-height: 1.3;
+}
+
+.press-matchday {
+  display: inline-block;
+  min-width: 2.2em;
+  font-weight: 700;
+  color: var(--c-accent);
+}
+
+/* Hemeroteca — archivo de prensa de la carrera (titulares agrupados por temporada) */
+.hemeroteca {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hemeroteca-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--sunken);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--c-border);
+  box-shadow: var(--inset-shadow);
+  line-height: 1.3;
+}
+
+.hemeroteca-icon {
+  flex: none;
+  width: 1.6em;
+  text-align: center;
+  font-size: 1.15rem;
+}
+
+.hemeroteca-text {
+  color: var(--c-ink);
+}
+
+/* Titulares destacados por tipo: gestas en oro, disgustos en rojo, mercado en azul. */
+.hemeroteca-line--titulo,
+.hemeroteca-line--ascenso {
+  border-left-color: var(--c-gold);
+}
+
+.hemeroteca-line--descenso,
+.hemeroteca-line--cese {
+  border-left-color: var(--c-danger);
+}
+
+.hemeroteca-line--fichaje,
+.hemeroteca-line--traspaso {
+  border-left-color: var(--c-accent);
+}
+
+/* Parón de selecciones — aviso de jugadores convocados y su fatiga extra */
+.callup-notice {
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.callup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.callup-line {
+  line-height: 1.3;
+}
+
+.callup-name {
+  font-weight: 700;
+}
+
+/* Estadísticas — panel de datos de temporada (goleadores, Zamora, récords) */
+.stat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stat-cell {
+  flex: 1 1 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 6px;
+  background: var(--bevel);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.stat-cell__value {
+  font-family: var(--font-data);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.stat-cell__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.stat-form-label {
+  margin: 12px 0 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.form-streak {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.form-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-data);
+  font-weight: 700;
+  color: var(--c-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.form-badge--V {
+  background: linear-gradient(180deg, #3fbf6a 0%, var(--c-accent-2) 60%, #176030 100%);
+}
+
+.form-badge--E {
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  color: #10142a;
+}
+
+.form-badge--D {
+  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+}
+
+/* La tabla de estadísticas alinea a la izquierda las columnas de texto (jugador). */
+.stat-table th.standings__team,
+.stat-table td.standings__team {
+  text-align: left;
+}
+
+/* ============================================================
+   DESPACHO — cabecera de club + rejilla de secciones agrupadas
+   ============================================================ */
+
+/* Cabecera del despacho: escudo enmarcado + identidad del club + chips de datos
+   (jornada, presupuesto) en placa de acero, para leer el estado de un vistazo. */
+.despacho-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: 14px var(--space);
+  background:
+    radial-gradient(120% 180% at 50% -40%, rgba(127, 159, 255, 0.22) 0%, transparent 55%),
+    var(--sheen),
+    var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Toque "sala de trofeos": filo de repisa iluminado en la base de la cabecera. */
+.despacho-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(127, 159, 255, 0.5) 20%, rgba(200, 220, 255, 0.85) 50%,
+    rgba(127, 159, 255, 0.5) 80%, transparent 100%);
+  pointer-events: none;
+}
+
+.despacho-head__crest {
+  flex: none;
+  width: 68px;
+  height: 68px;
+}
+
+.despacho-head__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.despacho-head__identity h1 {
+  margin: 0;
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+.despacho-head__stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Chip de dato: casquillo empotrado oscuro con rótulo tenue + valor en acento. */
+.head-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 84px;
+  padding: 7px 13px;
+  background: var(--sunken);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-shadow);
+}
+
+.head-chip__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.head-chip__value {
+  font-family: var(--font-data);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+/* Secciones del despacho agrupadas por tema (equipo / competición / club…). */
+.despacho-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+.despacho-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Rótulo de grupo: tipografía de datos con casquillo rojo a la izquierda,
+   igual que los títulos de panel, para que todo lea como un sistema. */
+.despacho-group__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+
+/* Casquillo rojo + filo de repisa: el rótulo de grupo lee como los títulos de
+   panel, para que todo el sistema hable el mismo idioma visual. */
+.despacho-group__label::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 13px;
+  border-radius: var(--radius-pill);
+  background: var(--cap-danger);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 7px rgba(200, 30, 30, 0.5);
+}
+
+.despacho-group__label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(127, 159, 255, 0.35), transparent);
+}
+
+/* ============================================================
+   FICHA DE JUGADOR — cabecera, barras de atributos y estado
+   ============================================================ */
+
+/* Cabecera de ficha: escudo + identidad + gran media en casquillo. */
+.player-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: var(--space);
+  background:
+    radial-gradient(120% 180% at 50% -40%, rgba(127, 159, 255, 0.20) 0%, transparent 55%),
+    var(--sheen),
+    var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow-lg);
+}
+
+.player-hero__crest {
+  flex: none;
+  width: 84px;
+  height: 84px;
+}
+
+/* Retrato real del jugador (BDFutbol) enmarcado en el mismo acero que el escudo.
+   Vertical ~2/3, la foto llena el hueco (object-fit: cover) dejando ver el bisel.
+   Si no hay foto se usa .player-hero__crest normal con el escudo. */
+.player-hero__portrait {
+  width: 84px;
+  height: 126px;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.player-hero__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.player-hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.player-hero__meta h1 {
+  margin: 0;
+  font-size: clamp(20px, 5vw, 28px);
+}
+
+/* Media global en casquillo empotrado, como el marcador. */
+.player-hero__media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  min-width: 76px;
+  padding: 8px 14px;
+  background: var(--sunken);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-shadow);
+}
+
+.player-hero__media-value {
+  font-family: var(--font-data);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  text-shadow: 0 0 10px rgba(127, 159, 255, 0.45);
+}
+
+.player-hero__media-label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+/* Rejilla de atributos: dos columnas en pantallas anchas, una en móvil. */
+.attr-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .attr-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+}
+
+.attr-row {
+  display: grid;
+  grid-template-columns: 88px 1fr 28px;
+  align-items: center;
+  gap: 8px;
+}
+
+.attr-label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  color: var(--c-ink-dim);
+}
+
+/* Carril empotrado + relleno con acento; el color lo fija el tier del atributo. */
+.attr-track {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.attr-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  transition: width 0.2s ease;
+}
+
+.attr-val {
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--c-ink);
+}
+
+/* Tiers de atributo (fijan currentColor para el relleno). */
+.attr--elite {
+  color: #3fbf6a;
+}
+.attr--good {
+  color: var(--c-accent);
+}
+.attr--avg {
+  color: #b7c24a;
+}
+.attr--low {
+  color: #d8901f;
+}
+.attr--na {
+  color: var(--c-ink-dim);
+}
+
+/* Bloque de estado: forma / moral / físico como barras con caption. */
+.vital-grid {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1162,7 +2054,7 @@ h1 {
   background: var(--c-accent);
   color: #fff;
 }
-.attr-grid {
+.cat-attr-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
   gap: calc(var(--space) * 0.5);
@@ -1234,4 +2126,1359 @@ h1 {
   align-items: center;
   gap: var(--space);
   flex-wrap: wrap;
+.vital-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 10px;
 }
+
+.vital-label {
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.vital-track {
+  position: relative;
+  height: 12px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.vital-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  opacity: 0.9;
+  box-shadow: 0 0 8px currentColor;
+  transition: width 0.2s ease;
+}
+
+.vital-caption {
+  font-family: var(--font-data);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+/* Ficha de contrato/potencial en pares dato-valor. */
+.player-facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-fact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--c-border);
+}
+
+.player-fact:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.player-fact dt {
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.player-fact dd {
+  margin: 0;
+  text-align: right;
+}
+
+/* Enlace de nombre de jugador en la plantilla: abre su ficha. */
+.player-link {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--c-accent);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 159, 255, 0.4);
+  text-underline-offset: 2px;
+}
+
+.player-link:hover {
+  filter: brightness(1.2);
+  text-decoration-color: var(--c-accent);
+}
+
+/* ============================================================
+   GESTIÓN (scoped .gest-* / .table-* / .mkt-*) — pulido de las
+   pantallas de gestión: cabeceras uniformes de acero, tablas más
+   nítidas y legibles, y el mercado como fichas ordenadas. Todo
+   aditivo: no toca las clases del tema/despacho/partido.
+   ============================================================ */
+
+/* --- Cabecera uniforme de pantalla de gestión --------------- */
+/* Placa de acero: escudo/icono enmarcado + título + chips de dato,
+   el mismo lenguaje que la cabecera del despacho. */
+.gest-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  padding: var(--space);
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.gest-head__crest {
+  flex: none;
+  width: 62px;
+  height: 62px;
+}
+
+/* Icono de sección en tesela de acero (cuando no hay escudo). */
+.gest-head__icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  font-size: 32px;
+  line-height: 1;
+  background: radial-gradient(circle at 50% 35%, #2a3f7a, #12203f);
+  border-top: 2px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), inset 0 -2px 3px var(--c-edge-dark);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.gest-head__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.gest-head__identity h1 {
+  margin: 0;
+  font-size: clamp(19px, 4.6vw, 27px);
+}
+
+.gest-head__sub {
+  color: var(--c-ink-dim);
+  font-family: var(--font-data);
+  letter-spacing: 0.3px;
+}
+
+.gest-head__chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Chip de dato: casquillo empotrado oscuro (igual que head-chip). */
+.gest-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 96px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.gest-chip__label {
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.gest-chip__value {
+  font-family: var(--font-data);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.gest-chip--danger .gest-chip__value {
+  color: #ff8a8a;
+}
+
+.gest-chip--good .gest-chip__value {
+  color: #4fd07f;
+}
+
+/* --- Tabla de acero: capa de pulido sobre .squad-table -------- */
+/* Contenedor redondeado con cabecera de acero, cebra legible y filas
+   con realce al pasar el ratón. Se aplica junto a .squad-table. */
+.table-steel {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 0 0 1px var(--c-border);
+}
+
+.table-steel thead th {
+  background: linear-gradient(180deg, var(--c-panel-top) 0%, #24407a 60%, #16264a 100%);
+  color: var(--c-ink);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 9px 8px;
+  border-bottom: 2px solid var(--c-edge-dark);
+  box-shadow: inset 0 1px 0 var(--c-edge-light);
+  white-space: nowrap;
+}
+
+.table-steel tbody td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(58, 84, 144, 0.5);
+  vertical-align: middle;
+}
+
+.table-steel tbody tr:nth-child(odd) {
+  background: rgba(10, 10, 40, 0.22);
+}
+
+.table-steel tbody tr:nth-child(even) {
+  background: rgba(127, 159, 255, 0.07);
+}
+
+.table-steel tbody tr:hover {
+  background: rgba(127, 159, 255, 0.16);
+}
+
+.table-steel tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Fila "de baja" (lesionado/sancionado): atenuada pero legible. */
+.table-steel tbody tr.squad-row--out {
+  background: rgba(200, 30, 30, 0.1);
+}
+
+/* Casquillo de posición del jugador (POR/DEF/MED/DEL) en la tabla. */
+.pos-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 2px 8px;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #10142a;
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Tinte por línea, sutil, para leer la posición de un vistazo. */
+.pos-badge--POR { background: linear-gradient(180deg, #e6c05a, #b8901f); }
+.pos-badge--DEF { background: linear-gradient(180deg, #7fa8e0, #3a5fa0); color: #f0f4ff; }
+.pos-badge--MED { background: linear-gradient(180deg, #6fd08f, #2a7d4a); color: #f0fff4; }
+.pos-badge--DEL { background: linear-gradient(180deg, #e88a6a, #b8471f); color: #fff2ee; }
+
+/* --- Mercado: fichas de fichaje ------------------------------ */
+/* Cada objetivo es una ficha de acero con tres bloques: identidad,
+   condiciones (pide/cláusula/potencial) y controles de oferta. */
+.mkt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mkt-signing {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(92, 126, 174, 0.16), rgba(20, 32, 63, 0.35));
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(127, 159, 255, 0.25), 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.mkt-signing__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Cesiones: a section subheading and the "already lent out" muted row. */
+.mkt-subhead {
+  margin: 14px 0 6px;
+  font-family: var(--font-data);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-muted, #9fb2d8);
+}
+
+.mkt-signing--muted {
+  opacity: 0.72;
+}
+
+.mkt-signing__name {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 15px;
+  min-width: 0;
+}
+
+/* Media (o rango de media) en casquillo empotrado a la derecha. */
+.mkt-media {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 3px 10px;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--c-accent);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.mkt-media small {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+
+/* Condiciones económicas como pares etiqueta/valor en línea. */
+.mkt-signing__terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-family: var(--font-data);
+  font-size: 13px;
+}
+
+.mkt-term {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+
+.mkt-term em {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+.mkt-term strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-signing__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mkt-signing__actions .offer-input {
+  min-height: 40px;
+}
+
+/* Separador fino entre la línea de datos y los controles. */
+.mkt-signing__terms + .mkt-signing__actions {
+  padding-top: 8px;
+  border-top: 1px dashed var(--c-border);
+}
+
+/* --- Mercado: libro de ingresos (ledger) --------------------- */
+.mkt-ledger {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mkt-ledger__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 2px;
+  border-bottom: 1px dashed var(--c-border);
+  font-family: var(--font-data);
+}
+
+.mkt-ledger__row:last-child {
+  border-bottom: none;
+}
+
+.mkt-ledger__label {
+  color: var(--c-ink-dim);
+}
+
+.mkt-ledger__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.mkt-ledger__value--neg {
+  color: #ff8a8a;
+}
+
+/* Fila de balance: casquillo resaltado que cierra el desglose. */
+.mkt-ledger__row--balance {
+  margin-top: 6px;
+  padding: 9px 12px;
+  border-bottom: none;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+
+.mkt-ledger__row--balance .mkt-ledger__label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink);
+}
+
+.mkt-ledger__row--balance .mkt-ledger__value {
+  font-size: 18px;
+}
+
+/* --- Fila destacada (nivel/oferta activa) -------------------- */
+/* Estadio y patrocinio: la opción vigente se marca con casquillo rojo. */
+.market-row--active {
+  background: linear-gradient(180deg, rgba(226, 75, 75, 0.22), rgba(143, 20, 20, 0.28));
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 156, 156, 0.4);
+}
+
+.market-row--active .market-name {
+  color: var(--c-ink);
+}
+
+/* --- Estilos que faltaban a clases ya usadas en el JSX ------- */
+/* .market-negotiate: separación clara entre bloques de una fila. */
+.market-negotiate {
+  gap: 6px 10px;
+}
+
+/* .press-notice: aviso de la rueda de prensa pendiente. */
+.press-notice {
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--c-accent);
+}
+
+/* .palmares-count: recuento grande de títulos de un grupo. */
+.palmares-count {
+  margin: 0 0 8px;
+  font-family: var(--font-data);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-accent);
+  text-shadow: 0 0 10px rgba(127, 159, 255, 0.4);
+}
+
+/* Palmarés: temporadas como pastillas de acero en línea. */
+.palmares--chips {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.palmares--chips li {
+  padding: 4px 12px;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 var(--c-edge-light), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+
+
+/* ============================================================
+   PARTIDO EN DIRECTO — marcador scoreboard + teletipo con lances
+   (scoped .match-* / .sb-* ; no toca clases existentes)
+   ============================================================ */
+
+/* --- Cabecera de jornada del prepartido: placa + chip local/visitante --- */
+.match-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space);
+  flex-wrap: wrap;
+}
+
+.match-head h1 {
+  margin: 0;
+  font-size: clamp(20px, 5.5vw, 30px);
+}
+
+/* Chip de sede: casquillo metálico "EN CASA" (verde) / "FUERA" (frío). */
+.match-venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-data);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.18);
+}
+.match-venue::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  box-shadow: 0 0 8px currentColor;
+}
+.match-venue--home {
+  color: #7ee0a0;
+}
+.match-venue--home::before {
+  background: var(--c-accent-2);
+}
+.match-venue--away {
+  color: var(--c-accent);
+}
+
+/* --- Cinta de DERBI: banda roja con fibras metálicas y pulso suave --- */
+.match-derby {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 16px;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  border-top: 1px solid #ff9c9c;
+  border-bottom: 2px solid #5a0c0c;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #ffb3b3, 0 0 18px rgba(200, 30, 30, 0.5), 0 3px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+}
+.match-derby__spark {
+  font-style: normal;
+  animation: match-derby-flare 1.6s ease-in-out infinite;
+}
+@keyframes match-derby-flare {
+  0%, 100% { opacity: 0.65; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* --- SCOREBOARD metálico: escudos HD + resultado empotrado + estado --- */
+.sb {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+}
+
+.sb__side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.sb__side--away {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+/* Escudo enmarcado en metal (reutiliza el look de .crest-frame). */
+.sb__crest {
+  flex: none;
+  width: 56px;
+  height: 56px;
+}
+.sb__crest .crest {
+  width: 42px;
+  height: 42px;
+}
+
+.sb__id {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.sb__side--away .sb__id {
+  align-items: flex-end;
+}
+
+.sb__name {
+  font-family: var(--font-data);
+  font-size: clamp(15px, 3.6vw, 19px);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.05;
+  color: var(--c-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.sb__role {
+  font-family: var(--font-data);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+
+/* Bloque central: dígitos rojos empotrados + estado (minuto/vivo/FINAL). */
+.sb__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+}
+
+.sb__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  font-family: var(--font-data);
+  font-size: clamp(30px, 9vw, 44px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #ff5a5a;
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(127, 159, 255, 0.15),
+    0 0 12px rgba(200, 30, 30, 0.35);
+  text-shadow: 0 0 10px rgba(255, 60, 60, 0.55);
+}
+.sb__num {
+  min-width: 0.72em;
+  text-align: center;
+}
+.sb__num--bump {
+  animation: sb-bump 0.5s ease;
+}
+@keyframes sb-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.35); color: #fff; text-shadow: 0 0 16px #fff; }
+  100% { transform: scale(1); }
+}
+.sb__sep {
+  opacity: 0.5;
+  font-size: 0.7em;
+}
+
+/* Variante prepartido: "VS" frío en vez de dígitos rojos. */
+.sb__score--vs {
+  color: var(--c-accent);
+  font-size: clamp(22px, 6vw, 30px);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px rgba(127, 159, 255, 0.5);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(127, 159, 255, 0.18);
+}
+
+/* Pastilla de estado: minuto con punto "en directo", o FINAL. */
+.sb__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  color: #10142a;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.sb__status--live {
+  background: linear-gradient(180deg, #e24b4b 0%, var(--c-danger) 55%, #8f1414 100%);
+  color: var(--c-ink);
+  box-shadow: inset 0 1px 0 #ff9c9c, 0 0 10px rgba(200, 30, 30, 0.4);
+}
+.sb__live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  animation: sb-pulse 1.1s ease-in-out infinite;
+}
+@keyframes sb-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* --- TELETIPO: panel con cabecera y feed de lances con icono + minuto --- */
+.match-ticker {
+  display: flex;
+  flex-direction: column;
+  background: var(--bevel);
+  border-top: 1px solid var(--c-edge-light);
+  border-bottom: 2px solid var(--c-edge-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow);
+  overflow: hidden;
+}
+
+.match-ticker__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--c-edge-dark);
+  background: linear-gradient(180deg, rgba(127, 159, 255, 0.14), transparent);
+}
+
+.match-ticker__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+.match-ticker__title::before {
+  content: '';
+  width: 4px;
+  height: 15px;
+  border-radius: 2px;
+  background: var(--c-danger);
+}
+
+.match-ticker__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ff8a8a;
+}
+.match-ticker__live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-danger);
+  box-shadow: 0 0 6px var(--c-danger);
+  animation: sb-pulse 1.1s ease-in-out infinite;
+}
+
+/* Feed con scroll interno y fundido superior/inferior. */
+.match-ticker__feed {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 340px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border) transparent;
+}
+.match-ticker__feed::-webkit-scrollbar {
+  width: 8px;
+}
+.match-ticker__feed::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: var(--radius-pill);
+}
+
+/* Fila de lance: casquillo de minuto + icono en badge + crónica condensada. */
+.match-ev {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(127, 159, 255, 0.05), transparent);
+  animation: match-ev-in 0.32s ease both;
+}
+@keyframes match-ev-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Casquillo de minuto plateado (tabular). */
+.match-ev__min {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 6px;
+  font-family: var(--font-data);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #10142a;
+  background: linear-gradient(180deg, #b6bdd0, var(--c-metal) 50%, #545a72);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Badge de icono: aro empotrado; el color lo fija la clase de tipo. */
+.match-ev__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--c-accent);
+  background: radial-gradient(circle at 50% 35%, rgba(127, 159, 255, 0.18), rgba(10, 10, 40, 0.6));
+  box-shadow: inset 0 1px 0 rgba(127, 159, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.6);
+}
+.match-ev__icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.match-ev__text {
+  font-family: var(--font-data);
+  font-size: 14px;
+  letter-spacing: 0.1px;
+  line-height: 1.25;
+  color: var(--c-ink);
+}
+.match-ev__text b {
+  color: #fff;
+}
+
+/* Colores por tipo de lance (fijan currentColor del icono). */
+.match-ev--goal .match-ev__icon { color: #fff; }
+.match-ev--save .match-ev__icon,
+.match-ev--chance .match-ev__icon,
+.match-ev--corner .match-ev__icon { color: var(--c-accent); }
+.match-ev--yellow .match-ev__icon { color: #f2c14e; }
+.match-ev--red .match-ev__icon,
+.match-ev--secondyellow .match-ev__icon { color: #ff5a5a; }
+.match-ev--injury .match-ev__icon { color: #ff6b6b; }
+.match-ev--post .match-ev__icon { color: #d7dcec; }
+.match-ev--offtarget .match-ev__icon,
+.match-ev--foul .match-ev__icon { color: var(--c-ink-dim); }
+.match-ev--kickoff .match-ev__icon,
+.match-ev--final .match-ev__icon { color: #d7dcec; }
+
+/* GOL: fila resaltada con casquillo rojo y latido de entrada. */
+.match-ev--goal {
+  background: linear-gradient(180deg, rgba(226, 75, 75, 0.28), rgba(143, 20, 20, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(255, 90, 90, 0.35), 0 0 14px rgba(200, 30, 30, 0.25);
+  animation: match-ev-in 0.32s ease both, match-goal-flash 0.9s ease 0.05s;
+}
+.match-ev--goal .match-ev__icon {
+  background: radial-gradient(circle at 50% 35%, #ff7a7a, #8f1414);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 12px rgba(255, 60, 60, 0.6);
+}
+.match-ev--goal .match-ev__text {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+@keyframes match-goal-flash {
+  0% { box-shadow: inset 0 0 0 1px rgba(255, 90, 90, 0.35), 0 0 0 rgba(200, 30, 30, 0); }
+  30% { box-shadow: inset 0 0 0 1px rgba(255, 150, 150, 0.8), 0 0 26px rgba(255, 60, 60, 0.6); }
+  100% { box-shadow: inset 0 0 0 1px rgba(255, 90, 90, 0.35), 0 0 14px rgba(200, 30, 30, 0.25); }
+}
+
+/* Banners de inicio/final dentro del feed: fila metálica sobria. */
+.match-ev--kickoff,
+.match-ev--final {
+  background: linear-gradient(180deg, rgba(127, 159, 255, 0.1), transparent);
+}
+.match-ev--final .match-ev__text,
+.match-ev--kickoff .match-ev__text {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-ink-dim);
+}
+
+/* Barra de acciones del partido: separa "Volver" del control en vivo. */
+.match-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Lista de bajas / estado físico con puntos de color (reutiliza paneles). */
+.match-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-data);
+}
+.match-list__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(127, 159, 255, 0.06), transparent);
+}
+.match-list__tag {
+  flex: none;
+  min-width: 84px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: var(--radius-pill);
+}
+.match-list__tag--injured {
+  color: #ff6b6b;
+  box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.5);
+}
+.match-list__tag--suspended {
+  color: #ffb454;
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 84, 0.5);
+}
+.match-list__tag--tired {
+  color: #ffb454;
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 84, 0.5);
+}
+.match-list__tag--spent {
+  color: #ff6b6b;
+  box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.5);
+}
+.match-list__name {
+  font-weight: 600;
+  color: var(--c-ink);
+}
+.match-list__meta {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--c-ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Formación en pastilla empotrada. */
+.match-formation {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-data);
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  color: var(--c-accent);
+  background: linear-gradient(180deg, #0a0a28, #05050f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.15);
+}
+.match-brief {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0 0;
+  font-family: var(--font-data);
+  color: var(--c-ink-dim);
+}
+.match-brief__label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .match-ev,
+  .match-ev--goal,
+  .sb__num--bump,
+  .sb__live-dot,
+  .match-ticker__live-dot,
+  .match-derby__spark {
+    animation: none;
+  }
+  .match-ticker__feed {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===== Comparativa de jugadores (pantalla COMPARA) ======================= */
+
+/* Selectores de jugador: uno por columna en ancho, apilados en móvil. */
+.compare-pickers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .compare-pickers {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+}
+
+.compare-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-picker__label {
+  font-family: var(--font-data);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--c-ink-dim);
+}
+
+/* Desplegable con look de casquillo empotrado del acero azul. */
+.compare-select {
+  width: 100%;
+  padding: 8px 10px;
+  font-family: var(--font-data);
+  font-size: 14px;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, var(--c-bg-sunken), #12203f);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.compare-select:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 1px;
+}
+
+/* Cabeceras enfrentadas: dos tarjetas con crest, nombre, media y un "VS". */
+.compare-heads {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.compare-head-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--c-bg-raised), var(--c-bg-panel));
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--bevel-shadow, inset 0 1px 0 var(--c-edge-light));
+}
+
+.compare-head-card--win {
+  border-color: var(--c-accent-2-hi);
+  box-shadow: 0 0 0 1px var(--c-accent-2-hi), 0 0 12px rgba(67, 194, 104, 0.35);
+}
+
+.compare-head-card__crest {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+}
+
+.compare-head-card__name {
+  font-family: var(--font-data);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-ink);
+  line-height: 1.15;
+}
+
+.compare-head-card__sub {
+  font-family: var(--font-data);
+  font-size: 11px;
+  color: var(--c-ink-soft);
+}
+
+.compare-head-card__media {
+  margin-top: 2px;
+  font-family: var(--font-data);
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+}
+
+.compare-head-card--win .compare-head-card__media {
+  color: var(--c-accent-2-hi);
+}
+
+.compare-vs {
+  align-self: center;
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--c-ink-soft);
+}
+
+.compare-verdict {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 14px;
+  color: var(--c-accent-2-hi);
+}
+
+.compare-verdict--tie {
+  color: var(--c-ink-dim);
+}
+
+/* Cuerpo de filas: barras espejadas que se encuentran en el rótulo central. */
+.compare-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr 108px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-num {
+  min-width: 34px;
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink-dim);
+}
+
+.compare-side--a .compare-num {
+  text-align: left;
+}
+
+.compare-side--b .compare-num {
+  text-align: right;
+}
+
+/* La barra crece desde el centro hacia fuera: A ancla a la derecha, B a la izquierda. */
+.compare-bar {
+  position: relative;
+  flex: 1;
+  height: 10px;
+  background: linear-gradient(180deg, #0a0a28, #12203f);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(127, 159, 255, 0.12);
+  overflow: hidden;
+}
+
+.compare-bar__fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--c-accent);
+  opacity: 0.55;
+  transition: width 0.2s ease;
+}
+
+.compare-side--a .compare-bar__fill {
+  right: 0;
+}
+
+.compare-side--b .compare-bar__fill {
+  left: 0;
+}
+
+/* El lado ganador se ilumina en verde césped, número en negrita clara. */
+.compare-side--win .compare-num {
+  color: var(--c-accent-2-hi);
+}
+
+.compare-side--win .compare-bar__fill {
+  background: var(--c-accent-2-hi);
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(67, 194, 104, 0.6);
+}
+
+.compare-label {
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: var(--c-ink-dim);
+}
+
+/* Filas descriptivas (edad, posición, altura, peso): sin ganador. */
+.compare-inforow {
+  display: grid;
+  grid-template-columns: 1fr 108px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-info-val {
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.compare-inforow > .compare-info-val:first-child {
+  text-align: left;
+}
+
+.compare-inforow > .compare-info-val:last-child {
+  text-align: right;
+}
+
+/* Avisos y secciones extra del despacho PCF7 (fuera del lienzo 640x480). */
+.despacho7__notice {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+  margin: 0.5em auto 0;
+  max-width: 64rem;
+  padding: 0.5em 0.8em;
+  font-family: var(--font-data);
+  color: var(--c-ink);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+}
+
+.despacho7__more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: center;
+  margin: 0.6em auto 0;
+  max-width: 64rem;
+}
+
+/* Fila de indicadores (moral, masa salarial, presupuesto) en consolas PCF7. */
+.pcf7chiprow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+
+.pcf7chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  padding: 0.25em 0.6em;
+  font-family: var(--font-data);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+}
+
+.pcf7chip__label {
+  font-size: 0.78em;
+  color: var(--c-ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pcf7chip__value { font-weight: 700; }
+.pcf7chip--good .pcf7chip__value { color: #8affa0; }
+.pcf7chip--bad .pcf7chip__value { color: #ff8a8a; }

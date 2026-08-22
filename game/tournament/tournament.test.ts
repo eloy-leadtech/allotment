@@ -84,4 +84,34 @@ describe('runTournament', () => {
     const other = runTournament(sixteen(), 999);
     expect(other.championId).toBeDefined();
   });
+
+  describe('humanPath', () => {
+    it('is omitted when no human id is given', () => {
+      expect(runTournament(sixteen(), 2024).humanPath).toBeUndefined();
+    });
+
+    it('does NOT change groups, knockout or champion (results are invariant)', () => {
+      const plain = runTournament(sixteen(), 2024);
+      const withHuman = runTournament(sixteen(), 2024, 4, 't1');
+      expect(withHuman.groups).toEqual(plain.groups);
+      expect(withHuman.knockout).toEqual(plain.knockout);
+      expect(withHuman.championId).toBe(plain.championId);
+    });
+
+    it("records the human's knockout ties with full matches matching the bracket", () => {
+      const r = runTournament(sixteen(), 2024, 4, 't1');
+      // If the human reached the knockout, every step involves them and its score
+      // matches the stored tie; otherwise the run is simply empty.
+      for (const step of r.humanPath ?? []) {
+        const m = step.match;
+        expect([m.homeId, m.awayId]).toContain('t1');
+        const tie = r.knockout
+          .flatMap((round) => round.ties)
+          .find((t) => t.homeId === m.homeId && t.awayId === m.awayId)!;
+        expect(m.homeGoals).toBe(tie.homeGoals);
+        expect(m.awayGoals).toBe(tie.awayGoals);
+        expect(step.winnerId).toBe(tie.winnerId);
+      }
+    });
+  });
 });

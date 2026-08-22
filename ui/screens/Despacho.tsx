@@ -1,4 +1,4 @@
-import { isSeasonOver, teamName } from '@game';
+import { isSeasonOver, teamName, isWinterWindowOpen, selectPressQuestion } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import type { Screen } from '@app/navigation';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -54,8 +54,8 @@ const ICON_ROWS = [...GROUP_A, ...GROUP_B];
 const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
   { label: 'Resultados', to: 'standings' },
   { label: 'Calendario', to: 'standings' },
-  { label: 'Finanzas', to: 'market' },
-  { label: 'Prensa', to: null },
+  { label: 'Finanzas', to: 'sponsors' },
+  { label: 'Prensa', to: 'press' },
   { label: 'Directiva', to: 'directiva' },
   { label: 'Fichajes', to: 'market' },
 ];
@@ -63,10 +63,26 @@ const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
 const RIGHT_ICONS: Array<{ label: string; to: Screen | null }> = [
   { label: 'Alineación', to: 'squad' },
   { label: 'Táctica', to: 'tactics' },
-  { label: 'Ojeador', to: 'market' },
-  { label: 'Vídeo', to: null },
-  { label: 'Entrenamiento', to: 'tactics' },
-  { label: 'Estadio', to: null },
+  { label: 'Ojeador', to: 'ojeo' },
+  { label: 'Vídeo', to: 'comparativa' },
+  { label: 'Entrenamiento', to: 'training' },
+  { label: 'Estadio', to: 'stadium' },
+];
+
+/**
+ * Sections that have no pre-drawn icon on scr_032 but are full screens of the
+ * game. They ride on a secondary strip under the tab bar so nothing built for
+ * the office is unreachable; labels never repeat an icon or tab label.
+ */
+const EXTRA_SECTIONS: Array<{ label: string; to: Screen }> = [
+  { label: 'Cantera', to: 'youth' },
+  { label: 'Promesas', to: 'prospects' },
+  { label: 'Cuerpo técnico', to: 'staff' },
+  { label: 'Patrocinio', to: 'sponsors' },
+  { label: 'Estadísticas', to: 'stats' },
+  { label: 'Palmarés', to: 'palmares' },
+  { label: 'Hemeroteca', to: 'hemeroteca' },
+  { label: 'Compara', to: 'comparativa' },
 ];
 
 function buildIconHotspots(x: number, defs: Array<{ label: string; to: Screen | null }>): Hotspot[] {
@@ -79,8 +95,11 @@ function buildIconHotspots(x: number, defs: Array<{ label: string; to: Screen | 
 
 export function Despacho() {
   const season = useGameStore((s) => s.season);
+  const career = useGameStore((s) => s.career);
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
+  const openWinterMarket = useGameStore((s) => s.openWinterMarket);
+  const lastCallUp = useGameStore((s) => s.lastCallUp);
   const goTo = useGameStore((s) => s.goTo);
 
   if (!season) {
@@ -96,6 +115,11 @@ export function Despacho() {
   const over = isSeasonOver(season);
   const playedMatchday = Math.min(season.currentMatchday, season.totalMatchdays);
   const bg = `${import.meta.env.BASE_URL}ui/pcf7/scr_032.png`;
+
+  // Mid-season the winter window blocks play until it is closed (the store also
+  // enforces it); the press waits for you after some matchdays.
+  const winterOpen = career ? isWinterWindowOpen(career) : false;
+  const pressPending = career ? selectPressQuestion(career) != null : false;
 
   const leftHotspots = buildIconHotspots(LEFT_X, LEFT_ICONS);
   const rightHotspots = buildIconHotspots(RIGHT_X, RIGHT_ICONS);
@@ -185,6 +209,40 @@ export function Despacho() {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Avisos que exigen tu atención antes de seguir jugando. */}
+      {winterOpen ? (
+        <p className="despacho7__notice">
+          ❄️ Ventana de fichajes de invierno abierta.{' '}
+          <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={openWinterMarket}>
+            Ir al mercado de invierno →
+          </button>
+        </p>
+      ) : null}
+      {pressPending ? (
+        <p className="despacho7__notice">
+          🎙️ La prensa espera tus declaraciones.{' '}
+          <button type="button" className="pcf7flatbtn" onClick={() => goTo('press')}>
+            Comparecer →
+          </button>
+        </p>
+      ) : null}
+      {lastCallUp && lastCallUp.players.length > 0 ? (
+        <p className="despacho7__notice">
+          ✈️ {lastCallUp.players.length}{' '}
+          {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón de
+          selecciones con fatiga extra.
+        </p>
+      ) : null}
+
+      {/* Secciones sin icono propio en scr_032. */}
+      <div className="despacho7__more">
+        {EXTRA_SECTIONS.map((s) => (
+          <button key={s.label} type="button" className="pcf7flatbtn" onClick={() => goTo(s.to)}>
+            {s.label}
+          </button>
+        ))}
       </div>
     </main>
   );

@@ -80,8 +80,20 @@ export function runCareerEuropa(
   if (human.comp === 'champions') championsClubs = [...championsClubs, human.team];
   if (human.comp === 'uefa') uefaClubs = [...uefaClubs, human.team];
 
-  const champions = runTournament(championsClubs, hashSeed(seed, 'champions', seasonNumber), 4);
-  const uefa = runCopa(uefaClubs, hashSeed(seed, 'uefa', seasonNumber));
+  // Thread the human id ONLY into the competition they actually play, so that
+  // comp's result carries the human's round-by-round run (with full matches for
+  // the live teletipo). The other comp stays a plain spectator bracket.
+  const champions = runTournament(
+    championsClubs,
+    hashSeed(seed, 'champions', seasonNumber),
+    4,
+    human.comp === 'champions' ? human.team.id : undefined,
+  );
+  const uefa = runCopa(
+    uefaClubs,
+    hashSeed(seed, 'uefa', seasonNumber),
+    human.comp === 'uefa' ? human.team.id : undefined,
+  );
 
   return { temporada, champions, uefa, humanComp: human.comp };
 }

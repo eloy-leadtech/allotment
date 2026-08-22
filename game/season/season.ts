@@ -2,6 +2,9 @@ import {
   buildCalendar,
   simulateFixture,
   computeStandings,
+  NEUTRAL_FORM,
+  NEUTRAL_MORALE,
+  FRESH_FATIGUE,
   type CompetitionTeam,
   type Fixture,
   type MatchPlayer,
@@ -10,6 +13,15 @@ import {
   type StandingRow,
 } from '@engine';
 import type { League, Player, Team } from '@data';
+import {
+  applyMatchdayAvailability,
+  isAvailable,
+  type AvailabilityMap,
+  type MedicalStaff,
+} from '../career/availability';
+import { applyFormMorale } from './formMorale';
+import { applyFatigue } from './fatigue';
+import { applyInternationalBreak, type CallUpNotice } from './convocatorias';
 
 export interface SeasonState {
   leagueId: string;
@@ -24,6 +36,18 @@ export interface SeasonState {
   /** Next matchday to play (1-indexed). currentMatchday > totalMatchdays => finished. */
   currentMatchday: number;
   results: MatchResult[];
+  /**
+   * Injuries/suspensions by player id. DERIVED (rebuilt by the save/load replay),
+   * never persisted directly; empty at kick-off.
+   */
+  availability: AvailabilityMap;
+  /**
+   * The human club's MÉDICO effect on injuries, if any: it shortens the layoff for
+   * the human squad. DERIVED from the career's staff when the season is built (see
+   * career.ts seasonFromCareer), so it is reconstructed by the save/load replay and
+   * never persisted. Absent = no médico (normal recovery for everyone).
+   */
+  medical?: MedicalStaff;
 }
 
 export function toMatchPlayer(p: Player): MatchPlayer {
@@ -38,6 +62,14 @@ export function toMatchPlayer(p: Player): MatchPlayer {
     pase: p.atributos.pase,
     entrada: p.atributos.entrada,
     porteria: p.atributos.porteria,
+    // Every season starts neutral/fresh; form/morale/fatigue evolve as matchdays
+    // are played (all re-derived by the save/load replay — never persisted).
+    form: NEUTRAL_FORM,
+    morale: NEUTRAL_MORALE,
+    fatigue: FRESH_FATIGUE,
+    // Carried through purely as a call-up signal (see convocatorias); null becomes
+    // absent so a player with unknown nationality behaves as "no signal".
+    nacionalidad: p.nacionalidad ?? undefined,
   };
 }
 
@@ -81,6 +113,7 @@ export function newSeasonFromTeams(
     totalMatchdays,
     currentMatchday: 1,
     results: [],
+    availability: {},
   };
 }
 
@@ -118,24 +151,79 @@ export function nextHumanFixture(state: SeasonState): Fixture | null {
   return fixtures.find((f) => f.homeId === state.humanTeamId || f.awayId === state.humanTeamId) ?? null;
 }
 
+/**
+ * The team as it lines up on `matchday`: injured/suspended players are dropped so
+ * the auto-XI (and the chosen XI) skip them. If fewer than 11 remain fit, the
+ * full squad is kept — the engine still needs eleven bodies on the pitch.
+ */
+function fieldableTeam(
+  team: CompetitionTeam,
+  availability: AvailabilityMap,
+  matchday: number,
+): CompetitionTeam {
+  const fit = team.players.filter((p) => isAvailable(availability[p.id], matchday));
+  const players = fit.length >= 11 ? fit : team.players;
+  if (players.length === team.players.length) return team;
+  // Drop any explicitly-chosen starters that are now unavailable; if the XI can
+  // no longer be honoured (fewer than 11 fit picks) fall back to the auto-XI.
+  let tactics = team.tactics;
+  if (tactics?.xi) {
+    const fitIds = new Set(players.map((p) => p.id));
+    const xi = tactics.xi.filter((p) => fitIds.has(p.id));
+    tactics = xi.length === 11 ? { ...tactics, xi } : { formation: tactics.formation };
+  }
+  return { ...team, players, tactics };
+}
+
 /** Play the current matchday; returns the updated state and the results just played. */
-export function advanceMatchday(state: SeasonState): { state: SeasonState; played: MatchResult[] } {
+export function advanceMatchday(state: SeasonState): {
+  state: SeasonState;
+  played: MatchResult[];
+  /** Set only when the matchday just played coincided with a national-team parón
+   * and the human club had at least one player called up (see convocatorias). */
+  callUp?: CallUpNotice;
+} {
   if (isSeasonOver(state)) {
     return { state, played: [] };
   }
+  const matchday = state.currentMatchday;
   const byId = new Map(state.teams.map((t) => [t.id, t]));
   const played: MatchResult[] = [];
-  for (const fixture of fixturesForMatchday(state, state.currentMatchday)) {
+  for (const fixture of fixturesForMatchday(state, matchday)) {
     const home = byId.get(fixture.homeId);
     const away = byId.get(fixture.awayId);
     if (!home || !away) {
       throw new Error(`Fixture references unknown team: ${fixture.homeId} vs ${fixture.awayId}`);
     }
-    played.push(simulateFixture(home, away, state.seed, fixture));
+    const homeXI = fieldableTeam(home, state.availability, matchday);
+    const awayXI = fieldableTeam(away, state.availability, matchday);
+    played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
   }
+  const availability = applyMatchdayAvailability(state.availability, played, matchday, state.medical);
+  // Evolve form/morale and fatigue from the matchday just played (deterministic:
+  // replaying the season from its neutral/fresh start always rebuilds the same
+  // values, so neither has to be persisted). Fatigue after so it reads the same
+  // fielded XI; the two updates touch independent player fields.
+  const fatigued = applyFatigue(applyFormMorale(state.teams, played), played);
+  // On a national-team parón matchday the internationals return with extra fatigue
+  // stacked on top; a no-op on every other matchday. Deterministic and unpersisted
+  // just like fatigue, so the replay reconstructs it identically.
+  const { teams, notice } = applyInternationalBreak(fatigued, {
+    matchday,
+    seed: state.seed,
+    totalMatchdays: state.totalMatchdays,
+    humanTeamId: state.humanTeamId,
+  });
   return {
-    state: { ...state, results: [...state.results, ...played], currentMatchday: state.currentMatchday + 1 },
+    state: {
+      ...state,
+      teams,
+      results: [...state.results, ...played],
+      currentMatchday: matchday + 1,
+      availability,
+    },
     played,
+    ...(notice ? { callUp: notice } : {}),
   };
 }
 

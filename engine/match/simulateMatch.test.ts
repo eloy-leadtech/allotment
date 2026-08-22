@@ -92,11 +92,99 @@ describe('simulateMatch', () => {
     }
   });
 
+  it('injuries: always reference a fielded player, last 1-8 matchdays, and are deterministic', () => {
+    let injuries = 0;
+    for (let seed = 0; seed < 400; seed += 1) {
+      const r = simulateMatch({ home, away, seed });
+      const homeIds = new Set(home.players.map((p) => p.id));
+      const awayIds = new Set(away.players.map((p) => p.id));
+      for (const e of r.events) {
+        if (e.type !== 'injury') continue;
+        injuries += 1;
+        expect(e.matchesOut).toBeGreaterThanOrEqual(1);
+        expect(e.matchesOut).toBeLessThanOrEqual(8);
+        const pool = e.team === 'home' ? homeIds : awayIds;
+        expect(pool.has(e.playerId)).toBe(true);
+      }
+    }
+    // Over 400 matches the low per-player chance still yields some injuries.
+    expect(injuries).toBeGreaterThan(0);
+    // Determinism: replaying a seed reproduces the exact same injury events.
+    const a = simulateMatch({ home, away, seed: 123 }).events.filter((e) => e.type === 'injury');
+    const b = simulateMatch({ home, away, seed: 123 }).events.filter((e) => e.type === 'injury');
+    expect(a).toEqual(b);
+  });
+
   it('averages a plausible number of goals per game (~2.6)', () => {
+    // Faithful "por lances" model (see config.ts): per half each team's chances
+    // are the line differential + noise, HARD-CAPPED at PCF5's `3 - rand()%3`, then
+    // a differential-aware geometric tail; each chance is filtered by the rival
+    // keeper (`keeperEfficacy` is the sanctioned calibration knob, §7.2). With two
+    // elite (78) keepers this settles at ~2.6 goals/game — the documented target.
+    // The band stays wide because the keeper is the regulator: weaker keepers push
+    // the average up (that keeper-sensitivity is the whole point of PCF's filter).
     const samples = 400;
     let totalGoals = 0;
     for (let seed = 0; seed < samples; seed += 1) {
       const r = simulateMatch({ home, away, seed });
+      totalGoals += r.homeGoals + r.awayGoals;
+    }
+    const mean = totalGoals / samples;
+    expect(mean).toBeGreaterThan(1.8);
+    expect(mean).toBeLessThan(3.6);
+  });
+});
+
+describe('simulateMatch — derbis', () => {
+  // Same squads; only the team id decides whether it is a rivalry pairing.
+  const madrid = { ...makeTeam('real-madrid', 65, 78), id: 'real-madrid', nombre: 'Real Madrid' };
+  const barca = { ...makeTeam('barcelona', 65, 78), id: 'barcelona', nombre: 'Barcelona' };
+  const valencia = { ...makeTeam('valencia', 65, 78), id: 'valencia', nombre: 'Valencia' };
+
+  it('flags a rivalry pairing as a derby, and a normal pairing as not', () => {
+    expect(simulateMatch({ home: madrid, away: barca, seed: 1 }).derby).toBe(true);
+    expect(simulateMatch({ home: madrid, away: valencia, seed: 1 }).derby).toBe(false);
+  });
+
+  it('is deterministic for a derby (same seed replays identically)', () => {
+    const a = simulateMatch({ home: madrid, away: barca, seed: 42 });
+    const b = simulateMatch({ home: madrid, away: barca, seed: 42 });
+    expect(a).toEqual(b);
+  });
+
+  it('the motivation actually changes the simulation (given a strength gap)', () => {
+    // Big favourite: motivation amplifies the quality gap enough to change the sim.
+    const strong = { ...makeTeam('real-madrid', 81, 78), id: 'real-madrid', nombre: 'RM' };
+    const weakRival = { ...makeTeam('barcelona', 40, 78), id: 'barcelona', nombre: 'FCB' };
+    const weakOther = { ...makeTeam('valencia', 40, 78), id: 'valencia', nombre: 'VCF' };
+    let differed = false;
+    for (let seed = 0; seed < 50; seed += 1) {
+      const derby = simulateMatch({ home: strong, away: weakRival, seed });
+      const plain = simulateMatch({ home: strong, away: weakOther, seed });
+      // Compare the event streams (ids aside): the derby motivation shifts them.
+      const strip = (r: ReturnType<typeof simulateMatch>) =>
+        JSON.stringify(r.events.map((e) => ({ min: e.min, type: e.type, team: e.team })));
+      if (strip(derby) !== strip(plain)) differed = true;
+    }
+    expect(differed).toBe(true);
+  });
+
+  it('does NOT break the goals average: even-strength derby == non-derby goals', () => {
+    // With symmetric squads the motivation cancels in the chance differential and
+    // the keeper is untouched, so a derby yields the EXACT same scoreline stream.
+    for (let seed = 0; seed < 200; seed += 1) {
+      const derby = simulateMatch({ home: madrid, away: barca, seed });
+      const plain = simulateMatch({ home: madrid, away: valencia, seed });
+      expect(derby.homeGoals).toBe(plain.homeGoals);
+      expect(derby.awayGoals).toBe(plain.awayGoals);
+    }
+  });
+
+  it('keeps derby goals within the same plausible band (~2.6/game)', () => {
+    const samples = 400;
+    let totalGoals = 0;
+    for (let seed = 0; seed < samples; seed += 1) {
+      const r = simulateMatch({ home: madrid, away: barca, seed });
       totalGoals += r.homeGoals + r.awayGoals;
     }
     const mean = totalGoals / samples;

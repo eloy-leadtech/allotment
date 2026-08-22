@@ -1,6 +1,7 @@
 export type {
   Line,
   EventType,
+  FlavorEventType,
   MatchPlayer,
   MatchTeam,
   MatchInput,
@@ -9,9 +10,39 @@ export type {
   Formation,
   Tactics,
 } from './types';
+export { FLAVOR_EVENT_TYPES, isFlavorEvent } from './types';
 export { simulateMatch } from './simulateMatch';
 export { selectStartingXI } from './lineup';
 export { computeStrength, type TeamStrength } from './strength';
+export {
+  NEUTRAL_FORM,
+  NEUTRAL_MORALE,
+  SCORE_MIN,
+  SCORE_MAX,
+  clampScore,
+  playerForm,
+  playerMorale,
+  performanceMultiplier,
+  outcomeOf,
+  nextForm,
+  nextMorale,
+  updateTeamFormMorale,
+  scoreTier,
+  squadMorale,
+  type MatchOutcome,
+  type PlayerMatchContext,
+} from './morale';
+export {
+  FRESH_FATIGUE,
+  FATIGUE_MIN,
+  FATIGUE_MAX,
+  clampFatigue,
+  playerFatigue,
+  fatigueMultiplier,
+  nextFatigue,
+  updateTeamFatigue,
+  fatigueTier,
+} from './fatigue';
 export {
   FORMATIONS,
   FORMATION_LIST,
@@ -20,3 +51,11 @@ export {
   type FormationMods,
 } from './formation';
 export { MATCH_CONFIG } from './config';
+export {
+  RIVALRIES,
+  canonicalClub,
+  derbyInfo,
+  derbyName,
+  isDerby,
+  type Rivalry,
+} from './rivalry';

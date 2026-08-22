@@ -10,11 +10,13 @@
 import { currentStandings } from '../season/season';
 import type { CareerState } from './types';
 import type { KnockoutRound } from '../tournament/tournament';
+import { gateMultiplier } from './stadium';
+import { sponsorIncome } from './sponsors';
 
 export interface SeasonIncome {
   /** TV rights (flat per division). */
   tv: number;
-  /** Gate receipts across the home matches (flat per division). */
+  /** Gate receipts across the home matches (per division, scaled by the aforo). */
   gate: number;
   /** League prize money, scaled by final position. */
   leaguePrize: number;
@@ -22,6 +24,8 @@ export interface SeasonIncome {
   copa: number;
   /** European competition bonus (qualifying + progress). */
   europa: number;
+  /** Main sponsor payment (guaranteed annual + any Europe bonus). See sponsors.ts. */
+  sponsor: number;
   total: number;
 }
 
@@ -78,10 +82,23 @@ export function seasonIncome(career: CareerState): SeasonIncome {
   const rankFromBottom = table.length - position + 1; // 1 = last, N = first
 
   const tv = TV[division];
-  const gate = GATE[division];
+  // The taquilla scales with the stadium's aforo: a bigger ground you invested in
+  // brings in more gate money every season (see stadium.ts).
+  const gate = Math.round(GATE[division] * gateMultiplier(career.stadium));
   const leaguePrize = rankFromBottom * PRIZE_PER_RANK[division];
   const copa = copaIncome(career);
   const europa = europaIncome(career);
+  // The main sponsor pays a guaranteed annual cheque (plus a Europe bonus for
+  // some tiers) — the manager's chosen offer, see sponsors.ts.
+  const sponsor = sponsorIncome(career);
 
-  return { tv, gate, leaguePrize, copa, europa, total: tv + gate + leaguePrize + copa + europa };
+  return {
+    tv,
+    gate,
+    leaguePrize,
+    copa,
+    europa,
+    sponsor,
+    total: tv + gate + leaguePrize + copa + europa + sponsor,
+  };
 }

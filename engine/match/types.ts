@@ -1,6 +1,33 @@
 export type Line = 'POR' | 'DEF' | 'MED' | 'DEL';
 
-export type EventType = 'goal' | 'chance' | 'yellow' | 'secondYellow' | 'red';
+/**
+ * Core event types drive the scoreline/discipline stream (goals, cards, injuries).
+ * The `flavor` types below are purely narrative colour — they NEVER change the
+ * result and are generated on an isolated RNG (see `simulateMatch`).
+ */
+export type EventType =
+  | 'goal'
+  | 'chance'
+  | 'yellow'
+  | 'secondYellow'
+  | 'red'
+  | 'injury'
+  // Flavor-only events (teletipo variety, no effect on the score):
+  | 'saved'
+  | 'offTarget'
+  | 'post'
+  | 'corner'
+  | 'foul';
+
+/** The purely-narrative event types: they add teletipo colour, never goals/cards. */
+export const FLAVOR_EVENT_TYPES = ['saved', 'offTarget', 'post', 'corner', 'foul'] as const;
+
+export type FlavorEventType = (typeof FLAVOR_EVENT_TYPES)[number];
+
+/** Whether an event type is flavor-only (does not affect the scoreline/discipline). */
+export function isFlavorEvent(type: EventType): type is FlavorEventType {
+  return (FLAVOR_EVENT_TYPES as readonly string[]).includes(type);
+}
 
 /** Minimal player view the match engine needs (mapped from the data Player). */
 export interface MatchPlayer {
@@ -14,6 +41,27 @@ export interface MatchPlayer {
   pase: number;
   entrada: number;
   porteria: number;
+  /**
+   * Short-term streak (0-100, 50 neutral): rises with wins/goals/playing, falls
+   * with defeats and benching. Optional so existing fixtures stay valid; when
+   * absent the player is treated as neutral (no effect on the pitch).
+   */
+  form?: number;
+  /** Player morale (0-100, 50 neutral): medium-term, moved by results and minutes. */
+  morale?: number;
+  /**
+   * Physical fatigue (0-100, 0 fresh): rises with minutes played, recovers with
+   * rest. Optional so existing fixtures stay valid; absent means fresh (no effect
+   * on the pitch). Feeds a small penalty multiplier into the effective ratings.
+   */
+  fatigue?: number;
+  /**
+   * ISO country/nationality string, or absent/empty when unknown (it is null for
+   * ~90% of the current dataset). Never affects the match itself; it is only a
+   * SIGNAL for the national-team call-up mechanic (see game/season/convocatorias),
+   * which must not depend on it in exclusive because it is so sparse.
+   */
+  nacionalidad?: string;
 }
 
 /** Playable formations (defenders-midfielders-forwards). */
@@ -48,6 +96,11 @@ export interface MatchEvent {
   team: 'home' | 'away';
   playerId: string;
   playerName: string;
+  /**
+   * For `injury` events: how many upcoming matchdays the player is out (1-8).
+   * Absent for every other event type.
+   */
+  matchesOut?: number;
 }
 
 export interface MatchResult {
@@ -56,4 +109,10 @@ export interface MatchResult {
   homeGoals: number;
   awayGoals: number;
   events: MatchEvent[];
+  /**
+   * Whether this fixture was a derbi (rivalry). Set by the simulation; optional
+   * so fixtures/results constructed by hand (e.g. tests) stay valid. When true,
+   * the teletipo and UI mark it as a derby and a light motivation boost applied.
+   */
+  derby?: boolean;
 }
