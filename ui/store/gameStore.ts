@@ -56,6 +56,7 @@ import {
   acceptRenewal,
   offerRenewal,
   letGoPlayer,
+  deriveHumanDesires,
   chooseSponsor,
   loanOutPlayer,
   loanInPlayer,
@@ -617,8 +618,15 @@ export const useGameStore = create<GameStore>((set, get) => {
         set({ marketMessage: result.reason === 'presupuesto' ? 'No te llega para la prima de renovación.' : 'No se puede renovar.' });
         return;
       }
-      // The squad is unchanged (only the wage book + budget), so keep the season.
-      set({ career: result.career, marketMessage: null });
+      // The squad is unchanged (only the wage book + budget), so keep the season —
+      // but re-derive the wishes so the renewed player no longer "quiere renovar"
+      // (the live season then matches what a fresh load re-derives from the new deal).
+      const renewed = result.career;
+      const next = {
+        ...renewed,
+        season: { ...renewed.season, humanDesires: deriveHumanDesires(renewed) },
+      };
+      set({ career: next, season: next.season, marketMessage: null });
     },
     acceptRenewal: (playerId) => {
       const { career } = get();

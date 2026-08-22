@@ -14,6 +14,7 @@ export * from './winterMovements';
 export * from './winterMarket';
 export * from './contracts';
 export * from './renewals';
+export * from './desires';
 export * from './promotion';
 export * from './board';
 export * from './confianza';

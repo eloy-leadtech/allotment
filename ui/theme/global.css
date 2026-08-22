@@ -3490,3 +3490,27 @@ h1 {
 .pcf7chip__value { font-weight: 700; }
 .pcf7chip--good .pcf7chip__value { color: #8affa0; }
 .pcf7chip--bad .pcf7chip__value { color: #ff8a8a; }
+
+/* Deseo individual (objetivo del jugador): renovar / minutos / ambición europea.
+   Un "want" pendiente se marca en ámbar; el jugador contento queda apagado. */
+.desire-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.desire-badge__icon {
+  font-size: 12px;
+}
+.desire-badge--want {
+  color: #ffb454;
+}
+.desire-badge--neutral {
+  color: var(--c-ink-dim);
+  font-weight: 600;
+}
