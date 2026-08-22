@@ -22,6 +22,11 @@ import {
 import { applyFormMorale } from './formMorale';
 import { applyFatigue } from './fatigue';
 import { applyInternationalBreak, type CallUpNotice } from './convocatorias';
+import {
+  applyDesireMorale,
+  humanMatchdayContext,
+  type DesireKind,
+} from '../career/desires';
 
 export interface SeasonState {
   leagueId: string;
@@ -48,6 +53,13 @@ export interface SeasonState {
    * never persisted. Absent = no médico (normal recovery for everyone).
    */
   medical?: MedicalStaff;
+  /**
+   * The human squad's individual wishes (deseos) this season, keyed by player id.
+   * DERIVED from the season-start situation by the career layer (see
+   * career/desires and seasonFromCareer), so it is re-derived on load, never
+   * persisted. Absent for a bare (non-career) season, which then applies no drift.
+   */
+  humanDesires?: Readonly<Record<string, DesireKind>>;
 }
 
 export function toMatchPlayer(p: Player): MatchPlayer {
@@ -189,6 +201,11 @@ export function advanceMatchday(state: SeasonState): {
   const matchday = state.currentMatchday;
   const byId = new Map(state.teams.map((t) => [t.id, t]));
   const played: MatchResult[] = [];
+  // Capture what the HUMAN team did this matchday (the fielded XI + result) for the
+  // wish-driven morale drift below; a bye leaves this as "did not play".
+  let humanXI: CompetitionTeam | undefined;
+  let humanGoals: number | undefined;
+  let humanRivalGoals: number | undefined;
   for (const fixture of fixturesForMatchday(state, matchday)) {
     const home = byId.get(fixture.homeId);
     const away = byId.get(fixture.awayId);
@@ -197,18 +214,35 @@ export function advanceMatchday(state: SeasonState): {
     }
     const homeXI = fieldableTeam(home, state.availability, matchday);
     const awayXI = fieldableTeam(away, state.availability, matchday);
-    played.push(simulateFixture(homeXI, awayXI, state.seed, fixture));
+    const result = simulateFixture(homeXI, awayXI, state.seed, fixture);
+    played.push(result);
+    if (fixture.homeId === state.humanTeamId) {
+      humanXI = homeXI;
+      humanGoals = result.homeGoals;
+      humanRivalGoals = result.awayGoals;
+    } else if (fixture.awayId === state.humanTeamId) {
+      humanXI = awayXI;
+      humanGoals = result.awayGoals;
+      humanRivalGoals = result.homeGoals;
+    }
   }
   const availability = applyMatchdayAvailability(state.availability, played, matchday, state.medical);
   // Evolve form/morale and fatigue from the matchday just played (deterministic:
   // replaying the season from its neutral/fresh start always rebuilds the same
   // values, so neither has to be persisted). Fatigue after so it reads the same
   // fielded XI; the two updates touch independent player fields.
-  const fatigued = applyFatigue(applyFormMorale(state.teams, played), played);
+  let evolved = applyFatigue(applyFormMorale(state.teams, played), played);
+  // Layer the individual-wish morale drift on top (human team only). Derived from
+  // the season's own humanDesires, so it too is reconstructed by the replay; absent
+  // for a bare season, in which case this is a no-op.
+  if (state.humanDesires) {
+    const ctx = humanMatchdayContext(humanXI, humanGoals, humanRivalGoals);
+    evolved = applyDesireMorale(evolved, state.humanTeamId, state.humanDesires, ctx);
+  }
   // On a national-team parón matchday the internationals return with extra fatigue
   // stacked on top; a no-op on every other matchday. Deterministic and unpersisted
   // just like fatigue, so the replay reconstructs it identically.
-  const { teams, notice } = applyInternationalBreak(fatigued, {
+  const { teams, notice } = applyInternationalBreak(evolved, {
     matchday,
     seed: state.seed,
     totalMatchdays: state.totalMatchdays,

@@ -21,6 +21,7 @@ import { generateYouthBatch } from './cantera';
 import { computeSeasonObjective } from './board';
 import { DEFAULT_CONFIANZA } from './confianza';
 import { DEFAULT_WINTER, reverseWinterMovements } from './winterMovements';
+import { deriveHumanDesires } from './desires';
 
 /** Everything `seasonFromCareer` needs (the career minus its derived season/history/palmarés). */
 type CareerMeta = Omit<CareerState, 'season' | 'history' | 'palmares'>;
@@ -104,12 +105,16 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
     },
     seed,
   );
+  // The human squad's individual wishes (deseos), DERIVED from the season-start
+  // situation (contracts/age/media/board). Re-derived identically on load, so it is
+  // never persisted — it drives a small per-matchday morale drift (see desires.ts).
+  const withDesires: SeasonState = { ...season, humanDesires: deriveHumanDesires(meta) };
   // The médico shortens injuries for the human squad (factor 1 = no médico → skip).
   const factor = medicalRecoveryFactor(meta.staff);
-  if (factor >= 1) return season;
+  if (factor >= 1) return withDesires;
   const humanPlayers = meta.teams.find((t) => t.id === meta.humanTeamId)?.players ?? [];
   const medical: MedicalStaff = { playerIds: new Set(humanPlayers.map((p) => p.id)), factor };
-  return { ...season, medical };
+  return { ...withDesires, medical };
 }
 
 /** Start a new career: the human manages `humanTeamId` from season 1. */

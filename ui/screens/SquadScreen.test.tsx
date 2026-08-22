@@ -32,6 +32,13 @@ describe('SquadScreen', () => {
     expect(container.querySelectorAll('.fatigue-bar').length).toBeGreaterThan(0);
   });
 
+  it('shows each player\'s individual wish (deseo)', () => {
+    const { container } = render(<SquadScreen />);
+    expect(screen.getByText('Deseo')).toBeInTheDocument();
+    // A wish badge is rendered for every squad row.
+    expect(container.querySelectorAll('.desire-badge').length).toBeGreaterThan(0);
+  });
+
   it('renders a menu fallback when there is no career', () => {
     useGameStore.setState({ career: null, season: null });
     render(<SquadScreen />);
