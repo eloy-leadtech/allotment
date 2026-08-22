@@ -1,7 +1,7 @@
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { join, normalize } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /**
@@ -40,9 +40,14 @@ function mountStatic(server: ServerLike, mount: string, dir: string, contentType
  * ~284 MB of data and ~3 GB of photos out of the repo and out of the bundle
  * while the game fetches only what it opens.
  */
+// Read from the shell first, then from .env/.env.local, so `npm run dev` works
+// without exporting the paths on every launch (.env.local is gitignored).
+const fileEnv = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), 'VITE_');
+const envVar = (key: string): string | undefined => process.env[key] ?? fileEnv[key];
+
 function catalogDataPlugin(): Plugin {
-  const dataDir = process.env.VITE_DATA_DIR;
-  const photoDir = process.env.VITE_PHOTO_DIR;
+  const dataDir = envVar('VITE_DATA_DIR');
+  const photoDir = envVar('VITE_PHOTO_DIR');
   return {
     name: 'pcf-catalog-data',
     configureServer(server) {
@@ -63,7 +68,7 @@ function catalogDataPlugin(): Plugin {
 // `base` is read from VITE_BASE so GitHub Pages can serve the game from a
 // subdirectory (e.g. /allotment/). Defaults to '/' for local dev.
 export default defineConfig({
-  base: process.env.VITE_BASE ?? '/',
+  base: envVar('VITE_BASE') ?? '/',
   plugins: [react(), catalogDataPlugin()],
   resolve: {
     alias: {
