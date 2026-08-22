@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './pcf7-calco.css';
 
 * {
   box-sizing: border-box;
@@ -3112,7 +3113,6 @@ h1 {
   text-align: right;
 }
 
-@import './pcf7-calco.css';
 
 /* ==========================================================================
    PC Fútbol 7 real-bitmap screens (título + despacho)
