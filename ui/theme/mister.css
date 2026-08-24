@@ -179,6 +179,116 @@
   box-shadow: 0 0 0 2px rgba(200, 150, 30, 0.2), 0 0 8px rgba(200, 150, 30, 0.55);
 }
 
+/* ══ UN JUGADOR SE PRESENTA SIEMPRE IGUAL ══
+   Dorsal, bandera, nombre y demarcación con el color de su línea. Lo pinta el
+   componente PlayerTag y lo usan todas las listas: si cambia, cambia en todas. */
+.mst-jg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  width: 100%;
+}
+.mst-jg__d {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(10, 20, 54, 0.6);
+  border: 1px solid rgba(190, 214, 255, 0.22);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 10.5px;
+  color: var(--c-ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+.mst-jg__b {
+  flex: none;
+  display: block;
+  width: 17px;
+  line-height: 0;
+}
+.mst-jg__n {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 13px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mst-jg__m {
+  margin-left: auto;
+  flex: none;
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--c-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mst-jg .pos-badge {
+  flex: none;
+}
+
+/* Banderita SVG (componente Flag): hereda el ancho de su contenedor. */
+.bandera {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1px;
+}
+
+/* ── Píldora de media — escala de 5 niveles:
+   azul metal (top) > verde > amarillo > naranja > rojo ── */
+.media-pill {
+  display: inline-block;
+  min-width: 30px;
+  padding: 1px 7px;
+  border-radius: var(--r-s);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 13px;
+  color: #0e1636;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #b6c6e6, #5a72a8);
+}
+.media-pill--top {
+  background: linear-gradient(180deg, #c2d2f0, #5a72a8);
+  color: #0e1636;
+}
+.media-pill--alto {
+  background: linear-gradient(180deg, #8fe6ab, #2f9e57);
+  color: #04240f;
+}
+.media-pill--medio {
+  background: linear-gradient(180deg, #ffe08a, #d0a020);
+  color: #3a2a00;
+}
+.media-pill--bajo {
+  background: linear-gradient(180deg, #f4b062, #d0781e);
+  color: #3a2200;
+}
+.media-pill--malo {
+  background: linear-gradient(180deg, #ef7a7a, #c22323);
+  color: #fff;
+}
+
+/* Valor de atributo suelto (celdas de tabla), misma escala. */
+.at {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.at--top { color: #aec4f0; }
+.at--alto { color: #7fe0a0; }
+.at--medio { color: #ffd24a; }
+.at--bajo { color: #ffab5c; }
+.at--malo { color: #ff8a8a; }
+
 /* Movimiento reducido: la placa no salta y el icono no gira. */
 @media (prefers-reduced-motion: reduce) {
   .mst-sec,

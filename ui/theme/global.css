@@ -2088,11 +2088,12 @@ h1 {
   box-shadow: inset 0 1px 0 #dfe4f0, 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Tinte por línea, sutil, para leer la posición de un vistazo. */
-.pos-badge--POR { background: linear-gradient(180deg, #e6c05a, #b8901f); }
-.pos-badge--DEF { background: linear-gradient(180deg, #7fa8e0, #3a5fa0); color: #f0f4ff; }
-.pos-badge--MED { background: linear-gradient(180deg, #6fd08f, #2a7d4a); color: #f0fff4; }
-.pos-badge--DEL { background: linear-gradient(180deg, #e88a6a, #b8471f); color: #fff2ee; }
+/* Tinte por línea (gradientes de la maqueta Mister): ámbar portero, azul
+   defensa, verde medio, rojo delantero. Texto blanco en los cuatro. */
+.pos-badge--POR { background: linear-gradient(180deg, #d9a72e, #9c6f14); color: #fff; }
+.pos-badge--DEF { background: linear-gradient(180deg, #4a74c8, #22397e); color: #fff; }
+.pos-badge--MED { background: linear-gradient(180deg, #2f9e57, #166b34); color: #fff; }
+.pos-badge--DEL { background: linear-gradient(180deg, #d24a4a, #8d1c1c); color: #fff; }
 
 /* --- Mercado: fichas de fichaje ------------------------------ */
 /* Cada objetivo es una ficha de acero con tres bloques: identidad,
