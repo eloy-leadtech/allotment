@@ -735,6 +735,408 @@
   background: linear-gradient(180deg, rgba(112, 150, 204, 0.98), rgba(34, 58, 110, 0.99));
 }
 
+/* ══ PLANTILLA: torre de resumen/filtros, tabla de datos y ficha ══ */
+.mst-plantilla {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+}
+.mst-plantilla--ficha {
+  grid-template-columns: 176px minmax(0, 1.1fr) 390px;
+}
+.mst-tower--wide {
+  width: 176px;
+}
+
+/* Filas de dato clave (torre de resumen). */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: var(--r-s);
+  background: linear-gradient(180deg, rgba(84, 116, 166, 0.24), rgba(24, 42, 84, 0.3));
+  border: 1px solid rgba(150, 180, 240, 0.16);
+  font-family: var(--font-data);
+}
+.sr-k {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+.sr-v {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--c-ink);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.stat-row.total {
+  background: linear-gradient(180deg, rgba(102, 140, 206, 0.4), rgba(30, 52, 104, 0.5));
+  border-color: rgba(190, 214, 255, 0.3);
+}
+.stat-row.total .sr-k,
+.stat-row.total .sr-v {
+  color: var(--c-ink);
+}
+.stat-row.alert .sr-v {
+  color: #ff9a9a;
+}
+.stat-row.good .sr-v {
+  color: #7fe0a0;
+}
+
+/* Botones de filtro (líneas, vistas, acciones de la torre). */
+.filt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: var(--c-ink-dim);
+  padding: 6px 11px;
+  border-radius: var(--r-s);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, rgba(60, 86, 140, 0.34), rgba(16, 28, 66, 0.4));
+  border: 1px solid rgba(150, 180, 240, 0.18);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.filt:hover {
+  background: linear-gradient(180deg, rgba(92, 124, 182, 0.6), rgba(24, 40, 88, 0.66));
+  color: var(--c-ink);
+}
+.filt:focus-visible {
+  outline: 2px solid var(--c-edge-light);
+  outline-offset: 1px;
+}
+.filt.is-on {
+  color: var(--c-ink);
+  background: linear-gradient(180deg, var(--c-steel-lit), var(--c-bg-panel) 72%, #1b2c58);
+  box-shadow: inset 0 1px 0 rgba(160, 190, 255, 0.6), inset 0 -2px 0 var(--c-danger);
+}
+
+/* Panel de la tabla: cabecera fija, cuerpo con scroll interno. */
+.mst-paneltable {
+  border-radius: var(--r-m);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: linear-gradient(180deg, rgba(18, 30, 66, 0.5), rgba(8, 12, 38, 0.6));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(127, 159, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 26px rgba(5, 8, 30, 0.45);
+}
+.mst-dt__head {
+  display: grid;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  flex: none;
+  background: linear-gradient(180deg, rgba(92, 126, 174, 0.5), rgba(30, 52, 98, 0.5));
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+.mst-dt__head span {
+  text-align: center;
+}
+.mst-dt__head .mst-dt__l {
+  text-align: left;
+}
+.mst-dt__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.mst-dt__body::-webkit-scrollbar {
+  width: 8px;
+}
+.mst-dt__body::-webkit-scrollbar-thumb {
+  background: rgba(127, 159, 255, 0.28);
+  border-radius: 8px;
+}
+.mst-dt__row {
+  display: grid;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(127, 159, 255, 0.08);
+  transition: background 0.12s;
+}
+.mst-dt__row > span {
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 12.5px;
+  color: var(--c-ink-dim);
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mst-dt__row .mst-dt__l {
+  text-align: left;
+}
+.mst-dt__row:hover {
+  background: linear-gradient(90deg, rgba(102, 140, 206, 0.28), rgba(30, 52, 104, 0.14));
+}
+.mst-dt__row:focus-visible {
+  outline: 2px solid var(--c-edge-light);
+  outline-offset: -2px;
+}
+.mst-dt__row.is-sel {
+  background: linear-gradient(90deg, rgba(200, 30, 30, 0.26), rgba(30, 52, 104, 0.1));
+  box-shadow: inset 3px 0 0 var(--c-danger);
+}
+.mst-dt__row.squad-row--out {
+  opacity: 0.66;
+}
+/* Las tres variantes de columnas: gestión, hoja de atributos y estrecha. */
+.mst-dt__row--gestion {
+  grid-template-columns:
+    minmax(150px, 1.4fr) 28px 40px minmax(78px, 0.9fr) 44px 34px 44px minmax(84px, 1fr) 60px 34px;
+}
+.mst-dt__row--atributos {
+  grid-template-columns: minmax(150px, 1.4fr) 28px 40px repeat(9, minmax(26px, 1fr));
+}
+.mst-dt__row--narrow {
+  grid-template-columns: minmax(140px, 1fr) 44px;
+}
+.mst-dt__group {
+  padding: 5px 12px 3px;
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-edge-light);
+  background: rgba(10, 16, 44, 0.5);
+  border-bottom: 1px solid rgba(127, 159, 255, 0.14);
+}
+
+/* ── La ficha del jugador, al costado de la tabla ── */
+.mst-ficha {
+  position: relative;
+  border-radius: var(--r-m);
+  padding: 14px;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  background: linear-gradient(180deg, rgba(20, 33, 72, 0.9), rgba(9, 13, 40, 0.94));
+  border: 1px solid rgba(127, 159, 255, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 22px 50px rgba(5, 8, 30, 0.75);
+}
+.mst-ficha__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(10, 14, 40, 0.6);
+  color: var(--c-ink-dim);
+  font-size: 16px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, color 0.15s;
+}
+.mst-ficha__close:hover {
+  background: var(--c-danger);
+  color: #fff;
+}
+.mst-ficha__grid {
+  display: grid;
+  grid-template-columns: 1fr 118px;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+.mst-ficha__left {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.mst-ficha__badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mst-ficha__d {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--c-ink-soft);
+}
+.mst-ficha__name {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--c-ink);
+  text-shadow: 0 2px 0 rgba(6, 8, 26, 0.8);
+  margin-top: 4px;
+}
+.mst-ficha__full {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--c-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-ficha__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 6px 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(127, 159, 255, 0.16);
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+.mst-ficha__nac {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.mst-ficha__nac .bandera {
+  width: 18px;
+}
+.mst-ficha__nac b {
+  color: var(--c-ink);
+}
+.mst-ficha__media {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--font-data);
+  text-transform: uppercase;
+}
+.mst-ficha__media span {
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--c-ink-soft);
+}
+.mst-ficha__media b {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--c-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mst-ficha__photo {
+  width: 118px;
+  height: 156px;
+  overflow: hidden;
+  border-radius: var(--r-m);
+  border-top: 1px solid rgba(160, 190, 255, 0.6);
+  border-bottom: 1px solid #05061a;
+  box-shadow: 0 4px 12px rgba(5, 8, 30, 0.7);
+  background: #101a3c;
+  display: grid;
+  place-items: center;
+}
+.mst-ficha__bars {
+  display: grid;
+  gap: 5px;
+}
+.mst-attr {
+  display: grid;
+  grid-template-columns: 74px 1fr 26px;
+  align-items: center;
+  gap: 8px;
+}
+.mst-attr__k {
+  font-family: var(--font-data);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+.mst-attr__track {
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(6, 10, 32, 0.8);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.mst-attr__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+.mst-attr__fill--top { background: linear-gradient(90deg, #5a72a8, #c2d2f0); }
+.mst-attr__fill--alto { background: linear-gradient(90deg, #2f9e57, #8fe6ab); }
+.mst-attr__fill--medio { background: linear-gradient(90deg, #d0a020, #ffe08a); }
+.mst-attr__fill--bajo { background: linear-gradient(90deg, #d0781e, #f4b062); }
+.mst-attr__fill--malo { background: linear-gradient(90deg, #c22323, #ef7a7a); }
+.mst-attr__v {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--c-ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.mst-ficha__contract {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(127, 159, 255, 0.16);
+}
+.mst-ficha__contract .stat-like {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-data);
+  font-size: 12.5px;
+  color: var(--c-ink);
+}
+.mst-ficha__ck {
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+.mst-ficha__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
 /* Movimiento reducido: la placa no salta y el icono no gira. */
 @media (prefers-reduced-motion: reduce) {
   .mst-sec,
