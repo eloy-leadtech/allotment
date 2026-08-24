@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { StadiumCanvas } from './StadiumCanvas';
+import { MisterSprite } from './MisterSprite';
 
 /* The console has a FIXED shape: whatever happens to the window, the board
    keeps its 1180×787 proportion (the mockup's contract). What does not fit
@@ -40,6 +41,7 @@ export function MisterFrame({ header, children }: MisterFrameProps) {
 
   return (
     <div className="mst-stage">
+      <MisterSprite />
       <div ref={ref} className="mst-console">
         <StadiumCanvas />
         <div className="mst-console__grain" aria-hidden="true" />

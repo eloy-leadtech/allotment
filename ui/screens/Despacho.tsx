@@ -1,108 +1,56 @@
-import { isSeasonOver, teamName, isWinterWindowOpen, selectPressQuestion } from '@game';
+import {
+  availabilityStatus,
+  isSeasonOver,
+  isWinterWindowOpen,
+  nextHumanFixture,
+  currentStandings,
+  selectPressQuestion,
+  stadiumAforo,
+  teamName,
+  TRAINING_FOCI,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import type { Screen } from '@app/navigation';
+import type { ReactNode } from 'react';
+import { MisterFrame } from '@ui/components/MisterFrame';
+import { MisterHeader } from '@ui/components/MisterHeader';
+import { MisterIcon } from '@ui/components/MisterSprite';
+import { TowerButton } from '@ui/components/TowerButton';
+import { Crest } from '@ui/components/Crest';
 import { RetroButton } from '@ui/components/RetroButton';
 
 /**
- * The DESPACHO (office) hub, rebuilt as a faithful replica of PC Fútbol 7's main
- * menu: the real 640×480 screen bitmap (`scr_032.png`) is shown as the background
- * and we overlay (a) 12 clickable hotspots over the pre-drawn icons and (b) our
- * live data (club, competition, matchday) on the empty plates, plus the 9 bottom
- * tabs. Coordinates are expressed against the original 640×480 canvas so the whole
- * thing scales while keeping its 4:3 proportion.
+ * The DESPACHO hub, rebuilt with the Mister skin: two towers of metal-plate
+ * section buttons with live data (navigation happens through them — no tab
+ * strip), competition cards and the play zone in the centre. The old PCF7
+ * bitmap (`scr_032.png`) is gone.
  */
 
-/** A rectangle on the original 640×480 canvas. */
-interface Rect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+interface SectionDef {
+  name: string;
+  icon?: string;
+  hint?: ReactNode;
+  hintTone?: 'alert' | 'good';
+  pip?: 'alert' | 'pending';
+  pipLabel?: string;
+  to?: Screen;
+  onClick?: () => void;
 }
 
-const CANVAS_W = 640;
-const CANVAS_H = 480;
-
-/** Turn a canvas-space rectangle into a percentage-based absolute style. */
-function place({ x, y, w, h }: Rect): React.CSSProperties {
-  return {
-    left: `${(x / CANVAS_W) * 100}%`,
-    top: `${(y / CANVAS_H) * 100}%`,
-    width: `${(w / CANVAS_W) * 100}%`,
-    height: `${(h / CANVAS_H) * 100}%`,
-  };
-}
-
-interface Hotspot {
-  rect: Rect;
-  label: string;
-  /** Destination screen, or null for sections not yet built as their own screen. */
-  to: Screen | null;
-}
-
-// The two icon columns of scr_032: left = management (blue/warm), right = sporting
-// (green). Each icon is ~55×30 px, grouped 3+3 with a vertical gap in the middle.
-// These are read off scr_032 by eye and are the values most worth a human's review.
-const ICON_W = 55;
-const ROW_H = 30;
-const LEFT_X = 123;
-const RIGHT_X = 551;
-const GROUP_A = [136, 168, 199]; // top three rows (y)
-const GROUP_B = [260, 292, 323]; // bottom three rows (y)
-const ICON_ROWS = [...GROUP_A, ...GROUP_B];
-
-const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Resultados', to: 'standings' },
-  { label: 'Calendario', to: 'standings' },
-  { label: 'Finanzas', to: 'sponsors' },
-  { label: 'Prensa', to: 'press' },
-  { label: 'Directiva', to: 'directiva' },
-  { label: 'Fichajes', to: 'market' },
-];
-
-const RIGHT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Alineación', to: 'squad' },
-  { label: 'Táctica', to: 'tactics' },
-  { label: 'Ojeador', to: 'ojeo' },
-  { label: 'Vídeo', to: 'comparativa' },
-  { label: 'Entrenamiento', to: 'training' },
-  { label: 'Estadio', to: 'stadium' },
-];
-
-/**
- * Sections that have no pre-drawn icon on scr_032 but are full screens of the
- * game. They ride on a secondary strip under the tab bar so nothing built for
- * the office is unreachable; labels never repeat an icon or tab label.
- */
-const EXTRA_SECTIONS: Array<{ label: string; to: Screen }> = [
-  { label: 'Cantera', to: 'youth' },
-  { label: 'Promesas', to: 'prospects' },
-  { label: 'Cuerpo técnico', to: 'staff' },
-  { label: 'Patrocinio', to: 'sponsors' },
-  { label: 'Estadísticas', to: 'stats' },
-  { label: 'Palmarés', to: 'palmares' },
-  { label: 'Hemeroteca', to: 'hemeroteca' },
-  { label: 'Compara', to: 'comparativa' },
-];
-
-function buildIconHotspots(x: number, defs: Array<{ label: string; to: Screen | null }>): Hotspot[] {
-  return defs.map((def, i) => ({
-    rect: { x, y: ICON_ROWS[i] ?? 0, w: ICON_W, h: ROW_H },
-    label: def.label,
-    to: def.to,
-  }));
+interface GroupDef {
+  title: string;
+  sections: SectionDef[];
 }
 
 export function Despacho() {
   const season = useGameStore((s) => s.season);
   const career = useGameStore((s) => s.career);
-  const hasEuropa = useGameStore((s) => s.career?.europa != null);
   const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const lastCallUp = useGameStore((s) => s.lastCallUp);
   const goTo = useGameStore((s) => s.goTo);
 
-  if (!season) {
+  if (!season || !career) {
     return (
       <main className="screen">
         <p>No hay temporada en curso.</p>
@@ -111,139 +59,283 @@ export function Despacho() {
     );
   }
 
-  const clubName = teamName(season, season.humanTeamId);
+  const clubId = career.humanTeamId;
   const over = isSeasonOver(season);
-  const playedMatchday = Math.min(season.currentMatchday, season.totalMatchdays);
-  const bg = `${import.meta.env.BASE_URL}ui/pcf7/scr_032.png`;
+  const fixture = over ? null : nextHumanFixture(season);
+  const rivalId = fixture ? (fixture.homeId === clubId ? fixture.awayId : fixture.homeId) : null;
+  const enCasa = fixture ? fixture.homeId === clubId : false;
 
-  // Mid-season the winter window blocks play until it is closed (the store also
-  // enforces it); the press waits for you after some matchdays.
-  const winterOpen = career ? isWinterWindowOpen(career) : false;
-  const pressPending = career ? selectPressQuestion(career) != null : false;
+  const rows = currentStandings(season);
+  const posIdx = rows.findIndex((r) => r.teamId === clubId);
+  const myRow = posIdx >= 0 ? rows[posIdx] : undefined;
 
-  const leftHotspots = buildIconHotspots(LEFT_X, LEFT_ICONS);
-  const rightHotspots = buildIconHotspots(RIGHT_X, RIGHT_ICONS);
+  const humanTeam = career.teams.find((t) => t.id === clubId);
+  const plantilla = humanTeam?.players ?? [];
+  const bajas = plantilla.filter(
+    (p) => availabilityStatus(season.availability[p.id], season.currentMatchday).status !== 'fit',
+  ).length;
 
-  // The nearest existing screen for a section not yet built stays on the office.
-  const openSection = (to: Screen | null): void => {
-    if (to) goTo(to);
-  };
+  const winterOpen = isWinterWindowOpen(career);
+  const pressPending = selectPressQuestion(career) != null;
+  const formation = career.tactics?.formation ?? '4-4-2';
+  const trainingLabel =
+    TRAINING_FOCI.find((f) => f.focus === career.training?.focus)?.label ?? 'Equilibrado';
+  const aforo = stadiumAforo(career.stadium);
+  const confianza = career.confianza?.directiva;
 
-  // The 9 bottom tabs = the persistent global switcher. "Liga" is the active one.
-  const tabs: Array<{ label: string; onClick: () => void; active?: boolean; disabled?: boolean }> = [
-    { label: 'Liga', onClick: () => undefined, active: true },
-    { label: 'Clasificación', onClick: () => goTo('standings') },
-    { label: 'Copa', onClick: () => goTo('copa') },
-    { label: 'Europa', onClick: () => goTo('europa'), disabled: !hasEuropa },
-    { label: 'Mercado', onClick: () => goTo('market') },
-    { label: 'Plantilla', onClick: () => goTo('squad') },
-    { label: 'Táctica', onClick: () => goTo('tactics') },
-    { label: 'Guardar', onClick: () => goTo('slots') },
-    { label: 'Menú', onClick: () => goTo('title') },
+  const left: GroupDef[] = [
+    {
+      title: 'Terreno de juego',
+      sections: [
+        {
+          name: 'Plantilla',
+          icon: 'ic-alineacion',
+          to: 'squad',
+          hint:
+            bajas > 0 ? (
+              <>
+                <em>{bajas}</em> {bajas === 1 ? 'baja' : 'bajas'}
+              </>
+            ) : (
+              `${plantilla.length} fichas`
+            ),
+          hintTone: bajas > 0 ? 'alert' : undefined,
+          pip: bajas > 0 ? 'pending' : undefined,
+          pipLabel: 'Hay bajas en la plantilla',
+        },
+        { name: 'Táctica', icon: 'ic-tactica', to: 'tactics', hint: formation },
+        { name: 'Entrenamiento', icon: 'ic-entrenamiento', to: 'training', hint: trainingLabel },
+      ],
+    },
+    {
+      title: 'Cantera y ojeo',
+      sections: [
+        {
+          name: 'Cantera',
+          icon: 'ic-cantera',
+          to: 'youth',
+          hint: `${career.youthProspects.length} juveniles`,
+        },
+        {
+          name: 'Promesas',
+          icon: 'ic-moral',
+          to: 'prospects',
+          hint: `${Object.keys(career.prospectTracking).length} seguidas`,
+        },
+        {
+          name: 'Ojeador',
+          icon: 'ic-leyendas',
+          to: 'ojeo',
+          hint: `${Object.keys(career.scouting).length} informes`,
+        },
+      ],
+    },
+    {
+      title: 'La temporada',
+      sections: [
+        {
+          name: 'Clasificación',
+          icon: 'ic-clasificacion',
+          to: 'standings',
+          hint: myRow ? (
+            <>
+              {posIdx + 1}.º · <em>{myRow.points} pts</em>
+            </>
+          ) : undefined,
+        },
+        { name: 'Estadísticas', icon: 'ic-resultados', to: 'stats' },
+        { name: 'Comparativa', icon: 'ic-lesiones', to: 'comparativa' },
+      ],
+    },
   ];
 
-  return (
-    <main className="screen screen--despacho">
-      <div
-        className="despacho7"
-        style={{ backgroundImage: `url(${bg})`, aspectRatio: `${CANVAS_W} / ${CANVAS_H}` }}
-      >
-        {/* Live data over the empty plates */}
-        <div className="despacho7__plate despacho7__plate--club" style={place({ x: 155, y: 8, w: 148, h: 30 })}>
-          {clubName}
-        </div>
-        <div className="despacho7__plate despacho7__plate--comp" style={place({ x: 382, y: 8, w: 154, h: 30 })}>
-          LIGA · {season.temporada}
-        </div>
-        <div className="despacho7__plate despacho7__plate--data" style={place({ x: 382, y: 56, w: 154, h: 26 })}>
-          {over ? 'Temporada terminada' : `Jornada ${playedMatchday}/${season.totalMatchdays}`}
-        </div>
+  const right: GroupDef[] = [
+    {
+      title: 'Club',
+      sections: [
+        {
+          name: 'Directiva',
+          icon: 'ic-directiva',
+          to: 'directiva',
+          hint:
+            confianza !== undefined ? (
+              <>
+                Confianza <em>{confianza}</em>
+              </>
+            ) : undefined,
+          hintTone: confianza !== undefined && confianza < 30 ? 'alert' : undefined,
+        },
+        { name: 'Cuerpo técnico', icon: 'ic-prensa', to: 'staff' },
+        {
+          name: 'Estadio',
+          icon: 'ic-clasificacion',
+          to: 'stadium',
+          hint: (
+            <>
+              Aforo <em>{aforo.toLocaleString('es-ES')}</em>
+            </>
+          ),
+        },
+      ],
+    },
+    {
+      title: 'Despacho',
+      sections: [
+        {
+          name: 'Fichajes',
+          icon: 'ic-fichajes',
+          hint: winterOpen ? <em>¡Ventana abierta!</em> : undefined,
+          hintTone: winterOpen ? 'alert' : undefined,
+          pip: winterOpen ? 'alert' : undefined,
+          pipLabel: 'Ventana de invierno abierta',
+          onClick: winterOpen ? openWinterMarket : () => goTo('market'),
+        },
+        { name: 'Patrocinio', icon: 'ic-finanzas', to: 'sponsors' },
+        {
+          name: 'Prensa',
+          icon: 'ic-prensa',
+          to: 'press',
+          hint: pressPending ? <em>Te esperan</em> : undefined,
+          hintTone: pressPending ? 'alert' : undefined,
+          pip: pressPending ? 'alert' : undefined,
+          pipLabel: 'La prensa espera tus declaraciones',
+        },
+      ],
+    },
+    {
+      title: 'Historia',
+      sections: [
+        {
+          name: 'Palmarés',
+          icon: 'ic-leyendas',
+          to: 'palmares',
+          hint: `${career.palmares.length} títulos`,
+        },
+        { name: 'Hemeroteca', icon: 'ic-calendario', to: 'hemeroteca' },
+        { name: 'Guardar', to: 'slots' },
+        { name: 'Menú', to: 'title' },
+      ],
+    },
+  ];
 
-        {/* 12 icon hotspots */}
-        {[...leftHotspots, ...rightHotspots].map((h) => (
-          <button
-            key={h.label}
-            type="button"
-            className={`despacho7__hotspot${h.to ? '' : ' despacho7__hotspot--soon'}`}
-            style={place(h.rect)}
-            title={h.to ? h.label : `${h.label} (próximamente)`}
-            aria-label={h.label}
-            onClick={() => openSection(h.to)}
-          />
-        ))}
-
-        {/* Central trophy zone = play/continue the matchday */}
-        <button
-          type="button"
-          className="despacho7__hotspot despacho7__hotspot--play"
-          style={place({ x: 285, y: 150, w: 100, h: 95 })}
-          title={over ? 'Fin de temporada' : 'Jugar jornada'}
-          aria-label={over ? 'Fin de temporada' : 'Jugar jornada'}
-          onClick={() => goTo(over ? 'seasonEnd' : 'prematch')}
-        />
-        {!over ? (
-          <button
-            type="button"
-            className="despacho7__hotspot despacho7__sim"
-            style={place({ x: 285, y: 250, w: 100, h: 22 })}
-            title="Simular jornada"
-            aria-label="Simular jornada"
-            onClick={playNextMatchday}
-          >
-            Simular
-          </button>
-        ) : null}
-
-        {/* 9 bottom tabs (regleta de solapas) */}
-        <div className="despacho7__tabs" style={place({ x: 2, y: 404, w: 636, h: 70 })}>
-          {tabs.map((t) => (
-            <button
-              key={t.label}
-              type="button"
-              className={`despacho7__tab${t.active ? ' despacho7__tab--active' : ''}`}
-              onClick={t.onClick}
-              disabled={t.disabled}
-              aria-current={t.active ? 'page' : undefined}
-            >
-              {t.label}
-            </button>
+  const renderTower = (groups: GroupDef[]) => (
+    <div className="mst-tower">
+      {groups.map((g) => (
+        <div key={g.title} className="mst-grp">
+          <p className="mst-grp__h">{g.title}</p>
+          {g.sections.map((s) => (
+            <TowerButton
+              key={s.name}
+              name={s.name}
+              icon={s.icon ? <MisterIcon id={s.icon} /> : undefined}
+              hint={s.hint}
+              hintTone={s.hintTone}
+              pip={s.pip}
+              pipLabel={s.pipLabel}
+              onClick={s.onClick ?? (() => goTo(s.to as Screen))}
+            />
           ))}
         </div>
-      </div>
+      ))}
+    </div>
+  );
 
-      {/* Avisos que exigen tu atención antes de seguir jugando. */}
-      {winterOpen ? (
-        <p className="despacho7__notice">
-          ❄️ Ventana de fichajes de invierno abierta.{' '}
-          <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={openWinterMarket}>
-            Ir al mercado de invierno →
+  return (
+    <MisterFrame header={<MisterHeader />}>
+      <div className="mst-despacho">
+        {/* Una tarjeta por competición en juego. */}
+        <div className="mst-fixtures">
+          <button type="button" className="mst-fx" onClick={() => goTo('standings')}>
+            {rivalId && (
+              <span className="mst-fx__crest">
+                <Crest teamId={rivalId} size={40} />
+              </span>
+            )}
+            <span className="mst-fx__main">
+              <span className="mst-fx__rival">
+                {over ? 'Temporada terminada' : rivalId ? teamName(season, rivalId) : 'Liga'}
+              </span>
+              <span className="mst-fx__meta">
+                {over ? (
+                  'Ver clasificación'
+                ) : (
+                  <>
+                    <b>Jornada {fixture?.round}</b>
+                    <i>·</i>
+                    <em>{enCasa ? 'Casa' : 'Fuera'}</em>
+                  </>
+                )}
+              </span>
+            </span>
           </button>
-        </p>
-      ) : null}
-      {pressPending ? (
-        <p className="despacho7__notice">
-          🎙️ La prensa espera tus declaraciones.{' '}
-          <button type="button" className="pcf7flatbtn" onClick={() => goTo('press')}>
-            Comparecer →
-          </button>
-        </p>
-      ) : null}
-      {lastCallUp && lastCallUp.players.length > 0 ? (
-        <p className="despacho7__notice">
-          ✈️ {lastCallUp.players.length}{' '}
-          {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón de
-          selecciones con fatiga extra.
-        </p>
-      ) : null}
+          {career.copa && (
+            <button type="button" className="mst-fx" onClick={() => goTo('copa')}>
+              <span className="mst-fx__main">
+                <span className="mst-fx__rival">Copa</span>
+                <span className="mst-fx__meta">Ver eliminatorias</span>
+              </span>
+            </button>
+          )}
+          {career.europa && (
+            <button type="button" className="mst-fx" onClick={() => goTo('europa')}>
+              <span className="mst-fx__main">
+                <span className="mst-fx__rival">Europa</span>
+                <span className="mst-fx__meta">Ver la competición</span>
+              </span>
+            </button>
+          )}
+        </div>
 
-      {/* Secciones sin icono propio en scr_032. */}
-      <div className="despacho7__more">
-        {EXTRA_SECTIONS.map((s) => (
-          <button key={s.label} type="button" className="pcf7flatbtn" onClick={() => goTo(s.to)}>
-            {s.label}
-          </button>
-        ))}
+        <div className="mst-despacho__body">
+          {renderTower(left)}
+
+          <div className="mst-core">
+            <button
+              type="button"
+              className="mst-play"
+              onClick={() => goTo(over ? 'seasonEnd' : 'prematch')}
+            >
+              <span className="mst-play__n">{over ? 'Fin de temporada' : 'Jugar jornada'}</span>
+              {!over && (
+                <span className="mst-play__d">
+                  Jornada {season.currentMatchday} de {season.totalMatchdays}
+                </span>
+              )}
+            </button>
+            {!over && (
+              <button type="button" className="mst-sim" onClick={playNextMatchday}>
+                Simular jornada
+              </button>
+            )}
+
+            {winterOpen && (
+              <p className="mst-notice">
+                ❄️ Ventana de fichajes de invierno abierta.{' '}
+                <button type="button" className="mst-notice__btn" onClick={openWinterMarket}>
+                  Ir al mercado de invierno →
+                </button>
+              </p>
+            )}
+            {pressPending && (
+              <p className="mst-notice">
+                🎙️ La prensa espera tus declaraciones.{' '}
+                <button type="button" className="mst-notice__btn" onClick={() => goTo('press')}>
+                  Comparecer →
+                </button>
+              </p>
+            )}
+            {lastCallUp && lastCallUp.players.length > 0 && (
+              <p className="mst-notice">
+                ✈️ {lastCallUp.players.length}{' '}
+                {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón
+                de selecciones con fatiga extra.
+              </p>
+            )}
+          </div>
+
+          {renderTower(right)}
+        </div>
       </div>
-    </main>
+    </MisterFrame>
   );
 }

@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Despacho } from './Despacho';
 import { useGameStore } from '@ui/store/gameStore';
@@ -10,43 +10,54 @@ function startGame(): void {
   useGameStore.getState().startCareer('barcelona');
 }
 
-describe('Despacho (PCF7 office hub)', () => {
+describe('Despacho (Mister hub)', () => {
   beforeEach(startGame);
 
-  it('shows the club and competition live data over the plates', () => {
-    render(<Despacho />);
-    expect(screen.getByText('Barcelona')).toBeInTheDocument();
-    expect(screen.getByText(/LIGA · 96\/97/)).toBeInTheDocument();
-    expect(screen.getByText(/Jornada 1\/\d+/)).toBeInTheDocument();
+  it('shows the club and the season in the persistent header', () => {
+    const { container } = render(<Despacho />);
+    expect(container.querySelector('.mst-head__name')?.textContent).toMatch(/Barcelona/i);
+    expect(screen.getByText(/96\/97/)).toBeInTheDocument();
+    // The old PCF7 bitmap is gone.
+    expect(container.querySelector('.despacho7')).toBeNull();
   });
 
-  it('renders the 12 icon hotspots plus the play zone with accessible labels', () => {
+  it('renders every section as a tower button, so no screen is orphaned', () => {
     render(<Despacho />);
-    // Labels unique to the icon column (not shared with a bottom tab).
     for (const label of [
-      'Resultados',
-      'Calendario',
-      'Finanzas',
-      'Prensa',
-      'Directiva',
-      'Fichajes',
-      'Alineación',
-      'Ojeador',
-      'Vídeo',
+      'Plantilla',
+      'Táctica',
       'Entrenamiento',
+      'Cantera',
+      'Promesas',
+      'Ojeador',
+      'Clasificación',
+      'Estadísticas',
+      'Comparativa',
+      'Directiva',
+      'Cuerpo técnico',
       'Estadio',
+      'Fichajes',
+      'Patrocinio',
+      'Prensa',
+      'Palmarés',
+      'Hemeroteca',
+      'Guardar',
+      'Menú',
     ]) {
-      expect(screen.getByRole('button', { name: label })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: new RegExp(label) })).toBeInTheDocument();
     }
-    // "Táctica" appears both as an icon hotspot and as a bottom tab.
-    expect(screen.getAllByRole('button', { name: 'Táctica' })).toHaveLength(2);
-    expect(screen.getByRole('button', { name: 'Jugar jornada' })).toBeInTheDocument();
   });
 
-  it('navigates to an existing section when its icon is clicked', () => {
+  it('navigates to a section when its tower button is clicked', () => {
     render(<Despacho />);
-    screen.getByRole('button', { name: 'Alineación' }).click();
+    screen.getByRole('button', { name: /Plantilla/ }).click();
     expect(useGameStore.getState().screen).toBe('squad');
+  });
+
+  it('shows the next rival card and the play zone', () => {
+    const { container } = render(<Despacho />);
+    expect(container.querySelectorAll('.mst-fx').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole('button', { name: /Jugar jornada/ })).toBeInTheDocument();
   });
 
   it('advances the matchday from the office (Simular) keeping the hub on screen', () => {
@@ -54,14 +65,5 @@ describe('Despacho (PCF7 office hub)', () => {
     expect(useGameStore.getState().season?.currentMatchday).toBe(1);
     screen.getByRole('button', { name: 'Simular jornada' }).click();
     expect(useGameStore.getState().season?.currentMatchday).toBe(2);
-  });
-
-  it('marks Liga as the active bottom tab', () => {
-    render(<Despacho />);
-    const liga = screen.getByRole('button', { name: 'Liga' });
-    expect(liga).toHaveAttribute('aria-current', 'page');
-    // The 9-tab strip is present.
-    const tabStrip = liga.parentElement!;
-    expect(within(tabStrip).getAllByRole('button')).toHaveLength(9);
   });
 });
