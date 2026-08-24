@@ -26,6 +26,7 @@ import { CopaScreen } from '@ui/screens/CopaScreen';
 import { EuropaScreen } from '@ui/screens/EuropaScreen';
 import { PalmaresScreen } from '@ui/screens/PalmaresScreen';
 import { HemerotecaScreen } from '@ui/screens/HemerotecaScreen';
+import { DiarioScreen } from '@ui/screens/DiarioScreen';
 import { StatsScreen } from '@ui/screens/StatsScreen';
 import { PressScreen } from '@ui/screens/PressScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
@@ -93,6 +94,8 @@ export function App() {
       return <StatsScreen />;
     case 'press':
       return <PressScreen />;
+    case 'diario':
+      return <DiarioScreen />;
     case 'match':
       return <MatchScreen />;
     case 'slots':

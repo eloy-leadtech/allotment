@@ -16,3 +16,7 @@ ios
 # (el enlace apunta fuera del repo y guarda miles de imagenes).
 public/fotos-bdf
 public/fotos-bdf/
+
+# Fotos del quiosco: se regeneran con tools/prensa_export_juego.py del repo de analisis
+public/prensa/fotos/
+public/prensa/semanal/

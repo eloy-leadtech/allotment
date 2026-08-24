@@ -3514,3 +3514,527 @@ h1 {
   color: var(--c-ink-dim);
   font-weight: 600;
 }
+
+/* ==========================================================================
+   EL QUIOSCO — el periódico de la jornada
+   Papel de prensa antiguo sobre la consola de acero: el contraste entre el
+   marco azul del despacho y la hoja crema es a propósito, así el diario se lee
+   como un objeto que el manager tiene encima de la mesa.
+   ========================================================================== */
+.diario {
+  --papel: #ede4d0;
+  --papel-sombra: #ddd0b4;
+  --tinta: #201a12;
+  --tinta-suave: #5b503f;
+  margin-top: var(--space);
+  padding: 18px 20px 16px;
+  /* El brillo de arriba es un velo blanco, no un color fijo: así el papel entero
+     lo manda la época y no se queda un tono de los noventa en las cabeceras. */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(178deg, var(--papel) 0%, var(--papel) 42%, var(--papel-sombra) 100%);
+  color: var(--tinta);
+  border: 1px solid #8b7d62;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.diario__cabecera {
+  text-align: center;
+  border-bottom: 3px double var(--tinta);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+.diario__cabecera-nombre {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin: 0;
+  line-height: 1;
+}
+.diario__cabecera-fecha {
+  font-family: var(--font-data);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--tinta-suave);
+  margin: 6px 0 0;
+}
+
+.diario__aviso {
+  font-family: var(--font-data);
+  text-align: center;
+  color: var(--tinta-suave);
+  padding: 24px 0;
+}
+
+.diario__columnas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(32, 26, 18, 0.35);
+}
+@media (max-width: 760px) {
+  .diario__columnas { grid-template-columns: 1fr; }
+}
+
+.diario-pieza__ante {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-data);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 0 0 4px;
+}
+.diario-pieza__cajon {
+  font-weight: 700;
+  color: #8a2b1e;
+}
+.diario-pieza__seccion { color: var(--tinta-suave); }
+
+.diario-pieza__titular {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+.diario-pieza__cuerpo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 0;
+  color: var(--tinta-suave);
+}
+.diario-pieza__foto {
+  margin: 0 0 8px;
+}
+.diario-pieza__foto img {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  /* Las fotos son de época: el filtro las asienta en la página impresa. */
+  filter: grayscale(1) contrast(1.08) sepia(0.18);
+  border: 1px solid rgba(32, 26, 18, 0.5);
+}
+
+/* La apertura ocupa el ancho entero, con la foto a la izquierda. */
+.diario-pieza--apertura {
+  display: grid;
+  grid-template-columns: minmax(200px, 42%) 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.diario-pieza--apertura .diario-pieza__foto img {
+  height: 100%;
+  max-height: 260px;
+  min-height: 170px;
+}
+.diario-pieza--apertura .diario-pieza__titular {
+  font-size: clamp(20px, 2.6vw, 30px);
+}
+.diario-pieza--apertura .diario-pieza__cuerpo { font-size: 15px; }
+@media (max-width: 760px) {
+  .diario-pieza--apertura { grid-template-columns: 1fr; }
+  .diario-pieza--apertura .diario-pieza__foto img { height: 180px; }
+}
+
+.diario__pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 3px double var(--tinta);
+}
+
+/* Créditos: autor, licencia y fuente. Es requisito de las CC BY y CC BY-SA. */
+.diario__creditos {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  background: rgba(32, 26, 18, 0.06);
+  border: 1px dashed rgba(32, 26, 18, 0.4);
+  font-family: var(--font-data);
+  font-size: 11px;
+}
+.diario-credito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 3px 0;
+}
+.diario-credito__autor { font-weight: 700; }
+.diario-credito__licencia { text-transform: uppercase; color: var(--tinta-suave); }
+.diario-credito a { color: #1b4f8a; }
+
+/* ── LA GACETA · DEPORTES: el suplemento ──────────────────────────────────
+   Los resultados que no son los tuyos son los que ocurrieron de verdad, así
+   que el suplemento no inventa: imprime el hecho, su marcador y el retrato
+   real del jugador que lo protagonizó esa temporada. */
+.diario__secciones {
+  display: flex;
+  gap: 8px;
+  margin-top: var(--space);
+}
+.diario--deportes {
+  --papel: #e9ddc0;
+  --papel-sombra: #d8c9a2;
+}
+.diario__suplemento {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 2px 10px 3px;
+  vertical-align: 8px;
+  font-size: 0.42em;
+  font-style: normal;
+  letter-spacing: 0.18em;
+  background: #8d2a1b;
+  color: #f4ecd8;
+  border-radius: 2px;
+}
+.diario__lema {
+  margin: 0 0 10px;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--tinta-suave);
+}
+.diario__columnas--dep {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+}
+
+.diario-dep {
+  padding-bottom: 8px;
+}
+.diario__columnas--dep .diario-dep {
+  border-bottom: 1px solid rgba(32, 26, 18, 0.18);
+}
+.diario-dep__marcador {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 11px;
+  color: #8d2a1b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 58%;
+}
+/* El retrato va recortado en columna, como una ficha de plantilla impresa. El
+   pie lleva el nombre del jugador, así que necesita su propio sitio: nada de
+   apretarlo contra el borde de la foto. */
+.diario-dep__foto {
+  float: left;
+  width: 96px;
+  margin: 2px 14px 8px 0;
+}
+.diario-dep__foto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(1) contrast(1.06) sepia(0.18);
+  border: 1px solid rgba(32, 26, 18, 0.5);
+}
+.diario-dep__foto figcaption {
+  display: block;
+  margin-top: 5px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(32, 26, 18, 0.35);
+  font-family: var(--font-data);
+  font-size: 10.5px;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tinta);
+  /* Dos líneas de nombre caben; a partir de ahí se recorta con puntos. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Cuando no hay retrato: escudo, trofeo o placa tipográfica, siempre ocupando
+   el mismo hueco para que la maqueta no baile. */
+.diario-dep__escudo,
+.diario-dep__trofeo,
+.diario-dep__placa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgba(32, 26, 18, 0.5);
+  background: rgba(32, 26, 18, 0.06);
+}
+.diario-dep__trofeo img {
+  width: 76%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 0;
+  filter: grayscale(1) contrast(1.05) sepia(0.2);
+}
+.diario-dep__escudo .crest {
+  filter: grayscale(1) contrast(1.05) sepia(0.2);
+}
+.diario-dep__placa {
+  padding: 6px;
+  font-family: var(--font-data);
+  font-size: 11px;
+  line-height: 1.15;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--tinta-suave);
+}
+.diario-dep--apertura {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 12px 14px;
+  border: 1px solid rgba(141, 42, 27, 0.28);
+  background: rgba(141, 42, 27, 0.06);
+  border-radius: 3px;
+}
+.diario-dep--apertura .diario-dep__foto {
+  float: none;
+  width: 100%;
+  margin: 0;
+}
+.diario-dep--apertura .diario-pieza__titular {
+  font-size: clamp(19px, 2.2vw, 26px);
+}
+.diario-dep--apertura .diario-dep__marcador {
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  .diario__columnas--dep { grid-template-columns: 1fr; }
+  .diario-dep--apertura { grid-template-columns: 110px 1fr; }
+}
+
+/* Breves de la segunda página del suplemento: el marcador en su columna y el
+   titular al lado, como la parrilla de resultados de un diario deportivo. */
+.diario__breves {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(32, 26, 18, 0.35);
+}
+.diario__breves ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 24px;
+}
+.diario__breves li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 3px 0;
+  border-bottom: 1px dotted rgba(32, 26, 18, 0.25);
+  break-inside: avoid;
+}
+.diario__breve-marcador {
+  flex: 0 0 40%;
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 11px;
+  color: #8d2a1b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.diario__breve-texto {
+  flex: 1 1 auto;
+  font-family: var(--font-data);
+  font-size: 11px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--tinta-suave);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .diario__breves ul { columns: 1; }
+}
+
+/* La Gaceta se lee bajando: la página es larga y la cabecera se queda arriba
+   como el mástil de un diario mientras pasan las noticias. */
+.diario {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(141, 42, 27, 0.5) transparent;
+}
+.diario::-webkit-scrollbar { width: 10px; }
+.diario::-webkit-scrollbar-track { background: rgba(32, 26, 18, 0.08); }
+.diario::-webkit-scrollbar-thumb {
+  background: rgba(141, 42, 27, 0.45);
+  border-radius: 5px;
+  border: 2px solid var(--papel);
+}
+.diario__cabecera {
+  position: sticky;
+  top: -18px;
+  z-index: 2;
+  margin-top: -18px;
+  padding-top: 18px;
+  background: linear-gradient(180deg, var(--papel) 0%, var(--papel) 76%, transparent 100%);
+}
+/* Con scroll ya no hace falta recortar: los pies de foto y las entradillas se
+   leen enteros, que era justo lo que se perdía. */
+.diario-dep__foto figcaption {
+  -webkit-line-clamp: 3;
+}
+.diario__lema--sep {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 3px double var(--tinta);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LA GACETA CAMBIA DE PIEL CON SU ÉPOCA
+   Un diario de 1933 no se parece en nada a uno de 2015: papel malo y una sola
+   tinta, luego el hueco­grabado sepia de la posguerra, el blanco y negro nítido
+   del desarrollismo, el color que llega a la prensa española a finales de los
+   ochenta y, al final, la portada moderna. El periódico del juego se imprime
+   como se imprimía en su año.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 1929-1939 · papel malo, tinta única, mancheta con filetes dobles */
+.diario--republica {
+  --papel: #e6d9b8;
+  --papel-sombra: #d2c19a;
+  --tinta: #241d12;
+  --tinta-suave: #59492f;
+  --foto: grayscale(1) sepia(0.42) contrast(1.22) brightness(0.94);
+}
+/* 1940-1959 · posguerra: papel aún peor, huecograbado muy sepia */
+.diario--posguerra {
+  --papel: #e9dcbc;
+  --papel-sombra: #d6c6a0;
+  --tinta: #2a2115;
+  --tinta-suave: #5f5137;
+  --foto: grayscale(1) sepia(0.5) contrast(1.12) brightness(0.97);
+}
+/* 1960-1975 · mejora el papel y la foto se ve de verdad */
+.diario--desarrollo {
+  --papel: #ece3cf;
+  --papel-sombra: #dbd0b6;
+  --tinta: #201a12;
+  --tinta-suave: #5b503f;
+  --foto: grayscale(1) contrast(1.1);
+}
+/* 1976-1989 · offset moderno, blanco y negro limpio */
+.diario--transicion {
+  --papel: #efe9dc;
+  --papel-sombra: #ded6c6;
+  --tinta: #1c1a17;
+  --tinta-suave: #58524a;
+  --foto: grayscale(1) contrast(1.04);
+}
+/* 1990-2004 · llega el color a las páginas de deportes */
+.diario--moderno {
+  --papel: #f4f1e8;
+  --papel-sombra: #e6e1d3;
+  --tinta: #171614;
+  --tinta-suave: #4f4c46;
+  --foto: saturate(0.8) contrast(1.03);
+}
+/* 2005 en adelante · papel blanco y foto a todo color */
+.diario--digital {
+  --papel: #fbfaf7;
+  --papel-sombra: #efeee9;
+  --tinta: #121212;
+  --tinta-suave: #4a4a4a;
+  --foto: none;
+}
+
+/* Las fotos obedecen a la época, no al capricho de cada bloque. */
+.diario-pieza__foto img,
+.diario-dep__foto img,
+.diario-dep__trofeo img,
+.diario-dep__escudo .crest {
+  filter: var(--foto, grayscale(1) contrast(1.06) sepia(0.18));
+}
+
+/* La mancheta también envejece: cuanto más atrás, más filetes y más letra
+   espaciada; en los 2000 se queda limpia. */
+.diario__cabecera-lema {
+  margin: 2px 0 0;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  color: var(--tinta-suave);
+}
+.diario--republica .diario__cabecera,
+.diario--posguerra .diario__cabecera {
+  border-bottom-width: 4px;
+}
+.diario--republica .diario__cabecera-nombre,
+.diario--posguerra .diario__cabecera-nombre {
+  letter-spacing: 0.2em;
+  font-style: normal;
+}
+.diario--digital .diario__cabecera {
+  border-bottom: 2px solid var(--tinta);
+}
+.diario--digital .diario__cabecera-nombre {
+  letter-spacing: 0.02em;
+}
+
+/* El texto rodea la foto, como en un periódico de verdad: la imagen va flotada
+   dentro de la columna y el párrafo se cierra a su alrededor. */
+.diario-pieza--apertura {
+  display: block;
+}
+.diario-pieza--apertura .diario-pieza__foto {
+  float: left;
+  width: min(42%, 320px);
+  margin: 4px 18px 10px 0;
+}
+.diario-pieza--apertura .diario-pieza__foto img {
+  height: auto;
+  max-height: 260px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.diario-pieza--apertura .diario-pieza__cuerpo {
+  text-align: justify;
+  hyphens: auto;
+}
+.diario-pieza--apertura::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+/* Las columnas de la portada, con su filete de separación como las de antes. */
+.diario--republica .diario__columnas,
+.diario--posguerra .diario__columnas,
+.diario--desarrollo .diario__columnas {
+  column-rule: 1px solid rgba(32, 26, 18, 0.3);
+}
+.diario__columnas > .diario-pieza + .diario-pieza {
+  border-left: 1px solid rgba(32, 26, 18, 0.16);
+  padding-left: 14px;
+}

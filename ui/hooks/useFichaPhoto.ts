@@ -7,9 +7,14 @@ import { useEffect, useState } from 'react';
  * Windows/Android app, set `VITE_PHOTO_BASE` to a bundled local folder so it
  * reads images off disk instead of hitting the network.
  */
-const PHOTO_BASE =
+export const PHOTO_BASE =
   (import.meta.env.VITE_PHOTO_BASE as string | undefined) ??
   'https://eloy-leadtech.github.io/pcfutbol-fotos/';
+
+/** URL de un retrato a partir de su ruta relativa ("2403/2403.jpg"). */
+export function urlRetrato(ruta: string): string {
+  return `${PHOTO_BASE}${ruta}`;
+}
 
 /** One player's photo record from the ficha-photo map. */
 export interface FichaPhotoEntry {

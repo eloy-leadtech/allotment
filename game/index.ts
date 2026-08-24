@@ -7,3 +7,5 @@ export * from './career/index';
 export * from './tournament/index';
 export * from './save/save';
 export * from './narration/narrate';
+export * from './prensa/periodico';
+export * from './prensa/suplemento';

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 130" width="240" height="260" role="img" aria-label="Camiseta Real Madrid">
+  <defs>
+    <clipPath id="c-real-madrid"><path d="M48,13 L40,9 C30,13 18,20 9,29 C11,40 13,50 16,60 C23,55 30,50 36,45 C33,70 31,95 30,121 C50,124 70,124 90,121 C89,95 87,70 84,45 C90,50 97,55 104,60 C107,50 109,40 111,29 C102,20 90,13 80,9 L72,13 C64,19 56,19 48,13 Z"/></clipPath>
+    <linearGradient id="luz-real-madrid" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.20"/>
+      <stop offset="35%" stop-color="#fff" stop-opacity="0.14"/>
+      <stop offset="70%" stop-color="#000" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#c-real-madrid)">
+    <rect x="0" y="0" width="120" height="130" fill="#ffffff"/>
+    
+    
+    <rect x="0" y="0" width="120" height="130" fill="url(#luz-real-madrid)"/>
+  </g>
+  <path d="M48,13 L40,9 C30,13 18,20 9,29 C11,40 13,50 16,60 C23,55 30,50 36,45 C33,70 31,95 30,121 C50,124 70,124 90,121 C89,95 87,70 84,45 C90,50 97,55 104,60 C107,50 109,40 111,29 C102,20 90,13 80,9 L72,13 C64,19 56,19 48,13 Z" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M48,13 C56,19 64,19 72,13" fill="none" stroke="#1a2a6c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M9,29 C11,40 13,50 16,60" fill="none" stroke="#1a2a6c" stroke-width="3.5"/>
+  <path d="M111,29 C109,40 107,50 104,60" fill="none" stroke="#1a2a6c" stroke-width="3.5"/>
+</svg>

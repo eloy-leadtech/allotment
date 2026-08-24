@@ -82,6 +82,7 @@ const EXTRA_SECTIONS: Array<{ label: string; to: Screen }> = [
   { label: 'Estadísticas', to: 'stats' },
   { label: 'Palmarés', to: 'palmares' },
   { label: 'Hemeroteca', to: 'hemeroteca' },
+  { label: 'Quiosco', to: 'diario' },
   { label: 'Compara', to: 'comparativa' },
 ];
 
