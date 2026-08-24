@@ -37,18 +37,34 @@
   --c-me: #2a3f7a;          /* fila del equipo humano */
   --c-gold: #f2c94c;        /* oro del trofeo / distinción */
 
-  /* Titulares: geométrica estilo Futura, en oblicua para los rótulos grandes.
-     Datos/tablas: condensada estilo Oswald/Barlow. Sin dependencias externas:
-     stacks del sistema que se acercan; fuentes bitmap propias = pulido posterior. */
-  --font-ui: 'Jost', 'Century Gothic', 'Futura', 'Trebuchet MS', system-ui, sans-serif;
-  --font-data: 'Oswald', 'Barlow Condensed', 'Roboto Condensed',
+  /* Tipografía Mister (derivada de la maqueta del despacho): Barlow Condensed
+     para rótulos (700 itálica en mayúsculas) y para todo dato tabular; Barlow
+     para texto corrido. Autoalojadas via @fontsource (app/main.tsx). */
+  --font-ui: 'Barlow Condensed', 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
+  --font-data: 'Barlow Condensed', 'Roboto Condensed',
     'Segoe UI Semilight', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Barlow', 'Segoe UI', system-ui, sans-serif;
 
   --radius: 10px;           /* cápsula: cantos redondeados generosos */
   --radius-sm: 6px;         /* radios pequeños (chips, badges) */
   --radius-pill: 999px;
   --tap: 48px;
   --space: 12px;
+
+  /* --- Piel Mister (maqueta del despacho, media/ui-ref del laboratorio) --- */
+  --c-steel: #555faa;       /* acero azul medio (placas, casquillos) */
+  --c-steel-lit: #5c7eae;   /* acero iluminado (estados activos) */
+  --c-gleam: #7593bb;       /* destello del acero (etiquetas, filos claros) */
+  --c-amber: #c8961e;       /* aviso ámbar (pips, estados a medias) */
+  --c-pitch: #117f2b;       /* verde césped (mapitas, iconografía de campo) */
+  --r-s: 3px;               /* radios de la maqueta: chip / placa / consola */
+  --r-m: 6px;
+  --r-l: 12px;
+  --u: 4px;                 /* unidad de rejilla de las torres del despacho */
+  /* Bisel fino de la maqueta (box-shadow, no gradiente como --bevel). */
+  --bevel-line: inset 0 1px 0 rgba(127, 159, 255, 0.5),
+    inset 0 -1px 0 rgba(10, 10, 40, 0.85);
+  --lift: 0 4px 14px rgba(10, 10, 40, 0.6);
 
   /* --- Gradientes de acero reutilizables (biseles multi-parada, más ricos) --- */
   /* Bisel base: metal abombado (cresta clara arriba → cuerpo → sombra abajo). */

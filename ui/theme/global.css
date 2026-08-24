@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './pcf7-calco.css';
+@import './mister.css';
 
 * {
   box-sizing: border-box;
@@ -11,7 +12,7 @@
 
 body {
   margin: 0;
-  font-family: var(--font-ui);
+  font-family: var(--font-body);
   /* Consola de acero azul: azul base con viñeteado radial a azul profundo,
      un destello frío alto-centro (la "foto de estadio difuminada" del PCF7) y
      un rayado técnico muy tenue (scanlines) que da textura de panel. */

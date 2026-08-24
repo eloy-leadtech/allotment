@@ -1,19 +1,16 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
-// PCF7 look: geometric "Futura"-style headings (Jost, incl. oblique) + condensed
-// data font (Oswald). Self-hosted via @fontsource so it works offline (no CDN).
-import '@fontsource/jost/latin-400.css';
-import '@fontsource/jost/latin-500.css';
-import '@fontsource/jost/latin-600.css';
-import '@fontsource/jost/latin-700.css';
-import '@fontsource/jost/latin-500-italic.css';
-import '@fontsource/jost/latin-600-italic.css';
-import '@fontsource/jost/latin-700-italic.css';
-import '@fontsource/oswald/latin-400.css';
-import '@fontsource/oswald/latin-500.css';
-import '@fontsource/oswald/latin-600.css';
-import '@fontsource/oswald/latin-700.css';
+// Mister look: Barlow for body text, Barlow Condensed (incl. italics) for
+// headings and tabular data. Self-hosted via @fontsource so it works offline.
+import '@fontsource/barlow/latin-400.css';
+import '@fontsource/barlow/latin-600.css';
+import '@fontsource/barlow/latin-700.css';
+import '@fontsource/barlow-condensed/latin-500.css';
+import '@fontsource/barlow-condensed/latin-600.css';
+import '@fontsource/barlow-condensed/latin-700.css';
+import '@fontsource/barlow-condensed/latin-600-italic.css';
+import '@fontsource/barlow-condensed/latin-700-italic.css';
 import '../ui/theme/global.css';
 
 const rootElement = document.getElementById('root');
