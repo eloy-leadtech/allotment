@@ -1,20 +1,16 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
-// Piel "Mister": titulares grotescos humanistas (Barlow, incl. oblicua) + datos
-// condensados (Barlow Condensed). Self-hosted vía @fontsource: funciona offline (sin CDN).
+// Mister look: Barlow for body text, Barlow Condensed (incl. italics) for
+// headings and tabular data. Self-hosted via @fontsource so it works offline.
 import '@fontsource/barlow/latin-400.css';
-import '@fontsource/barlow/latin-500.css';
 import '@fontsource/barlow/latin-600.css';
 import '@fontsource/barlow/latin-700.css';
-import '@fontsource/barlow/latin-800.css';
-import '@fontsource/barlow/latin-600-italic.css';
-import '@fontsource/barlow/latin-700-italic.css';
-import '@fontsource/barlow/latin-800-italic.css';
-import '@fontsource/barlow-condensed/latin-400.css';
 import '@fontsource/barlow-condensed/latin-500.css';
 import '@fontsource/barlow-condensed/latin-600.css';
 import '@fontsource/barlow-condensed/latin-700.css';
+import '@fontsource/barlow-condensed/latin-600-italic.css';
+import '@fontsource/barlow-condensed/latin-700-italic.css';
 import '../ui/theme/global.css';
 
 const rootElement = document.getElementById('root');

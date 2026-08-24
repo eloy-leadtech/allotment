@@ -17,9 +17,10 @@ const css = readFileSync(join(process.cwd(), 'ui/theme/global.css'), 'utf8');
 const ALLOWED_BEFORE = /^\s*(@charset\b|@layer\s+[^{]*;|\/\*[\s\S]*?\*\/)?\s*$/;
 
 describe('global.css', () => {
-  it('imports the tokens and the PCF7 calco skin', () => {
+  it('imports the tokens, the PCF7 calco skin and the Mister skin', () => {
     expect(css).toMatch(/@import\s+'\.\/tokens\.css';/);
     expect(css).toMatch(/@import\s+'\.\/pcf7-calco\.css';/);
+    expect(css).toMatch(/@import\s+'\.\/mister\.css';/);
   });
 
   it('keeps every @import ahead of the first rule, or the browser drops it', () => {

@@ -1,0 +1,197 @@
+/* Piel Mister — puerto fiel de la maqueta del despacho
+   (laboratorio: media/ui-ref/styles.css). Aquí viven las piezas REUTILIZABLES
+   de la piel: la placa metálica y el botón de torre con su miniatura y su pip.
+   Las pantallas las montan; los valores (gradientes, biseles, radios) son los
+   de la maqueta, con los tokens de tokens.css. */
+
+/* ── Placa metálica genérica: metal sólido, no cristal ── */
+.mst-plate {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: var(--r-s);
+  background: linear-gradient(180deg, rgba(84, 116, 166, 0.92), rgba(24, 42, 84, 0.95));
+  box-shadow: var(--bevel-line);
+}
+
+/* ── Torre de botones del despacho ── */
+.mst-tower {
+  display: grid;
+  gap: var(--u);
+  width: 146px;
+}
+
+.mst-grp {
+  display: grid;
+  gap: var(--u);
+}
+.mst-grp + .mst-grp {
+  margin-top: 26px;
+}
+.mst-grp__h {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+  padding-left: 2px;
+  margin: 0 0 2px;
+}
+
+/* ── Botón de torre: placa metálica con miniatura, rótulo y dato vivo ── */
+.mst-sec {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  cursor: pointer;
+  padding: 4px 8px 4px 5px;
+  border-radius: var(--r-m);
+  font: inherit;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, rgba(86, 120, 170, 0.93) 0%, rgba(26, 45, 88, 0.96) 100%);
+  border-top: 1px solid rgba(127, 159, 255, 0.5);
+  border-left: 1px solid rgba(127, 159, 255, 0.26);
+  border-bottom: 1px solid rgba(10, 10, 40, 0.9);
+  border-right: 1px solid rgba(10, 10, 40, 0.7);
+  box-shadow: 0 3px 9px rgba(6, 8, 26, 0.62);
+  transition:
+    transform 0.14s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.14s,
+    border-color 0.14s,
+    background 0.14s;
+}
+.mst-sec:hover,
+.mst-sec:focus-visible {
+  transform: translateY(-2px);
+  border-top-color: rgba(160, 190, 255, 0.9);
+  box-shadow: 0 6px 16px rgba(10, 10, 40, 0.65), 0 0 0 1px rgba(127, 159, 255, 0.25);
+  background: linear-gradient(180deg, rgba(112, 150, 204, 0.97) 0%, rgba(34, 58, 110, 0.98) 100%);
+  outline: none;
+}
+.mst-sec:focus-visible {
+  box-shadow: 0 6px 16px rgba(10, 10, 40, 0.65), 0 0 0 2px var(--c-edge-light);
+}
+.mst-sec:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+.mst-sec:disabled {
+  cursor: default;
+  opacity: 0.55;
+  transform: none;
+}
+
+/* Miniatura: pocillo metálico con el icono dentro. */
+.mst-sec__thumb {
+  width: 32px;
+  height: 28px;
+  flex: none;
+  border-radius: var(--r-s);
+  overflow: hidden;
+  background: linear-gradient(160deg, #22345f, #101a3c);
+  border-top: 1px solid rgba(160, 190, 255, 0.75);
+  border-left: 1px solid rgba(140, 170, 235, 0.5);
+  border-bottom: 1px solid #05061a;
+  border-right: 1px solid #070a22;
+  filter: brightness(0.92) saturate(0.94);
+  transition: filter 0.14s;
+  display: grid;
+  place-items: center;
+  perspective: 360px;
+}
+.mst-sec__thumb svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: 50% 50%;
+}
+/* El icono gira al ENTRAR el ratón, no al salir: la transición vive solo en el
+   estado hover, así la vuelta es seca (truco heredado de la maqueta). */
+.mst-sec:hover .mst-sec__thumb svg,
+.mst-sec:focus-visible .mst-sec__thumb svg {
+  transform: rotateY(360deg);
+  transition: transform 1.1s cubic-bezier(0.33, 0.7, 0.3, 1);
+}
+.mst-sec:hover .mst-sec__thumb {
+  filter: brightness(1.08) saturate(1.04);
+}
+
+.mst-sec__txt {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+.mst-sec__n {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  text-shadow: 0 1px 0 #101010;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.mst-sec__d {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--c-ink-soft);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.mst-sec__d em {
+  font-style: normal;
+  color: var(--c-ink-dim);
+}
+.mst-sec__d--alert em {
+  color: #ff8a8a;
+}
+.mst-sec__d--good em {
+  color: #63d98a;
+}
+
+/* Pip de aviso: rojo = requiere respuesta; ámbar = pendiente. */
+.mst-pip {
+  margin-left: auto;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-danger);
+  box-shadow: 0 0 0 2px rgba(200, 30, 30, 0.22), 0 0 8px rgba(200, 30, 30, 0.7);
+}
+.mst-pip--q {
+  background: var(--c-amber);
+  box-shadow: 0 0 0 2px rgba(200, 150, 30, 0.2), 0 0 8px rgba(200, 150, 30, 0.55);
+}
+
+/* Movimiento reducido: la placa no salta y el icono no gira. */
+@media (prefers-reduced-motion: reduce) {
+  .mst-sec,
+  .mst-sec__thumb,
+  .mst-sec__thumb svg {
+    transition: none;
+  }
+  .mst-sec:hover,
+  .mst-sec:focus-visible {
+    transform: none;
+  }
+  .mst-sec:hover .mst-sec__thumb svg,
+  .mst-sec:focus-visible .mst-sec__thumb svg {
+    transform: none;
+  }
+}
