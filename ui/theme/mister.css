@@ -179,6 +179,223 @@
   box-shadow: 0 0 0 2px rgba(200, 150, 30, 0.2), 0 0 8px rgba(200, 150, 30, 0.55);
 }
 
+/* ══ EL MARCO: consola de proporción FIJA 1180×787 ══
+   Pase lo que pase con la ventana, el tablero no cambia de forma: lo que no
+   cabe hace scroll por dentro, no estira el marco. Se escala entero con un
+   solo mando (--mst-zoom, lo fija MisterFrame midiendo la ventana). */
+.mst-stage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+.mst-console {
+  position: relative;
+  width: 1180px;
+  aspect-ratio: 1180 / 787;
+  zoom: var(--mst-zoom, 1);
+  border-radius: var(--r-l);
+  overflow: hidden;
+  background: #0b0f2c;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62), var(--bevel-line);
+  border: 1px solid #0d1230;
+}
+.mst-console__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.mst-console__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(10, 13, 44, 0.18), rgba(10, 13, 44, 0.18)),
+    radial-gradient(135% 108% at 50% 46%, rgba(10, 10, 40, 0) 40%, rgba(10, 10, 40, 0.82) 100%),
+    repeating-linear-gradient(0deg, rgba(127, 159, 255, 0.07) 0 1px, transparent 1px 3px);
+}
+.mst-screen {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+}
+.mst-views {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+.mst-views::-webkit-scrollbar {
+  width: 8px;
+}
+.mst-views::-webkit-scrollbar-thumb {
+  background: rgba(190, 214, 255, 0.22);
+  border-radius: 4px;
+}
+
+/* ══ CABECERA PERSISTENTE: tu club y el próximo partido, escudos asomando ══ */
+.mst-head {
+  position: relative;
+  flex: none;
+  margin-bottom: 6px;
+}
+.mst-head__barra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0;
+  border-radius: var(--r-m);
+  padding: 7px 14px;
+  min-height: 64px;
+  background: linear-gradient(
+    to bottom,
+    rgba(150, 182, 240, 0.5) 0%,
+    rgba(96, 132, 196, 0.4) 49%,
+    rgba(32, 54, 104, 0.52) 51%,
+    rgba(18, 32, 74, 0.6) 100%
+  );
+  border-top: 1px solid rgba(170, 200, 255, 0.5);
+  border-bottom: 1px solid rgba(8, 12, 34, 0.9);
+  box-shadow: 0 4px 14px rgba(6, 8, 26, 0.55), var(--bevel-line);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+}
+.mst-head__lado {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding-right: 120px;
+}
+.mst-head__lado--rival {
+  justify-content: flex-end;
+  text-align: right;
+  padding: 0 0 0 120px;
+}
+.mst-head__lado--rival .mst-head__txt {
+  align-items: flex-end;
+}
+.mst-head__esc {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  margin: -14px 0;
+}
+.mst-head__esc .crest {
+  width: 100%;
+  height: 100%;
+  max-width: 86px;
+  max-height: 86px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 9px rgba(5, 8, 30, 0.9));
+}
+.mst-head__txt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0;
+}
+.mst-head__lbl {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+  line-height: 1.25;
+}
+.mst-head__name {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(6, 8, 26, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-head__sub {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-head__sub b {
+  color: var(--c-ink);
+  font-weight: 700;
+}
+.mst-head__sub i {
+  font-style: normal;
+  color: var(--c-bg-raised);
+  margin: 0 6px;
+}
+.mst-head__sub em {
+  font-style: normal;
+  color: var(--c-edge-light);
+}
+/* La placa de temporada, montada en el centro de la barra. */
+.mst-head__comp {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 6px 16px 5px;
+  border-radius: 0 0 var(--r-m) var(--r-m);
+  background: linear-gradient(180deg, rgba(30, 52, 104, 0.94), rgba(12, 20, 52, 0.96));
+  border: 1px solid rgba(170, 200, 255, 0.35);
+  border-top: 0;
+  box-shadow: 0 6px 16px rgba(5, 8, 30, 0.7);
+}
+.mst-head__date {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0 rgba(6, 8, 26, 0.8);
+}
+.mst-head__date em {
+  font-style: italic;
+  color: var(--c-edge-light);
+}
+.mst-head__week {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  line-height: 1.3;
+  text-align: center;
+}
+
 /* ══ UN JUGADOR SE PRESENTA SIEMPRE IGUAL ══
    Dorsal, bandera, nombre y demarcación con el color de su línea. Lo pinta el
    componente PlayerTag y lo usan todas las listas: si cambia, cambia en todas. */
