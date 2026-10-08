@@ -59,3 +59,9 @@ export {
   isDerby,
   type Rivalry,
 } from './rivalry';
+export {
+  buildMatchFrames,
+  type MatchFrame,
+  type PlayAction,
+  type PitchPos,
+} from './viewer';
