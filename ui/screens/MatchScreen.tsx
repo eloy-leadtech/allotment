@@ -224,11 +224,7 @@ export function MatchScreen() {
               <button type="button" className="match-ctl" onClick={skipToEnd}>
                 Final
               </button>
-            ) : (
-              <button type="button" className="match-ctl" onClick={restart} aria-label="Repetir">
-                <RestartIcon />
-              </button>
-            )}
+            ) : null}
           </div>
         ) : null}
       </div>
