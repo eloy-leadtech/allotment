@@ -164,8 +164,14 @@ export interface CareerState {
   tactics?: CareerTactics;
   /** The season's training focus for the human club; absent means the default (equilibrado). */
   training?: TrainingState;
-  /** This season's Copa del Rey (regenerated deterministically; not persisted). */
+  /** This season's national cup (regenerated deterministically; not persisted). */
   copa?: CopaResult;
+  /**
+   * Display name of this season's national cup ("Copa del Rey", "Coppa Italia",
+   * "FA Cup"…). Set alongside `copa` by the wiring layer from the national-cup
+   * registry; absent means the Spanish default. Derived, so it is not persisted.
+   */
+  copaNombre?: string;
   /** This season's European competition (regenerated deterministically; not persisted). */
   europa?: EuropaResult;
   /** The human club's transfer budget, in whole euros. */

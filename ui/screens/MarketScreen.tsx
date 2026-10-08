@@ -11,6 +11,7 @@ import {
   loanOutCandidates,
   loanOffers,
   careerLoans,
+  MAX_SQUAD,
 } from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -33,6 +34,8 @@ export function MarketScreen() {
   const makeOffer = useGameStore((s) => s.makeOffer);
   const acceptCounterOffer = useGameStore((s) => s.acceptCounterOffer);
   const acceptMarketBid = useGameStore((s) => s.acceptMarketBid);
+  const intlListings = useGameStore((s) => s.intlListings);
+  const buyIntl = useGameStore((s) => s.buyIntl);
   const requestCredit = useGameStore((s) => s.requestCredit);
   const scoutPlayer = useGameStore((s) => s.scoutPlayer);
   const loanOut = useGameStore((s) => s.loanOut);
@@ -42,6 +45,8 @@ export function MarketScreen() {
   const [query, setQuery] = useState('');
   /** Draft offer amounts (in euros) keyed by player id; blank = use asking. */
   const [offers, setOffers] = useState<Record<string, string>>({});
+  /** Draft offer amounts for international signings (blank = pay the asking price). */
+  const [intlOffers, setIntlOffers] = useState<Record<string, string>>({});
 
   const listings = useMemo(() => (career ? buyableListings(career) : []), [career]);
   const filtered = useMemo(() => {
@@ -153,7 +158,7 @@ export function MarketScreen() {
             </li>
             {lastIncome.copa > 0 ? (
               <li className="mkt-ledger__row">
-                <span className="mkt-ledger__label">Copa del Rey</span>
+                <span className="mkt-ledger__label">{career.copaNombre ?? 'Copa del Rey'}</span>
                 <span className="mkt-ledger__value">{formatEuros(lastIncome.copa)}</span>
               </li>
             ) : null}
@@ -309,6 +314,72 @@ export function MarketScreen() {
           <p className="hint">Mostrando {filtered.length} de {listings.length}. Busca por nombre para afinar.</p>
         ) : null}
       </RetroPanel>
+
+      {intlListings.length > 0 ? (
+        <RetroPanel title={`Mercado internacional (${intlListings.length})`}>
+          <p className="hint">
+            Fichajes de clubes de otras ligas. Respeta tu presupuesto, la cláusula y el tope de
+            plantilla ({MAX_SQUAD} jugadores). Déjalo en blanco para pagar lo que pide, o iguala la
+            cláusula para un fichaje inmediato.
+          </p>
+          <ul className="mkt-list">
+            {intlListings.slice(0, MAX_ROWS).map((l) => {
+              const draft = intlOffers[l.player.id] ?? '';
+              const offerEuros = draft.trim() === '' ? undefined : Math.round(Number(draft) * 1_000_000);
+              const validOffer = offerEuros === undefined || (Number.isFinite(offerEuros) && offerEuros > 0);
+              return (
+                <li key={l.player.id} className="mkt-signing">
+                  <div className="mkt-signing__head">
+                    <span className={`pos-badge pos-badge--${l.player.posicion}`}>{l.player.posicion}</span>
+                    <span className="mkt-signing__name">{l.player.nombre}</span>
+                    <span className="mkt-media">
+                      {l.player.media}
+                      <small>media</small>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__terms">
+                    <span className="mkt-term">
+                      <em>{l.clubName}</em>
+                      <strong>{l.country}</strong>
+                    </span>
+                    <span className="mkt-term">
+                      <em>Pide</em>
+                      <strong>{formatEuros(l.askingPrice)}</strong>
+                    </span>
+                    <span className="mkt-term">
+                      <em>Cláusula</em>
+                      <strong>{formatEuros(l.clause)}</strong>
+                    </span>
+                  </div>
+                  <div className="mkt-signing__actions">
+                    <input
+                      className="offer-input"
+                      type="number"
+                      min={0}
+                      step={0.5}
+                      placeholder={(l.askingPrice / 1_000_000).toFixed(1)}
+                      value={draft}
+                      onChange={(e) => setIntlOffers((o) => ({ ...o, [l.player.id]: e.target.value }))}
+                      aria-label={`Oferta por ${l.player.nombre} en millones`}
+                    />
+                    <span className="hint">M€</span>
+                    <RetroButton
+                      variant="primary"
+                      disabled={!validOffer}
+                      onClick={() => buyIntl(l.player.id, offerEuros)}
+                    >
+                      Fichar
+                    </RetroButton>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          {intlListings.length > MAX_ROWS ? (
+            <p className="hint">Mostrando {MAX_ROWS} de {intlListings.length}.</p>
+          ) : null}
+        </RetroPanel>
+      ) : null}
 
       <RetroPanel title="Cesiones">
         <p className="hint">

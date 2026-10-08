@@ -41,7 +41,7 @@ export function CopaScreen() {
   return (
     <main className="screen">
       <header className="season-head">
-        <h1>Copa del Rey · {career.temporada}</h1>
+        <h1>{career.copaNombre ?? 'Copa del Rey'} · {career.temporada}</h1>
         <span className="matchday">🏆 {name(copa.championId)}</span>
       </header>
 

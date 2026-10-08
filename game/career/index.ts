@@ -9,6 +9,7 @@ export * from './ojeo';
 export * from './prospects';
 export * from './cantera';
 export * from './market';
+export * from './internationalMarket';
 export * from './compare';
 export * from './winterMovements';
 export * from './winterMarket';

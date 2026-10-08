@@ -12,6 +12,7 @@ import {
   catalogEntry,
   catalogFor,
   catalogCountries,
+  nationalCupFor,
   type League,
   type SeasonEntry,
 } from '@data';
@@ -68,8 +69,13 @@ import {
   formatEuros,
   toCompetitionTeam,
   runCareerCopa,
+  runCareerNationalCup,
   runCareerEuropa,
   europaQualification,
+  internationalListings,
+  buyInternational,
+  type ForeignClub,
+  type ForeignListing,
   currentStandings,
   humanFate,
   seasonIncome,
@@ -118,6 +124,25 @@ function attachCopa(career: CareerState): CareerState {
   return {
     ...career,
     copa: runCareerCopa(career.seed, career.seasonNumber, domestic, career.humanTeamId),
+    copaNombre: nationalCupFor('ESP').nombre,
+  };
+}
+
+/**
+ * Build this season's NATIONAL CUP for a catalogue (non-Spanish) career and
+ * attach it, reusing the agnostic knockout engine. The cup's name comes from the
+ * country registry (Coppa Italia, FA Cup…); the field is the human's own league
+ * (a playable single-division cup). This is what turns a catalogue league from
+ * "league only" into "league + its own cup".
+ */
+function attachCatalogNationalCup(career: CareerState): CareerState {
+  const entry = catalogEntry(career.leagueId);
+  if (!entry) return career;
+  const cup = nationalCupFor(entry.country);
+  return {
+    ...career,
+    copa: runCareerNationalCup(career.seed, career.seasonNumber, career.season.teams, career.humanTeamId),
+    copaNombre: cup.nombre,
   };
 }
 
@@ -177,6 +202,47 @@ async function buildCatalogEuropaPool(seasonStr: string, excludeTeamId: string) 
   return pool;
 }
 
+/**
+ * Assemble the INTERNATIONAL transfer pool for a catalogue season: clubs from
+ * every OTHER country's Primera that year, capped to the strongest few per
+ * country so the market stays legible. Ids are namespaced by country so slugs
+ * from different leagues never collide with the human's squad. Fetches are
+ * cached, so the handful of league loads only happen once per season.
+ */
+async function buildInternationalPool(
+  seasonStr: string,
+  humanCountry: string,
+  excludeTeamId: string,
+): Promise<ForeignClub[]> {
+  const CLUBS_PER_COUNTRY = 5;
+  const pool: ForeignClub[] = [];
+  for (const c of catalogCountries()) {
+    if (c.code === humanCountry) continue; // only foreign clubs
+    const entry = catalogFor(c.code, '1').find((e) => e.season === seasonStr);
+    if (!entry) continue;
+    try {
+      const lg = await fetchLeague(entry.id);
+      const ranked = [...lg.equipos]
+        .map((t) => ({ t, strength: poolStrength(t.jugadores) }))
+        .sort((a, b) => b.strength - a.strength)
+        .slice(0, CLUBS_PER_COUNTRY);
+      for (const { t } of ranked) {
+        if (t.id === excludeTeamId) continue;
+        pool.push({
+          id: `${c.code}-${t.id}`,
+          nombre: t.nombre,
+          country: c.code,
+          leagueId: entry.id,
+          players: t.jugadores,
+        });
+      }
+    } catch {
+      /* liga ausente ese año: se omite */
+    }
+  }
+  return pool;
+}
+
 interface GameStore {
   screen: Screen;
   /** Season chosen for the next new game. */
@@ -194,6 +260,14 @@ interface GameStore {
   isCatalogCareer: boolean;
   /** id→nombre for the European field of a catalogue career (ids are namespaced). */
   europaNames: Record<string, string>;
+  /**
+   * International transfer market for a catalogue career: foreign players the
+   * human can sign this window, most valuable first (empty for Spanish careers
+   * and until a foreign pool has been assembled).
+   */
+  intlListings: ForeignListing[];
+  /** The foreign-club pool backing `intlListings` (resolves a signing by id). */
+  intlPool: ForeignClub[];
   /** The whole career (source of truth); null before a game starts. */
   career: CareerState | null;
   /** Mirror of `career.season`, the in-progress season (drives the season screens). */
@@ -275,6 +349,8 @@ interface GameStore {
   acceptCounterOffer: () => void;
   dismissCounter: () => void;
   acceptMarketBid: (bid: Bid) => void;
+  /** Sign a foreign player in the international market (optional offer honours the clause). */
+  buyIntl: (playerId: string, offer?: number) => void;
   /** Open the mid-season winter transfer window screen (snapshots AI bids). */
   openWinterMarket: () => void;
   /** Close the winter window and return to play the second half. */
@@ -316,6 +392,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     league: first.load(),
     isCatalogCareer: false,
     europaNames: {},
+    intlListings: [],
+    intlPool: [],
     career: null,
     season: null,
     lastResults: [],
@@ -348,10 +426,11 @@ export const useGameStore = create<GameStore>((set, get) => {
     startCareer: (teamId) => {
       const { league, seed, isCatalogCareer } = get();
       const base = newCareer(league, teamId, seed);
-      // Copa del Rey and European cups are wired to the Spanish registry only;
-      // a catalogue league (any country) plays its league season without them
-      // until foreign competitions arrive (Fase 3).
-      const career = isCatalogCareer ? base : attachEuropa(attachCopa(base));
+      // Spanish careers get the Copa del Rey + European cups from the hand-built
+      // registry; a catalogue league (any country) gets its OWN national cup
+      // (Coppa Italia, FA Cup…) over its field, and qualifies for Europe at the
+      // next transition (see continueCatalogCareer).
+      const career = isCatalogCareer ? attachCatalogNationalCup(base) : attachEuropa(attachCopa(base));
       set({
         career,
         season: career.season,
@@ -360,6 +439,8 @@ export const useGameStore = create<GameStore>((set, get) => {
         viewingMatch: null,
         retainIds: [],
         bids: [],
+        intlListings: [],
+        intlPool: [],
         marketMessage: null,
         screen: 'season',
       });
@@ -439,6 +520,17 @@ export const useGameStore = create<GameStore>((set, get) => {
           } catch {
             /* Europa es opcional: si falla, la temporada sigue sin ella */
           }
+          // Every catalogue season also gets its own national cup.
+          nextCareer = attachCatalogNationalCup(nextCareer);
+          // The international market: foreign clubs the human can sign from this window.
+          let intlPool: ForeignClub[] = [];
+          let intlListings: ForeignListing[] = [];
+          try {
+            intlPool = await buildInternationalPool(target.season, cur.country, nextCareer.humanTeamId);
+            intlListings = internationalListings(nextCareer, intlPool);
+          } catch {
+            /* mercado internacional opcional: si falla, la temporada sigue sin él */
+          }
           set({
             career: nextCareer,
             season: nextCareer.season,
@@ -446,6 +538,8 @@ export const useGameStore = create<GameStore>((set, get) => {
             league: targetLeague,
             isCatalogCareer: true,
             europaNames,
+            intlPool,
+            intlListings,
             retainIds: [],
             bids: generateBids(nextCareer),
             marketMessage: changedDiv
@@ -800,6 +894,9 @@ export const useGameStore = create<GameStore>((set, get) => {
         league: targetLeague,
         retainIds: [],
         bids: generateBids(next),
+        // Spanish careers trade within the Spanish registry only (no intl pool yet).
+        intlListings: [],
+        intlPool: [],
         marketMessage: null,
         counterOffer: null,
         lastIncome: income,
@@ -877,6 +974,36 @@ export const useGameStore = create<GameStore>((set, get) => {
         bids: bids.filter((b) => b.playerId !== bid.playerId),
         marketMessage: null,
       });
+    },
+    buyIntl: (playerId, offer) => {
+      const { career, intlPool } = get();
+      if (!career) return;
+      const out = buyInternational(career, playerId, intlPool, offer);
+      switch (out.status) {
+        case 'accepted': {
+          // Drop the signed player from the pool so he can't be bought twice.
+          const pool = intlPool.map((c) => ({ ...c, players: c.players.filter((p) => p.id !== playerId) }));
+          set({
+            career: out.career,
+            season: out.career.season,
+            intlPool: pool,
+            intlListings: internationalListings(out.career, pool),
+            marketMessage: `Fichaje internacional cerrado por ${formatEuros(out.price)}.`,
+          });
+          return;
+        }
+        case 'no-budget':
+          set({ marketMessage: 'No te llega el presupuesto para esa cifra.' });
+          return;
+        case 'squad-full':
+          set({ marketMessage: 'Plantilla completa: no puedes fichar a más jugadores.' });
+          return;
+        case 'rejected':
+          set({ marketMessage: 'Oferta demasiado baja: el club la rechaza.' });
+          return;
+        default:
+          set({ marketMessage: 'Jugador no disponible.' });
+      }
     },
     openWinterMarket: () => {
       const { career } = get();
@@ -1019,7 +1146,7 @@ export const useGameStore = create<GameStore>((set, get) => {
       const classic = getSeason(leagueId);
       const enter = (league: League, isCatalog: boolean): void => {
         const restored = restoreCareer(info.save, league);
-        const career = isCatalog ? restored : attachEuropa(attachCopa(restored));
+        const career = isCatalog ? attachCatalogNationalCup(restored) : attachEuropa(attachCopa(restored));
         set({
           career,
           season: career.season,
@@ -1031,6 +1158,8 @@ export const useGameStore = create<GameStore>((set, get) => {
           viewingMatch: null,
           retainIds: [],
           bids: [],
+          intlListings: [],
+          intlPool: [],
           marketMessage: null,
           screen: 'season',
         });

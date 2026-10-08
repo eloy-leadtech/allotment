@@ -1,0 +1,16 @@
+[
+  { "country": "ESP", "id": "copa-del-rey", "nombre": "Copa del Rey" },
+  { "country": "ITA", "id": "coppa-italia", "nombre": "Coppa Italia" },
+  { "country": "ENG", "id": "fa-cup", "nombre": "FA Cup" },
+  { "country": "FRA", "id": "coupe-de-france", "nombre": "Coupe de France" },
+  { "country": "GER", "id": "dfb-pokal", "nombre": "DFB-Pokal" },
+  { "country": "POR", "id": "taca-de-portugal", "nombre": "Taça de Portugal" },
+  { "country": "HOL", "id": "knvb-beker", "nombre": "KNVB Beker" },
+  { "country": "BEL", "id": "copa-belgica", "nombre": "Copa de Bélgica" },
+  { "country": "SCO", "id": "scottish-cup", "nombre": "Scottish Cup" },
+  { "country": "AUT", "id": "copa-austria", "nombre": "Copa de Austria" },
+  { "country": "SUI", "id": "copa-suiza", "nombre": "Copa de Suiza" },
+  { "country": "TUR", "id": "copa-turquia", "nombre": "Copa de Turquía" },
+  { "country": "RUS", "id": "copa-rusia", "nombre": "Copa de Rusia" },
+  { "country": "RDA", "id": "fdgb-pokal", "nombre": "FDGB-Pokal" }
+]
