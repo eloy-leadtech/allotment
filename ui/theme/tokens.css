@@ -37,12 +37,12 @@
   --c-me: #2a3f7a;          /* fila del equipo humano */
   --c-gold: #f2c94c;        /* oro del trofeo / distinción */
 
-  /* Titulares: geométrica estilo Futura, en oblicua para los rótulos grandes.
-     Datos/tablas: condensada estilo Oswald/Barlow. Sin dependencias externas:
-     stacks del sistema que se acercan; fuentes bitmap propias = pulido posterior. */
-  --font-ui: 'Jost', 'Century Gothic', 'Futura', 'Trebuchet MS', system-ui, sans-serif;
-  --font-data: 'Oswald', 'Barlow Condensed', 'Roboto Condensed',
-    'Segoe UI Semilight', 'Arial Narrow', system-ui, sans-serif;
+  /* Piel Mister: titulares en Barlow (grotesca humanista), en oblicua para los
+     rótulos grandes; datos/tablas en Barlow Condensed. Self-hosted vía @fontsource
+     (app/main.tsx), con stacks del sistema de reserva. */
+  --font-ui: 'Barlow', 'Helvetica Neue', 'Arial', system-ui, sans-serif;
+  --font-data: 'Barlow Condensed', 'Oswald', 'Roboto Condensed',
+    'Arial Narrow', system-ui, sans-serif;
 
   --radius: 10px;           /* cápsula: cantos redondeados generosos */
   --radius-sm: 6px;         /* radios pequeños (chips, badges) */
