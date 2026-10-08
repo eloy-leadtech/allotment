@@ -12,6 +12,8 @@ Bitácora de decisiones/dudas de la rama `claude/seleccion-976222`. Resuelvo dud
 - POSEO: `game/tournament/*`, NUEVO `game/career/seleccion.ts`, `ui/screens/TournamentScreen.tsx`.
 - Hook quirúrgico en `game/career/index.ts` (una línea `export * from './seleccion'`). Anotado: el frente multiliga también roza ese índice.
 - NO toco `game/save/save.ts` (no es mío y es infra compartida). Ver decisión de serialización.
+- `ui/store/gameStore.ts`: cableado estándar (el store es el único puente UI↔game). Cambios ADITIVOS: estado `seleccionCareer`/`seleccionSaveExists` + acciones `startSeleccionCareer`/`resume`/`setFormation`/`advance`/`nextCycle` + autoguardado propio en `localStorage` (clave `mister.seleccion.v1`). No altero la lógica de carrera de club ni la infra de slots.
+- Merge de `origin/main` (coordinación swarm, PR #89 piel base) antes del PR: limpio, sin conflictos (no toco `ui/theme` ni `global.css`). Gate re-verificado tras el merge.
 
 ## Decisiones de diseño
 - **`seleccion.ts` es PURO** (como el resto de `/engine` y `/game`): recibe el `pool: CompetitionTeam[]` como entrada; el store carga el DB (`loadSeleccionEuro2000/98`) y mapea con `toCompetitionTeam`. Así es testeable con equipos sintéticos, igual que `tournament.test.ts`.
