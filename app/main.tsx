@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import { AudioProvider } from '@ui/audio';
+import { useGameStore } from '@ui/store/gameStore';
 // Piel "Mister": titulares grotescos humanistas (Barlow, incl. oblicua) + datos
 // condensados (Barlow Condensed). Self-hosted vía @fontsource: funciona offline (sin CDN).
 import '@fontsource/barlow/latin-400.css';
@@ -24,6 +26,8 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <AudioProvider store={useGameStore}>
+      <App />
+    </AudioProvider>
   </StrictMode>,
 );

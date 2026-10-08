@@ -28,3 +28,8 @@ vía es sustituir estos recursos por **arte original pixelado** (estilo retro, o
 ## Recursos propios / libres
 Cualquier sprite, sonido o fuente **nuevo** debe ser original o de licencia libre compatible, y se
 documenta aquí con su origen y licencia.
+
+- **Sonidos (`public/sfx/*.wav`):** obra original del proyecto, sintetizada por código propio
+  (`ui/audio/synth`: osciladores, ruido filtrado y envolventes; sin muestras de grabaciones ni material de
+  Dinamic o de terceros). Se regeneran con `npx tsx ui/audio/synth/generate.ts` y un test comprueba que los
+  ficheros coinciden con las recetas. Detalle en `public/sfx/README.md`.
