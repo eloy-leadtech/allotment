@@ -81,6 +81,16 @@ import {
   seasonIncome,
   runTournament,
   TOURNAMENTS,
+  newSeleccionCareer,
+  setSeleccionTactics,
+  advanceSeleccionPhase,
+  nextSeleccionCycle,
+  serializeSeleccion,
+  restoreSeleccion,
+  seleccionDef,
+  type SeleccionCareer,
+  type SeleccionSave,
+  type TournamentDef,
   type SeasonIncome,
   type SponsorId,
   type StaffRole,
@@ -92,7 +102,7 @@ import {
   type Bid,
   type CallUpNotice,
 } from '@game';
-import type { MatchResult } from '@engine';
+import type { MatchResult, Formation, CompetitionTeam } from '@engine';
 import type { Screen } from '@app/navigation';
 import { listSlots, readSlot, writeSlot, deleteSlot, type SlotInfo } from '@ui/persistence/saveSlots';
 
@@ -101,6 +111,35 @@ function randomSeed(): number {
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
   return buf[0] ?? 1;
+}
+
+/** localStorage key for the (self-contained) seleccion career snapshot. */
+const SELECCION_KEY = 'mister.seleccion.v1';
+
+/** The full national-team pool for a tournament: every nation in its database. */
+function seleccionPool(def: TournamentDef): CompetitionTeam[] {
+  const league =
+    def.dbId === 'seleccion-mundial98' ? loadSeleccionMundial98() : loadSeleccionEuro2000();
+  return league.equipos.map(toCompetitionTeam);
+}
+
+/** Read the persisted seleccion save (null when absent or storage is unavailable). */
+function readSeleccionSave(): SeleccionSave | null {
+  try {
+    const raw = localStorage.getItem(SELECCION_KEY);
+    return raw ? (JSON.parse(raw) as SeleccionSave) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Persist the seleccion career (best-effort: the career still lives in memory). */
+function writeSeleccionSave(career: SeleccionCareer): void {
+  try {
+    localStorage.setItem(SELECCION_KEY, JSON.stringify(serializeSeleccion(career)));
+  } catch {
+    /* storage unavailable (private mode, quota): keep going with the in-memory career */
+  }
 }
 
 /** The next real season after a given league id, or null if there is none yet. */
@@ -289,6 +328,10 @@ interface GameStore {
   tournamentNationId: string | null;
   /** Which tournament was played ('euro2000' | 'mundial98'). */
   tournamentId: string | null;
+  /** The in-progress carrera de seleccionador (national-team manager); null when none. */
+  seleccionCareer: SeleccionCareer | null;
+  /** Whether a resumable seleccion career is persisted (drives the "Reanudar" button). */
+  seleccionSaveExists: boolean;
   /** AI offers for your players this transfer window (snapshot on market entry). */
   bids: Bid[];
   /** Last market action feedback for the UI (e.g. "sin presupuesto"). */
@@ -343,6 +386,16 @@ interface GameStore {
   requestCredit: (amount: number) => void;
   expandStadium: () => void;
   startTournament: (tournamentId: string, nationId: string) => void;
+  /** Begin a new carrera de seleccionador managing `nationId` in the chosen tournament. */
+  startSeleccionCareer: (tournamentId: string, nationId: string) => void;
+  /** Resume the persisted seleccion career, if any. */
+  resumeSeleccionCareer: () => void;
+  /** Set the convocatoria formation (only takes effect in the convocatoria phase). */
+  seleccionSetFormation: (formation: Formation) => void;
+  /** Advance the current seleccion edition to its next phase. */
+  seleccionAdvance: () => void;
+  /** Close the finished edition and start the next qualification cycle. */
+  seleccionNextCycle: () => void;
   continueCareer: () => void;
   buyInMarket: (playerId: string) => void;
   makeOffer: (playerId: string, amount: number) => void;
@@ -403,6 +456,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     tournament: null,
     tournamentNationId: null,
     tournamentId: null,
+    seleccionCareer: null,
+    seleccionSaveExists: readSeleccionSave() !== null,
     bids: [],
     marketMessage: null,
     counterOffer: null,
@@ -1130,6 +1185,48 @@ export const useGameStore = create<GameStore>((set, get) => {
         .map(toCompetitionTeam);
       const tournament = runTournament(teams, get().seed, def.numGroups);
       set({ tournament, tournamentNationId: nationId, tournamentId, screen: 'tournament' });
+    },
+    startSeleccionCareer: (tournamentId, nationId) => {
+      const def = TOURNAMENTS.find((t) => t.id === tournamentId);
+      if (!def) return;
+      const career = newSeleccionCareer(seleccionPool(def), def, nationId, get().seed);
+      writeSeleccionSave(career);
+      set({ seleccionCareer: career, seleccionSaveExists: true, screen: 'tournament' });
+    },
+    resumeSeleccionCareer: () => {
+      const save = readSeleccionSave();
+      if (!save) return;
+      const def = TOURNAMENTS.find((t) => t.id === save.tournamentId);
+      if (!def) return;
+      try {
+        const career = restoreSeleccion(save, seleccionPool(def));
+        set({ seleccionCareer: career, seleccionSaveExists: true, screen: 'tournament' });
+      } catch {
+        set({ seleccionSaveExists: false });
+      }
+    },
+    seleccionSetFormation: (formation) => {
+      const { seleccionCareer } = get();
+      if (!seleccionCareer) return;
+      const def = seleccionDef(seleccionCareer.tournamentId);
+      const next = setSeleccionTactics(seleccionCareer, seleccionPool(def), { formation });
+      writeSeleccionSave(next);
+      set({ seleccionCareer: next });
+    },
+    seleccionAdvance: () => {
+      const { seleccionCareer } = get();
+      if (!seleccionCareer) return;
+      const next = advanceSeleccionPhase(seleccionCareer);
+      writeSeleccionSave(next);
+      set({ seleccionCareer: next });
+    },
+    seleccionNextCycle: () => {
+      const { seleccionCareer } = get();
+      if (!seleccionCareer) return;
+      const def = seleccionDef(seleccionCareer.tournamentId);
+      const next = nextSeleccionCycle(seleccionCareer, seleccionPool(def));
+      writeSeleccionSave(next);
+      set({ seleccionCareer: next });
     },
     openMatch: (result) => set({ viewingMatch: result, screen: 'match' }),
     refreshSlots: () => set({ slots: listSlots() }),

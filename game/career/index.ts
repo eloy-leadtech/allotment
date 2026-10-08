@@ -32,3 +32,4 @@ export * from './credit';
 export * from './loans';
 export * from './staff';
 export * from './awards';
+export * from './seleccion';
