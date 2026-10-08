@@ -3,4 +3,5 @@ export * from './schemas';
 export * from './loader';
 export * from './seasons';
 export * from './catalog';
+export * from './cups';
 export * from './estadios';

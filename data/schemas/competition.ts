@@ -17,3 +17,22 @@ export const CompetitionSchema = z.discriminatedUnion('kind', [
   }),
 ]);
 export type Competition = z.infer<typeof CompetitionSchema>;
+
+/**
+ * A country's domestic knockout cup (Copa del Rey, Coppa Italia, FA Cup…),
+ * played alongside its league with the agnostic knockout engine (SPEC §3, E10).
+ * Only the NAME differs per country; the mechanics are identical, so this is the
+ * data the registry needs to give every catalogue country its own cup.
+ */
+export const NationalCupSchema = z.object({
+  /** ISO-3166 alpha-3 country code, matching the catalogue's `country`. */
+  country: z.string().min(1),
+  /** Stable slug for the cup (e.g. "coppa-italia"). */
+  id: z.string().min(1),
+  /** Display name in Spanish/original (e.g. "Coppa Italia"). */
+  nombre: z.string().min(1),
+});
+export type NationalCup = z.infer<typeof NationalCupSchema>;
+
+/** The whole country→cup registry, loaded from `data/catalog/cups.json`. */
+export const NationalCupCatalogSchema = z.array(NationalCupSchema);
