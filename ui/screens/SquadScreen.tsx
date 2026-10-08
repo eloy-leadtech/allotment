@@ -16,10 +16,10 @@ import { scoreTier, squadMorale, fatigueTier, NEUTRAL_FORM, NEUTRAL_MORALE, FRES
 import type { Player, Position } from '@data';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
+import { RetroPanel } from '@ui/components/RetroPanel';
 import { Crest } from '@ui/components/Crest';
 import { Stadium } from '@ui/components/Stadium';
 import { PotentialRange } from '@ui/components/PotentialRange';
-import { Pcf7Console } from '@ui/components/Pcf7Frame';
 import { useFichaPhoto } from '@ui/hooks/useFichaPhoto';
 
 /** Players at or under this age get a (fallible) scouted potential range. */
@@ -188,40 +188,38 @@ export function SquadScreen() {
   const streakById = new Map(seasonPlayers.map((p) => [p.id, p]));
   const vestuario = squadMorale(seasonPlayers);
   const vestuarioTier = scoreTier(vestuario);
+  const moraleColor =
+    vestuarioTier > 0 ? 'var(--c-accent-2)' : vestuarioTier < 0 ? 'var(--c-danger-hi)' : undefined;
 
   const teamLabel = team?.nombre ?? career.humanTeamId;
   const selected = players.find((p) => p.id === selectedId) ?? null;
-
-  const footer = (
-    <>
-      <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={() => goTo('comparativa')}>
-        Comparar jugadores
-      </button>
-      <button type="button" className="pcf7flatbtn" onClick={() => goTo('season')}>
-        Volver al despacho
-      </button>
-    </>
-  );
 
   // Each key player's wish (deseo): derived from his situation (contrato/minutos/
   // edad/ambición). The live season carries the same map; fall back to deriving it.
   const desires = career.season.humanDesires ?? deriveHumanDesires(career);
 
   return (
-    <Pcf7Console title={teamLabel} status={`Plantilla · ${career.temporada}`} footer={footer}>
-      <div className="pcf7chiprow">
-        <span className={`pcf7chip${vestuarioTier > 0 ? ' pcf7chip--good' : vestuarioTier < 0 ? ' pcf7chip--bad' : ''}`}>
-          <span className="pcf7chip__label">Moral vestuario</span>
-          <span className="pcf7chip__value">{vestuario}</span>
-        </span>
-        <span className="pcf7chip pcf7chip--bad">
-          <span className="pcf7chip__label">Masa salarial</span>
-          <span className="pcf7chip__value">{formatEuros(masaSalarial)}/año</span>
-        </span>
-        <span className="pcf7chip">
-          <span className="pcf7chip__label">Presupuesto</span>
-          <span className="pcf7chip__value">{formatEuros(career.budget)}</span>
-        </span>
+    <main className="screen">
+      <header className="season-head">
+        <h1>{teamLabel}</h1>
+        <span className="matchday">Plantilla · {career.temporada}</span>
+      </header>
+
+      <div className="stat-grid">
+        <div className="stat-cell">
+          <span className="stat-cell__value" style={moraleColor ? { color: moraleColor } : undefined}>
+            {vestuario}
+          </span>
+          <span className="stat-cell__label">Moral vestuario</span>
+        </div>
+        <div className="stat-cell">
+          <span className="stat-cell__value">{formatEuros(masaSalarial)}/año</span>
+          <span className="stat-cell__label">Masa salarial</span>
+        </div>
+        <div className="stat-cell">
+          <span className="stat-cell__value">{formatEuros(career.budget)}</span>
+          <span className="stat-cell__label">Presupuesto</span>
+        </div>
       </div>
 
       {marketMessage ? <p className="market-msg">{marketMessage}</p> : null}
@@ -229,32 +227,33 @@ export function SquadScreen() {
       <Stadium teamId={career.humanTeamId} />
 
       {selected ? (
-        <section className="pcf7card">
-          <div className="pcf7card__head">
-            Ficha · {selected.nombre} · dorsal {selected.dorsal ?? '—'}
-          </div>
-          <div className="pcf7ficha" style={{ padding: '0.7em' }}>
-            <div className="pcf7ficha__photo">
+        <RetroPanel title={`Ficha · ${selected.nombre} · dorsal ${selected.dorsal ?? '—'}`}>
+          <div style={{ display: 'flex', gap: 'var(--space)', alignItems: 'flex-start' }}>
+            <div
+              className="crest-frame"
+              style={{ width: 96, height: 132, flex: 'none', overflow: 'hidden', padding: 3 }}
+            >
               <PlayerPhoto temporada={career.temporada} player={selected} teamId={career.humanTeamId} />
             </div>
-            <table className="pcf7tbl">
-              <tbody>
-                <tr><td>Posición</td><td className="pcf7tbl__num">{selected.posicion}</td></tr>
-                <tr><td>Media</td><td className="pcf7tbl__num">{selected.media}</td></tr>
-                <tr><td>Edad</td><td className="pcf7tbl__num">{playerAge(selected, startYear) ?? '—'}</td></tr>
-                {attrRows(selected).map(([label, value]) => (
-                  <tr key={label}><td>{label}</td><td className="pcf7tbl__num">{value}</td></tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="squad-scroll" style={{ flex: '1 1 auto' }}>
+              <table className="squad-table">
+                <tbody>
+                  <tr><td>Posición</td><td className="squad-media">{selected.posicion}</td></tr>
+                  <tr><td>Media</td><td className="squad-media">{selected.media}</td></tr>
+                  <tr><td>Edad</td><td className="squad-media">{playerAge(selected, startYear) ?? '—'}</td></tr>
+                  {attrRows(selected).map(([label, value]) => (
+                    <tr key={label}><td>{label}</td><td className="squad-media">{value}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </RetroPanel>
       ) : null}
 
-      <section className="pcf7card" style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
-        <div className="pcf7card__head">Plantilla</div>
-        <div className="pcf7steel__scroll">
-          <table className="pcf7tbl squad-table">
+      <RetroPanel title="Plantilla">
+        <div className="squad-scroll">
+          <table className="squad-table">
             <thead>
               <tr>
                 <th>Pos</th>
@@ -286,15 +285,17 @@ export function SquadScreen() {
                 const fatigue = streak?.fatigue ?? FRESH_FATIGUE;
                 const contract = career.contracts[p.id];
                 const lastYear = contract?.yearsLeft === 1;
-                const rowClass = [status ? 'squad-row--out' : '', p.id === selectedId ? 'pcf7tbl__me' : '']
-                  .filter(Boolean)
-                  .join(' ');
+                const isSelected = p.id === selectedId;
                 return (
                   <tr
                     key={p.id}
-                    className={rowClass || undefined}
+                    className={status ? 'squad-row--out' : undefined}
+                    aria-selected={isSelected}
                     onClick={() => setSelectedId(p.id)}
-                    style={{ cursor: 'pointer' }}
+                    style={{
+                      cursor: 'pointer',
+                      ...(isSelected ? { background: 'rgba(127, 159, 255, 0.16)' } : {}),
+                    }}
                   >
                     <td><span className={`pos-badge pos-badge--${p.posicion}`}>{p.posicion}</span></td>
                     <td className="squad-name">
@@ -310,8 +311,8 @@ export function SquadScreen() {
                         {p.nombre}
                       </button>
                     </td>
-                    <td className="pcf7tbl__num">{age ?? '—'}</td>
-                    <td className="pcf7tbl__num squad-media">{p.media}</td>
+                    <td className="squad-media">{age ?? '—'}</td>
+                    <td className="squad-media">{p.media}</td>
                     <td>
                       {status ? (
                         <span className={status.className}>{status.text}</span>
@@ -323,7 +324,7 @@ export function SquadScreen() {
                     <td><FormArrow form={form} /></td>
                     <td><MoraleBar morale={morale} /></td>
                     <td><DesireBadge kind={desires[p.id] ?? 'contento'} /></td>
-                    <td className="pcf7tbl__num squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
+                    <td className="squad-media">{contract ? formatEuros(contract.salary) : '—'}</td>
                     <td>
                       {contract ? (
                         <span className={lastYear ? 'squad-status squad-status--suspended' : undefined}>
@@ -333,19 +334,10 @@ export function SquadScreen() {
                         '—'
                       )}
                     </td>
-                    <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="pcf7list__dim">—</span>}</td>
+                    <td>{range ? <PotentialRange low={range.low} high={range.high} /> : <span className="hint">—</span>}</td>
                     <td>
                       {contract ? (
-                        <button
-                          type="button"
-                          className="pcf7flatbtn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            renewPlayer(p.id);
-                          }}
-                        >
-                          Renovar
-                        </button>
+                        <RetroButton onClick={() => renewPlayer(p.id)}>Renovar</RetroButton>
                       ) : null}
                     </td>
                   </tr>
@@ -354,12 +346,19 @@ export function SquadScreen() {
             </tbody>
           </table>
         </div>
-      </section>
+      </RetroPanel>
 
-      <p className="pcf7list__dim" style={{ fontFamily: 'var(--font-data)', margin: 0 }}>
+      <p className="hint">
         Toca un jugador para ver su ficha aquí mismo, o pulsa su nombre para la ficha completa. El ojeo es
         falible: el rango puede no contener el valor real y se estrecha (que no acierta más) con el tiempo.
       </p>
-    </Pcf7Console>
+
+      <div className="season-actions">
+        <RetroButton variant="primary" onClick={() => goTo('comparativa')}>
+          Comparar jugadores
+        </RetroButton>
+        <RetroButton onClick={() => goTo('season')}>Volver al despacho</RetroButton>
+      </div>
+    </main>
   );
 }
