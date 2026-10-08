@@ -481,7 +481,10 @@ h1 {
 
 /* Fila del equipo humano: casquillo rojo del PCF7 (mismo acento que el botón
    primario), para leer de un vistazo "este eres tú". */
-.standings__row--me {
+/* Selector compuesto (`.standings tbody tr.…`) para GANAR en especificidad a
+   `.standings tbody tr` y a `:nth-child(even)`; si no, el fondo base de la fila
+   pisaba el casquillo rojo y el equipo humano no se resaltaba. */
+.standings tbody tr.standings__row--me {
   background: var(--cap-danger);
   box-shadow: inset 0 1px 0 #ff9c9c, inset 0 -2px 3px #5a0c0c,
     0 2px 8px rgba(200, 30, 30, 0.35);
