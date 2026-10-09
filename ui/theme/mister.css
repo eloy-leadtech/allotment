@@ -195,3 +195,441 @@
     transform: none;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   DESPACHO — montaje de la piel Mister (puerto de la maqueta media/ui-ref).
+   Consola con fondo de estadio + barra superior con escudos + torres de
+   navegación a ambos lados de una zona central de "jugar jornada".
+   ════════════════════════════════════════════════════════════════════════ */
+
+.mst-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Marco centrado de 1180 (la proporción fija del juego). */
+.mst-wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 18px 28px;
+}
+
+/* Consola: metal oscuro con foto de estadio detrás y biselado. */
+.mst-console {
+  position: relative;
+  border-radius: var(--r-l);
+  overflow: hidden;
+  background: #0b0f2c;
+  border: 1px solid #0d1230;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62), var(--bevel-line);
+  isolation: isolate;
+}
+
+/* Foto de estadio del club, a toda la consola (cover). */
+.mst-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+/* Velo + viñeta + rayado técnico sobre la foto (legibilidad del dato). */
+.mst-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(10, 13, 44, 0.28), rgba(10, 13, 44, 0.28)),
+    radial-gradient(135% 108% at 50% 44%, rgba(10, 10, 40, 0) 38%, rgba(10, 10, 40, 0.88) 100%),
+    repeating-linear-gradient(0deg, rgba(127, 159, 255, 0.07) 0 1px, transparent 1px 3px);
+}
+
+.mst-screen {
+  position: relative;
+  z-index: 2;
+  padding: 18px 18px 22px;
+}
+
+/* ── Cabecera: [tu club] · [fecha] · [PRÓXIMO RIVAL siempre] ── */
+.mst-head {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+}
+
+.mst-teamcard {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  padding: 6px 12px 6px 6px;
+}
+
+.mst-teamcard .crest {
+  width: 76px;
+  height: 76px;
+  flex: none;
+  object-fit: contain;
+  margin: -14px 0;
+  filter: drop-shadow(0 3px 7px rgba(5, 8, 30, 0.85));
+}
+
+.mst-tc-txt { display: flex; flex-direction: column; min-width: 0; }
+.mst-tc-name {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(6, 8, 26, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-tc-sub {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.mst-tc-sub b { color: var(--c-ink); font-weight: 700; }
+.mst-tc-sub i { font-style: normal; color: var(--c-gleam); margin: 0 6px; }
+.mst-tc-sub em { font-style: normal; color: var(--c-edge-light); }
+
+.mst-today {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4px 6px;
+  flex: none;
+}
+.mst-today-date {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(6, 8, 26, 0.8);
+}
+.mst-today-date em { font-style: italic; color: var(--c-edge-light); }
+.mst-today-week {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  line-height: 1.1;
+}
+
+/* ── Cuerpo: torre | centro (jugar) | torre ── */
+.mst-body {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+/* Centro: la llamada a jugar la jornada, sobre el césped. */
+.mst-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 320px;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Botón grande de "jugar": placa metálica con acento rojo (acción primaria). */
+.mst-play {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 16px 40px;
+  cursor: pointer;
+  color: var(--c-ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-m);
+  border-top: 1px solid #ff9c9c;
+  border-left: 1px solid rgba(255, 140, 140, 0.4);
+  border-bottom: 1px solid rgba(90, 12, 12, 0.9);
+  border-right: 1px solid rgba(90, 12, 12, 0.8);
+  background: linear-gradient(178deg, var(--c-danger-hi) 0%, #cf2626 52%, #8f1414 100%);
+  box-shadow: 0 6px 18px rgba(10, 10, 40, 0.6), inset 0 1px 0 rgba(255, 200, 200, 0.5);
+  transition: transform 0.14s, box-shadow 0.14s, filter 0.14s;
+}
+.mst-play__big { font-size: 26px; line-height: 1; }
+.mst-play__sub { font-size: 11px; font-weight: 600; font-style: normal; color: rgba(255, 230, 230, 0.9); }
+.mst-play:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 24px rgba(10, 10, 40, 0.6), 0 0 16px rgba(200, 30, 30, 0.5);
+}
+.mst-play:active { transform: translateY(0); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5); }
+.mst-play:focus-visible { outline: 2px solid var(--c-edge-light); outline-offset: 3px; }
+
+/* Botón secundario (simular) bajo el de jugar. */
+.mst-sim {
+  padding: 7px 20px;
+  cursor: pointer;
+  color: var(--c-ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  border-radius: var(--r-m);
+  border-top: 1px solid rgba(127, 159, 255, 0.5);
+  border-bottom: 1px solid rgba(10, 10, 40, 0.9);
+  background: linear-gradient(180deg, rgba(86, 120, 170, 0.93), rgba(26, 45, 88, 0.96));
+  box-shadow: var(--lift);
+  transition: transform 0.12s, filter 0.12s;
+}
+.mst-sim:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.mst-sim:focus-visible { outline: 2px solid var(--c-edge-light); outline-offset: 2px; }
+
+/* Avisos (invierno, prensa, selecciones): placa fina de alerta. */
+.mst-notices { display: flex; flex-direction: column; gap: 6px; width: min(100%, 360px); }
+.mst-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: var(--r-s);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--c-ink);
+  background: linear-gradient(180deg, rgba(84, 116, 166, 0.92), rgba(24, 42, 84, 0.95));
+  box-shadow: var(--bevel-line);
+  text-align: left;
+}
+.mst-notice button {
+  margin-left: auto;
+  flex: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--c-danger);
+  border: none;
+  border-radius: var(--r-s);
+  padding: 3px 9px;
+}
+
+/* Pie: secciones menos frecuentes en placas compactas. */
+.mst-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+  justify-content: center;
+}
+.mst-more button {
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  padding: 6px 12px;
+  border-radius: var(--r-s);
+  border-top: 1px solid rgba(127, 159, 255, 0.4);
+  border-bottom: 1px solid rgba(10, 10, 40, 0.85);
+  background: linear-gradient(180deg, rgba(60, 86, 140, 0.8), rgba(22, 38, 76, 0.9));
+  transition: filter 0.12s, color 0.12s;
+}
+.mst-more button:hover { filter: brightness(1.14); color: var(--c-ink); }
+.mst-more button:focus-visible { outline: 2px solid var(--c-edge-light); outline-offset: 2px; }
+
+/* En marcos estrechos las torres pasan a columna (sin scroll lateral). */
+@media (max-width: 900px) {
+  .mst-body { grid-template-columns: 1fr; gap: 16px; }
+  .mst-tower { width: 100%; }
+  .mst-center { min-height: 0; order: -1; }
+}
+
+/* ── Barra de PRÓXIMO RIVAL (siempre; "Por definir" si aún no se sabe) ── */
+.mst-rival {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 11px;
+  min-width: 0;
+  text-align: right;
+  padding: 6px 6px 6px 12px;
+}
+.mst-rival .crest {
+  width: 58px;
+  height: 58px;
+  flex: none;
+  object-fit: contain;
+  margin: -10px 0;
+  filter: drop-shadow(0 3px 7px rgba(5, 8, 30, 0.85));
+}
+.mst-rival__ph {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(10, 15, 40, 0.45);
+  border: 1px dashed rgba(127, 159, 255, 0.4);
+  color: var(--c-ink-soft);
+  font-family: var(--font-ui);
+  font-size: 24px;
+  font-weight: 700;
+}
+.mst-rival__txt { display: flex; flex-direction: column; min-width: 0; }
+.mst-rival__lbl {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+  line-height: 1.3;
+}
+.mst-rival__name {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.04;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(6, 8, 26, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-rival__sub {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  white-space: nowrap;
+}
+.mst-rival__sub em { font-style: normal; color: var(--c-edge-light); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   OVERLAY — cada sección se abre DENTRO del despacho, en un panel glassy
+   opaco (legible) sobre la foto, animándose. El despacho se queda detrás.
+   ════════════════════════════════════════════════════════════════════════ */
+.mst-ov {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(5, 8, 25, 0.42);
+  animation: mst-ov-in 0.2s ease;
+}
+@keyframes mst-ov-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.mst-ov__panel {
+  position: relative;
+  width: min(94vw, 900px);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--r-l);
+  border: 1px solid rgba(127, 159, 255, 0.38);
+  background: linear-gradient(180deg, rgba(20, 30, 66, 0.94), rgba(10, 15, 40, 0.93));
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.62), inset 0 1px 0 rgba(170, 198, 255, 0.45);
+  animation: mst-panel-in 0.24s cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+@keyframes mst-panel-in {
+  from { transform: scale(0.94) translateY(10px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.mst-ov__x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-m);
+  border: 1px solid rgba(127, 159, 255, 0.4);
+  background: rgba(10, 15, 40, 0.6);
+  color: var(--c-ink);
+  font-size: 16px;
+  cursor: pointer;
+}
+.mst-ov__x:hover { background: rgba(200, 30, 30, 0.6); }
+.mst-ov__x:focus-visible { outline: 2px solid var(--c-edge-light); outline-offset: 2px; }
+.mst-ov__body { overflow: auto; padding: 16px 18px 20px; }
+
+/* Las pantallas de sección fluyen DENTRO del panel (sin su marco a pantalla
+   completa ni su propio fondo): el panel glassy ya es el marco. */
+.mst-ov__body .screen {
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+  background: none;
+}
+.mst-ov__body .screen--title::before,
+.mst-ov__body .screen--title::after { display: none; }
+.mst-ov__body .pcf7screen {
+  position: static;
+  width: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  display: block;
+  overflow: visible;
+}
+.mst-ov__body .pcf7console {
+  width: auto;
+  height: auto;
+  max-height: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+.mst-ov__body .pcf7console__bar { border-radius: var(--r-m) var(--r-m) 0 0; }
+.mst-ov__body .pcf7canvas { width: 100%; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mst-ov,
+  .mst-ov__panel { animation: none; }
+}

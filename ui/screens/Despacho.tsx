@@ -1,98 +1,35 @@
-import { isSeasonOver, teamName, isWinterWindowOpen, selectPressQuestion } from '@game';
+import type { ReactNode } from 'react';
+import {
+  isSeasonOver,
+  teamName,
+  isWinterWindowOpen,
+  selectPressQuestion,
+  currentStandings,
+  formatEuros,
+  nextHumanFixture,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
 import type { Screen } from '@app/navigation';
+import { Crest } from '@ui/components/Crest';
+import { TowerButton } from '@ui/components/TowerButton';
+import { MisterSprite } from '@ui/components/MisterSprite';
 import { RetroButton } from '@ui/components/RetroButton';
 
-/**
- * The DESPACHO (office) hub, rebuilt as a faithful replica of PC Fútbol 7's main
- * menu: the real 640×480 screen bitmap (`scr_032.png`) is shown as the background
- * and we overlay (a) 12 clickable hotspots over the pre-drawn icons and (b) our
- * live data (club, competition, matchday) on the empty plates, plus the 9 bottom
- * tabs. Coordinates are expressed against the original 640×480 canvas so the whole
- * thing scales while keeping its 4:3 proportion.
- */
-
-/** A rectangle on the original 640×480 canvas. */
-interface Rect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+/** One icon from the Mister sprite (ported from the lab mockup). */
+function Ic({ id }: { id: string }) {
+  return (
+    <svg viewBox="0 0 48 40" width="100%" height="100%" aria-hidden="true">
+      <use href={`#ic-${id}`} />
+    </svg>
+  );
 }
-
-const CANVAS_W = 640;
-const CANVAS_H = 480;
-
-/** Turn a canvas-space rectangle into a percentage-based absolute style. */
-function place({ x, y, w, h }: Rect): React.CSSProperties {
-  return {
-    left: `${(x / CANVAS_W) * 100}%`,
-    top: `${(y / CANVAS_H) * 100}%`,
-    width: `${(w / CANVAS_W) * 100}%`,
-    height: `${(h / CANVAS_H) * 100}%`,
-  };
-}
-
-interface Hotspot {
-  rect: Rect;
-  label: string;
-  /** Destination screen, or null for sections not yet built as their own screen. */
-  to: Screen | null;
-}
-
-// The two icon columns of scr_032: left = management (blue/warm), right = sporting
-// (green). Each icon is ~55×30 px, grouped 3+3 with a vertical gap in the middle.
-// These are read off scr_032 by eye and are the values most worth a human's review.
-const ICON_W = 55;
-const ROW_H = 30;
-const LEFT_X = 123;
-const RIGHT_X = 551;
-const GROUP_A = [136, 168, 199]; // top three rows (y)
-const GROUP_B = [260, 292, 323]; // bottom three rows (y)
-const ICON_ROWS = [...GROUP_A, ...GROUP_B];
-
-const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Resultados', to: 'standings' },
-  { label: 'Calendario', to: 'standings' },
-  { label: 'Finanzas', to: 'sponsors' },
-  { label: 'Prensa', to: 'press' },
-  { label: 'Directiva', to: 'directiva' },
-  { label: 'Fichajes', to: 'market' },
-];
-
-const RIGHT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Alineación', to: 'squad' },
-  { label: 'Táctica', to: 'tactics' },
-  { label: 'Ojeador', to: 'ojeo' },
-  { label: 'Vídeo', to: 'comparativa' },
-  { label: 'Entrenamiento', to: 'training' },
-  { label: 'Estadio', to: 'stadium' },
-];
 
 /**
- * Sections that have no pre-drawn icon on scr_032 but are full screens of the
- * game. They ride on a secondary strip under the tab bar so nothing built for
- * the office is unreachable; labels never repeat an icon or tab label.
+ * DESPACHO — the office hub in the definitive Mister skin: a steel console over
+ * the club's stadium, a header with the crest/standing/budget, and navigation
+ * through towers of metal section buttons (NO tab strip), with the matchday
+ * "play" call in the centre. Faithful port of the lab mockup (media/ui-ref).
  */
-const EXTRA_SECTIONS: Array<{ label: string; to: Screen }> = [
-  { label: 'Cantera', to: 'youth' },
-  { label: 'Promesas', to: 'prospects' },
-  { label: 'Cuerpo técnico', to: 'staff' },
-  { label: 'Patrocinio', to: 'sponsors' },
-  { label: 'Estadísticas', to: 'stats' },
-  { label: 'Palmarés', to: 'palmares' },
-  { label: 'Hemeroteca', to: 'hemeroteca' },
-  { label: 'Compara', to: 'comparativa' },
-];
-
-function buildIconHotspots(x: number, defs: Array<{ label: string; to: Screen | null }>): Hotspot[] {
-  return defs.map((def, i) => ({
-    rect: { x, y: ICON_ROWS[i] ?? 0, w: ICON_W, h: ROW_H },
-    label: def.label,
-    to: def.to,
-  }));
-}
-
 export function Despacho() {
   const season = useGameStore((s) => s.season);
   const career = useGameStore((s) => s.career);
@@ -114,135 +51,206 @@ export function Despacho() {
   const clubName = teamName(season, season.humanTeamId);
   const over = isSeasonOver(season);
   const playedMatchday = Math.min(season.currentMatchday, season.totalMatchdays);
-  const bg = `${import.meta.env.BASE_URL}ui/pcf7/scr_032.png`;
+  const stadiumBg = `${import.meta.env.BASE_URL}stadiums/${season.humanTeamId}.png`;
 
-  // Mid-season the winter window blocks play until it is closed (the store also
-  // enforces it); the press waits for you after some matchdays.
+  const table = currentStandings(season);
+  const myRow = table.find((r) => r.teamId === season.humanTeamId);
+  const pos = myRow ? table.indexOf(myRow) + 1 : table.length;
+  const pts = myRow?.points ?? 0;
+  const budget = career?.budget ?? 0;
+  const division = career?.division ?? 'primera';
+  const divisionName = division === 'segunda' ? '2ª División' : '1ª División';
+  const squad = career?.teams.find((t) => t.id === career.humanTeamId)?.players.length;
+
   const winterOpen = career ? isWinterWindowOpen(career) : false;
   const pressPending = career ? selectPressQuestion(career) != null : false;
 
-  const leftHotspots = buildIconHotspots(LEFT_X, LEFT_ICONS);
-  const rightHotspots = buildIconHotspots(RIGHT_X, RIGHT_ICONS);
+  // Próximo partido (real) para la barra superior; null = aún por definir.
+  const fixture = nextHumanFixture(season);
+  const rival = fixture
+    ? fixture.homeId === season.humanTeamId
+      ? { id: fixture.awayId, home: true }
+      : { id: fixture.homeId, home: false }
+    : null;
 
-  // The nearest existing screen for a section not yet built stays on the office.
-  const openSection = (to: Screen | null): void => {
-    if (to) goTo(to);
-  };
-
-  // The 9 bottom tabs = the persistent global switcher. "Liga" is the active one.
-  const tabs: Array<{ label: string; onClick: () => void; active?: boolean; disabled?: boolean }> = [
-    { label: 'Liga', onClick: () => undefined, active: true },
-    { label: 'Clasificación', onClick: () => goTo('standings') },
-    { label: 'Copa', onClick: () => goTo('copa') },
-    { label: 'Europa', onClick: () => goTo('europa'), disabled: !hasEuropa },
-    { label: 'Mercado', onClick: () => goTo('market') },
-    { label: 'Plantilla', onClick: () => goTo('squad') },
-    { label: 'Táctica', onClick: () => goTo('tactics') },
-    { label: 'Guardar', onClick: () => goTo('slots') },
-    { label: 'Menú', onClick: () => goTo('title') },
-  ];
+  /** A section button: metal plate with its sprite icon and an onClick. */
+  const sec = (
+    to: Screen,
+    icon: string,
+    name: string,
+    extra?: {
+      hint?: ReactNode;
+      hintTone?: 'alert' | 'good';
+      pip?: 'alert' | 'pending';
+      pipLabel?: string;
+      disabled?: boolean;
+    },
+  ) => (
+    <TowerButton
+      key={name}
+      name={name}
+      icon={<Ic id={icon} />}
+      hint={extra?.hint}
+      hintTone={extra?.hintTone}
+      pip={extra?.pip}
+      pipLabel={extra?.pipLabel}
+      disabled={extra?.disabled}
+      onClick={() => goTo(to)}
+    />
+  );
 
   return (
-    <main className="screen screen--despacho">
-      <div
-        className="despacho7"
-        style={{ backgroundImage: `url(${bg})`, aspectRatio: `${CANVAS_W} / ${CANVAS_H}` }}
-      >
-        {/* Live data over the empty plates */}
-        <div className="despacho7__plate despacho7__plate--club" style={place({ x: 155, y: 8, w: 148, h: 30 })}>
-          {clubName}
-        </div>
-        <div className="despacho7__plate despacho7__plate--comp" style={place({ x: 382, y: 8, w: 154, h: 30 })}>
-          LIGA · {season.temporada}
-        </div>
-        <div className="despacho7__plate despacho7__plate--data" style={place({ x: 382, y: 56, w: 154, h: 26 })}>
-          {over ? 'Temporada terminada' : `Jornada ${playedMatchday}/${season.totalMatchdays}`}
-        </div>
-
-        {/* 12 icon hotspots */}
-        {[...leftHotspots, ...rightHotspots].map((h) => (
-          <button
-            key={h.label}
-            type="button"
-            className={`despacho7__hotspot${h.to ? '' : ' despacho7__hotspot--soon'}`}
-            style={place(h.rect)}
-            title={h.to ? h.label : `${h.label} (próximamente)`}
-            aria-label={h.label}
-            onClick={() => openSection(h.to)}
-          />
-        ))}
-
-        {/* Central trophy zone = play/continue the matchday */}
-        <button
-          type="button"
-          className="despacho7__hotspot despacho7__hotspot--play"
-          style={place({ x: 285, y: 150, w: 100, h: 95 })}
-          title={over ? 'Fin de temporada' : 'Jugar jornada'}
-          aria-label={over ? 'Fin de temporada' : 'Jugar jornada'}
-          onClick={() => goTo(over ? 'seasonEnd' : 'prematch')}
+    <main className="mst-wrap">
+      <MisterSprite />
+      <div className="mst-console">
+        <img
+          className="mst-bg"
+          src={stadiumBg}
+          alt=""
+          aria-hidden="true"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).style.display = 'none';
+          }}
         />
-        {!over ? (
-          <button
-            type="button"
-            className="despacho7__hotspot despacho7__sim"
-            style={place({ x: 285, y: 250, w: 100, h: 22 })}
-            title="Simular jornada"
-            aria-label="Simular jornada"
-            onClick={playNextMatchday}
-          >
-            Simular
-          </button>
-        ) : null}
+        <div className="mst-grain" aria-hidden="true" />
 
-        {/* 9 bottom tabs (regleta de solapas) */}
-        <div className="despacho7__tabs" style={place({ x: 2, y: 404, w: 636, h: 70 })}>
-          {tabs.map((t) => (
-            <button
-              key={t.label}
-              type="button"
-              className={`despacho7__tab${t.active ? ' despacho7__tab--active' : ''}`}
-              onClick={t.onClick}
-              disabled={t.disabled}
-              aria-current={t.active ? 'page' : undefined}
-            >
-              {t.label}
-            </button>
-          ))}
+        <div className="mst-screen">
+          <header className="mst-head">
+            <div className="mst-teamcard">
+              <Crest teamId={season.humanTeamId} size={76} />
+              <div className="mst-tc-txt">
+                <span className="mst-tc-name">{clubName}</span>
+                <span className="mst-tc-sub">
+                  <b>{pos}.º</b> en Liga <i>·</i> <b>{pts} pts</b> <i>·</i> Saldo{' '}
+                  <em>{formatEuros(budget)}</em>
+                </span>
+              </div>
+            </div>
+            <div className="mst-today">
+              <span className="mst-today-date">
+                {over ? 'FIN' : `J${playedMatchday}`}
+                <em>/{season.totalMatchdays}</em>
+              </span>
+              <span className="mst-today-week">
+                {season.temporada} · {divisionName}
+              </span>
+            </div>
+            <div className="mst-rival">
+              <div className="mst-rival__txt">
+                <span className="mst-rival__lbl">Próximo partido</span>
+                <span className="mst-rival__name">{rival ? teamName(season, rival.id) : 'Por definir'}</span>
+                <span className="mst-rival__sub">
+                  {over ? (
+                    'Temporada terminada'
+                  ) : (
+                    <>
+                      Liga · J{playedMatchday} · <em>{rival ? (rival.home ? 'Casa' : 'Fuera') : '—'}</em>
+                    </>
+                  )}
+                </span>
+              </div>
+              {rival ? (
+                <Crest teamId={rival.id} size={58} />
+              ) : (
+                <span className="mst-rival__ph" aria-hidden="true">?</span>
+              )}
+            </div>
+          </header>
+
+          <div className="mst-body">
+            {/* Torre izquierda: equipo + competición */}
+            <nav className="mst-tower" aria-label="Equipo y competición">
+              <div className="mst-grp">
+                <p className="mst-grp__h">Terreno de juego</p>
+                {sec('squad', 'alineacion', 'Alineación', squad ? { hint: <><em>{squad}</em> jugadores</> } : undefined)}
+                {sec('tactics', 'tactica', 'Táctica')}
+                {sec('training', 'entrenamiento', 'Entrenamiento')}
+                {sec('youth', 'cantera', 'Cantera')}
+                {sec('prospects', 'cantera', 'Promesas')}
+              </div>
+              <div className="mst-grp">
+                <p className="mst-grp__h">Competición</p>
+                {sec('standings', 'clasificacion', 'Clasificación', { hint: <><em>{pos}.º</em> · {pts} pts</> })}
+                {sec('copa', 'leyendas', 'Copa')}
+                {sec('europa', 'leyendas', 'Europa', { disabled: !hasEuropa })}
+                {sec('standings', 'calendario', 'Calendario')}
+              </div>
+            </nav>
+
+            {/* Centro: jugar la jornada, sobre el césped */}
+            <div className="mst-center">
+              {over ? (
+                <button type="button" className="mst-play" onClick={() => goTo('seasonEnd')}>
+                  <span className="mst-play__big">Fin de temporada</span>
+                  <span className="mst-play__sub">Revisa el balance del año</span>
+                </button>
+              ) : (
+                <>
+                  <button type="button" className="mst-play" onClick={() => goTo('prematch')}>
+                    <span className="mst-play__big">Jugar jornada {playedMatchday}</span>
+                    <span className="mst-play__sub">Salta al terreno de juego</span>
+                  </button>
+                  <button type="button" className="mst-sim" onClick={playNextMatchday}>
+                    Simular jornada
+                  </button>
+                </>
+              )}
+
+              <div className="mst-notices">
+                {winterOpen ? (
+                  <p className="mst-notice">
+                    ❄️ Mercado de invierno abierto.
+                    <button type="button" onClick={openWinterMarket}>
+                      Ir →
+                    </button>
+                  </p>
+                ) : null}
+                {pressPending ? (
+                  <p className="mst-notice">
+                    🎙️ La prensa espera tus declaraciones.
+                    <button type="button" onClick={() => goTo('press')}>
+                      Comparecer →
+                    </button>
+                  </p>
+                ) : null}
+                {lastCallUp && lastCallUp.players.length > 0 ? (
+                  <p className="mst-notice">
+                    ✈️ {lastCallUp.players.length}{' '}
+                    {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón con
+                    fatiga extra.
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            {/* Torre derecha: club + medios */}
+            <nav className="mst-tower" aria-label="Club y medios">
+              <div className="mst-grp">
+                <p className="mst-grp__h">Club</p>
+                {sec('market', 'fichajes', 'Fichajes', winterOpen ? { pip: 'alert', pipLabel: 'Mercado de invierno abierto' } : undefined)}
+                {sec('directiva', 'directiva', 'Directiva')}
+                {sec('sponsors', 'finanzas', 'Finanzas', { hint: <em>{formatEuros(budget)}</em> })}
+                {sec('stadium', 'resultados', 'Estadio')}
+                {sec('ojeo', 'moral', 'Ojeador')}
+              </div>
+              <div className="mst-grp">
+                <p className="mst-grp__h">Medios</p>
+                {sec('press', 'prensa', 'Prensa', pressPending ? { pip: 'alert', pipLabel: 'La prensa te espera' } : undefined)}
+                {sec('stats', 'clasificacion', 'Estadísticas')}
+                {sec('palmares', 'leyendas', 'Palmarés')}
+                {sec('hemeroteca', 'prensa', 'Hemeroteca')}
+              </div>
+            </nav>
+          </div>
+
+          {/* Secciones menos frecuentes */}
+          <div className="mst-more">
+            <button type="button" onClick={() => goTo('comparativa')}>Comparar</button>
+            <button type="button" onClick={() => goTo('staff')}>Personal</button>
+            <button type="button" onClick={() => goTo('slots')}>Guardar</button>
+            <button type="button" onClick={() => goTo('title')}>Menú</button>
+          </div>
         </div>
-      </div>
-
-      {/* Avisos que exigen tu atención antes de seguir jugando. */}
-      {winterOpen ? (
-        <p className="despacho7__notice">
-          ❄️ Ventana de fichajes de invierno abierta.{' '}
-          <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={openWinterMarket}>
-            Ir al mercado de invierno →
-          </button>
-        </p>
-      ) : null}
-      {pressPending ? (
-        <p className="despacho7__notice">
-          🎙️ La prensa espera tus declaraciones.{' '}
-          <button type="button" className="pcf7flatbtn" onClick={() => goTo('press')}>
-            Comparecer →
-          </button>
-        </p>
-      ) : null}
-      {lastCallUp && lastCallUp.players.length > 0 ? (
-        <p className="despacho7__notice">
-          ✈️ {lastCallUp.players.length}{' '}
-          {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón de
-          selecciones con fatiga extra.
-        </p>
-      ) : null}
-
-      {/* Secciones sin icono propio en scr_032. */}
-      <div className="despacho7__more">
-        {EXTRA_SECTIONS.map((s) => (
-          <button key={s.label} type="button" className="pcf7flatbtn" onClick={() => goTo(s.to)}>
-            {s.label}
-          </button>
-        ))}
       </div>
     </main>
   );

@@ -1,4 +1,6 @@
 import { useGameStore } from '@ui/store/gameStore';
+import type { Screen } from '@app/navigation';
+import { SectionOverlay } from '@ui/components/SectionOverlay';
 import { TitleScreen } from '@ui/screens/TitleScreen';
 import { NewGameScreen } from '@ui/screens/NewGameScreen';
 import { DatabaseScreen } from '@ui/screens/DatabaseScreen';
@@ -31,9 +33,37 @@ import { PressScreen } from '@ui/screens/PressScreen';
 import { MatchScreen } from '@ui/screens/MatchScreen';
 import { SlotsScreen } from '@ui/screens/SlotsScreen';
 
-/** Root shell: renders the current screen from the store. */
-export function App() {
-  const screen = useGameStore((s) => s.screen);
+/**
+ * Despacho SECTIONS: screens reached from the office that open as a glassy panel
+ * OVER the despacho (its stadium photo stays behind). Everything else (title,
+ * new game, the match itself, season end…) is a full screen of its own.
+ */
+const SECTIONS: ReadonlySet<Screen> = new Set<Screen>([
+  'standings',
+  'market',
+  'winterMarket',
+  'squad',
+  'comparativa',
+  'playerCard',
+  'youth',
+  'ojeo',
+  'prospects',
+  'tactics',
+  'directiva',
+  'training',
+  'staff',
+  'stadium',
+  'sponsors',
+  'copa',
+  'europa',
+  'palmares',
+  'hemeroteca',
+  'stats',
+  'press',
+]);
+
+/** The component for a given screen. */
+function renderScreen(screen: Screen) {
   switch (screen) {
     case 'title':
       return <TitleScreen />;
@@ -98,4 +128,18 @@ export function App() {
     case 'slots':
       return <SlotsScreen />;
   }
+}
+
+/** Root shell: the despacho is the stage; sections open as glassy panels over it. */
+export function App() {
+  const screen = useGameStore((s) => s.screen);
+  if (SECTIONS.has(screen)) {
+    return (
+      <>
+        <Despacho />
+        <SectionOverlay>{renderScreen(screen)}</SectionOverlay>
+      </>
+    );
+  }
+  return renderScreen(screen);
 }

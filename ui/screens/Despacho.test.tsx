@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Despacho } from './Despacho';
 import { useGameStore } from '@ui/store/gameStore';
@@ -10,58 +10,50 @@ function startGame(): void {
   useGameStore.getState().startCareer('barcelona');
 }
 
-describe('Despacho (PCF7 office hub)', () => {
+describe('Despacho (Mister office hub)', () => {
   beforeEach(startGame);
 
-  it('shows the club and competition live data over the plates', () => {
+  it('shows the club, its standing, the matchday and the next-match bar', () => {
     render(<Despacho />);
     expect(screen.getByText('Barcelona')).toBeInTheDocument();
-    expect(screen.getByText(/LIGA · 96\/97/)).toBeInTheDocument();
-    expect(screen.getByText(/Jornada 1\/\d+/)).toBeInTheDocument();
+    expect(screen.getByText(/en Liga/)).toBeInTheDocument();
+    // "J1" appears in the date and in the next-match bar, so there may be several.
+    expect(screen.getAllByText(/J1/).length).toBeGreaterThan(0);
+    // The "próximo partido" bar is always present (even before it is known).
+    expect(screen.getByText(/Próximo partido/i)).toBeInTheDocument();
   });
 
-  it('renders the 12 icon hotspots plus the play zone with accessible labels', () => {
+  it('navigates through the section towers (no tab strip)', () => {
     render(<Despacho />);
-    // Labels unique to the icon column (not shared with a bottom tab).
     for (const label of [
-      'Resultados',
-      'Calendario',
-      'Finanzas',
-      'Prensa',
-      'Directiva',
-      'Fichajes',
       'Alineación',
-      'Ojeador',
-      'Vídeo',
-      'Entrenamiento',
-      'Estadio',
+      'Táctica',
+      'Clasificación',
+      'Fichajes',
+      'Directiva',
+      'Prensa',
+      'Palmarés',
     ]) {
-      expect(screen.getByRole('button', { name: label })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: new RegExp(label) })).toBeInTheDocument();
     }
-    // "Táctica" appears both as an icon hotspot and as a bottom tab.
-    expect(screen.getAllByRole('button', { name: 'Táctica' })).toHaveLength(2);
-    expect(screen.getByRole('button', { name: 'Jugar jornada' })).toBeInTheDocument();
   });
 
-  it('navigates to an existing section when its icon is clicked', () => {
+  it('opens the squad from the Alineación tower button', () => {
     render(<Despacho />);
-    screen.getByRole('button', { name: 'Alineación' }).click();
+    screen.getByRole('button', { name: /Alineación/ }).click();
     expect(useGameStore.getState().screen).toBe('squad');
   });
 
   it('advances the matchday from the office (Simular) keeping the hub on screen', () => {
     render(<Despacho />);
     expect(useGameStore.getState().season?.currentMatchday).toBe(1);
-    screen.getByRole('button', { name: 'Simular jornada' }).click();
+    screen.getByRole('button', { name: /Simular jornada/ }).click();
     expect(useGameStore.getState().season?.currentMatchday).toBe(2);
   });
 
-  it('marks Liga as the active bottom tab', () => {
+  it('plays the matchday from the central call to action', () => {
     render(<Despacho />);
-    const liga = screen.getByRole('button', { name: 'Liga' });
-    expect(liga).toHaveAttribute('aria-current', 'page');
-    // The 9-tab strip is present.
-    const tabStrip = liga.parentElement!;
-    expect(within(tabStrip).getAllByRole('button')).toHaveLength(9);
+    screen.getByRole('button', { name: /Jugar jornada/ }).click();
+    expect(useGameStore.getState().screen).toBe('prematch');
   });
 });
