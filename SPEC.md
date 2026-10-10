@@ -1,11 +1,12 @@
-# PCFUTBOL ULTIMATE — Documento de Diseño (SPEC v0.3)
+# PCFUTBOL ULTIMATE — Documento de Diseño (SPEC v0.4)
 
-> Manager de fútbol para Android con estética retro años 90 y plantillas históricas de la saga (temporadas clásicas, p. ej. 96/97; objetivo: 93/94→actualidad).
+> Manager de fútbol para Android, navegador y escritorio Windows con estética retro años 90 y plantillas históricas de la saga (temporadas clásicas, p. ej. 96/97; objetivo: 93/94→actualidad).
 > **Mashup de toda la saga futbolística de Dinamic Multimedia**: PC Fútbol (1.0→2001),
 > PC Calcio, PC Premier y PC Selección — lo mejor de cada título, replicando
 > mecánicas e ideas (nunca assets, gráficos ni código originales).
 > Este documento es la fuente de verdad de los agentes de desarrollo.
 
+**Changelog v0.4**: partido JUGABLE vía Pro Evolution Soccer 6 (copia original del usuario) en escritorio Windows, mediante el **Puente PES6** (§4.6, épica E13). La gestión (Mister + economía estilo PC Fútbol 7) sigue siendo nuestra; el simulador propio se mantiene para los partidos no jugados y para Android/navegador.
 **Changelog v0.3**: se elimina el enfoque MVP — el objetivo es el JUEGO COMPLETO en v1.0. Los hitos pasan a ser internos (orden de construcción), no releases recortadas.
 **Changelog v0.2**: enfoque mashup multi-título; arquitectura multi-competición; visor 2D; carpeta `research/`.
 
@@ -18,6 +19,7 @@
 3. **Motor agnóstico de competición**: aunque el MVP es la liga española, el engine se diseña desde el día 1 para cualquier liga, copa o torneo de selecciones. Añadir Italia debe ser añadir datos, no reescribir código.
 4. **Datos abiertos**: todo en `/data/*.json`, editable a mano. Actualizar temporada = editar JSON.
 5. **Siempre jugable**: cada versión se puede jugar de principio a fin de temporada.
+6. **El partido, jugado de verdad**: en escritorio, el usuario puede jugar sus partidos en su propia copia de PES6. Nuestro juego pone la gestión; PES6 pone solo el partido. Sin PES6, todo sigue funcionando con el simulador propio.
 
 ## 2. Herencia por título (resumen; detalle en `research/`)
 
@@ -29,6 +31,7 @@
 | PC Premier | Liga inglesa; calendario congestionado y copas domésticas |
 | PC Selección | Modo selecciones: clasificación, Eurocopa y Mundial, convocatorias |
 | Saga (todos) | Narración teletipo + radio, visor 2D cenital, base de datos consultable, prensa |
+| Pro Evolution Soccer 6 (Konami, 2006) | Jugabilidad del partido: el usuario juega el partido en SU copia de PES6 a través del Puente PES6 (nunca se copia ni se distribuye nada de Konami) |
 
 La carpeta `research/` contendrá un documento por título (modos, mecánicas, pantallas, qué adoptamos y qué no). Los agentes DEBEN consultarla antes de implementar una mecánica.
 
@@ -37,9 +40,11 @@ La carpeta `research/` contendrá un documento por título (modos, mecánicas, p
 No hay MVP ni releases recortadas. La v1.0 incluye TODO:
 - **Ligas**: España (1ª y 2ª con ascensos/descensos), Italia (Serie A), Inglaterra (Premier), con sus copas domésticas (Copa del Rey, Coppa Italia, FA Cup)
 - **Modos**: Liga simple, **ProManager** completo (economía, despidos, ofertas, estadio, cantera), **Selecciones** (fases de clasificación, Eurocopa, Mundial, convocatorias) y amistosos
-- **Partido**: narración teletipo + visor 2D cenital + cambios y tácticas en vivo
+- **Partido**, dos ejecutores (§4.4):
+  - **Simulado** (todas las plataformas): narración teletipo + visor 2D cenital + cambios y tácticas en vivo
+  - **Jugado en PES6** (escritorio Windows con PES6 instalado): el partido se juega en PES6 con nuestros equipos y el resultado vuelve a la partida
 - **Sistemas**: fichajes/cesiones/cláusulas, mercado internacional, entrenamientos, evolución y envejecimiento, lesiones y sanciones, prensa dinámica, histórico multi-temporada
-- **Plataforma**: APK Android + navegador, guardado multi-ranura, estética retro completa con sonido
+- **Plataforma**: APK Android + navegador + **escritorio Windows** (necesario para el Puente PES6), guardado multi-ranura, estética retro completa con sonido
 
 ### Hitos internos de construcción (orden, no releases)
 Los hitos H1→H6 marcan dependencias técnicas: los agentes trabajan las épicas en este orden porque el código lo exige, pero nada se considera "terminado" hasta que el juego completo está entero.
@@ -49,12 +54,13 @@ Los hitos H1→H6 marcan dependencias técnicas: los agentes trabajan las épica
 - **H4 ProManager**: economía completa, cantera, estadio, prensa
 - **H5 Mundo**: Italia + Inglaterra + copas + mercado internacional
 - **H6 Gloria**: selecciones, Eurocopa, Mundial, carrera total
+- **H7 Estadio**: escritorio Windows + Puente PES6 (partido jugable en PES6). Su fase de investigación (E13-A) puede ir en paralelo a cualquier hito porque no toca código
 Regla intacta: al cierre de cada hito el juego es jugable de principio a fin con lo construido hasta entonces (es la red de seguridad para "reparar después").
 
 ## 4. Arquitectura técnica
 
 ### 4.1 Stack
-TypeScript + React + Vite; Capacitor → APK Android (y navegador); Zustand para estado; CSS propio con variables (tema retro, sin UI kits); Vitest. 100% offline, guardado local.
+TypeScript + React + Vite; Capacitor → APK Android (y navegador); shell de escritorio Windows (Tauri o Electron, ver §7) con un helper nativo para el Puente PES6; Zustand para estado; CSS propio con variables (tema retro, sin UI kits); Vitest. 100% offline, guardado local.
 
 ### 4.2 Módulos
 ```
@@ -64,8 +70,10 @@ TypeScript + React + Vite; Capacitor → APK Android (y navegador); Zustand para
 /game       → partida: gestión, fichajes, evolución, guardado/carga
 /ui         → React: pantallas, tema retro, visor 2D (canvas)
 /app        → shell Capacitor, navegación
+/bridge     → TS puro sin React ni APIs de navegador: Puente PES6 (codec del option file, mapeo de atributos, normalizador de resultado)
+/desktop    → shell de escritorio + helper nativo (detectar PES6, lanzar, leer resultado de memoria)
 ```
-Regla dura: `/engine` y `/game` no importan React. UI = capa fina.
+Regla dura: `/engine`, `/game` y `/bridge` no importan React. UI = capa fina. Todo lo que dependa del sistema operativo vive en `/desktop`.
 
 ### 4.3 Modelo de datos (borrador)
 ```ts
@@ -96,12 +104,35 @@ Script `anonymize.ts` para generar nombres alternativos (uso personal = nombres 
 - Cambios y ajustes tácticos en vivo con pausa
 - Calibración: ~2.6 goles/partido de media, sorpresas plausibles
 
+#### Ejecutores de partido
+El engine define una interfaz `MatchExecutor` con dos implementaciones:
+- **`SimulatedExecutor`**: el simulador de eventos descrito arriba. Determinista por seed.
+- **`Pes6Executor`**: delega en el Puente PES6 (§4.6). NO es determinista (lo juega una persona): su resultado se trata como entrada y se guarda en la partida tal cual.
+
+Ambos devuelven el mismo `MatchReport` normalizado (marcador, goleadores, asistencias si se pueden obtener, tarjetas, lesiones, cambios, minutos jugados). El resto del juego (clasificación, sanciones, moral, economía, prensa) solo consume `MatchReport` y no sabe qué ejecutor se usó. Los partidos que el usuario no juega se simulan siempre con `SimulatedExecutor`.
+
 ### 4.5 UX móvil retro
 - Pantallas completas tipo menú clásico, tipografía pixelada legible (mín. 14px equivalente)
 - Zonas táctiles ≥ 48px; navegación: barra inferior retro + gesto atrás
 - Modo vertical por defecto; visor 2D en horizontal opcional
 - Sonido: clics, ambiente de estadio, música tracker en menús (toggle)
 - `THEME.md` definirá paleta y componentes (pendiente)
+- En escritorio: horizontal por defecto, ratón y teclado
+
+### 4.6 Puente PES6
+Conecta la partida con la copia de PES6 del usuario, al estilo FIFA Manager ↔ FIFA. Flujo de un partido jugado:
+1. **Preparar**: hacer copia de seguridad del option file del usuario y escribir en él los dos equipos (nombres, plantilla, atributos mapeados, alineación, táctica).
+2. **Lanzar**: arrancar PES6 directamente en ese partido. Plan B si el arranque directo no es viable: PES6 se abre con los equipos ya cargados y el usuario elige el partido en el menú.
+3. **Recoger**: al acabar, leer el resultado de la memoria del proceso, normalizarlo a `MatchReport` y restaurar el option file original.
+4. **Fallos**: si PES6 se cierra, se cuelga o el partido se abandona, el usuario elige entre simular el partido, repetirlo o darlo por perdido. Nunca se corrompe la partida ni el option file.
+
+Mapeo de datos: los 10 atributos propios (§4.3) se traducen a los de PES6 con una tabla en `/data/pes6-mapping.json` (esquema Zod). Nada de mapeos hardcodeados.
+
+**Reglas legales del puente** (obligatorias):
+- Ingeniería inversa SOLO para interoperabilidad. Lo que se descubre se documenta en `research/pes6/` como formatos, direcciones y comportamiento, nunca como código copiado de Konami.
+- Funciona exclusivamente con la copia original instalada por el usuario. El repo no incluye ni distribuye ejecutables, datos, option files ni assets de Konami (tampoco como fixtures de test: los tests usan fixtures sintéticos).
+- No se elimina ni se elude ninguna protección anticopia.
+- El puente solo escribe en ficheros del usuario después de hacer copia de seguridad, y la restaura al terminar.
 
 ## 5. Factoría
 Ver `SETUP.md`. Flujo: issues `ready` → agente (Actions nocturno o night-shift local) → PR → CI (typecheck+lint+test+build) → auto-merge. `.github/**`, `SPEC.md` y `CLAUDE.md` protegidos por CODEOWNERS.
@@ -120,8 +151,13 @@ Ver `SETUP.md`. Flujo: issues `ready` → agente (Actions nocturno o night-shift
 11. **E10 Multi-liga** (H5): datos Italia e Inglaterra, mercado internacional
 12. **E11 Selecciones** (H6): convocatorias, clasificación, Eurocopa, Mundial, carrera total
 13. **E12 Pulido** (H6): sonido, transiciones, rendimiento, APK firmada
+14. **E13 Puente PES6** (H7): escritorio Windows, option file, lanzamiento, lectura de resultado e integración en la UI Mister. Desglose en `docs/E13-puente-pes6.md`
 
 ## 7. Decisiones abiertas
 - Nombre definitivo y logo
 - ¿Base de datos inicial: generada a mano, o script de importación desde fuente abierta?
 - Paleta y tipografía concretas (THEME.md)
+- Shell de escritorio: **Tauri** (ligero, Rust da acceso directo a Win32 para lanzar procesos y leer memoria) o **Electron** (todo en JS, pero la lectura de memoria necesitaría un módulo nativo). Recomendación: Tauri
+- Versión exacta de PES6 PC soportada (el exe original o con parche oficial): las direcciones de memoria dependen de ella. Se soporta una sola versión al principio
+- Arranque directo al partido o plan B (menú guiado): se decide tras la investigación E13-A
+- Competiciones con reglas que PES6 no reproduce bien (eliminatorias a doble partido, prórroga y penaltis): qué se configura en PES6 y qué se resuelve en nuestro juego
