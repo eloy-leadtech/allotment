@@ -432,5 +432,135 @@
     "Juega en el estadio de O Couto, inaugurado en 1949.",
     "Se le conoce como 'los rojillos'; viste camiseta roja y pantalón azul.",
     "Nunca jugó en Primera; su mejor época fueron los terceros puestos en Segunda de 1959-60 y 1961-62."
+  ],
+  "real-madrid-b": [
+    "Es el equipo filial del Real Madrid; en los años 90 competía como Real Madrid B, tras décadas con el histórico nombre de Castilla.",
+    "En 1980 llegó a la final de la Copa del Rey, donde cayó por 6-1 ante el primer equipo, el propio Real Madrid, en el Santiago Bernabéu.",
+    "Como finalista de Copa disputó la Recopa de Europa 1980-81, algo insólito para un filial; cayó ante el West Ham pese a ganar 3-1 la ida en el Bernabéu.",
+    "En 1983-84 fue campeón de Segunda División, el único filial español que lo ha logrado, aunque no pudo ascender por su condición de dependiente.",
+    "De su cantera salió la 'Quinta del Buitre': Butragueño, Míchel, Sanchís, Martín Vázquez y Pardeza.",
+    "En los años 90 jugaba en la antigua Ciudad Deportiva del Real Madrid, en el paseo de la Castellana."
+  ],
+  "barcelona-b": [
+    "Es el equipo filial del FC Barcelona; nació en 1970 como Barcelona Atlético y en 1991 pasó a llamarse FC Barcelona B.",
+    "Juega en el Mini Estadi, inaugurado el 23 de septiembre de 1982 junto al Camp Nou, con capacidad para 15.276 espectadores.",
+    "Debutó en Segunda División en la temporada 1974-75; por normativa no puede ascender a Primera.",
+    "Por su cantera han pasado futbolistas como Guardiola, Guillermo Amor, Iván de la Peña, Xavi, Puyol, Iniesta o Messi.",
+    "Pep Guardiola arrancó su carrera de entrenador dirigiendo al filial en 2007-08, al que ascendió desde Tercera División."
+  ],
+  "athletic-b": [
+    "Es el equipo filial del Athletic Club, conocido como Bilbao Athletic.",
+    "Desde la temporada 1996-97 juega en las instalaciones de Lezama; antes disputaba sus partidos en el viejo San Mamés.",
+    "Comparte la filosofía de cantera del Athletic y nutre al primer equipo de futbolistas formados en casa.",
+    "En 1983-84 fue subcampeón de Segunda División, empatado a puntos con el Castilla, pero no pudo ascender a Primera por ser filial.",
+    "Pasó buena parte de los años 80 y 90 en Segunda División, entre 1983 y 1996."
+  ],
+  "at-madrid-b": [
+    "Es el equipo filial del Atlético de Madrid; hasta 1991 se llamó Atlético Madrileño.",
+    "Jugó muchos años en el Vicente Calderón y, desde septiembre de 1995, en el Cerro del Espino de Majadahonda.",
+    "Su mejor clasificación fue un 2º puesto en Segunda División en 1998-99, con 74 puntos, aunque no pudo ascender por su condición de filial.",
+    "En 1983 ganó la Copa de la Liga de Segunda División, su primer título oficial, en una final ante el Deportivo de La Coruña.",
+    "Por su cantera han pasado futbolistas que luego triunfaron en el primer equipo, como David de Gea o Koke."
+  ],
+  "mallorca-b": [
+    "Es el equipo filial del RCD Mallorca.",
+    "Nació en 1967 como Unión Deportiva Collerense y se convirtió en filial del Mallorca en la temporada 1981-82.",
+    "Compitió como Mallorca Atlético desde 1983-84 y adoptó el nombre de RCD Mallorca B tras la temporada 1992-93.",
+    "En los años 90 jugaba en el viejo Lluís Sitjar de Palma, el estadio histórico del primer equipo.",
+    "Disputó la Segunda División en 1998-99, su única temporada en la categoría, en la que acabó 19º y descendió."
+  ],
+  "milan": [
+    "El AC Milan se fundó en 1899 de la mano de un grupo de ingleses encabezado por Alfred Edwards y Herbert Kilpin.",
+    "Juega en San Siro, el estadio Giuseppe Meazza, inaugurado en 1926 y que comparte con el Inter desde 1947.",
+    "Se le conoce como 'los rossoneri' (rojinegros) y como 'Il Diavolo'.",
+    "Ha ganado siete Copas de Europa, entre ellas las de 1989 y 1990 con Sacchi y el trío neerlandés Gullit, Van Basten y Rijkaard.",
+    "En 1994, con Capello, firmó una de las finales más recordadas: un 4-0 al Barcelona de Cruyff en Atenas.",
+    "Entre 1991 y 1993 estuvo 58 partidos de Liga sin perder, una racha histórica; a aquel equipo se le apodó 'Gli Invincibili'."
+  ],
+  "juventus": [
+    "La Juventus se fundó en 1897; su nombre viene del latín 'iuventus', que significa 'juventud'.",
+    "Viste de blanco y negro, de ahí 'los bianconeri', y se la apoda 'la Vecchia Signora' (la Vieja Dama).",
+    "En los años 90 jugaba en el Stadio delle Alpi de Turín, construido para el Mundial de 1990.",
+    "Es el club más laureado de Italia y ha ganado dos Copas de Europa: 1985, ante el Liverpool en Heysel, y 1996, ante el Ajax en los penaltis.",
+    "A finales de los 90 perdió dos finales europeas seguidas: la de 1997 ante el Borussia Dortmund y la de 1998 ante el Real Madrid."
+  ],
+  "lazio": [
+    "La Lazio se fundó en 1900 en el barrio romano de Prati.",
+    "Juega en el Estadio Olímpico de Roma, que comparte con la Roma en el derbi de la capital.",
+    "Viste de celeste y blanco; se la conoce como 'los biancocelesti' y 'le Aquile' (las águilas).",
+    "En 1999 conquistó la última Recopa de Europa de la historia, al vencer 2-1 al Mallorca en Birmingham.",
+    "Poco después ganó la Supercopa de Europa de 1999 y el Scudetto de 1999-2000, el segundo de su historia tras el de 1974."
+  ],
+  "parma": [
+    "El Parma se fundó en 1913 y juega en el Stadio Ennio Tardini, inaugurado en 1924.",
+    "Se le conoce como 'los crociati' (los cruzados) y 'los gialloblù'; su camiseta clásica es blanca con una cruz negra.",
+    "Vivió su época dorada en los años 90, pese a no haber ganado nunca el Scudetto.",
+    "Ganó la Recopa de Europa en 1993 y la Copa de la UEFA en dos ocasiones, en 1995 y 1999.",
+    "También levantó la Copa de Italia en 1992, 1999 y 2002."
+  ],
+  "roma": [
+    "La AS Roma nació en 1927 de la fusión de tres clubes de la capital italiana.",
+    "Juega en el Estadio Olímpico de Roma, que comparte con la Lazio.",
+    "Viste de rojo y amarillo ('giallorossi') y tiene como símbolo a la loba capitolina.",
+    "Ha ganado tres Scudetti, en 1942, 1983 y 2001.",
+    "En 1984 perdió en los penaltis la final de la Copa de Europa ante el Liverpool, disputada en su propio Estadio Olímpico.",
+    "Francesco Totti, uno de sus grandes símbolos, desarrolló toda su carrera en la Roma."
+  ],
+  "inter": [
+    "El Inter de Milán se fundó en 1908 como escisión del Milan; se llamó 'Internazionale' porque admitía jugadores extranjeros.",
+    "Comparte con el Milan el estadio de San Siro (Giuseppe Meazza), escenario del derbi de la Madonnina.",
+    "Viste de azul y negro, de ahí 'los nerazzurri'.",
+    "Con el 'Grande Inter' de Helenio Herrera ganó dos Copas de Europa seguidas, en 1964 y 1965.",
+    "El 6 de mayo de 1998 ganó la Copa de la UEFA al vencer 3-0 a la Lazio en París, con un gol de Ronaldo, su gran estrella de la época."
+  ],
+  "fiorentina": [
+    "La Fiorentina se fundó en 1926 en Florencia.",
+    "Juega en el Estadio Artemio Franchi, inaugurado en 1931.",
+    "Viste de color violeta, de donde viene su apodo, 'la Viola'.",
+    "Ha ganado dos Scudetti, en 1956 y 1969, y conquistó la primera Recopa de Europa de la historia, en 1961.",
+    "En 1962 perdió la final de la Recopa ante el Atlético de Madrid, en el partido de desempate.",
+    "En los años 90 su gran ídolo fue Gabriel Batistuta, que marcó 207 goles antes de marcharse a la Roma en 2000."
+  ],
+  "manchester-united": [
+    "El Manchester United se fundó en 1878 como Newton Heath y adoptó su nombre actual en 1902.",
+    "Juega en Old Trafford, inaugurado en 1910, y se le conoce como 'los Red Devils' (los Diablos Rojos).",
+    "El 6 de febrero de 1958 el desastre aéreo de Múnich se llevó la vida de ocho de sus jugadores, los jóvenes 'Busby Babes'.",
+    "Diez años después, en 1968, fue el primer club inglés en ganar la Copa de Europa.",
+    "En 1999 logró un triplete histórico: Liga, FA Cup y una Champions que remontó al Bayern con dos goles en el descuento."
+  ],
+  "liverpool": [
+    "El Liverpool FC se fundó en 1892 y juega en Anfield.",
+    "Su grada más famosa, 'the Kop', data de 1906, y antes de cada partido suena su himno, 'You'll Never Walk Alone'.",
+    "Se le conoce como 'the Reds' por su camiseta roja.",
+    "Ha ganado seis Copas de Europa, cuatro de ellas en apenas ocho años, entre 1977 y 1984.",
+    "Su historia quedó marcada por las tragedias de Heysel (1985) y Hillsborough (1989)."
+  ],
+  "leeds-united": [
+    "El Leeds United se fundó en 1919 y juega en Elland Road.",
+    "Viste de blanco y se le conoce como 'the Whites' y 'the Peacocks' (los pavos reales).",
+    "Con Don Revie vivió su época dorada en los años 60 y 70, con dos Ligas inglesas y dos Copas de Ferias.",
+    "Fue campeón de Liga en 1991-92, la última temporada antes de la creación de la Premier League.",
+    "En 2001 alcanzó las semifinales de la Liga de Campeones, donde cayó ante el Valencia."
+  ],
+  "newcastle-united": [
+    "El Newcastle United se fundó en 1892 y juega en St James' Park.",
+    "Viste de blanco y negro y se le conoce como 'the Magpies' (las Urracas).",
+    "Sus cuatro Ligas inglesas son antiguas: las ganó en 1905, 1907, 1909 y 1927.",
+    "A mediados de los 90, el equipo de Kevin Keegan apodado 'the Entertainers' fue subcampeón de la Premier en 1995-96.",
+    "En 1996 fichó a Alan Shearer por una cifra de transferencia récord, y perdió dos finales de FA Cup seguidas, en 1998 y 1999."
+  ],
+  "arsenal": [
+    "El Arsenal se fundó en 1886 en Woolwich, al sureste de Londres.",
+    "En los años 90 jugaba en Highbury, su estadio hasta 2006, cuando se mudó al Emirates.",
+    "Se le conoce como 'the Gunners' (los Artilleros) y es famoso por su sólida defensa, liderada por Tony Adams.",
+    "Conquistó la Recopa de Europa en 1994, aunque años antes, en 1980, había perdido esa misma final ante el Valencia.",
+    "En 1997-98 ganó el doblete de Liga y FA Cup con Arsène Wenger, llegado al banquillo en 1996."
+  ],
+  "chelsea": [
+    "El Chelsea FC se fundó en 1905 y juega en Stamford Bridge.",
+    "Viste de azul, de ahí su apodo, 'the Blues'.",
+    "Su primer título de Liga lo ganó en 1955; los demás llegaron ya en el siglo XXI.",
+    "A finales de los 90 vivió una gran etapa con los italianos Gullit y Vialli en el banquillo.",
+    "Ganó la Recopa de Europa en 1998 y, ese mismo año, la Supercopa de Europa al vencer al Real Madrid."
   ]
 }
