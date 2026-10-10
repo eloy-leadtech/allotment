@@ -2464,11 +2464,14 @@ h1 {
   font-size: clamp(15px, 3.6vw, 19px);
   font-weight: 700;
   letter-spacing: 0.2px;
-  line-height: 1.05;
+  line-height: 1.1;
   color: var(--c-ink);
+  /* Full official names can be long: wrap up to two lines instead of truncating. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
   max-width: 100%;
 }
 

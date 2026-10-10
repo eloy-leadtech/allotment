@@ -6,6 +6,8 @@ import type { StandingRow } from '../standings';
 export interface CompetitionTeam {
   id: string;
   nombre: string;
+  /** Full official club name, if known; display-only, never used by the engine. */
+  nombreCompleto?: string;
   players: MatchPlayer[];
   /** Optional tactics; the match engine reads this straight from the team. */
   tactics?: Tactics;

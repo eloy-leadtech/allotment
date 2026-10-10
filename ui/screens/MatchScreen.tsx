@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { teamName } from '@game';
+import { teamName, teamFullName } from '@game';
 import { derbyName } from '@engine';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -19,8 +19,12 @@ export function MatchScreen() {
   const match = useGameStore((s) => s.viewingMatch);
   const goTo = useGameStore((s) => s.goTo);
 
+  // Short names drive the teletype narration (reads better play-by-play); the full
+  // official names headline the scoreboard.
   const home = season && match ? teamName(season, match.homeId) : '';
   const away = season && match ? teamName(season, match.awayId) : '';
+  const homeFull = season && match ? teamFullName(season, match.homeId) : '';
+  const awayFull = season && match ? teamFullName(season, match.awayId) : '';
   const derby = (match?.derby ?? false) && match ? derbyName(match.homeId, match.awayId) : null;
 
   const beats = useMemo(
@@ -81,13 +85,13 @@ export function MatchScreen() {
         </p>
       ) : null}
 
-      <section className="sb" aria-label={`Marcador ${home} ${hs} - ${as} ${away}`}>
+      <section className="sb" aria-label={`Marcador ${homeFull} ${hs} - ${as} ${awayFull}`}>
         <div className="sb__side">
           <span className="crest-frame sb__crest">
             <Crest teamId={match.homeId} size={42} />
           </span>
           <span className="sb__id">
-            <span className="sb__name">{home}</span>
+            <span className="sb__name">{homeFull}</span>
             <span className="sb__role">Local</span>
           </span>
         </div>
@@ -111,7 +115,7 @@ export function MatchScreen() {
             <Crest teamId={match.awayId} size={42} />
           </span>
           <span className="sb__id">
-            <span className="sb__name">{away}</span>
+            <span className="sb__name">{awayFull}</span>
             <span className="sb__role">Visitante</span>
           </span>
         </div>

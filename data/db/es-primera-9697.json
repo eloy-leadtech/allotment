@@ -13,6 +13,7 @@
     {
       "id": "barcelona",
       "nombre": "Barcelona",
+      "nombreCompleto": "Futbol Club Barcelona",
       "jugadores": [
         {
           "id": "barcelona-francesc-arnau-grabulosa-1975",
@@ -836,6 +837,7 @@
     {
       "id": "deportivo",
       "nombre": "Deportivo",
+      "nombreCompleto": "Real Club Deportivo de La Coruña",
       "jugadores": [
         {
           "id": "deportivo-nuno-herlander-simoes-do-espirito-santo-1974",
@@ -1754,6 +1756,7 @@
     {
       "id": "zaragoza",
       "nombre": "Zaragoza",
+      "nombreCompleto": "Real Zaragoza",
       "jugadores": [
         {
           "id": "zaragoza-otto-konrad-1964",
@@ -2557,6 +2560,7 @@
     {
       "id": "real-madrid",
       "nombre": "Real Madrid",
+      "nombreCompleto": "Real Madrid Club de Fútbol",
       "jugadores": [
         {
           "id": "real-madrid-bodo-illgner-1967",
@@ -3349,6 +3353,7 @@
     {
       "id": "athletic",
       "nombre": "Athletic",
+      "nombreCompleto": "Athletic Club",
       "jugadores": [
         {
           "id": "athletic-juan-jose-valencia-de-la-serna-1971",
@@ -4127,6 +4132,7 @@
     {
       "id": "sevilla",
       "nombre": "Sevilla",
+      "nombreCompleto": "Sevilla Fútbol Club",
       "jugadores": [
         {
           "id": "sevilla-juan-carlos-unzue-labiano-1967",
@@ -5183,6 +5189,7 @@
     {
       "id": "valencia",
       "nombre": "Valencia",
+      "nombreCompleto": "Valencia Club de Fútbol",
       "jugadores": [
         {
           "id": "valencia-andoni-zubizarreta-urreta-1961",
@@ -6038,6 +6045,7 @@
     {
       "id": "racing",
       "nombre": "Racing",
+      "nombreCompleto": "Real Racing Club de Santander",
       "jugadores": [
         {
           "id": "racing-fernando-marcos-santiago-1968",
@@ -6947,6 +6955,7 @@
     {
       "id": "oviedo",
       "nombre": "Oviedo",
+      "nombreCompleto": "Real Oviedo",
       "jugadores": [
         {
           "id": "oviedo-juan-luis-mora-palacios-1973",
@@ -7681,6 +7690,7 @@
     {
       "id": "tenerife",
       "nombre": "Tenerife",
+      "nombreCompleto": "Club Deportivo Tenerife",
       "jugadores": [
         {
           "id": "tenerife-jose-domingo-hernandez-guanche-1973",
@@ -8479,6 +8489,7 @@
     {
       "id": "real-sociedad",
       "nombre": "Real Sociedad",
+      "nombreCompleto": "Real Sociedad de Fútbol",
       "jugadores": [
         {
           "id": "real-sociedad-raul-iglesias-rodriguez-1974",
@@ -9209,6 +9220,7 @@
     {
       "id": "at-madrid",
       "nombre": "At. Madrid",
+      "nombreCompleto": "Club Atlético de Madrid",
       "jugadores": [
         {
           "id": "at-madrid-jose-francisco-molina-gimenez-1970",
@@ -10010,6 +10022,7 @@
     {
       "id": "sporting",
       "nombre": "Sporting",
+      "nombreCompleto": "Real Sporting de Gijón",
       "jugadores": [
         {
           "id": "sporting-juan-jose-gonzalez-arguelles-juanjo-1973",
@@ -10917,6 +10930,7 @@
     {
       "id": "celta",
       "nombre": "Celta",
+      "nombreCompleto": "Real Club Celta de Vigo",
       "jugadores": [
         {
           "id": "celta-jose-luis-diezma-izquierdo-1968",
@@ -11770,6 +11784,7 @@
     {
       "id": "logrones",
       "nombre": "Logroñés",
+      "nombreCompleto": "Club Deportivo Logroñés",
       "jugadores": [
         {
           "id": "logrones-javier-blanco-jauregui-1976",
@@ -12713,6 +12728,7 @@
     {
       "id": "valladolid",
       "nombre": "Valladolid",
+      "nombreCompleto": "Real Valladolid Club de Fútbol",
       "jugadores": [
         {
           "id": "valladolid-cesar-sanchez-dominguez-1971",
@@ -13572,6 +13588,7 @@
     {
       "id": "espanyol",
       "nombre": "Espanyol",
+      "nombreCompleto": "Reial Club Deportiu Espanyol de Barcelona",
       "jugadores": [
         {
           "id": "espanyol-antonio-jimenez-sistachs-toni-1970",
@@ -14524,6 +14541,7 @@
     {
       "id": "betis",
       "nombre": "Betis",
+      "nombreCompleto": "Real Betis Balompié",
       "jugadores": [
         {
           "id": "betis-antoni-prats-servera-1971",
@@ -15327,6 +15345,7 @@
     {
       "id": "compostela",
       "nombre": "Compostela",
+      "nombreCompleto": "Sociedad Deportiva Compostela",
       "jugadores": [
         {
           "id": "compostela-rafael-gomez-company-rafa-1974",
@@ -16154,6 +16173,7 @@
     {
       "id": "rayo",
       "nombre": "Rayo",
+      "nombreCompleto": "Rayo Vallecano de Madrid",
       "jugadores": [
         {
           "id": "rayo-pedro-contreras-gonzalez-1972",
@@ -16932,6 +16952,7 @@
     {
       "id": "hercules",
       "nombre": "Hércules",
+      "nombreCompleto": "Hércules Club de Fútbol",
       "jugadores": [
         {
           "id": "hercules-peter-rufai-1963",
@@ -17847,6 +17868,7 @@
     {
       "id": "extremadura",
       "nombre": "Extremadura",
+      "nombreCompleto": "Club de Fútbol Extremadura",
       "jugadores": [
         {
           "id": "extremadura-francisco-rodriguez-amador-1968",

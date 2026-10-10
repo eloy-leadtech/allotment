@@ -87,10 +87,11 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
     const isHuman = ct.id === meta.humanTeamId;
     let players = ct.players.map(toMatchPlayer);
     if (isHuman && bonus > 0) players = players.map((p) => boostMatchPlayer(p, bonus));
+    const named = ct.nombreCompleto ? { nombreCompleto: ct.nombreCompleto } : {};
     if (isHuman && meta.tactics) {
-      return { id: ct.id, nombre: ct.nombre, players, tactics: tacticsForSquad(meta.tactics, players) };
+      return { id: ct.id, nombre: ct.nombre, ...named, players, tactics: tacticsForSquad(meta.tactics, players) };
     }
-    return { id: ct.id, nombre: ct.nombre, players };
+    return { id: ct.id, nombre: ct.nombre, ...named, players };
   });
   // Each career season gets its own deterministic seed derived from the master seed.
   const seed = hashSeed(meta.seed, 'season', meta.seasonNumber);
@@ -125,6 +126,7 @@ export function newCareer(league: League, humanTeamId: string, seed: number): Ca
   const teams: CareerTeam[] = league.equipos.map((t) => ({
     id: t.id,
     nombre: t.nombre,
+    ...(t.nombreCompleto ? { nombreCompleto: t.nombreCompleto } : {}),
     colores: t.colores,
     players: t.jugadores,
   }));

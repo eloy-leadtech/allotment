@@ -1,4 +1,4 @@
-import { nextHumanFixture, teamName, availabilityStatus } from '@game';
+import { nextHumanFixture, teamFullName, availabilityStatus } from '@game';
 import { fatigueTier, FRESH_FATIGUE, derbyName } from '@engine';
 import { useGameStore } from '@ui/store/gameStore';
 import { RetroButton } from '@ui/components/RetroButton';
@@ -46,7 +46,9 @@ export function PrematchScreen() {
   const me = season.humanTeamId;
   const atHome = fixture.homeId === me;
   const rivalId = atHome ? fixture.awayId : fixture.homeId;
-  const name = (id: string): string => teamName(season, id);
+  // All names here are prominent (scoreboard + rival highlight), so show the full
+  // official name, falling back to the short one when unknown.
+  const name = (id: string): string => teamFullName(season, id);
   const derby = derbyName(fixture.homeId, fixture.awayId);
 
   return (
