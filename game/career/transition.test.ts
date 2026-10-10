@@ -369,14 +369,15 @@ describe('applyTransition palmarés accumulation', () => {
  * SUSTAINED collapse of the directiva meter sacks from season two on.
  *
  * These run on the real 96/97 database with FIXED seeds (fully deterministic).
- * Seed 9 gives a Barça that badly misses its "win the league" objective without
- * going down; seed 140 gives a Barça that is relegated. (Seeds re-picked after
- * the data-fidelity pass corrected player positions from the real line byte,
- * which shifted the deterministic simulation; the dismissal rules are unchanged.)
+ * Seed 2 gives a Barça that badly misses its "win the league" objective without
+ * going down; seed 32 gives a Barça that is relegated. (Seeds re-picked after the
+ * real-calendar switch (#132): the career now follows the authentic 96/97 fixtures
+ * and only Barça's own matches are simulated, which shifted the deterministic
+ * outcomes; the dismissal rules themselves are unchanged.)
  */
 describe('isManagerDismissed (cese fiel)', () => {
   it('does NOT sack a first-year Barça that badly misses the objective (no descenso)', () => {
-    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 9));
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 2));
     const evaluation = endOfSeasonEvaluation(finished);
     // A clear, angry miss — but not relegation.
     expect(careerOutcome(finished)).not.toBe('relegated');
@@ -388,7 +389,7 @@ describe('isManagerDismissed (cese fiel)', () => {
   });
 
   it('DOES sack a first-year Barça that is relegated (the one disaster)', () => {
-    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 140));
+    const finished = playSeasonToEnd(newCareer(loadPrimera9697(), 'barcelona', 32));
     expect(careerOutcome(finished)).toBe('relegated');
     expect(endOfSeasonEvaluation(finished).dismissed).toBe(true);
     expect(isManagerDismissed(finished)).toBe(true);
