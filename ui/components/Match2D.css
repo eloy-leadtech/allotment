@@ -1,0 +1,124 @@
+/* Visor 2D cenital — placa empotrada estilo PCF7. Aislado del global.css para no
+   pisar a otros agentes; usa los tokens del tema (tokens.css). */
+
+.match2d {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--c-bg-sunken);
+  box-shadow: var(--inset-shadow), var(--bevel-shadow);
+  line-height: 0;
+}
+
+.match2d__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Barra de controles del partido (play/pausa/velocidad + conmutador de vista). */
+.match-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.match-view__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Conmutador segmentado Teletipo / Visor 2D. */
+.match-seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--sunken);
+  box-shadow: var(--inset-shadow);
+}
+
+.match-seg__btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  min-height: 34px;
+  padding: 6px 16px;
+  font-family: var(--font-data);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  background: transparent;
+  border-radius: var(--radius-pill);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.match-seg__btn:hover {
+  color: var(--c-ink);
+}
+
+.match-seg__btn--active {
+  color: var(--c-ink);
+  background: var(--cap-metal);
+  box-shadow: var(--bevel-shadow);
+}
+
+/* Botón redondo de transporte (play/pausa/reinicio/velocidad). */
+.match-ctl {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 44px;
+  min-height: 40px;
+  padding: 0 12px;
+  font-family: var(--font-data);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-ink);
+  background: var(--bevel);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--bevel-shadow);
+}
+
+.match-ctl:hover {
+  background: var(--bevel-raised);
+}
+
+.match-ctl:active {
+  box-shadow: var(--inset-shadow);
+}
+
+.match-ctl--primary {
+  background: var(--cap-danger);
+  border-color: #8f1414;
+}
+
+.match-ctl__icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  fill: currentColor;
+}
+
+/* Rótulo de velocidad en monoespaciado de datos. */
+.match-ctl--speed {
+  font-variant-numeric: tabular-nums;
+  min-width: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .match-seg__btn {
+    transition: none;
+  }
+}
