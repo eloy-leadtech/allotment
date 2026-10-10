@@ -1,4 +1,4 @@
-# PCFUTBOL ULTIMATE — Documento de Diseño (SPEC v0.4)
+# PCFUTBOL ULTIMATE — Documento de Diseño (SPEC v0.4.1)
 
 > Manager de fútbol para Android, navegador y escritorio Windows con estética retro años 90 y plantillas históricas de la saga (temporadas clásicas, p. ej. 96/97; objetivo: 93/94→actualidad).
 > **Mashup de toda la saga futbolística de Dinamic Multimedia**: PC Fútbol (1.0→2001),
@@ -6,6 +6,7 @@
 > mecánicas e ideas (nunca assets, gráficos ni código originales).
 > Este documento es la fuente de verdad de los agentes de desarrollo.
 
+**Changelog v0.4.1**: shell de escritorio decidida: **Electron** (§4.1).
 **Changelog v0.4**: partido JUGABLE vía Pro Evolution Soccer 6 (copia original del usuario) en escritorio Windows, mediante el **Puente PES6** (§4.6, épica E13). La gestión (Mister + economía estilo PC Fútbol 7) sigue siendo nuestra; el simulador propio se mantiene para los partidos no jugados y para Android/navegador.
 **Changelog v0.3**: se elimina el enfoque MVP — el objetivo es el JUEGO COMPLETO en v1.0. Los hitos pasan a ser internos (orden de construcción), no releases recortadas.
 **Changelog v0.2**: enfoque mashup multi-título; arquitectura multi-competición; visor 2D; carpeta `research/`.
@@ -60,7 +61,7 @@ Regla intacta: al cierre de cada hito el juego es jugable de principio a fin con
 ## 4. Arquitectura técnica
 
 ### 4.1 Stack
-TypeScript + React + Vite; Capacitor → APK Android (y navegador); shell de escritorio Windows (Tauri o Electron, ver §7) con un helper nativo para el Puente PES6; Zustand para estado; CSS propio con variables (tema retro, sin UI kits); Vitest. 100% offline, guardado local.
+TypeScript + React + Vite; Capacitor → APK Android (y navegador); shell de escritorio Windows con **Electron** (llamadas a la API de Windows desde TS con `koffi`, sin compilar módulos nativos) para el Puente PES6; Zustand para estado; CSS propio con variables (tema retro, sin UI kits); Vitest. 100% offline, guardado local.
 
 ### 4.2 Módulos
 ```
@@ -71,9 +72,11 @@ TypeScript + React + Vite; Capacitor → APK Android (y navegador); shell de esc
 /ui         → React: pantallas, tema retro, visor 2D (canvas)
 /app        → shell Capacitor, navegación
 /bridge     → TS puro sin React ni APIs de navegador: Puente PES6 (codec del option file, mapeo de atributos, normalizador de resultado)
-/desktop    → shell de escritorio + helper nativo (detectar PES6, lanzar, leer resultado de memoria)
+/desktop    → shell Electron: proceso principal (detectar PES6, lanzar, leer resultado de memoria) + preload que expone una API mínima a la UI
 ```
 Regla dura: `/engine`, `/game` y `/bridge` no importan React. UI = capa fina. Todo lo que dependa del sistema operativo vive en `/desktop`.
+
+**Electron (decisión del propietario, 2026-10-10)**: se elige frente a Tauri porque mantiene un solo lenguaje (TypeScript estricto, Vitest y la CI actual) para el propietario y los agentes; el tamaño y la RAM extra no importan para este uso. Reglas de seguridad obligatorias: `contextIsolation: true`, `nodeIntegration: false`, `sandbox: true` y la UI solo habla con el proceso principal a través del preload. Si el arranque directo (E13-A4) exige inyectar código en PES6, esa pieza será una DLL nativa de 32 bits aparte, sea cual sea la shell.
 
 ### 4.3 Modelo de datos (borrador)
 ```ts
@@ -157,7 +160,6 @@ Ver `SETUP.md`. Flujo: issues `ready` → agente (Actions nocturno o night-shift
 - Nombre definitivo y logo
 - ¿Base de datos inicial: generada a mano, o script de importación desde fuente abierta?
 - Paleta y tipografía concretas (THEME.md)
-- Shell de escritorio: **Tauri** (ligero, Rust da acceso directo a Win32 para lanzar procesos y leer memoria) o **Electron** (todo en JS, pero la lectura de memoria necesitaría un módulo nativo). Recomendación: Tauri
 - Versión exacta de PES6 PC soportada (el exe original o con parche oficial): las direcciones de memoria dependen de ella. Se soporta una sola versión al principio
 - Arranque directo al partido o plan B (menú guiado): se decide tras la investigación E13-A
 - Competiciones con reglas que PES6 no reproduce bien (eliminatorias a doble partido, prórroga y penaltis): qué se configura en PES6 y qué se resuelve en nuestro juego

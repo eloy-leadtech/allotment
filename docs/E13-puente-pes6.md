@@ -35,7 +35,7 @@ Cada issue es un PR pequeño en `feat/issue-<n>`. Orden: de menos a más riesgo.
 
 | # | Issue | Hecho cuando |
 |---|---|---|
-| C1 · #110 | **Shell de escritorio** | Tauri o Electron (según decisión de §7 del SPEC; dependencia justificada en el PR) abre la app actual sin cambios. Build de Windows en local y en CI |
+| C1 · #110 | **Shell de escritorio** | Electron (SPEC §4.1; dependencia justificada en el PR) abre la app actual sin cambios, con las reglas de seguridad del SPEC. Build de Windows en local y en CI |
 | C2 · #111 | **Detectar PES6 + copia de seguridad** | El helper encuentra la instalación, comprueba la versión soportada (hash de A0) y hace copia de seguridad / restauración del option file. Nunca borra el original |
 | C3 · #112 | **Lanzar y esperar** | Lanza PES6, detecta cuándo se cierra y avisa a la app |
 | C4 · #113 | **Lector de resultado** | Lee de memoria lo documentado en A3 mientras PES6 está abierto y entrega la estructura cruda a B5 |
