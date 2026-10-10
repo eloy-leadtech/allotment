@@ -1,0 +1,72 @@
+/*
+ * Capa propia (NO de la maqueta) para los controles de PARTIDA que el motor
+ * necesita y que la maqueta estática no cableaba: jugar la jornada, guardar,
+ * menú, mercado de invierno y acceso a copa/europa. Van en el centro del
+ * despacho (sobre la foto) con la piel Mister (tokens de `.mister`). Separada de
+ * `mister.css` (generada, no editable) para dejar claro qué es port y qué es
+ * añadido funcional nuestro. Las secciones de la torre siguen siendo el hub 1:1.
+ */
+/*
+ * Neutraliza la fuga del skin viejo (global.css / pcf7-calco.css) dentro del
+ * subárbol Mister. Ambas pieles comparten unos pocos nombres de clase
+ * (conjunto COMPLETO: screen, ticker, crest, pos-badge, trophy, attr-track,
+ * attr-fill); el scope `.mister …` gana en especificidad para lo que la maqueta
+ * declara, pero las PROPIEDADES que la maqueta deja por defecto se las comía la
+ * regla global. La crítica es `.screen`, que global limita a 720px y vuelve
+ * flex: eso encajonaba todo el despacho a la izquierda. Se restaura el bloque a
+ * pantalla completa que espera la maqueta. Se carga DESPUÉS de mister.css.
+ */
+.mister .screen {
+  max-width: none;
+  margin: 0;
+  display: block;
+  min-height: 0;
+}
+.mister .ticker {
+  list-style: none;
+}
+
+.mister .office-play {
+  align-self: center;
+  width: min(300px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+.mister .office-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+.mister .office-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.mister .office-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  background: linear-gradient(180deg, rgba(84, 116, 170, 0.6), rgba(24, 42, 84, 0.72));
+  border: 1px solid rgba(127, 159, 255, 0.26);
+  border-radius: var(--r-s);
+  padding: 6px 13px;
+  cursor: pointer;
+  transition: color 0.14s, border-color 0.14s, transform 0.14s;
+}
+.mister .office-link:hover {
+  color: var(--ink);
+  border-color: rgba(160, 190, 255, 0.6);
+  transform: translateY(-1px);
+}
+.mister .office-link:focus-visible {
+  outline: 2px solid var(--edge);
+  outline-offset: 2px;
+}

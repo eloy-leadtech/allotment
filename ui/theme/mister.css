@@ -1,0 +1,2842 @@
+/*
+ * Piel "Mister" — port 1:1 de la maqueta del laboratorio
+ * (C:\dev\pcfutbol-analysis\media\ui-ref\styles.css), SCOPEADA bajo `.mister`
+ * para convivir con global.css sin chocar en nombres compartidos
+ * (.screen/.crest/.head/.body/.core…). Generada: selectores reescritos
+ * (:root/html/body/* -> .mister; body.en-pantalla -> .mister.en-pantalla;
+ * el resto prefijado). El cuerpo de cada regla es idéntico al original, así
+ * que la cascada resuelve igual que en despacho-local.html. Regenerar con
+ * scope-mister-css.mjs cuando cambie la maqueta. NO editar a mano.
+ */
+.mister{
+  --void:#0A0A28; --base:#14143C; --panel:#1E3462; --panel-hi:#2A4478;
+  --electric:#2A3FAA; --steel:#555FAA; --steel-lit:#5C7EAE; --gleam:#7593BB;
+  --edge:#7F9FFF; --chrome:#8890A8; --red:#C81E1E; --pitch:#117F2B; --amber:#C8961E;
+  --ink:#fff; --ink-dim:#B8C8E8; --ink-mute:#8FA3C8;
+  --r-s:3px; --r-m:6px; --r-l:12px;
+  --bevel: inset 0 1px 0 rgba(127,159,255,.5), inset 0 -1px 0 rgba(10,10,40,.85);
+  --lift: 0 4px 14px rgba(10,10,40,.6);
+  --u:4px;
+}
+.mister *{box-sizing:border-box}
+.mister{
+  margin:0; background:var(--void); color:var(--ink);
+  font-family:'Barlow',system-ui,sans-serif; font-size:15px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.mister .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 64px}
+
+.mister .eyebrow{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 18px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);
+}
+.mister .eyebrow b{color:var(--edge);font-weight:700}
+.mister .eyebrow .sep{color:var(--panel-hi)}
+
+/* ───── consola ───── */
+.mister .console{
+  position:relative;border-radius:var(--r-l);overflow:hidden;background:#0b0f2c;
+  box-shadow:0 24px 60px rgba(0,0,0,.62), var(--bevel);
+  border:1px solid #0d1230;
+}
+.mister .bg{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Capa de fotos: vive SOLO en la banda central abierta (bajo las tarjetas de
+   partido y sobre las solapas). Así la cabeza del sujeto —que suele estar
+   arriba en la foto— cae en lo alto de esa banda y se ve entera, sin que las
+   tarjetas superiores la tapen. Los bordes se funden para integrarse. */
+/* fondos: TODOS a pantalla completa de la consola, mismo tamaño (cover) */
+.mister .photos{position:absolute;inset:0;overflow:hidden}
+.mister .photo{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center center;
+  opacity:0;transition:opacity 2.6s ease, transform 32s linear;
+  transform:scale(1.05);
+}
+.mister .photo.on{opacity:.85;transform:scale(1.11)}
+/* El crédito va FUERA de la consola: dentro chocaba con la regleta de solapas. */
+/* ALTURA FIJA: el pie aparece/desaparece SIN mover la consola (nada de resize) */
+.mister .pcredit{
+  display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow:hidden;
+  margin:6px 2px 0;height:20px;transition:opacity .5s;
+  font-family:'Barlow Condensed',sans-serif;white-space:nowrap;
+}
+.mister .pcredit .pc-titulo{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.mister .pc-tag{
+  flex:none;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--void);background:var(--gleam);padding:2px 8px;border-radius:3px;
+}
+.mister .pc-titulo{font-weight:600;font-size:13.5px;letter-spacing:.01em;color:var(--ink-dim)}
+.mister .pc-src{font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .grain{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    /* el velo baja de .46 a .18: era lo que más apagaba la foto */
+    linear-gradient(rgba(10,13,44,.18), rgba(10,13,44,.18)),
+    radial-gradient(135% 108% at 50% 46%, rgba(10,10,40,0) 40%, rgba(10,10,40,.82) 100%),
+    repeating-linear-gradient(0deg,rgba(127,159,255,.07) 0 1px,transparent 1px 3px);
+}
+.mister .screen{position:relative;z-index:2;padding:18px 18px 0}
+
+/* ───── cabecero: [tu club] [logo Liga centrado] [rival] [fecha] ─────
+   Las dos tarjetas de equipo comparten formato y ancho (1fr cada una), con la
+   competición centrada entre ellas. Banda fina; los escudos, grandes, asoman. */
+/* align-items:stretch -> todas las tarjetas del cabecero con la MISMA altura */
+.mister .head{display:grid;grid-template-columns:1fr auto 1fr auto;align-items:stretch;gap:10px;overflow:visible}
+
+.mister .teamcard{
+  display:flex;align-items:center;gap:13px;padding:6px 18px 6px 10px;min-width:0;
+  border-radius:var(--r-m);overflow:visible;
+}
+.mister .teamcard.rival{padding:6px 10px 6px 18px}
+.mister .nm-comp{align-self:center}
+/* escudos y logo un 50% más grandes (81px), proporción respetada (contain),
+   asomando fuera de la banda fina con margen negativo. */
+.mister .crest, .mister .nm-comp{
+  width:81px;height:81px;flex:none;object-fit:contain;margin-top:-18px;margin-bottom:-18px;
+  filter:drop-shadow(0 3px 7px rgba(5,8,30,.85));
+}
+.mister img.crest{background:transparent}
+.mister .nm-comp{width:66px;height:66px;margin-top:-12px;margin-bottom:-12px;
+  justify-self:center;border-radius:10px}
+
+.mister .tc-txt{display:flex;flex-direction:column;min-width:0;gap:0}
+.mister .tc-lbl{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:8.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);line-height:1.25;
+}
+.mister .tc-name{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:22px;line-height:1.04;letter-spacing:.005em;text-transform:uppercase;
+  text-shadow:0 1px 0 rgba(6,8,26,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .tc-sub{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);line-height:1.15;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .tc-sub b{color:var(--ink);font-weight:700}
+.mister .tc-sub i{font-style:normal;color:var(--panel-hi);margin:0 6px}
+.mister .tc-sub em{font-style:normal;color:var(--edge)}
+
+.mister .today{
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-end;
+  padding:4px 15px;border-radius:var(--r-m);text-align:right;flex:none;
+}
+.mister .today-date{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:20px;line-height:1.05;text-transform:uppercase;white-space:nowrap;
+  font-variant-numeric:tabular-nums;text-shadow:0 1px 0 rgba(6,8,26,.8);
+}
+.mister .today-date em{font-style:italic;color:var(--edge)}
+.mister .today-week{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);line-height:1.1;
+}
+
+/* ───── próximos partidos (y selector de competición) ───── */
+.mister .fixtures{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:3px}
+.mister .fx{
+  display:flex;flex-direction:row;align-items:center;gap:8px;text-align:left;
+  padding:4px 7px 4px 10px;border-radius:var(--r-m);cursor:pointer;font:inherit;color:var(--ink);
+  transition:background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.mister .fx-main{display:flex;flex-direction:column;gap:0;min-width:0;flex:1}
+/* logo de competición a la derecha, del MISMO tamaño que el escudo del rival */
+.mister .fx-side{
+  display:flex;align-items:center;justify-content:center;flex:none;
+  padding-left:9px;border-left:1px solid rgba(127,159,255,.16);
+}
+.mister .fx-side .fx-logo{width:40px;height:40px;border-radius:6px}
+.mister .fx:hover{background:linear-gradient(180deg,rgba(84,116,178,.95),rgba(24,38,80,.97))}
+.mister .fx:focus-visible{outline:2px solid var(--edge);outline-offset:2px}
+.mister .fx[aria-selected="true"]{
+  background:linear-gradient(180deg,rgba(102,140,206,.97),rgba(30,52,104,.98));
+  border-top-color:rgba(170,198,255,.85);
+  box-shadow:0 4px 14px rgba(6,8,26,.62), inset 0 -3px 0 var(--red);
+}
+.mister .fx-logo{object-fit:contain}
+.mister .fx-round{color:var(--edge);font-weight:700}
+.mister .fx[aria-selected="true"] .fx-round{color:#cfe0ff}
+.mister .fx-body{display:flex;align-items:center;gap:8px;width:100%}
+.mister .fx-crest{width:40px;height:40px;flex:none;object-fit:contain;
+  filter:drop-shadow(0 1px 2px rgba(5,8,30,.7))}
+.mister .fx-rival{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;line-height:1.05;
+  text-transform:uppercase;letter-spacing:.01em;text-shadow:0 1px 0 #0b0f2c;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .fx-meta{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:9.5px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);line-height:1.2;
+  margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.mister .fx-meta i{font-style:normal;color:var(--panel-hi);margin:0 4px}
+.mister .fx-meta b{color:var(--ink-dim);font-weight:700}
+.mister .fx-meta em{font-style:normal;color:var(--edge)}
+.mister .fx-meta b{color:var(--ink);font-weight:700}
+.mister .fx-meta i{font-style:normal;color:var(--panel-hi);margin:0 5px}
+.mister .fx-meta em{font-style:normal;color:var(--edge)}
+
+.mister .statusbar{
+  margin:10px 0 0;height:16px;border-radius:999px;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#0b0f2c,#131a44);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.75), 0 1px 0 rgba(127,159,255,.18);
+}
+.mister .statusbar .fill{
+  position:absolute;inset:2px auto 2px 2px;width:var(--pct,58%);border-radius:999px;
+  background:linear-gradient(180deg,#4358c8,#2A3FAA 60%,#1c2a80);
+  box-shadow:inset 0 1px 0 rgba(160,180,255,.55);
+}
+.mister .statusbar .seg{
+  position:absolute;top:2px;bottom:2px;left:calc(var(--pct,58%) - 26px);width:26px;border-radius:999px;
+  background:linear-gradient(180deg,#e04a4a,var(--red) 55%,#8d1414);
+  box-shadow:inset 0 1px 0 rgba(255,180,180,.5);
+}
+.mister .subhead{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);
+}
+.mister .subplate{
+  display:flex;justify-content:space-between;gap:12px;padding:6px 12px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(84,116,166,.92),rgba(24,42,84,.95));
+  box-shadow:var(--bevel);
+}
+.mister .subplate span:last-child{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ───── cuerpo ─────
+   Torres estrechas y pegadas a los bordes; el centro (foto + barritas) se
+   ensancha. gap grande = las torres se alejan del centro. */
+.mister .body{display:grid;grid-template-columns:auto 1fr auto;gap:36px;margin-top:14px;align-items:stretch}
+.mister .tower{display:grid;gap:var(--u);width:146px}
+.mister .grp{display:grid;gap:var(--u)}
+.mister .grp + .grp{margin-top:26px}
+.mister .grp-h{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);
+  padding-left:2px;margin:0 0 2px;
+}
+.mister .sec{
+  display:flex;align-items:center;gap:8px;width:100%;min-width:0;text-align:left;cursor:pointer;
+  padding:4px 8px 4px 5px;border-radius:var(--r-m);font:inherit;color:var(--ink);
+  /* casi opacas: la foto de fondo ahora se ve mucho más, y las placas
+     tienen que seguir siendo metal sólido, no cristal */
+  background:linear-gradient(180deg,rgba(86,120,170,.93) 0%,rgba(26,45,88,.96) 100%);
+  border-top:1px solid rgba(127,159,255,.5);border-left:1px solid rgba(127,159,255,.26);
+  border-bottom:1px solid rgba(10,10,40,.9);border-right:1px solid rgba(10,10,40,.7);
+  box-shadow:0 3px 9px rgba(6,8,26,.62);
+  transition:transform .14s cubic-bezier(.4,0,.2,1), box-shadow .14s, border-color .14s, background .14s;
+}
+.mister .sec:hover, .mister .sec:focus-visible{
+  transform:translateY(-2px);border-top-color:rgba(160,190,255,.9);
+  box-shadow:0 6px 16px rgba(10,10,40,.65), 0 0 0 1px rgba(127,159,255,.25);
+  background:linear-gradient(180deg,rgba(112,150,204,.97) 0%,rgba(34,58,110,.98) 100%);
+  outline:none;
+}
+.mister .sec:focus-visible{box-shadow:0 6px 16px rgba(10,10,40,.65), 0 0 0 2px var(--edge)}
+.mister .sec:active{transform:translateY(0);box-shadow:inset 0 2px 5px rgba(0,0,0,.6)}
+.mister .thumb{
+  width:32px;height:28px;flex:none;border-radius:var(--r-s);overflow:hidden;
+  background:linear-gradient(160deg,#22345f,#101a3c);
+  border-top:1px solid rgba(160,190,255,.75);border-left:1px solid rgba(140,170,235,.5);
+  border-bottom:1px solid #05061a;border-right:1px solid #070a22;
+  filter:brightness(.92) saturate(.94);transition:filter .14s;
+  display:grid;place-items:center;
+}
+/* El icono gira al ENTRAR el ratón, no al salir.
+   El truco: la transición vive en el estado :hover, no en el base. Así el
+   giro solo se anima cuando el cursor entra; al salir, el estado base no
+   tiene transición y el icono vuelve seco a su sitio, sin girar hacia atrás.
+   Giro lento (1,1 s) para que se aprecie. */
+.mister .thumb{perspective:360px}
+.mister .thumb svg{width:100%;height:100%;display:block;transform-origin:50% 50%}
+.mister .sec:hover .thumb svg, .mister .sec:focus-visible .thumb svg{
+  transform:rotateY(360deg);
+  transition:transform 1.1s cubic-bezier(.33,.7,.3,1);
+}
+.mister .sec:hover .thumb{filter:brightness(1.08) saturate(1.04)}
+.mister .sec .txt{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.mister .sec .n{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.03em;text-transform:uppercase;line-height:1.05;text-shadow:0 1px 0 #101010;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.mister .sec .d{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.05em;color:var(--ink-mute);text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.mister .sec .d em{font-style:normal;color:var(--ink-dim)}
+.mister .sec .d.alert em{color:#ff8a8a}
+.mister .sec .d.good em{color:#63d98a}
+.mister .pip{margin-left:auto;flex:none;width:8px;height:8px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 0 2px rgba(200,30,30,.22), 0 0 8px rgba(200,30,30,.7)}
+.mister .pip.q{background:var(--amber);box-shadow:0 0 0 2px rgba(200,150,30,.2),0 0 8px rgba(200,150,30,.55)}
+
+/* ───── núcleo: abierto (estadio); la ficha de leyenda se abre al pulsar el
+   medallón junto a Moral y aparece centrada. ───── */
+/* .core SIN position:relative -> la ficha (absolute) se centra respecto a
+   .screen (el panel entero), no respecto a la columna central de la rejilla,
+   que estaba descentrada por las torres. */
+.mister .core{display:flex;flex-direction:column;justify-content:center;
+  align-items:center;padding:8px}
+
+/* ── barrita fina que abre las fichas de jugador (bajo la tarjeta central) ── */
+.mister .legends-bar{
+  grid-column:2/3;grid-row:2;margin-top:4px;
+  display:flex;align-items:center;gap:7px;cursor:pointer;font:inherit;color:var(--ink-dim);
+  height:24px;padding:0 10px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(60,86,140,.5),rgba(16,28,66,.56));
+  border:1px solid rgba(172,202,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 2px 7px rgba(6,8,26,.45);
+  transition:background .2s, box-shadow .2s, transform .12s, color .2s;
+}
+.mister .legends-bar:hover{background:linear-gradient(180deg,rgba(88,120,182,.66),rgba(24,40,88,.72));color:var(--ink);transform:translateY(-1px)}
+.mister .legends-bar:focus-visible{outline:2px solid var(--edge);outline-offset:1px}
+.mister .legends-bar[aria-pressed="true"]{
+  background:linear-gradient(180deg,rgba(112,150,204,.8),rgba(34,58,110,.85));color:var(--ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4), inset 0 -2px 0 var(--gleam);
+}
+.mister .lb-icon{width:16px;height:16px;flex:none;filter:drop-shadow(0 1px 1px rgba(5,8,30,.7))}
+.mister .lb-txt{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;
+}
+.mister .lb-chev{margin-left:auto;font-size:10px;color:var(--edge);
+  transition:transform .3s cubic-bezier(.22,.61,.36,1)}
+.mister .legends-bar[aria-pressed="true"] .lb-chev{transform:rotate(90deg)}
+
+/* ── ficha de jugador: SIEMPRE en flujo y centrada por el flex de .core (que
+   está perfectamente centrado); se muestra/oculta con opacidad. Así el centrado
+   es inmune a las rarezas del posicionamiento absoluto. ── */
+.mister .playercard{
+  display:flex;z-index:5;gap:16px;width:min(430px,94%);padding:14px;border-radius:var(--r-l);
+  background:linear-gradient(180deg,rgba(20,33,72,.9),rgba(9,13,40,.94));
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 22px 50px rgba(5,8,30,.75);
+  border:1px solid rgba(127,159,255,.34);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px) scale(.97);
+  transition:opacity .35s ease, transform .35s cubic-bezier(.22,.61,.36,1), visibility .35s;
+}
+.mister .playercard.open{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.mister .pcp-close{
+  position:absolute;top:6px;right:8px;width:22px;height:22px;border:0;border-radius:50%;
+  cursor:pointer;background:rgba(10,14,40,.6);color:var(--ink-dim);font-size:16px;line-height:1;
+  display:grid;place-items:center;transition:background .15s,color .15s;
+}
+.mister .pcp-close:hover{background:var(--red);color:#fff}
+.mister .pcp-foto{
+  width:120px;height:160px;flex:none;object-fit:cover;border-radius:var(--r-m);
+  border-top:1px solid rgba(160,190,255,.6);border-bottom:1px solid #05061a;
+  box-shadow:0 4px 12px rgba(5,8,30,.7);background:#101a3c;
+  transition:opacity .4s ease;
+}
+.mister .pcp-info{display:flex;flex-direction:column;min-width:0;transition:opacity .4s ease}
+.mister .pcp-foto.swap, .mister .pcp-info.swap{opacity:0}
+.mister .pcp-eyebrow{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--edge);
+}
+.mister .pcp-icon{width:18px;height:18px;flex:none}
+.mister .pcp-nombre{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:30px;line-height:1;text-transform:uppercase;letter-spacing:.01em;
+  color:var(--ink);text-shadow:0 2px 0 rgba(6,8,26,.8);margin-top:2px;
+}
+.mister .pcp-tray{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink-dim);
+  margin:3px 0 8px;padding-bottom:8px;border-bottom:1px solid rgba(127,159,255,.16);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .pcp-bio{
+  font-family:'Barlow',sans-serif;font-size:12.5px;line-height:1.4;color:var(--ink-dim);
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;
+}
+.mister .pcp-next{
+  margin-top:auto;padding-top:8px;cursor:pointer;align-self:flex-end;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--edge);
+}
+.mister .pcp-next:hover{color:#a9c2ff}
+.mister .halo{
+  position:absolute;top:40%;left:50%;width:min(540px,96%);aspect-ratio:1;transform:translate(-50%,-50%);
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(196,220,255,.8) 0%,rgba(90,130,240,.4) 13%,rgba(42,63,170,.19) 33%,rgba(42,63,170,0) 66%);
+  animation:breathe 7s ease-in-out infinite;
+}
+.mister .flare{
+  position:absolute;top:40%;left:50%;width:min(640px,106%);height:2px;transform:translate(-50%,-50%);
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(150,185,255,.5) 42%,rgba(225,238,255,.95) 50%,rgba(150,185,255,.5) 58%,transparent);
+  animation:breathe 7s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(.97)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.03)}}
+/* escenario del trofeo: alto fijo para que al cambiar de copa no salte el layout */
+.mister .trophy-stage{
+  position:relative;z-index:2;height:210px;display:grid;place-items:center;width:100%;
+}
+.mister .complogo{
+  max-height:200px;max-width:78%;width:auto;height:auto;display:block;
+  border-radius:20px;
+  filter:drop-shadow(0 16px 34px rgba(5,8,30,.85));
+  transition:opacity .5s ease, transform .5s cubic-bezier(.22,.61,.36,1);
+}
+.mister .complogo.swap{opacity:0;transform:translateY(12px) scale(.95)}
+
+/* selector de competición */
+.mister .compsel{
+  position:relative;z-index:2;display:flex;gap:4px;margin-top:14px;padding:3px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(10,14,44,.85),rgba(22,30,70,.7));
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.6), 0 1px 0 rgba(127,159,255,.2);
+}
+.mister .cbtn{
+  padding:6px 15px 7px;border:0;border-radius:999px;cursor:pointer;font:inherit;color:var(--ink-mute);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;background:transparent;
+  transition:color .16s,background .16s,box-shadow .16s;
+}
+.mister .cbtn:hover{color:var(--ink)}
+.mister .cbtn:focus-visible{outline:2px solid var(--edge);outline-offset:1px}
+.mister .cbtn[aria-selected="true"]{
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--steel-lit),var(--panel) 72%,#1b2c58);
+  box-shadow:inset 0 1px 0 rgba(160,190,255,.7), 0 2px 6px rgba(10,10,40,.55);
+}
+.mister .corelbl{position:relative;z-index:2;margin-top:4px;text-align:center}
+.mister .corelbl .comp{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:clamp(26px,4.4vw,42px);letter-spacing:.005em;text-transform:uppercase;line-height:.98;
+  background:linear-gradient(174deg,#ffffff 0%,#cfe0ff 26%,#7d95c8 52%,#e8f0ff 70%,#8fa6d4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 0 rgba(10,10,40,.5);
+}
+.mister .corelbl .sub{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11.5px;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--ink-mute);margin-top:5px;
+}
+/* Clasificación PLEGADA como barrita al fondo del centro. Al pasar el ratón
+   (o enfocar con teclado) se despliega la tabla completa, creciendo hacia
+   arriba porque el centro está anclado abajo. */
+.mister .miniliga{
+  position:relative;z-index:2;width:min(360px,96%);border-radius:var(--r-m);overflow:hidden;
+  max-height:27px;   /* plegada: solo la barra */
+  /* transparente y esmerilada: deja ver el estadio a través */
+  background:linear-gradient(180deg,rgba(18,30,66,.28),rgba(8,12,38,.36));
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 8px 24px rgba(5,8,30,.45);
+  border:1px solid rgba(127,159,255,.22);outline:none;
+  transition:max-height .42s cubic-bezier(.22,.61,.36,1), background .3s ease,
+             backdrop-filter .3s ease, box-shadow .3s ease;
+}
+.mister .miniliga:hover, .mister .miniliga:focus-within, .mister .miniliga:focus{
+  max-height:260px;
+  /* al abrir sube algo la opacidad para leer la tabla, pero sigue translúcida */
+  background:linear-gradient(180deg,rgba(19,31,70,.74),rgba(9,13,40,.8));
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 14px 36px rgba(5,8,30,.65);
+}
+.mister .ml-head{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:0 12px;height:27px;cursor:default;
+  background:linear-gradient(180deg,rgba(92,126,174,.3),rgba(30,52,98,.26));
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);
+}
+.mister .ml-title em{font-style:normal;color:var(--edge);font-weight:600}
+.mister .ml-hint{display:flex;align-items:center;gap:5px;color:var(--ink-mute);font-size:9px}
+.mister .ml-chev{display:inline-block;transition:transform .42s cubic-bezier(.22,.61,.36,1)}
+.mister .miniliga:hover .ml-chev, .mister .miniliga:focus-within .ml-chev{transform:rotate(90deg)}
+.mister .miniliga:hover .ml-hint, .mister .miniliga:focus-within .ml-hint{color:var(--edge)}
+.mister .ml-cols, .mister .ml-row{
+  display:grid;grid-template-columns:16px 1fr 18px 46px 28px 24px;align-items:center;gap:8px;
+  padding:1px 11px;font-family:'Barlow Condensed',sans-serif;
+}
+.mister .ml-cols{
+  padding-top:2px;padding-bottom:2px;font-weight:600;font-size:8px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-mute);border-bottom:1px solid rgba(127,159,255,.14);
+}
+.mister .ml-cols span{text-align:right} .mister .ml-cols span:nth-child(2){text-align:left}
+.mister .ml-row{border-top:1px solid rgba(127,159,255,.06)}
+.mister .ml-pos{font-weight:700;font-size:11px;color:var(--ink-mute);text-align:center;font-variant-numeric:tabular-nums}
+.mister .ml-club{font-weight:600;font-size:12px;letter-spacing:.02em;color:var(--ink-dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .ml-n, .mister .ml-gep, .mister .ml-dg{font-weight:600;font-size:10px;color:var(--ink-mute);
+  font-variant-numeric:tabular-nums;text-align:right}
+.mister .ml-dg{color:var(--ink-dim)}
+.mister .ml-pts{font-weight:700;font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.mister .ml-row.me{
+  background:linear-gradient(90deg,rgba(200,30,30,.28),rgba(200,30,30,.02));
+  box-shadow:inset 3px 0 0 var(--red);
+}
+.mister .ml-row.me .ml-pos, .mister .ml-row.me .ml-club, .mister .ml-row.me .ml-dg{color:var(--ink)}
+
+.mister .stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:100%;margin-top:16px}
+.mister .stat{
+  padding:8px 10px 9px;border-radius:var(--r-m);text-align:center;
+  background:linear-gradient(180deg,rgba(80,112,164,.9),rgba(14,19,50,.95));
+  box-shadow:var(--bevel);
+}
+.mister .stat .k{
+  display:block;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:9.5px;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--ink-mute);
+}
+.mister .stat .v{
+  display:block;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums;text-shadow:0 1px 0 #101010;
+}
+.mister .stat .v small{font-size:13px;font-style:normal;font-weight:600;color:var(--ink-dim);letter-spacing:.02em}
+.mister .stat.pos .v{color:#7fe0a0} .mister .stat.neg .v{color:#ff9a9a}
+
+/* ───── solapas ───── */
+.mister .tabs{display:flex;gap:2px;margin:20px -18px 0;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.mister .tabs::-webkit-scrollbar{display:none}
+.mister .tab{
+  flex:1 0 auto;min-width:96px;padding:9px 14px 11px;cursor:pointer;font:inherit;color:var(--ink-dim);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.13em;text-transform:uppercase;white-space:nowrap;text-align:center;
+  border:0;border-radius:var(--r-m) var(--r-m) 0 0;
+  clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%);
+  background:linear-gradient(180deg,rgba(52,76,132,.95),rgba(14,21,52,.97));
+  box-shadow:inset 0 1px 0 rgba(127,159,255,.3);
+  transition:color .14s,background .14s;
+}
+.mister .tab:hover{color:var(--ink);background:linear-gradient(180deg,rgba(78,108,172,.97),rgba(22,32,72,.98))}
+.mister .tab:focus-visible{outline:2px solid var(--edge);outline-offset:-3px}
+.mister .tab[aria-selected="true"]{
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--steel-lit),var(--panel) 70%,#1b2c58);
+  box-shadow:inset 0 1px 0 rgba(160,190,255,.75), inset 0 -3px 0 var(--red);
+}
+
+/* ───── franja de curiosidades ───── */
+.mister .ticker{
+  display:flex;align-items:center;gap:12px;margin:3px 0 0;padding:7px 14px;
+  border-radius:var(--r-m);
+  background:linear-gradient(180deg,rgba(20,30,66,.92),rgba(10,15,44,.95));
+  box-shadow:var(--bevel);border-top:1px solid rgba(127,159,255,.2);
+}
+.mister .ticker-tag{
+  flex:none;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--edge);
+  padding-right:12px;border-right:1px solid rgba(127,159,255,.25);
+}
+.mister .ticker-txt{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;
+  letter-spacing:.02em;color:var(--ink-dim);line-height:1.3;
+  transition:opacity .6s ease;
+}
+.mister .ticker-txt.fade{opacity:0}
+
+/* ───── notas ───── */
+.mister .notes{margin-top:34px;display:grid;gap:14px}
+.mister .notes h2{
+  margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:22px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);
+}
+.mister .notes p{margin:0;max-width:66ch;color:var(--ink-dim);font-size:14.5px}
+.mister .notes p b{color:var(--ink);font-weight:600}
+.mister .sw{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.mister .chip{
+  display:flex;align-items:center;gap:7px;padding:5px 11px 5px 6px;border-radius:999px;
+  background:rgba(30,52,98,.5);box-shadow:var(--bevel);
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);
+}
+.mister .chip i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.mister .chip b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.mister .credits{font-size:12.5px;line-height:1.65;color:var(--ink-mute)}
+.mister .credits b{color:var(--ink-dim);font-weight:600}
+.mister .credits a{color:var(--edge);text-decoration:underline;text-underline-offset:2px}
+.mister .credits a:hover{color:#a9c2ff}
+
+/* ═══════ cristal Windows Aero ═══════
+   Superficie de cristal esmerilado sobre el estadio: la línea de brillo al 50%
+   (más claro arriba, más oscuro abajo) es la firma del Aero, más el reflejo
+   superior y el desenfoque del fondo. */
+.mister .teamcard, .mister .today, .mister .sec, .mister .fx, .mister .tab{
+  background:linear-gradient(to bottom,
+    rgba(150,182,240,.52) 0%,
+    rgba(96,132,196,.40) 49%,
+    rgba(32,54,104,.52) 51%,
+    rgba(18,32,74,.60) 100%) !important;
+  -webkit-backdrop-filter:blur(8px) saturate(1.1);
+  backdrop-filter:blur(8px) saturate(1.1);
+  border:1px solid rgba(172,202,255,.34);
+  border-radius:var(--r-m);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    0 3px 10px rgba(5,8,30,.42);
+  position:relative;
+}
+/* brillo superior tipo cristal */
+.mister .teamcard::after, .mister .today::after, .mister .sec::after, .mister .fx::after{
+  content:"";position:absolute;left:0;right:0;top:0;height:48%;pointer-events:none;
+  border-radius:var(--r-m) var(--r-m) 0 0;
+  background:linear-gradient(to bottom, rgba(255,255,255,.28), rgba(255,255,255,0));
+  z-index:0;
+}
+.mister .teamcard > *, .mister .today > *, .mister .sec > *, .mister .fx > *{position:relative;z-index:1}
+/* botones de sección: casi transparentes en reposo (dejan ver el estadio),
+   y opacos al pasar el ratón — igual que la tabla de clasificación. */
+.mister .sec{
+  background:linear-gradient(to bottom,
+    rgba(120,150,210,.22) 0%,
+    rgba(70,100,165,.16) 49%,
+    rgba(26,44,92,.22) 51%,
+    rgba(16,28,66,.28) 100%) !important;
+  border-color:rgba(150,180,240,.22) !important;
+  transition:background .28s ease, border-color .28s ease, transform .14s cubic-bezier(.4,0,.2,1), box-shadow .14s;
+}
+.mister .sec:hover, .mister .sec:focus-visible, .mister .fx:hover{
+  background:linear-gradient(to bottom,
+    rgba(176,206,255,.66) 0%,
+    rgba(116,152,214,.54) 49%,
+    rgba(40,64,120,.64) 51%,
+    rgba(24,40,88,.72) 100%) !important;
+  border-color:rgba(190,214,255,.55) !important;
+}
+.mister .fx[aria-selected="true"]{
+  background:linear-gradient(to bottom,
+    rgba(186,214,255,.7) 0%,
+    rgba(120,158,220,.56) 49%,
+    rgba(44,70,128,.66) 51%,
+    rgba(28,46,96,.72) 100%) !important;
+  border-top-color:rgba(200,222,255,.8);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -3px 0 var(--red), 0 4px 14px rgba(5,8,30,.6);
+}
+
+@media (max-width:900px){
+  .mister .body{grid-template-columns:1fr;gap:22px}
+  .mister .tower{width:auto;grid-template-columns:1fr 1fr;gap:6px;align-items:start}
+  .mister .grp{grid-template-columns:1fr;gap:6px}
+  .mister .grp + .grp{margin-top:0}
+  .mister .core{order:-1;min-height:auto;padding-bottom:8px}
+  .mister .head{grid-template-columns:1fr}
+  .mister .cap{display:none}
+  .mister .plate.right{flex-direction:row;padding:5px 14px 5px 8px}
+  .mister .plate.right .ptxt{align-items:flex-start}
+  .mister .subhead{grid-template-columns:1fr}
+  .mister .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:540px){
+  .mister .tower{grid-template-columns:1fr}
+  .mister .wrap{padding:18px 12px 48px}
+  .mister .trophy{width:140px}
+}
+/* Movimiento reducido, con criterio.
+   Antes esto mataba TODA transición con un !important global, y con ello se
+   llevaba por delante dos cosas que el usuario sí quiere: el relevo de fotos
+   del fondo (que es un cambio de contenido, no un movimiento) y el giro del
+   icono al apuntarlo (que solo ocurre si el usuario lo provoca).
+   Lo que sí se apaga es el movimiento ambiental: el latido del núcleo, las
+   entradas en cascada y el zoom lento del fondo. */
+@media (prefers-reduced-motion:reduce){
+  .mister *{animation:none!important}
+  .mister .halo, .mister .flare{opacity:.85}
+  .mister .photo{transition:opacity 2s ease!important;transform:none!important}
+  .mister .photo.on{transform:none!important}
+  .mister .trophy{transition:opacity .2s ease!important}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PANTALLAS CONMUTABLES  (plantilla · mercado · economía · estadio ·
+   palmarés · partido). Comparten la cabecera, el ticker y las solapas
+   con el despacho; solo cambia el bloque central.
+   ═══════════════════════════════════════════════════════════════════ */
+/* La consola NO debe cambiar de tamaño al cambiar de pestaña.
+   Truco: todas las pantallas se apilan en la MISMA celda de un grid, así el
+   contenedor siempre mide lo que la pantalla más alta —da igual cuál esté
+   activa—. Las inactivas siguen ocupando su hueco (visibility:hidden), solo
+   que no se ven ni se pueden pulsar. Resultado: altura constante, sin recortes. */
+.mister .views{position:relative;display:grid;grid-template-columns:1fr}
+.mister .view{grid-area:1/1;visibility:hidden;pointer-events:none}
+.mister .view.is-active{visibility:visible;pointer-events:auto}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mister .view.is-active{animation:viewIn .4s cubic-bezier(.22,.61,.36,1) both}
+
+/* título de cada pantalla */
+.mister .view-head{margin:8px 2px 2px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.mister .vh-title{
+  margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:30px;line-height:1;letter-spacing:.01em;text-transform:uppercase;
+  background:linear-gradient(174deg,#ffffff 0%,#cfe0ff 30%,#8fa6d4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 0 rgba(10,10,40,.4);
+}
+.mister .vh-sub{
+  margin:0;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);
+}
+.mister .vh-sub em{font-style:normal;color:var(--edge)}
+
+/* rejilla de cuerpo por pantalla */
+.mister .screenbody{display:grid;gap:18px;margin-top:12px;align-items:start;
+  grid-template-columns:206px minmax(0,1fr) 206px}
+/* Ficha CERRADA (por defecto): tabla ancha con TODOS los stats para comparar.
+   Ficha ABIERTA (al clicar): tabla fija de 560 y ficha al lado; misma altura. */
+.mister .view[data-view="plantilla"] .screenbody, .mister .view[data-view="mercado"] .screenbody{grid-template-columns:172px minmax(0,1fr)}
+.mister .view[data-view="plantilla"] .screenbody.ficha-open, .mister .view[data-view="mercado"] .screenbody.ficha-open{grid-template-columns:172px 560px minmax(300px,1fr)}
+.mister .view[data-view="plantilla"] .paneltable, .mister .view[data-view="mercado"] .paneltable{max-width:none}
+.mister .ficha{display:none}
+.mister .screenbody.ficha-open .ficha{display:block}
+.mister .screenbody.ficha-open .at-x{display:none}   /* modo estrecho: oculta atributos extra */
+.mister .screenbody .tower{width:auto}
+
+/* filas de dato clave (torres de resumen) */
+.mister .stat-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  padding:5px 10px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(84,116,166,.24),rgba(24,42,84,.3));
+  border:1px solid rgba(150,180,240,.16);
+  font-family:'Barlow Condensed',sans-serif;
+}
+.mister .sr-k{font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .sr-v{font-weight:700;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.mister .stat-row.total{background:linear-gradient(180deg,rgba(102,140,206,.4),rgba(30,52,104,.5));border-color:rgba(190,214,255,.3)}
+.mister .stat-row.total .sr-k, .mister .stat-row.total .sr-v{color:var(--ink)}
+.mister .stat-row.alert .sr-v{color:#ff9a9a}
+.mister .stat-row.good .sr-v{color:#7fe0a0}
+
+/* botones de filtro por línea */
+.mister .filt{
+  display:block;width:100%;text-align:left;cursor:pointer;font:inherit;color:var(--ink-dim);
+  padding:6px 11px;border-radius:var(--r-s);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11.5px;
+  letter-spacing:.09em;text-transform:uppercase;
+  background:linear-gradient(180deg,rgba(60,86,140,.34),rgba(16,28,66,.4));
+  border:1px solid rgba(150,180,240,.18);
+  transition:background .18s,color .18s,box-shadow .18s;
+}
+.mister .filt:hover{background:linear-gradient(180deg,rgba(92,124,182,.6),rgba(24,40,88,.66));color:var(--ink)}
+.mister .filt:focus-visible{outline:2px solid var(--edge);outline-offset:1px}
+.mister .filt.is-on{
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--steel-lit),var(--panel) 72%,#1b2c58);
+  box-shadow:inset 0 1px 0 rgba(160,190,255,.6),inset 0 -2px 0 var(--red);
+}
+
+/* ─── tabla de datos (plantilla / mercado) ─── */
+.mister .paneltable{
+  border-radius:var(--r-m);overflow:hidden;max-width:720px;
+  display:flex;flex-direction:column;   /* la cabecera fija, el cuerpo rellena */
+  background:linear-gradient(180deg,rgba(18,30,66,.5),rgba(8,12,38,.6));
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(127,159,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 26px rgba(5,8,30,.45);
+}
+.mister .dt-head{
+  display:grid;align-items:center;gap:8px;padding:7px 12px;
+  background:linear-gradient(180deg,rgba(92,126,174,.5),rgba(30,52,98,.5));
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute);
+  border-bottom:1px solid rgba(127,159,255,.2);
+}
+.mister .dt-head span{text-align:center}
+.mister .dt-head .dt-l{text-align:left}
+/* ANCHO (ficha cerrada): todos los atributos */
+.mister .dt-squad{grid-template-columns:24px minmax(92px,1.1fr) 46px 48px 24px 34px repeat(9,minmax(24px,1fr))}
+.mister .dt-market{grid-template-columns:minmax(92px,1.1fr) minmax(54px,.8fr) 46px 48px 24px 34px repeat(9,minmax(22px,1fr)) 46px}
+/* ESTRECHO (ficha abierta): identidad + media + Téc/Vel/Res (+valor) */
+.mister .screenbody.ficha-open .dt-squad{grid-template-columns:24px minmax(94px,1fr) 46px 54px 26px 40px 34px 34px 34px}
+.mister .screenbody.ficha-open .dt-market{grid-template-columns:minmax(90px,1.2fr) minmax(56px,1fr) 46px 54px 26px 40px 34px 34px 34px 50px}
+.mister .dt-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.mister .dt-body::-webkit-scrollbar{width:8px}
+.mister .dt-body::-webkit-scrollbar-thumb{background:rgba(127,159,255,.28);border-radius:8px}
+.mister .dt-row{
+  display:grid;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif;
+  border-bottom:1px solid rgba(127,159,255,.07);
+  transition:background .14s;
+}
+.mister .dt-squad .dt-row{grid-template-columns:24px minmax(92px,1.1fr) 46px 48px 24px 34px repeat(9,minmax(24px,1fr))}
+.mister .dt-market .dt-row{grid-template-columns:minmax(92px,1.1fr) minmax(54px,.8fr) 46px 48px 24px 34px repeat(9,minmax(22px,1fr)) 46px}
+.mister .screenbody.ficha-open .dt-squad .dt-row{grid-template-columns:24px minmax(94px,1fr) 46px 54px 26px 40px 34px 34px 34px}
+.mister .screenbody.ficha-open .dt-market .dt-row{grid-template-columns:minmax(90px,1.2fr) minmax(56px,1fr) 46px 54px 26px 40px 34px 34px 34px 50px}
+.mister .mp-cell{display:flex;align-items:center;justify-content:center;overflow:visible}
+.mister .mp{display:block}
+.mister .dt-row:hover{background:linear-gradient(90deg,rgba(102,140,206,.28),rgba(30,52,104,.14))}
+.mister .dt-row.is-sel{background:linear-gradient(90deg,rgba(200,30,30,.26),rgba(30,52,104,.10));box-shadow:inset 3px 0 0 var(--red)}
+.mister .dt-row.is-sel .dt-name{color:#fff}
+/* atributo dentro de la tabla: número compacto coloreado por nivel */
+.mister .at{font-weight:700;font-size:12px;font-variant-numeric:tabular-nums}
+.mister .at.top{color:#aec4f0}.mister .at.alto{color:#7fe0a0}.mister .at.medio{color:#ffd24a}.mister .at.bajo{color:#ffab5c}.mister .at.malo{color:#ff8a8a}
+/* punto de baja/lesión junto al nombre */
+.mister .dt-name .injury{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;vertical-align:middle}
+.mister .dt-name .injury.bad{background:var(--red);box-shadow:0 0 6px rgba(200,30,30,.7)}
+.mister .dt-name .injury.warn{background:var(--amber);box-shadow:0 0 6px rgba(200,150,30,.6)}
+.mister .dt-row > span{text-align:center;font-size:12.5px;color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.mister .dt-row .dt-l{text-align:left}
+.mister .dt-num{font-weight:700;color:var(--ink-mute)}
+.mister .dt-name{font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .dt-club{font-weight:600;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .dt-val{font-weight:700;color:var(--edge)}
+/* grupo de línea dentro de la tabla */
+.mister .dt-group{
+  padding:3px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:8.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--edge);
+  background:rgba(10,16,46,.5);border-bottom:1px solid rgba(127,159,255,.12);
+}
+/* píldora de posición */
+.mister .pos-badge{
+  display:inline-block;min-width:40px;padding:1px 5px;border-radius:999px;
+  font-weight:700;font-size:9px;letter-spacing:.03em;color:#fff;text-align:center;
+}
+.mister .pos-badge.por{background:linear-gradient(180deg,#d9a72e,#9c6f14)}
+.mister .pos-badge.def{background:linear-gradient(180deg,#4a74c8,#22397e)}
+.mister .pos-badge.med{background:linear-gradient(180deg,#2f9e57,#166b34)}
+.mister .pos-badge.del{background:linear-gradient(180deg,#d24a4a,#8d1c1c)}
+/* píldora de media — escala de 5 niveles:
+   azul metal (top) > verde > amarillo > naranja > rojo */
+.mister .media-pill{
+  display:inline-block;min-width:30px;padding:1px 7px;border-radius:var(--r-s);
+  font-weight:700;font-size:13px;color:#0e1636;font-variant-numeric:tabular-nums;
+  background:linear-gradient(180deg,#b6c6e6,#5a72a8);
+}
+.mister .media-pill.top  {background:linear-gradient(180deg,#c2d2f0,#5a72a8);color:#0e1636}
+.mister .media-pill.alto {background:linear-gradient(180deg,#8fe6ab,#2f9e57);color:#04240f}
+.mister .media-pill.medio{background:linear-gradient(180deg,#ffe08a,#d0a020);color:#3a2a00}
+.mister .media-pill.bajo {background:linear-gradient(180deg,#f4b062,#d0781e);color:#3a2200}
+.mister .media-pill.malo {background:linear-gradient(180deg,#ef7a7a,#c22323);color:#fff}
+/* estado del jugador */
+.mister .dt-estado{text-align:left!important;font-weight:600;font-size:11px;color:var(--ink-mute)!important}
+.mister .dt-estado.ok{color:#7fe0a0!important}
+.mister .dt-estado.warn{color:#ffc27a!important}
+.mister .dt-estado.bad{color:#ff9a9a!important}
+
+/* ─── ficha del jugador (panel de atributos, reutilizable en Alineación) ─── */
+.mister .ficha{
+  position:relative;border-radius:var(--r-m);padding:12px 13px;align-self:start;
+  overflow:hidden;   /* SIN scroll; el alto lo fija el JS = alto de la torre (hasta Delanteros) */
+  background:linear-gradient(180deg,rgba(20,33,72,.62),rgba(9,13,40,.7));
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  border:1px solid rgba(127,159,255,.26);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 26px rgba(5,8,30,.5);
+}
+.mister .fi-close{
+  position:absolute;top:6px;right:8px;z-index:3;width:22px;height:22px;border:0;border-radius:50%;
+  cursor:pointer;background:rgba(10,14,40,.55);color:var(--ink-dim);font-size:16px;line-height:1;
+  display:grid;place-items:center;transition:background .15s,color .15s;
+}
+.mister .fi-close:hover{background:var(--red);color:#fff}
+.mister .ficha-empty{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);text-align:center;padding:40px 8px;
+}
+/* cabecera de la ficha: datos a la izquierda, FOTO GRANDE a la derecha */
+.mister .fi-grid{display:grid;grid-template-columns:1fr 132px;gap:12px;align-items:start;margin-bottom:10px}
+.mister .fi-grid.nophoto{grid-template-columns:1fr}
+.mister .fi-left{min-width:0;display:flex;flex-direction:column}
+.mister .fi-right{align-self:stretch}
+.mister .fi-foto{
+  width:132px;height:auto;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:var(--r-m);
+  border-top:1px solid rgba(160,190,255,.6);border-bottom:1px solid #05061a;background:#101a3c;
+  box-shadow:0 5px 14px rgba(5,8,30,.7);
+}
+.mister .fi-badges{display:flex;align-items:center;gap:6px}
+.mister .fi-badges .mp-big{margin-left:auto}
+.mister .fi-d{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--ink-mute)}
+.mister .fi-name{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:23px;line-height:1;text-transform:uppercase;color:var(--ink);
+  text-shadow:0 2px 0 rgba(6,8,26,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .fi-meta{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute);line-height:1.35;
+  margin:2px 0 8px;
+}
+.mister .fi-meta em{font-style:normal;color:var(--ink-dim)}
+.mister .fi-media{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:5px 10px;border-radius:var(--r-s);margin-bottom:8px;
+  background:linear-gradient(180deg,rgba(102,140,206,.4),rgba(30,52,104,.5));
+}
+.mister .fi-media span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+.mister .fi-media b{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:30px;line-height:1;color:#fff;font-variant-numeric:tabular-nums}
+.mister .fi-bars{display:flex;flex-direction:column;gap:5px}
+.mister .attr{display:grid;grid-template-columns:64px 1fr 24px;align-items:center;gap:8px}
+.mister .attr-k{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .attr-track{height:8px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(180deg,#0b0f2c,#131a44);box-shadow:inset 0 1px 3px rgba(0,0,0,.7)}
+.mister .attr-fill{display:block;height:100%;border-radius:999px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.mister .attr-fill.top{background:linear-gradient(90deg,#5a72a8,#c2d2f0)}
+.mister .attr-fill.alto{background:linear-gradient(90deg,#2f9e57,#8fe6ab)}
+.mister .attr-fill.medio{background:linear-gradient(90deg,#d0a020,#ffe08a)}
+.mister .attr-fill.bajo{background:linear-gradient(90deg,#d0781e,#f4b062)}
+.mister .attr-fill.malo{background:linear-gradient(90deg,#c22323,#ef7a7a)}
+.mister .attr-v{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+
+/* presupuesto (mercado) */
+.mister .budget{padding:2px}
+.mister .bud-bar{height:12px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(180deg,#0b0f2c,#131a44);box-shadow:inset 0 2px 4px rgba(0,0,0,.7)}
+.mister .bud-bar span{display:block;height:100%;border-radius:999px;
+  background:linear-gradient(180deg,#e04a4a,var(--red) 60%,#8d1414)}
+.mister .bud-txt{margin-top:6px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .bud-txt b{color:var(--ink)}
+.mister .bud-txt i{font-style:normal;color:var(--panel-hi);margin:0 5px}
+/* seguimiento */
+.mister .watch{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 10px;
+  border-radius:var(--r-s);background:linear-gradient(180deg,rgba(84,116,166,.26),rgba(24,42,84,.32));
+  border:1px solid rgba(150,180,240,.16);font-family:'Barlow Condensed',sans-serif}
+.mister .w-n{font-weight:700;font-size:13px;color:var(--ink)}
+.mister .w-v{font-weight:700;font-size:12px;color:var(--edge);font-variant-numeric:tabular-nums}
+
+/* ─── economía ─── */
+.mister .econ-center{display:flex;flex-direction:column;gap:14px}
+
+/* ─── ENTRENAMIENTO: tarjetas legibles sobre la foto ───
+   Los paneles iban transparentes y la foto rotatoria del fondo (opacity .42) se
+   colaba por detrás del texto: no se leía nada. Cada columna pasa a ser una
+   tarjeta glassy opaca; la foto solo respira en los huecos entre tarjetas. */
+/* La vista se vuelve columna flex para acotar el screenbody a la altura real:
+   así el 1fr de la fila resuelve a px y las columnas pueden scrollear dentro en
+   vez de crecer y quedar recortadas (menú inaccesible por abajo). */
+.mister .view[data-view="entreno"]{display:flex;flex-direction:column;min-height:0}
+.mister .view[data-view="entreno"] .screenbody{
+  flex:1 1 auto;min-height:0;
+  grid-template-columns:minmax(240px,270px) minmax(0,1fr) minmax(264px,300px);
+  grid-template-rows:minmax(0,1fr);   /* la fila se acota a la altura disponible */
+  align-items:start;gap:16px;
+}
+.mister .view[data-view="entreno"] .tower.wide, .mister .view[data-view="entreno"] .econ-center{
+  align-self:start;padding:14px 16px;border-radius:14px;
+  background:linear-gradient(180deg,rgba(18,30,66,.88),rgba(9,13,40,.92));
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  border:1px solid rgba(127,159,255,.26);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 14px 34px rgba(5,8,30,.55);
+  /* si una columna (p.ej. la de ojeo) crece más que la pantalla, scrollea DENTRO
+     en vez de salirse por abajo y quedar inaccesible. */
+  max-height:100%;min-height:0;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--gleam) rgba(10,10,40,.5);
+}
+.mister .view[data-view="entreno"] .tower.wide::-webkit-scrollbar, .mister .view[data-view="entreno"] .econ-center::-webkit-scrollbar{width:8px}
+.mister .view[data-view="entreno"] .tower.wide::-webkit-scrollbar-thumb, .mister .view[data-view="entreno"] .econ-center::-webkit-scrollbar-thumb{
+  background:rgba(190,214,255,.26);border-radius:4px;
+}
+.mister .view[data-view="entreno"] .econ-center{gap:12px}
+/* Foco de entrenamiento: pista del foco elegido y lista de "cómo evoluciona". */
+.mister .view[data-view="entreno"] .entreno-pista{
+  margin:9px 2px 0;font-size:11.5px;line-height:1.35;color:var(--ink-dim);
+}
+.mister .view[data-view="entreno"] .entreno-evo{
+  list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;
+}
+.mister .view[data-view="entreno"] .entreno-evo li{
+  position:relative;padding-left:17px;font-size:11.5px;line-height:1.3;color:var(--ink-mute);
+}
+.mister .view[data-view="entreno"] .entreno-evo li::before{
+  content:'';position:absolute;left:3px;top:5px;width:6px;height:6px;border-radius:50%;
+  background:var(--edge);box-shadow:0 0 6px rgba(127,159,255,.6);
+}
+/* Ojeo: lista clicable de jugadores encontrados (cartera / cantera). */
+.mister .view[data-view="entreno"] .ojeo-resumen{
+  margin:6px 2px 0;font-size:10.5px;line-height:1.3;color:var(--ink-mute);font-style:italic;
+}
+.mister .view[data-view="entreno"] .ojeo-lista{
+  list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;
+}
+.mister .view[data-view="entreno"] .ojeo-row{
+  display:grid;grid-template-columns:38px minmax(0,1fr) auto auto;align-items:center;gap:8px;
+  padding:4px 8px;border-radius:6px;cursor:pointer;font-size:11.5px;
+  border:1px solid transparent;background:rgba(20,34,74,.42);
+  transition:background .15s,border-color .15s;
+}
+.mister .view[data-view="entreno"] .ojeo-row:hover{background:rgba(34,58,116,.5);border-color:rgba(190,214,255,.3)}
+.mister .view[data-view="entreno"] .ojeo-row.on{border-color:var(--edge);background:rgba(42,68,120,.72)}
+.mister .view[data-view="entreno"] .oj-pos{font-size:9px;font-weight:700;letter-spacing:.03em;color:var(--edge);text-align:center}
+.mister .view[data-view="entreno"] .oj-nom{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mister .view[data-view="entreno"] .oj-ed{color:var(--ink-mute);font-variant-numeric:tabular-nums}
+.mister .view[data-view="entreno"] .oj-med{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.mister .econ-headline{
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px;border-radius:var(--r-m);
+  background:linear-gradient(180deg,rgba(20,33,72,.55),rgba(9,13,40,.62));
+  border:1px solid rgba(127,159,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+.mister .eh-k{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .eh-v{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:44px;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 2px 0 rgba(10,10,40,.5)}
+.mister .eh-v.pos{color:#7fe0a0}.mister .eh-v.neg{color:#ff9a9a}
+.mister .chart{padding:14px 16px 10px;border-radius:var(--r-m);
+  background:linear-gradient(180deg,rgba(18,30,66,.5),rgba(8,12,38,.6));
+  border:1px solid rgba(127,159,255,.2)}
+.mister .chart-plot{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;height:150px}
+.mister .chart-bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-height:4px;
+  background:linear-gradient(180deg,#5c7ece,#2A3FAA 70%,#1c2a80);
+  box-shadow:inset 0 1px 0 rgba(160,180,255,.5);transition:filter .15s}
+.mister .chart-bar:hover{filter:brightness(1.15)}
+.mister .chart-bar.now{background:linear-gradient(180deg,#e86a6a,var(--red) 70%,#8d1414)}
+.mister .chart-bar b{position:absolute;top:-16px;left:0;right:0;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;color:var(--ink-dim);
+  font-variant-numeric:tabular-nums}
+.mister .chart-axis{display:flex;justify-content:space-between;gap:6px;margin-top:6px}
+.mister .chart-axis span{flex:1;text-align:center;font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .chart-cap{margin:8px 0 0;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute);text-align:center}
+.mister .goal{padding:8px 11px;border-radius:var(--r-s);font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:12px;letter-spacing:.03em;color:var(--ink-dim);
+  background:linear-gradient(180deg,rgba(47,158,87,.28),rgba(16,50,30,.34));
+  border:1px solid rgba(127,220,160,.28)}
+.mister .goal em{font-style:normal;color:#7fe0a0;font-weight:700}
+
+/* ─── estadio ─── */
+.mister .stadium-center{display:flex;align-items:center;justify-content:center;padding:6px}
+.mister .stadium-center svg{width:100%;height:auto;max-width:460px;
+  filter:drop-shadow(0 14px 30px rgba(5,8,30,.6))}
+.mister .work{
+  display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:0 8px;
+  width:100%;text-align:left;cursor:pointer;font:inherit;padding:7px 11px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(60,86,140,.34),rgba(16,28,66,.4));
+  border:1px solid rgba(150,180,240,.18);transition:background .18s,transform .12s}
+.mister .work:hover{background:linear-gradient(180deg,rgba(92,124,182,.6),rgba(24,40,88,.66));transform:translateY(-1px)}
+.mister .work:focus-visible{outline:2px solid var(--edge);outline-offset:1px}
+.mister .wk-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+.mister .wk-v{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--edge);
+  font-variant-numeric:tabular-nums;text-align:right}
+.mister .wk-d{grid-column:1/3;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:9.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+
+/* ─── palmarés ─── */
+.mister .pal-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:2px;padding:8px;position:relative;min-height:360px}
+.mister .pal-trophy{max-height:220px;max-width:80%;width:auto;object-fit:contain;
+  filter:drop-shadow(0 16px 34px rgba(5,8,30,.8));
+  transition:opacity .4s ease,transform .4s cubic-bezier(.22,.61,.36,1)}
+.mister .pal-trophy.swap{opacity:0;transform:translateY(12px) scale(.95)}
+.mister .pal-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:64px;line-height:.9;font-variant-numeric:tabular-nums;
+  background:linear-gradient(174deg,#fff 0%,#ffe08a 45%,#d0a020 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 0 rgba(10,10,40,.4);margin-top:-6px}
+.mister .pal-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.mister .pal-years{margin-top:8px;max-width:340px;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11.5px;
+  letter-spacing:.04em;color:var(--ink-mute);line-height:1.5}
+.mister .hon{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;
+  text-align:left;cursor:pointer;font:inherit;padding:7px 11px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(60,86,140,.34),rgba(16,28,66,.4));
+  border:1px solid rgba(150,180,240,.18);transition:background .18s,box-shadow .18s}
+.mister .hon:hover{background:linear-gradient(180deg,rgba(92,124,182,.6),rgba(24,40,88,.66))}
+.mister .hon:focus-visible{outline:2px solid var(--edge);outline-offset:1px}
+.mister .hon.is-on{background:linear-gradient(180deg,var(--steel-lit),var(--panel) 72%,#1b2c58);
+  box-shadow:inset 0 1px 0 rgba(160,190,255,.6),inset 0 -2px 0 var(--amber)}
+.mister .hon-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.mister .hon-c{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;font-size:18px;
+  color:var(--amber);font-variant-numeric:tabular-nums}
+.mister .hon.is-on .hon-c{color:#ffe08a}
+
+/* ─── partido ─── */
+.mister .pitch-center{display:flex;align-items:center;justify-content:center;padding:4px}
+.mister .pitch{
+  position:relative;width:100%;max-width:520px;aspect-ratio:3/2;border-radius:var(--r-m);overflow:hidden;
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 calc(100%/12),rgba(0,0,0,.04) 0 calc(200%/12)),
+    linear-gradient(180deg,#188534,#0e5f28);
+  border:2px solid rgba(220,240,220,.5);box-shadow:inset 0 0 40px rgba(0,0,0,.4),0 12px 28px rgba(5,8,30,.5)}
+.mister .pitch::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-1px);
+  background:rgba(230,245,230,.5)}
+.mister .pitch::after{content:"";position:absolute;left:50%;top:50%;width:88px;height:88px;transform:translate(-50%,-50%);
+  border:2px solid rgba(230,245,230,.5);border-radius:50%}
+.mister .pp{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;
+  width:60px}
+.mister .pp-dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:#fff;
+  box-shadow:0 3px 7px rgba(5,8,30,.6),inset 0 1px 0 rgba(255,255,255,.4)}
+.mister .pp-dot.por{background:radial-gradient(circle at 35% 30%,#f0c860,#9c6f14)}
+.mister .pp-dot.def{background:radial-gradient(circle at 35% 30%,#6a94e8,#22397e)}
+.mister .pp-dot.med{background:radial-gradient(circle at 35% 30%,#4fbe77,#166b34)}
+.mister .pp-dot.del{background:radial-gradient(circle at 35% 30%,#ee6a6a,#8d1c1c)}
+.mister .pp-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.02em;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9);
+  white-space:nowrap}
+/* lista del once (torre) */
+.mister .line-row{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;
+  padding:3px 10px;border-radius:var(--r-s);font-family:'Barlow Condensed',sans-serif;
+  border-bottom:1px solid rgba(127,159,255,.08)}
+.mister .lr-d{font-weight:700;font-size:11px;color:var(--ink-mute);text-align:center;font-variant-numeric:tabular-nums}
+.mister .lr-n{font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .lr-p{font-weight:700;font-size:9px;letter-spacing:.05em;padding:1px 6px;border-radius:999px;color:#fff}
+.mister .lr-p.por{background:#9c6f14}.mister .lr-p.def{background:#22397e}.mister .lr-p.med{background:#166b34}.mister .lr-p.del{background:#8d1c1c}
+/* tarjeta rival */
+.mister .rival-card{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(84,116,166,.28),rgba(24,42,84,.34));
+  border:1px solid rgba(150,180,240,.18)}
+.mister .rc-crest{width:38px;height:38px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 4px rgba(5,8,30,.7))}
+.mister .rc-txt{display:flex;flex-direction:column;min-width:0}
+.mister .rc-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;color:var(--ink)}
+.mister .rc-sub{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+/* botón grande de acción */
+.mister .bigbtn{display:block;width:100%;cursor:pointer;font:inherit;margin-top:2px;padding:10px 12px;border-radius:var(--r-m);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-dim);background:linear-gradient(180deg,rgba(60,86,140,.5),rgba(16,28,66,.6));
+  border:1px solid rgba(150,180,240,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
+  transition:background .16s,transform .12s,box-shadow .16s}
+.mister .bigbtn:hover{transform:translateY(-1px);color:var(--ink)}
+.mister .bigbtn:focus-visible{outline:2px solid var(--edge);outline-offset:2px}
+.mister .bigbtn.primary{color:#fff;
+  background:linear-gradient(180deg,#e04a4a,var(--red) 60%,#8d1414);
+  box-shadow:inset 0 1px 0 rgba(255,200,200,.5),0 4px 14px rgba(200,30,30,.4)}
+.mister .bigbtn.primary:hover{background:linear-gradient(180deg,#f05a5a,#d82222 60%,#9d1818)}
+
+/* responsive de las nuevas pantallas */
+/* aviso flotante (toast) para pantallas aún no montadas */
+.mister .toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);z-index:50;
+  padding:9px 16px;border-radius:999px;pointer-events:none;opacity:0;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:#fff;
+  background:linear-gradient(180deg,rgba(40,63,120,.96),rgba(16,24,60,.98));
+  border:1px solid rgba(172,202,255,.4);box-shadow:0 8px 24px rgba(5,8,30,.6);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.mister .toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .mister .screenbody{grid-template-columns:1fr!important}
+  .mister .pal-stage{min-height:0}
+}
+
+/* ═══════════ PANTALLAS DE GESTIÓN (economía · estadio · directiva) ═══════════ */
+.mister .econ-caja{display:grid;gap:var(--u);margin:10px 0 4px}
+.mister .econ-acciones{display:grid;gap:var(--u);margin-top:12px}
+.mister .work.primary{background:linear-gradient(180deg,var(--electric),#1d2c7a);border-color:var(--edge)}
+.mister .work.primary:hover{background:linear-gradient(180deg,#3550c8,#233594)}
+.mister .econ-rojo{
+  margin:12px 0 0;padding:9px 11px;border-radius:var(--r-m);
+  background:rgba(200,30,30,.14);border:1px solid rgba(255,140,140,.35);
+  color:#ffc9c9;font-size:12.5px;line-height:1.45;
+}
+.mister .eh-v.neg{color:#ff9a9a}
+.mister .eh-v.pos{color:#7fe0a0}
+
+.mister .chart-plot{display:flex;align-items:flex-end;gap:6px;height:64px;padding:0 2px}
+.mister .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
+.mister .bar{width:100%;border-radius:2px 2px 0 0;background:linear-gradient(180deg,var(--gleam),var(--steel))}
+.mister .bar.neg{background:linear-gradient(180deg,#d06a6a,#8f3535)}
+.mister .bar-lbl{
+  font-family:'Barlow Condensed',sans-serif;font-size:9.5px;letter-spacing:.06em;
+  color:var(--ink-mute);white-space:nowrap;
+}
+
+/* ── estadio ── */
+.mister .estadio-center{display:grid;gap:12px;align-content:start}
+.mister .zonas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--u)}
+.mister .zona{
+  display:grid;gap:2px;text-align:left;padding:10px 11px;cursor:pointer;
+  border-radius:var(--r-m);border:1px solid rgba(190,214,255,.18);
+  background:linear-gradient(180deg,rgba(42,68,120,.55),rgba(30,52,104,.45));
+  box-shadow:var(--bevel);color:inherit;font:inherit;
+}
+.mister .zona:hover{border-color:var(--edge);background:linear-gradient(180deg,rgba(58,88,150,.6),rgba(36,60,116,.5))}
+.mister .zona.pie{border-style:dashed}
+.mister .z-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.12em;color:var(--edge)}
+.mister .z-a{font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.mister .z-p{font-size:11.5px;color:var(--ink-mute)}
+.mister .z-c{margin-top:3px;font-size:11px;font-weight:600;color:var(--gleam)}
+
+.mister .aviso{
+  margin:0;padding:8px 11px;border-radius:var(--r-m);font-size:12.5px;
+  background:rgba(127,159,255,.12);border:1px solid rgba(127,159,255,.3);color:var(--ink-dim);
+}
+
+.mister .obras{display:grid;gap:var(--u)}
+.mister .obra{display:grid;gap:4px;padding:9px 11px;border-radius:var(--r-m);
+  background:rgba(20,20,60,.5);border:1px solid rgba(190,214,255,.14)}
+.mister .ob-n{font-weight:600;font-size:12.5px}
+.mister .ob-v{font-size:11px;color:var(--ink-mute);font-variant-numeric:tabular-nums}
+.mister .ob-bar{height:6px;border-radius:3px;background:rgba(10,10,40,.7);overflow:hidden}
+.mister .ob-fill{height:100%;background:linear-gradient(90deg,var(--steel-lit),var(--edge))}
+.mister .ob-fill.bad{background:linear-gradient(90deg,#8f3535,#d06a6a)}
+
+.mister .servicio{
+  display:grid;grid-template-columns:1fr auto;gap:2px 8px;text-align:left;
+  padding:8px 11px;cursor:pointer;border-radius:var(--r-m);
+  border:1px solid rgba(190,214,255,.16);background:rgba(30,52,104,.42);
+  box-shadow:var(--bevel);color:inherit;font:inherit;
+}
+.mister .servicio:hover{border-color:var(--edge);background:rgba(42,68,120,.55)}
+.mister .sv-n{font-weight:600;font-size:12.5px}
+.mister .sv-e{
+  grid-row:2;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+}
+.mister .sv-e.e0{color:#ff9a9a}.mister .sv-e.e1{color:var(--amber)}.mister .sv-e.e2{color:#7fe0a0}.mister .sv-e.u{color:var(--gleam)}
+.mister .sv-c{grid-column:2;grid-row:1/3;align-self:center;font-size:11px;font-weight:600;color:var(--gleam);text-align:right}
+
+.mister .slider-row{display:grid;gap:5px;padding:8px 11px;border-radius:var(--r-m);
+  background:rgba(20,20,60,.45);border:1px solid rgba(190,214,255,.12)}
+.mister .sl-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.mister input.sl{
+  -webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;
+  background:linear-gradient(90deg,var(--steel),var(--panel-hi));outline:none;
+}
+.mister input.sl::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;cursor:pointer;
+  background:var(--edge);border:2px solid var(--void);box-shadow:0 1px 4px rgba(0,0,0,.6);
+}
+.mister input.sl::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;cursor:pointer;
+  background:var(--edge);border:2px solid var(--void);
+}
+
+.mister .credito{display:grid;gap:10px;padding:14px;border-radius:var(--r-m);
+  background:rgba(20,20,60,.5);border:1px solid rgba(190,214,255,.16)}
+.mister .credito-v{margin:0;text-align:center;font-weight:700;font-size:26px;font-variant-numeric:tabular-nums;color:var(--edge)}
+.mister .credito-btns{display:grid;grid-template-columns:1fr 1fr;gap:var(--u)}
+.mister .servicio.vacante{border-style:dashed;opacity:.85}
+.mister .servicio.elegido{border-color:var(--edge);background:rgba(42,68,120,.7);box-shadow:var(--bevel),0 0 0 1px rgba(127,159,255,.35)}
+.mister .servicio .sv-e.u{font-family:'Barlow',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:0;text-transform:none;color:var(--ink-mute);line-height:1.35}
+.mister .chips{display:flex;flex-wrap:wrap;gap:var(--u)}
+.mister .chip{
+  padding:6px 11px;cursor:pointer;border-radius:999px;font:inherit;color:var(--ink-dim);
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid rgba(190,214,255,.22);background:rgba(30,52,104,.4);
+}
+.mister .chip:hover{border-color:var(--edge);color:var(--ink)}
+.mister .chip.on{background:linear-gradient(180deg,var(--electric),#1d2c7a);border-color:var(--edge);color:var(--ink)}
+.mister .chip.bloque{display:block;width:100%;border-radius:var(--r-m);text-align:left;letter-spacing:.05em}
+.mister .articulo{
+  display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;
+  padding:7px 10px;border-radius:var(--r-m);
+  background:rgba(20,20,60,.42);border:1px solid rgba(190,214,255,.12);
+}
+.mister .articulo.sobra{border-color:rgba(255,140,140,.34);background:rgba(200,30,30,.1)}
+.mister .ar-n{font-weight:600;font-size:12.5px}
+.mister .ar-p{grid-row:2;font-size:10.5px;color:var(--ink-mute)}
+.mister .ar-d{grid-column:1/3;grid-row:3;font-size:10.5px;color:var(--gleam)}
+.mister .ar-ctr{grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:6px}
+.mister .ar-b{
+  width:20px;height:20px;line-height:1;cursor:pointer;border-radius:var(--r-s);
+  border:1px solid rgba(190,214,255,.3);background:rgba(42,68,120,.6);color:var(--ink);
+  font:inherit;font-weight:700;
+}
+.mister .ar-b:hover{border-color:var(--edge);background:var(--electric)}
+.mister .ar-v{min-width:48px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;font-size:13px}
+
+.mister .oferta{
+  display:grid;gap:2px;text-align:left;padding:9px 11px;cursor:pointer;
+  border-radius:var(--r-m);border:1px solid rgba(190,214,255,.18);
+  background:linear-gradient(180deg,rgba(42,68,120,.5),rgba(30,52,104,.42));
+  box-shadow:var(--bevel);color:inherit;font:inherit;
+}
+.mister .oferta:hover{border-color:var(--edge)}
+.mister .of-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--edge)}
+.mister .of-v{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.mister .of-c{font-size:10.5px;color:var(--ink-mute);line-height:1.35}
+
+/* ── bloque de contrato dentro de la ficha ── */
+.mister .fi-contrato{
+  margin-top:14px;padding-top:12px;display:grid;gap:var(--u);
+  border-top:1px solid rgba(190,214,255,.16);
+}
+.mister .fi-contrato .grp-h{margin:8px 0 2px}
+.mister .fi-contrato .grp-h:first-child{margin-top:0}
+.mister .fi-tags{display:flex;flex-wrap:wrap;gap:5px}
+.mister .tag{
+  padding:3px 8px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-dim);background:rgba(30,52,104,.55);border:1px solid rgba(190,214,255,.2);
+}
+.mister .tag.ok{color:#7fe0a0;border-color:rgba(127,224,160,.35)}
+.mister .tag.bad{color:#ff9a9a;border-color:rgba(255,154,154,.35)}
+.mister .tag.warn{color:var(--amber);border-color:rgba(200,150,30,.4)}
+.mister .tag.por{color:var(--edge);border-color:rgba(127,159,255,.4)}
+.mister .tag.ext{color:var(--gleam)}
+.mister .fi-acciones{display:grid;grid-template-columns:1fr 1fr;gap:var(--u);margin-top:8px}
+.mister .fi-acciones .work{padding:7px 9px}
+.mister .fi-acciones .wk-n{font-size:11.5px}
+
+/* ═══════════ MARCO FIJO Y NAVEGACIÓN ═══════════ */
+/* La consola tiene proporción FIJA: pase lo que pase con la foto de fondo o con
+   el tamaño de la ventana, el tablero no cambia de forma. Lo que no cabe hace
+   scroll por dentro, no estira el marco. */
+.mister .console{
+  width:min(1180px,100%);
+  aspect-ratio:1180 / 787;
+  display:flex;flex-direction:column;
+}
+.mister .screen{flex:1;min-height:0;display:flex;flex-direction:column}
+.mister .views{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding-right:4px}
+.mister .views::-webkit-scrollbar{width:8px}
+.mister .views::-webkit-scrollbar-thumb{background:rgba(190,214,255,.22);border-radius:4px}
+.mister .view.is-active{display:block}
+
+/* la regleta de once pestañas se queda como máquina de estados, sin pintarse */
+.mister .tabs.is-hidden{display:none}
+
+.mister .navback[hidden]{display:none}   /* display:flex anula el atributo hidden si no se dice */
+.mister .navback{
+  display:flex;align-items:center;gap:12px;flex:none;
+  margin:8px -18px 0;padding:8px 18px;
+  border-top:1px solid rgba(190,214,255,.14);background:rgba(10,10,40,.45);
+}
+.mister .nb-back{
+  cursor:pointer;padding:6px 14px;border-radius:var(--r-m);font:inherit;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  border:1px solid rgba(190,214,255,.3);background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+  box-shadow:var(--bevel);
+}
+.mister .nb-back:hover{border-color:var(--edge);background:linear-gradient(180deg,#37538f,#22386e)}
+.mister .nb-donde{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);
+}
+
+/* ═══════════ LEGIBILIDAD FUERA DEL DESPACHO ═══════════ */
+/* En el despacho la foto manda: es el ambiente. En las pantallas de gestión
+   estorba, así que se apaga y se pone un velo para que las tablas se lean. */
+.mister.en-pantalla .photo.on{opacity:.13}
+.mister.en-pantalla .console::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,10,40,.72),rgba(10,10,40,.86));
+}
+.mister.en-pantalla .pcredit{opacity:.35}
+
+/* el contenido largo respira al final y se avisa de que hay más abajo */
+.mister .views{padding-bottom:10px}
+.mister .screen{position:relative}
+.mister .screen::after{
+  content:'';position:absolute;left:0;right:0;bottom:44px;height:26px;z-index:3;
+  pointer-events:none;opacity:0;transition:opacity .25s;
+  background:linear-gradient(180deg,rgba(10,10,40,0),rgba(10,10,40,.75));
+}
+.mister.en-pantalla .screen::after{opacity:1}
+
+/* Estadio: la torre de servicios necesita más sitio; con nueve fichas en una
+   columna no cabe en el marco fijo. Se ensancha y va a dos columnas. */
+.mister .view[data-view="estadio"] .screenbody{grid-template-columns:196px minmax(0,1fr) 396px}
+.mister .grp.rejilla2{display:grid;grid-template-columns:1fr 1fr;gap:var(--u);align-content:start}
+.mister .grp.rejilla2 > .grp-h{grid-column:1/-1}
+.mister .sl-top .sr-v{white-space:nowrap}   /* que el valor no parta el símbolo a otra línea */
+
+/* ═══════════ SIN SCROLL: todo tiene que caber en el marco ═══════════ */
+.mister .views{overflow:hidden;padding-bottom:6px}
+.mister .screen::after{display:none}      /* sobra el degradado de "hay más abajo" */
+
+/* alineación */
+.mister .pitch.grande{max-width:none;width:100%;aspect-ratio:auto;height:100%;min-height:330px}
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:186px minmax(0,1fr) 210px;height:calc(100% - 46px)}
+.mister .view[data-view="alineacion"] .pitch-center{height:100%;align-items:stretch}
+.mister .pp.sel .pp-dot{outline:2px solid var(--edge);outline-offset:2px}
+.mister .pp{cursor:grab;touch-action:none}
+.mister .pp:active{cursor:grabbing}
+.mister .suplente{
+  display:grid;grid-template-columns:24px 1fr auto;gap:8px;align-items:center;
+  padding:6px 9px;cursor:pointer;border-radius:var(--r-m);text-align:left;font:inherit;color:inherit;
+  border:1px solid rgba(190,214,255,.16);background:rgba(30,52,104,.42);
+}
+.mister .suplente:hover{border-color:var(--edge);background:rgba(42,68,120,.6)}
+.mister .su-d{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:var(--ink-mute);text-align:right}
+.mister .su-n{font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .su-m{font-weight:700;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--gleam)}
+/* mini campo dentro de Táctica */
+.mister .pitch-center.mini .pitch{max-width:100%;min-height:0;aspect-ratio:3/2;height:auto}
+.mister .pitch-center.mini .pp{width:44px}
+.mister .pitch-center.mini .pp-dot{width:19px;height:19px;font-size:10px}
+.mister .pitch-center.mini .pp-name{font-size:8.5px}
+
+/* El campo debe caber a lo ALTO del marco: se dimensiona desde la altura y el
+   ancho sale del 3:2. Para eso las vistas necesitan altura definida. */
+.mister .views{align-items:stretch}
+.mister .view{min-height:0}
+.mister .view[data-view="alineacion"] .screenbody{height:calc(100% - 52px);min-height:0}
+.mister .pitch.grande{height:100%;width:auto;max-width:100%;min-height:0;aspect-ratio:3/2;margin:0 auto}
+.mister .view[data-view="alineacion"] .pitch-center{min-height:0;overflow:hidden}
+
+/* Variante compacta: una sola línea por fila. Sin scroll, la pantalla de Club
+   con ocho puestos y seis artículos no cabe de otra forma. */
+.mister .servicio.compacto{grid-template-columns:1fr auto auto;gap:2px 8px;padding:5px 9px;align-items:center}
+.mister .servicio.compacto .sv-n{grid-row:1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .servicio.compacto .sv-e{grid-row:1;grid-column:2;font-size:9.5px;white-space:nowrap}
+.mister .servicio.compacto .sv-c{grid-row:1;grid-column:3;font-size:10px;white-space:nowrap}
+.mister .articulo.compacto{grid-template-columns:1fr auto;gap:1px 8px;padding:5px 9px}
+.mister .articulo.compacto .ar-n{grid-row:1;font-size:12px}
+.mister .articulo.compacto .ar-p{grid-row:2;font-size:9.5px}
+.mister .articulo.compacto .ar-d{grid-row:2;grid-column:2;font-size:9.5px;text-align:right;align-self:center}
+.mister .articulo.compacto .ar-ctr{grid-row:1;grid-column:2}
+.mister .articulo.compacto .ar-b{width:17px;height:17px}
+.mister .articulo.compacto .ar-v{min-width:40px;font-size:12px}
+/* los seguros llevan su explicación: ahí sí hace falta la segunda línea */
+.mister .view[data-view="club"] .econ-center .servicio.compacto{grid-template-columns:1fr auto}
+.mister .view[data-view="club"] .econ-center .servicio.compacto .sv-e{grid-row:2;grid-column:1;font-size:10.5px}
+.mister .view[data-view="club"] .econ-center .servicio.compacto .sv-c{grid-row:1;grid-column:2}
+/* Personal: el nombre entero manda; estado y precio bajan a la segunda línea. */
+.mister .view[data-view="club"] .screenbody{grid-template-columns:232px minmax(0,1fr) 232px}
+.mister .view[data-view="club"] .tower.wide:first-child .servicio.compacto{grid-template-columns:1fr auto}
+.mister .view[data-view="club"] .tower.wide:first-child .servicio.compacto .sv-n{
+  grid-row:1;grid-column:1/-1;white-space:normal;font-size:12.5px}
+.mister .view[data-view="club"] .tower.wide:first-child .servicio.compacto .sv-e{grid-row:2;grid-column:1}
+.mister .view[data-view="club"] .tower.wide:first-child .servicio.compacto .sv-c{grid-row:2;grid-column:2}
+/* Los siete ajustes de táctica, en filas finas: siete cajas no caben. */
+.mister .ajuste{display:grid;gap:3px;padding:4px 2px}
+.mister .ajuste .sr-k{font-size:10px}
+.mister .ajuste .chip{padding:4px 9px;font-size:10.5px}
+.mister .view[data-view="tactica"] .screenbody{grid-template-columns:210px minmax(0,1fr) 216px}
+.mister .view[data-view="tactica"] .econ-center .slider-row{padding:6px 9px}
+
+/* ═══════════ CONVOCATORIA (pantalla de Táctica) ═══════════ */
+.mister .view[data-view="tactica"] .screenbody{grid-template-columns:196px minmax(0,1fr) 216px;height:calc(100% - 52px);min-height:0}
+.mister .convoc{display:flex;flex-direction:column;min-height:0;gap:3px}
+.mister .cv-head, .mister .cv-row{
+  display:grid;align-items:center;gap:5px;
+  /* 17 columnas (Dorsal, Jugador, Posición, Zona, Edad, Media, Forma, Moral,
+     Confianza, Partidos, Minutos, Goles, Asistencias, Entradas, Pases, Disparos,
+     Tarjetas): antes había 14 tracks y los 3 últimos se salían de la tabla. */
+  grid-template-columns:26px minmax(72px,1fr) 38px 32px 28px 34px 30px 30px 40px 32px 38px 28px 36px 32px 32px 32px 32px;
+}
+.mister .cv-head{
+  padding:0 8px 5px;border-bottom:1px solid rgba(190,214,255,.18);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);
+}
+.mister .cv-head .cv-c{cursor:pointer;text-align:right}
+.mister .cv-head .cv-c:hover{color:var(--edge)}
+.mister .cv-head .cv-c.nom, .mister .cv-head .cv-c.num{text-align:left}
+.mister .cv-body{display:flex;flex-direction:column;gap:2px;min-height:0;overflow:hidden}
+.mister .cv-grupo{
+  padding:5px 8px 2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gleam);
+}
+.mister .cv-row{
+  padding:4px 8px;border-radius:var(--r-s);cursor:pointer;
+  background:rgba(20,20,60,.4);border:1px solid transparent;
+  font-size:12px;font-variant-numeric:tabular-nums;
+}
+.mister .cv-row:hover{border-color:rgba(190,214,255,.3);background:rgba(30,52,104,.55)}
+.mister .cv-row.conv{background:rgba(30,52,104,.55)}
+.mister .cv-row.sel{border-color:var(--edge);background:rgba(42,68,120,.75)}
+.mister .cv-c{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .cv-c.nom{text-align:left;font-weight:600}
+.mister .cv-c.num{text-align:left;color:var(--ink-mute);font-size:10.5px}
+.mister .cv-c.fuerte{font-weight:700;color:var(--ink)}
+.mister .cv-c.bien{color:#7fe0a0}
+.mister .cv-c.medio{color:var(--amber)}
+.mister .cv-c.mal{color:#ff9a9a}
+.mister .cv-c.malo{color:var(--ink-mute)}
+.mister .cv-c.cv-zona{display:flex;justify-content:center;align-items:center;padding:0}
+.mister .cvmp{position:relative;width:26px;height:17px;border-radius:2px;background:rgba(17,127,43,.5);
+  border:1px solid rgba(190,214,255,.22);display:block}
+.mister .cvmp-d{position:absolute;width:5px;height:5px;border-radius:50%;top:50%;transform:translate(-50%,-50%)}
+.mister .cvmp-d.por{left:14%;background:#f0c860}
+.mister .cvmp-d.def{left:36%;background:#6a94e8}
+.mister .cvmp-d.med{left:60%;background:#4fbe77}
+.mister .cvmp-d.del{left:84%;background:#ee6a6a}
+/* Filas finas: la plantilla entera tiene que caber sin scroll. */
+.mister .cv-body{gap:1px}
+.mister .cv-row{padding:2px 8px;font-size:11.5px;line-height:1.25}
+.mister .cv-grupo{padding:3px 8px 1px;font-size:9.5px}
+.mister .cvmp{width:22px;height:13px}
+.mister .cvmp-d{width:4px;height:4px}
+.mister .cv-head{padding-bottom:3px}
+/* el campito de la derecha necesita medida propia o colapsa */
+.mister .view[data-view="tactica"] .pitch-center.mini{display:block;padding:0}
+.mister .view[data-view="tactica"] .pitch-center.mini .pitch{width:100%;height:auto;aspect-ratio:3/2;min-height:0}
+
+/* ═══════════ AJUSTES DE LA CONVOCATORIA (pantalla de Alineación) ═══════════ */
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:196px minmax(0,1fr) 216px;height:calc(100% - 52px);min-height:0}
+.mister .view[data-view="alineacion"] .pitch-center{height:auto}
+/* la plantilla entera son 26 fichas: esta lista SÍ hace scroll */
+.mister .cv-body{overflow-y:auto;flex:1}
+.mister .cv-body::-webkit-scrollbar{width:7px}
+.mister .cv-body::-webkit-scrollbar-thumb{background:rgba(190,214,255,.24);border-radius:4px}
+.mister .cv-head, .mister .cv-row{grid-template-columns:24px minmax(72px,1fr) 46px 40px 26px 34px 32px 32px 28px 40px 30px 30px 32px 32px 30px}
+.mister .cv-c.pos{display:flex;align-items:center;justify-content:flex-end;overflow:visible}
+.mister .cv-c.cv-zona{overflow:visible}
+.mister .cv-c.cv-zona .mp{display:block}
+
+/* ═══════════ CAMPO CON DETALLE ═══════════ */
+.mister .pitch.grande::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;
+  transform:translateX(-1px);background:rgba(230,245,230,.5)}
+.mister .pitch.grande::after{content:"";position:absolute;left:50%;top:50%;
+  width:20%;aspect-ratio:1;transform:translate(-50%,-50%);
+  border:2px solid rgba(230,245,230,.5);border-radius:50%}
+.mister .pt-l{position:absolute;border:2px solid rgba(230,245,230,.45);pointer-events:none}
+.mister .pt-area-i{left:0;top:19%;width:16%;height:62%;border-left:none}
+.mister .pt-area-d{right:0;top:19%;width:16%;height:62%;border-right:none}
+.mister .pt-peq-i{left:0;top:34%;width:6%;height:32%;border-left:none}
+.mister .pt-peq-d{right:0;top:34%;width:6%;height:32%;border-right:none}
+.mister .pt-porteria-i{left:-1%;top:42%;width:1.6%;height:16%;background:rgba(230,245,230,.35)}
+.mister .pt-porteria-d{right:-1%;top:42%;width:1.6%;height:16%;background:rgba(230,245,230,.35)}
+.mister .pt-punto{position:absolute;width:5px;height:5px;border-radius:50%;
+  background:rgba(240,250,240,.85);transform:translate(-50%,-50%);pointer-events:none}
+.mister .pt-penal-i{left:11%;top:50%}
+.mister .pt-penal-d{left:89%;top:50%}
+.mister .pt-centro{left:50%;top:50%}
+.mister .pt-arco{position:absolute;width:9%;aspect-ratio:1;border:2px solid rgba(230,245,230,.45);
+  border-radius:50%;pointer-events:none;clip-path:inset(0 0 0 50%)}
+.mister .pt-arco-i{left:11%;top:50%;transform:translate(-50%,-50%)}
+.mister .pt-arco-d{left:89%;top:50%;transform:translate(-50%,-50%) rotate(180deg)}
+.mister .pt-corner{position:absolute;width:14px;height:14px;border:2px solid rgba(230,245,230,.4);
+  border-radius:50%;pointer-events:none}
+.mister .pt-c1{left:-7px;top:-7px}.mister .pt-c2{right:-7px;top:-7px}
+.mister .pt-c3{left:-7px;bottom:-7px}.mister .pt-c4{right:-7px;bottom:-7px}
+
+/* Las pantallas se intercambiaron: el campo vive en Táctica y la lista en
+   Alineación. Estas reglas mandan sobre las anteriores. */
+.mister .view[data-view="tactica"] .screenbody{grid-template-columns:186px minmax(0,1fr) 210px;height:calc(100% - 52px);min-height:0}
+.mister .view[data-view="tactica"] .pitch-center{height:100%;align-items:stretch;min-height:0;overflow:hidden;display:flex}
+.mister .view[data-view="tactica"] .pitch.grande{height:100%;width:auto;max-width:100%;aspect-ratio:3/2;margin:0 auto}
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:196px minmax(0,1fr) 216px;height:calc(100% - 52px);min-height:0}
+/* que la última fila de la lista no quede cortada a media altura */
+.mister .cv-body{padding-bottom:2px}
+.mister .cv-body::after{content:'';display:block;min-height:6px;flex:none}
+/* La lista sí hace scroll (son 26 fichas), pero el corte no debe parecer un
+   error: se difumina el borde inferior para que se lea como "hay más abajo". */
+.mister .convoc{position:relative}
+.mister .convoc::after{
+  content:'';position:absolute;left:0;right:7px;bottom:0;height:22px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,10,40,0),rgba(10,10,40,.92));
+}
+.mister .ajuste{padding:2px 2px}
+.mister .ajuste .chip{padding:3px 8px;font-size:10px}
+.mister .view[data-view="tactica"] .pitch-center{padding:0}
+/* Fuera del despacho la foto casi no se ve, así que su pie sobra y además
+   pisaba la última fila de las columnas. */
+.mister.en-pantalla .pcredit{display:none}
+/* los cinco sistemas caben en una fila; así entra el último ajuste */
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chip{
+  padding:4px 6px;font-size:10px;letter-spacing:.04em}
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chips{flex-wrap:nowrap}
+.mister .cv-row.baja{opacity:.62}
+.mister .cv-row.baja .cv-c.nom::after{content:' ·';color:#ff9a9a}
+.mister .regla{margin:0;padding:3px 8px;border-radius:var(--r-s);font-size:10.5px;line-height:1.35;
+  color:var(--ink-dim);background:rgba(20,20,60,.42);border:1px solid rgba(190,214,255,.1)}
+.mister .chip.mini{padding:3px 7px;font-size:9.5px;letter-spacing:.04em}
+/* La fila del grid de vistas crecía con el contenido, así que ningún `height:100%`
+   de dentro resolvía y las listas no podían hacer scroll: se estiraban. */
+.mister .views{grid-template-rows:minmax(0,1fr)}
+.mister .view{overflow:hidden}
+/* Con `align-items:start` cada columna tomaba su altura natural, así que la lista
+   crecía sin límite y el overflow nunca entraba. En las pantallas con lista o
+   campo, las columnas se estiran a la altura del marco. */
+.mister .view[data-view="alineacion"] .screenbody, .mister .view[data-view="tactica"] .screenbody{align-items:stretch}
+.mister .convoc{height:100%}
+/* El stretch solo lo necesita la columna que scrollea; las torres, a su aire. */
+.mister .view[data-view="alineacion"] .screenbody{align-items:start}
+.mister .view[data-view="alineacion"] .convoc{align-self:stretch}
+.mister .view[data-view="tactica"] .screenbody{align-items:start}
+.mister .view[data-view="tactica"] .pitch-center{align-self:stretch}
+/* el campito de la ficha, con medida propia */
+.mister .view[data-view="alineacion"] .pitch-center.mini{display:block;padding:0}
+.mister .view[data-view="alineacion"] .pitch-center.mini .pitch{width:100%;height:auto;aspect-ratio:3/2;min-height:0}
+
+/* ═══════════ CAMPO (imagen de Commons) ═══════════ */
+.mister .pitch.grande{background:linear-gradient(180deg,#1a8f39,#0f6a2c);border:none;box-shadow:0 12px 28px rgba(5,8,30,.5)}
+.mister .pitch.grande::before, .mister .pitch.grande::after{content:none}
+/* El SVG de Commons es vertical. Se gira 90° y, para que encaje, se le dan las
+   medidas del contenedor CAMBIADAS: ancho = alto del hueco, alto = ancho del
+   hueco. `container-type:size` habilita las unidades cqw/cqh. */
+.mister .pitch.grande{container-type:size}
+.mister .pitch-img{
+  position:absolute;top:50%;left:50%;
+  width:100cqh;height:100cqw;
+  transform:translate(-50%,-50%) rotate(90deg);
+  object-fit:fill;opacity:.95;pointer-events:none;
+}
+/* El campo debe caber ENTERO: con height:100% se estiraba y se comía las bandas. */
+.mister .view[data-view="tactica"] .pitch.grande{
+  width:100%;height:auto;max-height:100%;aspect-ratio:3/2;align-self:center;margin:auto}
+.mister .view[data-view="tactica"] .pitch-center{align-items:center;justify-content:center}
+/* El SVG de Commons es 534x738; girado da 738x534 = 1,382. Si la caja usa otra
+   proporción, `object-fit:fill` lo estira. La caja adopta la del propio dibujo. */
+.mister .pitch.grande, .mister .view[data-view="tactica"] .pitch.grande{aspect-ratio:738 / 534}
+/* REGLA ÚNICA del campo: se dimensiona por el ALTO disponible y el ancho sale de
+   la proporción del dibujo (738x534). Así nunca se estira ni se sale. */
+.mister .view[data-view="tactica"] .pitch.grande{
+  height:100%;width:auto;max-width:100%;max-height:100%;
+  aspect-ratio:738 / 534;margin:0 auto;align-self:center;
+}
+/* Fuera los números mágicos: la vista es una columna flexible y el cuerpo ocupa
+   lo que sobra bajo la cabecera, mida lo que mida. */
+.mister .view{display:flex;flex-direction:column}
+.mister .view[data-view="tactica"] .screenbody, .mister .view[data-view="alineacion"] .screenbody{height:auto;flex:1;min-height:0}
+.mister .view-head{flex:none}
+/* El campo, calculado de una vez: su ancho es el menor entre el ancho del hueco
+   y el que le corresponde por su altura (738/534 = 1,382). Sin height:100%
+   peleándose con max-width, que era lo que lo estiraba. */
+.mister .view[data-view="tactica"] .pitch-center{container-type:size;display:grid;place-content:center;padding:0}
+.mister .view[data-view="tactica"] .pitch.grande{
+  width:min(100cqw, 138.2cqh);
+  height:auto;max-width:none;max-height:none;
+  aspect-ratio:738 / 534;align-self:center;margin:0;
+}
+
+/* ═══════════ CAMPO PROPIO (campo/campo_svg.js) ═══════════ */
+.mister .pitch.grande{background:none;border:none;overflow:visible}
+.mister .pitch-svg{position:absolute;inset:0;pointer-events:none;border-radius:var(--r-m);overflow:hidden;
+  box-shadow:0 14px 34px rgba(5,8,30,.55), inset 0 0 0 1px rgba(230,245,230,.18)}
+.mister .pitch-svg svg{width:100%;height:100%;display:block}
+/* proporción del dibujo (1130x760); se dimensiona por el alto disponible */
+.mister .view[data-view="tactica"] .pitch.grande{
+  width:min(100cqw, 148.7cqh);height:auto;aspect-ratio:1130 / 760;
+  max-width:none;max-height:none;align-self:center;margin:0;
+}
+
+/* ═══════════ CHIPS DE SISTEMA Y ÉPOCA ═══════════ */
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chip{
+  padding:5px 9px;font-size:11px;letter-spacing:.06em;
+  background:linear-gradient(180deg,rgba(42,68,120,.75),rgba(24,40,80,.75));
+  border-color:rgba(190,214,255,.28);
+}
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chip.on{
+  background:linear-gradient(180deg,#3a58a8,#22367e);
+  border-color:var(--edge);color:#fff;
+  box-shadow:0 0 0 1px rgba(127,159,255,.35), 0 3px 10px rgba(10,10,40,.5);
+}
+.mister .chip.mini{
+  padding:4px 8px;font-size:10px;font-variant-numeric:tabular-nums;
+  background:rgba(20,20,60,.55);border-color:rgba(190,214,255,.16);color:var(--ink-mute);
+}
+.mister .chip.mini.on{
+  background:linear-gradient(180deg,var(--gleam),var(--steel));
+  border-color:var(--edge);color:var(--void);font-weight:700;
+}
+.mister .chip.mini:hover{color:var(--ink)}
+.mister .chip.mini.on:hover{color:var(--void)}
+/* las reglas, en la columna derecha y en dos líneas como mucho */
+.mister .regla{font-size:10px;padding:3px 7px}
+/* que el campo no toque los bordes del hueco */
+.mister .view[data-view="tactica"] .pitch.grande{width:min(98cqw, 143cqh)}
+/* la columna derecha lleva reglas + banquillo: filas finas para que quepan */
+.mister .view[data-view="tactica"] .tower.wide:last-child .suplente{padding:4px 9px}
+.mister .view[data-view="tactica"] .tower.wide:last-child .su-n{font-size:12px}
+.mister .view[data-view="tactica"] .tower.wide .grp + .grp{margin-top:14px}
+/* el campo no puede invadir las columnas de al lado */
+.mister .view[data-view="tactica"] .pitch-center{overflow:hidden}
+.mister .view[data-view="tactica"] .pitch.grande{width:min(100cqw, 143cqh);max-width:100cqw}
+/* el resumen del once, en una línea */
+.mister .resumen-once{
+  display:flex;align-items:baseline;gap:10px;margin:0;padding:6px 10px;
+  border-radius:var(--r-m);background:rgba(20,20,60,.5);border:1px solid rgba(190,214,255,.14);
+}
+.mister .resumen-once b{font-size:15px;font-variant-numeric:tabular-nums}
+.mister .resumen-once span{font-size:11.5px;color:var(--ink-mute)}
+.mister .resumen-once em{
+  margin-left:auto;font-style:normal;font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+}
+.mister .resumen-once em.bien{color:#7fe0a0}
+.mister .resumen-once em.mal{color:#ff9a9a}
+/* `place-content:center` dejaba que la columna creciera con el campo y este
+   invadía las de al lado. Con flex + min-width:0 la columna manda. */
+.mister .view[data-view="tactica"] .pitch-center{
+  display:flex;align-items:center;justify-content:center;
+  min-width:0;overflow:hidden;place-content:normal;
+}
+.mister .view[data-view="tactica"] .pitch.grande{max-width:100%}
+/* El `nowrap` que puse para meter los sistemas en una fila hacía que los chips
+   se salieran de la columna y se metieran debajo del campo. Que envuelvan. */
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chips{flex-wrap:wrap}
+.mister .view[data-view="tactica"] .tower.wide:first-child .grp:first-child .chip{max-width:100%}
+/* siete ajustes en una columna no caben junto a los chips: van a dos */
+.mister .view[data-view="tactica"] .grp.rejilla2{grid-template-columns:1fr 1fr;gap:2px 8px}
+.mister .view[data-view="tactica"] .grp.rejilla2 .ajuste .chip{padding:3px 6px;font-size:9.5px}
+.mister .view[data-view="tactica"] .grp.rejilla2 .ajuste .sr-k{font-size:9px}
+
+/* ═══════════ BARRA DE SISTEMA SOBRE EL CAMPO ═══════════ */
+.mister .campo-col{display:flex;flex-direction:column;min-width:0;min-height:0;gap:8px}
+.mister .barra-sistema{
+  display:flex;align-items:center;gap:5px;flex:none;flex-wrap:wrap;
+  padding:6px 8px;border-radius:var(--r-m);
+  background:linear-gradient(180deg,rgba(30,52,104,.55),rgba(20,20,60,.5));
+  border:1px solid rgba(190,214,255,.16);box-shadow:var(--bevel);
+}
+.mister .chip.sis{
+  padding:5px 11px;font-size:11.5px;letter-spacing:.06em;
+  background:linear-gradient(180deg,rgba(42,68,120,.8),rgba(24,40,80,.8));
+  border-color:rgba(190,214,255,.26);
+}
+.mister .chip.sis.on{
+  background:linear-gradient(180deg,#3f5eb4,#22367e);border-color:var(--edge);color:#fff;
+  box-shadow:0 0 0 1px rgba(127,159,255,.4), 0 3px 10px rgba(10,10,40,.55);
+}
+.mister .btn-epoca{
+  margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer;
+  padding:5px 10px;border-radius:var(--r-m);font:inherit;
+  border:1px solid rgba(190,214,255,.3);
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));box-shadow:var(--bevel);
+}
+.mister .btn-epoca:hover{border-color:var(--edge);background:linear-gradient(180deg,#37538f,#22386e)}
+.mister .be-l{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .be-v{font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.mister .be-c{color:var(--edge);font-size:11px}
+.mister .view[data-view="tactica"] .pitch-center{flex:1}
+
+/* demarcación del suplente */
+.mister .suplente{grid-template-columns:22px 1fr auto auto;gap:6px}
+.mister .su-p{display:flex;align-items:center}
+.mister .su-p .pos-badge{font-size:9px;padding:2px 5px}
+/* la columna del campo es la que se estira ahora, no el .pitch-center */
+.mister .view[data-view="tactica"] .campo-col{align-self:stretch;height:100%}
+.mister .view[data-view="tactica"] .pitch-center{flex:1;min-height:0;align-self:auto}
+
+/* ═══════════ ATAQUE / DEFENSA Y TIRADORES ═══════════ */
+.mister .disp{display:flex;gap:3px;margin-left:12px}
+.mister .chip.disp-b{padding:5px 12px;font-size:11px}
+.mister .chip.disp-b.on.defensa{background:linear-gradient(180deg,#3f6fb4,#1f3f7e);border-color:#7fb0ff;color:#fff}
+.mister .chip.disp-b.on.ataque{background:linear-gradient(180deg,#c05252,#7e2020);border-color:#ff9a9a;color:#fff}
+/* aviso de colocación: el aro del dorsal avisa de lo lejos que está de su sitio */
+.mister .pp.col1 .pp-dot{box-shadow:0 0 0 2px rgba(200,150,30,.8), 0 3px 7px rgba(5,8,30,.6)}
+.mister .pp.col2 .pp-dot{box-shadow:0 0 0 2px rgba(230,120,60,.9), 0 3px 7px rgba(5,8,30,.6)}
+.mister .pp.col3 .pp-dot{box-shadow:0 0 0 3px rgba(255,90,90,.95), 0 3px 7px rgba(5,8,30,.6)}
+
+.mister .tirador{
+  display:grid;grid-template-columns:18px 1fr auto auto auto;gap:4px;align-items:center;
+  padding:3px 7px;border-radius:var(--r-s);background:rgba(30,52,104,.5);
+  border:1px solid rgba(190,214,255,.14);
+}
+.mister .ti-n{font-size:10px;color:var(--ink-mute);font-variant-numeric:tabular-nums}
+.mister .ti-j{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .ti-b{
+  width:16px;height:16px;line-height:1;cursor:pointer;border-radius:2px;font:inherit;font-size:8px;
+  border:1px solid rgba(190,214,255,.25);background:rgba(20,20,60,.6);color:var(--ink-dim);
+}
+.mister .ti-b:hover{border-color:var(--edge);color:var(--ink)}
+.mister .ti-b.x:hover{border-color:#ff9a9a;color:#ff9a9a}
+.mister .chips.crit{margin-top:6px}
+.mister .chips.crit .chip{padding:3px 6px;font-size:9px}
+.mister .candidato{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding:3px 8px;cursor:pointer;border-radius:var(--r-s);font:inherit;color:inherit;
+  border:1px solid rgba(190,214,255,.12);background:rgba(20,20,60,.4);
+}
+.mister .candidato:hover{border-color:var(--edge);background:rgba(42,68,120,.6)}
+.mister .candidato.puesto{opacity:.45}
+.mister .ca-n{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .ca-v{font-size:11.5px;font-weight:700;color:var(--gleam);font-variant-numeric:tabular-nums}
+.mister .chips.pest{margin-bottom:8px}
+.mister .chips.pest .chip{flex:1;justify-content:center;text-align:center;padding:5px 8px;font-size:10.5px}
+/* la barra de arriba, compacta: sistemas + disposición + época en dos filas como mucho */
+.mister .barra-sistema{padding:5px 7px;gap:4px}
+.mister .chip.sis{padding:4px 9px;font-size:10.5px}
+.mister .disp{margin-left:8px}
+.mister .chip.disp-b{padding:4px 10px;font-size:10.5px}
+/* La columna derecha no puede cambiar de alto al cambiar de pestaña: si crece,
+   estira la fila y el campo se agranda. Se fija y recorta por dentro. */
+.mister .view[data-view="tactica"] .tower.wide{height:100%;min-height:0;overflow:hidden;align-self:stretch}
+.mister .view[data-view="tactica"] .screenbody{align-items:stretch}
+/* el stretch de la columna estiraba los chips a lo alto: se quedan a su tamaño */
+.mister .chips{align-items:flex-start}
+.mister .chips .chip{align-self:flex-start;flex-grow:0}
+.mister .chips.pest .chip{flex:1 1 0;align-self:stretch;height:auto;padding:6px 8px;border-radius:var(--r-m)}
+.mister .view[data-view="tactica"] .tower.wide > .grp{flex:none}
+.mister .view[data-view="tactica"] .tower.wide{display:flex;flex-direction:column}
+
+/* ═══════════ CAMPO VERTICAL DE LA FICHA ═══════════ */
+.mister .pitch.vertical{aspect-ratio:534 / 738;width:100%;height:auto}
+.mister .pitch.vertical .pitch-svg svg{transform:rotate(-90deg) scale(1.447);transform-origin:center}
+.mister .view[data-view="alineacion"] .pitch-center.mini{display:block;padding:0}
+.mister .view[data-view="alineacion"] .pitch-center.mini .pitch{width:100%;height:auto;min-height:0}
+.mister .view[data-view="alineacion"] .pitch.vertical .pp{width:auto}
+.mister .view[data-view="alineacion"] .pitch.vertical .pp-dot{width:17px;height:17px;font-size:9px}
+.mister .view[data-view="alineacion"] .pitch.vertical .pp-name{font-size:8px;letter-spacing:0}
+
+/* bajas: cruz para lesionados, punto rojo para sancionados */
+.mister .baja-ico{margin-left:5px;font-size:9px;vertical-align:middle}
+.mister .baja-ico.cruz{color:#ff6a6a;font-weight:700}
+.mister .baja-ico.punto{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:#e04040;box-shadow:0 0 0 1px rgba(255,150,150,.5);
+}
+/* la torre izquierda scrollea: con las reglas de la época no cabe */
+.mister .view[data-view="alineacion"] .tower.wide:first-child{
+  overflow-y:auto;max-height:100%;padding-right:4px;align-self:stretch}
+.mister .view[data-view="alineacion"] .tower.wide:first-child::-webkit-scrollbar{width:6px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child::-webkit-scrollbar-thumb{
+  background:rgba(190,214,255,.22);border-radius:3px}
+
+/* ═══════════ ALINEACIÓN: alturas de una vez ═══════════ */
+.mister .view[data-view="alineacion"] .screenbody{align-items:stretch}
+.mister .view[data-view="alineacion"] .tower.wide{
+  min-height:0;overflow-y:auto;overflow-x:hidden;padding-right:4px;
+  display:flex;flex-direction:column;
+}
+.mister .view[data-view="alineacion"] .tower.wide > .grp{flex:none;align-content:start}
+.mister .view[data-view="alineacion"] .tower.wide::-webkit-scrollbar{width:6px}
+.mister .view[data-view="alineacion"] .tower.wide::-webkit-scrollbar-thumb{background:rgba(190,214,255,.22);border-radius:3px}
+.mister .view[data-view="alineacion"] .stat-row, .mister .view[data-view="alineacion"] .chip.bloque{flex:none}
+.mister .view[data-view="alineacion"] .convoc{height:100%;min-height:0}
+.mister .view[data-view="alineacion"] .cv-body{flex:1;min-height:0;overflow-y:auto}
+
+/* el campito de la ficha, VERTICAL de verdad */
+.mister .view[data-view="alineacion"] .pitch-center.mini .pitch.vertical{
+  aspect-ratio:534 / 738;width:100%;height:auto;max-width:none;max-height:none;
+}
+.mister .view[data-view="alineacion"] .pitch.vertical .pitch-svg{overflow:hidden}
+.mister .view[data-view="alineacion"] .pitch.vertical .pitch-svg svg{
+  position:absolute;top:50%;left:50%;width:138.2%;height:72.4%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+}
+/* Barras de scroll VISIBLES: si algo scrollea, tiene que notarse. */
+.mister .cv-body::-webkit-scrollbar, .mister .view[data-view="alineacion"] .tower.wide::-webkit-scrollbar{width:9px}
+.mister .cv-body::-webkit-scrollbar-track, .mister .view[data-view="alineacion"] .tower.wide::-webkit-scrollbar-track{
+  background:rgba(10,10,40,.6);border-radius:5px}
+.mister .cv-body::-webkit-scrollbar-thumb, .mister .view[data-view="alineacion"] .tower.wide::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--gleam),var(--steel));
+  border-radius:5px;border:1px solid rgba(10,10,40,.5)}
+.mister .cv-body::-webkit-scrollbar-thumb:hover{background:var(--edge)}
+.mister .cv-body{scrollbar-color:var(--gleam) rgba(10,10,40,.6);scrollbar-width:thin}
+.mister .view[data-view="alineacion"] .tower.wide{scrollbar-color:var(--gleam) rgba(10,10,40,.6);scrollbar-width:thin}
+
+/* ═══════════ PANTALLA COMPLETA ═══════════
+   El tablero ocupa la ventana entera del navegador: fuera la banda de arriba y
+   las notas de abajo, y la consola pasa de proporción fija a ocupar todo. Así
+   además las alturas se resuelven contra el viewport de verdad. */
+.mister{height:100%;overflow:hidden}
+.mister .eyebrow, .mister .notes{display:none}
+.mister .wrap{max-width:none;width:100vw;height:100vh;margin:0;padding:0;display:flex}
+.mister .console{
+  width:100vw;height:100vh;aspect-ratio:auto;border-radius:0;border:none;
+  box-shadow:none;flex:1;min-height:0;
+}
+.mister .screen{padding:14px 18px 0}
+/* La fila del grid del cuerpo era de tamaño automático, así que crecía con el
+   contenido y ningún height:100% de dentro se resolvía: por eso la lista no
+   podía scrollear. Se fija la fila al alto disponible. */
+.mister .view[data-view="alineacion"] .screenbody, .mister .view[data-view="tactica"] .screenbody{grid-template-rows:minmax(0,1fr)}
+/* columna de rol */
+.mister .cv-head, .mister .cv-row{grid-template-columns:24px minmax(72px,1fr) 46px 40px 26px 32px 34px 32px 32px 28px 40px 30px 30px 32px 32px 30px}
+.mister .cv-c.rol{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.08em}
+.mister .cv-c.rol.r0{color:var(--steel-lit)}
+.mister .cv-c.rol.r1{color:var(--ink-mute)}
+.mister .cv-c.rol.r2{color:#7fe0a0}
+/* pizarra de jugada ensayada */
+.mister .pitch.pizarra .pp-name{font-size:8.5px}
+.mister .pitch.pizarra .pp.fijo{opacity:.55}
+.mister .balon{
+  position:absolute;width:11px;height:11px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#c8c8c8);
+  border:1px solid #333;transform:translate(-50%,-50%);
+  box-shadow:0 2px 5px rgba(0,0,0,.6);z-index:3;
+}
+.mister .balon{width:14px;height:14px;box-shadow:0 0 0 2px rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.7)}
+.mister .pitch.pizarra .pp{width:52px}
+/* columnas de buenas/malas */
+.mister .cv-head, .mister .cv-row{grid-template-columns:24px minmax(66px,1fr) 42px 36px 24px 30px 30px 30px 30px 26px 38px 28px 28px 42px 46px 42px 28px}
+.mister .cv-c.bm{font-size:10.5px;color:var(--ink-dim)}
+/* 18 columnas: #, jugador, pos, zona, ed, rol, med, for, mor, con, pj, min, gol, asi, ent, pas, dis, tar */
+.mister .cv-head, .mister .cv-row{
+  grid-template-columns:22px minmax(60px,1fr) 40px 34px 22px 28px 28px 28px 28px 28px 24px 36px 26px 26px 40px 44px 40px 26px;
+  gap:5px;
+}
+
+/* ═══════════ RESOLUCIÓN ESTÁNDAR DEL JUEGO (pantalla de PC, 1920 de ancho) ═══
+   Todo el tablero se escala con UN SOLO mando. Subir --zoom hace todo más
+   grande (letras, fichas, campo) sin tocar ni una regla más; --unzoom es su
+   inverso y sirve para que la consola siga midiendo la ventana exacta: si no,
+   el 100vw se multiplicaría por el zoom y se saldría por la derecha.
+   Si se cambia uno hay que cambiar el otro: --unzoom = 1 / --zoom. */
+.mister{ --zoom:1.15; --unzoom:.8696; }
+.mister .console{
+  zoom:var(--zoom);
+  width:calc(100vw * var(--unzoom));
+  height:calc(100vh * var(--unzoom));
+}
+
+/* ═══════════ ALINEACIÓN: lista aprovechada y campo grande ═══════════
+   El nombre se llevaba TODO el hueco sobrante y dejaba un desierto entre el
+   jugador y su demarcación. Ahora el nombre tiene un tope y el sobrante se
+   reparte entre las columnas de números, que es donde se lee. Lo que se
+   ahorra la tabla se lo queda la torre de la derecha: mapita más grande. */
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:200px minmax(0,1fr) 356px}
+.mister .cv-head, .mister .cv-row{
+  grid-template-columns:
+    26px                /* dorsal */
+    minmax(84px,148px)  /* jugador (con tope: se acabó el desierto) */
+    48px                /* pos */
+    40px                /* zona (mapita) */
+    minmax(26px,1fr)    /* ed */
+    minmax(34px,1fr)    /* rol */
+    minmax(32px,1fr)    /* med */
+    minmax(30px,1fr)    /* for */
+    minmax(30px,1fr)    /* mor */
+    minmax(30px,1fr)    /* con */
+    minmax(28px,1fr)    /* pj */
+    minmax(40px,1.2fr)  /* min */
+    minmax(28px,1fr)    /* gol */
+    minmax(28px,1fr)    /* asi */
+    minmax(42px,1.3fr)  /* ent */
+    minmax(46px,1.4fr)  /* pas */
+    minmax(42px,1.3fr)  /* dis */
+    minmax(28px,1fr);   /* tar */
+  gap:6px;
+}
+
+/* ═══════════ FICHA DE LA TORRE: siempre con foto y barras ═══════════
+   Es la misma ficha de la plantilla, encogida para la columna de la derecha.
+   La cruz de cerrar no pinta aquí: la ficha no se cierra nunca. */
+.mister .ficha-tower{position:relative;margin-bottom:6px}
+.mister .ficha-tower .fi-close{display:none}
+.mister .ficha-tower .fi-grid{grid-template-columns:1fr 104px;gap:9px;margin-bottom:8px}
+.mister .ficha-tower .fi-foto{width:104px}
+.mister .ficha-tower .fi-name{font-size:20px}
+.mister .ficha-tower .fi-meta{font-size:9.5px;margin:2px 0 6px}
+.mister .ficha-tower .fi-media{padding:4px 8px;margin-bottom:6px}
+.mister .ficha-tower .fi-media b{font-size:25px}
+.mister .ficha-tower .fi-bars{gap:4px}
+.mister .ficha-tower .attr{grid-template-columns:58px 1fr 22px;gap:7px}
+.mister .ficha-tower .attr-track{height:7px}
+
+/* El campo de la torre manda en ALTO (se lo fija el JS al hueco que hay) y el
+   ancho lo saca de su proporción: así crece con la pantalla sin comerse la
+   ficha que va debajo. */
+.mister .view[data-view="alineacion"] .tower.wide .pitch-center.mini{
+  display:flex;justify-content:center;min-height:0;padding:0;
+}
+.mister .view[data-view="alineacion"] .tower.wide .pitch-center.mini .pitch.vertical{
+  width:auto;height:100%;max-width:100%;
+}
+/* La ficha de la torre va apretada: tiene que caber campo + foto + nueve barras
+   sin que nada se salga del marco. */
+.mister .ficha-tower .fi-bars{gap:3px}
+.mister .ficha-tower .attr-track{height:6px}
+.mister .ficha-tower .attr{grid-template-columns:56px 1fr 21px;gap:6px}
+.mister .ficha-tower .attr-k{font-size:10px}
+.mister .view[data-view="alineacion"] .tower.wide .stat-row{padding:3px 9px}
+/* Nueve barras en columna no caben junto al campo: van a dos columnas. */
+.mister .ficha-tower .fi-bars{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
+
+/* ═══════════ ALINEACIÓN v2: campo APAISADO y grande ═══════════
+   En vertical el campo se comía todo el alto y dejaba a la ficha sin sitio (y
+   con scroll). Apaisado cunde mucho más: cabe más ancho, los nombres se
+   separan y aún sobra hueco para la foto y las barras. */
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:200px minmax(0,1fr) 420px}
+.mister .view[data-view="alineacion"] .tower.wide .pitch-center.mini{
+  display:flex;justify-content:center;align-items:flex-start;min-height:0;padding:0;
+}
+.mister .view[data-view="alineacion"] .tower.wide .pitch-center.mini .pitch{
+  width:100%;height:auto;aspect-ratio:3/2;max-width:none;
+}
+/* Nombres que NO se pisan: cada uno en su chapita, con sitio de sobra y por
+   encima del muñeco de al lado. */
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp{width:86px}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-dot{width:23px;height:23px;font-size:11.5px}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-name{
+  font-size:9.5px;letter-spacing:.02em;padding:1px 5px;border-radius:999px;
+  background:rgba(6,26,14,.62);box-shadow:0 1px 4px rgba(0,0,0,.45);
+}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp:hover{z-index:4}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp{z-index:2}
+
+/* ═══════════ CRISTAL (AERO): la foto se ve SIEMPRE, en todas las pantallas ═══
+   El despacho enseña las fotos que van rotando; en las pantallas de gestión se
+   apagaban casi del todo y el tablero se quedaba en una caja opaca. Ahora la
+   foto sigue ahí detrás y cada pieza —tabla, ficha, botones— es un panel de
+   cristal esmerilado por encima. Legible, pero sin tapar el fondo. */
+.mister.en-pantalla .photo.on{opacity:.42}
+.mister.en-pantalla .console::after{
+  background:linear-gradient(180deg,rgba(10,10,40,.44),rgba(10,10,40,.62));
+}
+.mister.en-pantalla .pcredit{opacity:.5}
+
+/* paneles grandes */
+.mister.en-pantalla .convoc, .mister.en-pantalla .ficha-tower, .mister.en-pantalla .paneltable, .mister.en-pantalla .econ-caja{
+  background:linear-gradient(180deg,rgba(26,44,92,.36),rgba(12,18,48,.46));
+  border:1px solid rgba(150,180,240,.16);border-radius:var(--r-m);
+  padding:6px 7px;
+  backdrop-filter:blur(16px) saturate(135%);
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+}
+/* piezas: filas, fichas de dato y botones. Los botones son paneles de ventana:
+   cristal con el borde iluminado, y al pasar por encima se encienden. */
+.mister.en-pantalla .cv-row, .mister.en-pantalla .cv-head, .mister.en-pantalla .stat-row, .mister.en-pantalla .chip, .mister.en-pantalla .work, .mister.en-pantalla .sec, .mister.en-pantalla .servicio, .mister.en-pantalla .articulo, .mister.en-pantalla .oferta, .mister.en-pantalla .zona, .mister.en-pantalla .tag, .mister.en-pantalla .fi-media{
+  backdrop-filter:blur(10px) saturate(130%);
+  -webkit-backdrop-filter:blur(10px) saturate(130%);
+}
+.mister.en-pantalla .cv-row{background:rgba(20,34,74,.42)}
+.mister.en-pantalla .cv-row.conv{background:rgba(34,58,116,.5)}
+.mister.en-pantalla .cv-row.sel{background:rgba(52,84,150,.62)}
+.mister.en-pantalla .chip, .mister.en-pantalla .work{border-color:rgba(190,214,255,.34)}
+.mister.en-pantalla .chip:hover, .mister.en-pantalla .work:hover{border-color:var(--edge);background:rgba(58,88,158,.6)}
+
+/* ═══════════ TABLA FIJA, CON PALABRAS ENTERAS Y BANDERAS ═══════════
+   Diecisiete columnas con el nombre completo de cada dato. Las abreviaturas de
+   tres letras (For, Mor, Con) no las entiende nadie que no las haya escrito. */
+.mister .cv-head, .mister .cv-row{
+  grid-template-columns:
+    minmax(30px,34px)     /* dorsal */
+    minmax(106px,150px)   /* jugador: bandera + nombre + punto de extranjero */
+    minmax(46px,54px)     /* posición */
+    38px                  /* zona (mapita) */
+    minmax(32px,1fr)      /* edad */
+    minmax(40px,1fr)      /* media */
+    minmax(40px,1fr)      /* forma */
+    minmax(40px,1fr)      /* moral */
+    minmax(54px,1.2fr)    /* confianza */
+    minmax(50px,1.1fr)    /* partidos */
+    minmax(46px,1fr)      /* minutos */
+    minmax(38px,1fr)      /* goles */
+    minmax(58px,1.3fr)    /* asistencias */
+    minmax(50px,1.1fr)    /* entradas */
+    minmax(40px,1fr)      /* pases */
+    minmax(48px,1.1fr)    /* disparos */
+    minmax(48px,1.1fr);   /* tarjetas */
+  gap:5px;
+}
+/* La cabecera NO scrollea y el cuerpo SÍ: sin reservar el mismo hueco de barra,
+   las columnas se descuadran y "Tarjetas" cae bajo la barra. Reservamos el
+   canal de scroll en ambos para que cuadren y la última columna lo despeje. */
+.mister .view[data-view="alineacion"] .cv-body{ scrollbar-gutter:stable }
+.mister .view[data-view="alineacion"] .cv-body::-webkit-scrollbar{ width:9px }
+.mister .view[data-view="alineacion"] .cv-head{ overflow-y:scroll; scrollbar-gutter:stable }
+.mister .view[data-view="alineacion"] .cv-head::-webkit-scrollbar{ width:9px; background:transparent }
+.mister .view[data-view="alineacion"] .cv-head::-webkit-scrollbar-thumb{ background:transparent }
+.mister .cv-head .cv-c{
+  cursor:default;font-size:9.5px;letter-spacing:.03em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .cv-head .cv-c:hover{color:var(--ink-mute)}   /* ya no se ordena: no se ilumina */
+
+/* nombre: bandera, nombre y, si toca, el punto de extranjero */
+.mister .cv-c.nom{display:flex;align-items:center;gap:6px;min-width:0}
+.mister .cv-nom-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.mister .cv-bandera{flex:none;display:block;width:18px;line-height:0}
+.mister .bandera{display:block;width:100%;height:auto;border-radius:1.5px}
+.mister .bd-ficha{display:inline-block;width:16px;height:auto;vertical-align:-2px;margin-right:4px;border-radius:1.5px}
+.mister .fi-nac{font-weight:700;color:var(--ink-dim)}
+/* El punto azul: solo en las épocas con cupo, y solo en quien gasta plaza. */
+.mister .cv-extranjero{
+  flex:none;width:7px;height:7px;border-radius:50%;display:inline-block;
+  background:radial-gradient(circle at 35% 30%,#9dc0ff,#1b4fd0);
+  box-shadow:0 0 0 1px rgba(8,16,48,.75),0 0 6px rgba(90,140,255,.7);
+}
+.mister .fi-meta .cv-extranjero{margin-left:4px;vertical-align:1px}
+
+/* ═══════════ MAPITA: el nombre AL LADO del dorsal ═══════════
+   Debajo se pisaban unos con otros en cuanto había cuatro jugadores en línea.
+   Al lado hay sitio de sobra; y a quien juega pegado a la banda derecha se le
+   pone a la izquierda para que no se salga del campo. */
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp{width:23px;gap:0}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-name{
+  position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);
+  font-size:9.5px;letter-spacing:.02em;padding:1px 5px;border-radius:999px;
+  background:rgba(6,26,14,.62);box-shadow:0 1px 4px rgba(0,0,0,.45);
+}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp.nombre-izq .pp-name{
+  left:auto;right:calc(100% + 5px);
+}
+/* nombre del mapita: cortito y con tope, para que no invada la línea de al lado */
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-name{
+  font-size:9px;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* La torre izquierda lleva ahora resumen, filtros, rol y reglas de la época:
+   se aprieta un punto para que entre todo sin scroll. */
+.mister .view[data-view="alineacion"] .tower.wide:first-child .stat-row{padding:2px 9px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .chip.bloque{padding:4px 9px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .grp{gap:3px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .regla{font-size:9.5px;line-height:1.25}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .grp-h{margin-top:2px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child{gap:5px}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .grp-h{margin:1px 0 0}
+.mister .view[data-view="alineacion"] .tower.wide:first-child .regla{line-height:1.2}
+
+/* ═══════════ TORRE: campo y ficha, la misma caja ═══════════ */
+.mister .view[data-view="alineacion"] .screenbody{grid-template-columns:200px minmax(0,1fr) 460px}
+.mister .view[data-view="alineacion"] .tower.wide .pitch-center.mini{align-items:center}
+.mister .ficha-tower{display:flex;flex-direction:column;justify-content:center}
+/* con el campo ya estirado, los nombres respiran: se les da un pelín más de aire */
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-name{
+  font-size:9.5px;max-width:84px;padding:1px 6px;
+}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp-name{left:calc(100% + 7px)}
+.mister .view[data-view="alineacion"] .tower.wide .pitch .pp.nombre-izq .pp-name{left:auto;right:calc(100% + 7px)}
+
+/* ═══════════ NI UNA BARRA DE SCROLL EN LAS TORRES ═══════════
+   Lo que no cabe se encoge (lo hace el JS con la ficha), no se scrollea. */
+.mister .view[data-view="alineacion"] .tower.wide, .mister .view[data-view="alineacion"] .tower.wide:first-child{overflow:hidden}
+
+/* ═══════════ BAJAS: TARJETA ROJA Y CRUZ DE ENFERMERÍA ═══════════
+   El sancionado lleva su tarjeta roja —un rectángulo, como la de verdad— y el
+   lesionado una cruz roja sobre placa blanca, la de la enfermería. */
+.mister .baja-ico{margin-left:5px;vertical-align:middle;flex:none}
+.mister .baja-ico.punto{
+  display:inline-block;width:8px;height:11px;border-radius:1.5px;
+  background:linear-gradient(160deg,#f04a4a,#b40d0d);
+  box-shadow:0 1px 2px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.35);
+}
+.mister .baja-ico.cruz{
+  display:inline-grid;place-items:center;width:11px;height:11px;border-radius:2px;
+  background:#f4f7ff;color:#c81e1e;font-size:9px;font-weight:900;line-height:1;
+  box-shadow:0 1px 2px rgba(0,0,0,.55),inset 0 0 0 1px rgba(0,0,0,.15);
+}
+
+/* ═══════════ TÁCTICA v2 — el reparto de PC Fútbol 7 (scr_027) ═══════════
+   Cuatro cuadros: arriba los mandos y la lista del once; abajo el panel del
+   campo y el campo apaisado, que es el que manda. */
+.mister .view[data-view="tactica"] .screenbody{
+  grid-template-columns:238px minmax(0,1fr) 268px;
+  grid-template-rows:minmax(0,1fr);
+  gap:10px;align-items:stretch;
+}
+.mister .tac-panel, .mister .tac-lista, .mister .tac-mandos, .mister .tac-campo{min-width:0;min-height:0}
+.mister .tac-panel, .mister .tac-mandos{display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.mister .tac-lista{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+.mister .tac-campo{display:flex;align-items:center;justify-content:center;min-height:0}
+.mister .tac-campo .pitch{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+.mister .view[data-view="tactica"] .sis-chips{flex-wrap:wrap;gap:4px}
+
+/* la lista del once: once filas y las columnas del original */
+.mister .tac-once{display:flex;flex-direction:column;gap:2px;min-height:0;overflow:hidden}
+.mister .to-fila{
+  display:grid;grid-template-columns:26px minmax(90px,1fr) 58px 96px 108px;
+  gap:8px;align-items:center;padding:3px 8px;border-radius:var(--r-s);
+  background:rgba(30,52,104,.45);border:1px solid rgba(150,180,240,.14);
+  font-family:'Barlow Condensed',sans-serif;font-size:12.5px;cursor:pointer;
+}
+.mister .to-fila:hover{border-color:rgba(190,214,255,.35)}
+.mister .to-fila.sel{border-color:var(--edge);background:rgba(52,84,150,.66)}
+.mister .to-fila.cab{
+  background:none;border:0;border-bottom:1px solid rgba(190,214,255,.18);
+  border-radius:0;color:var(--ink-mute);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;cursor:default;padding-bottom:4px;
+}
+.mister .to-d{color:var(--ink-mute);font-weight:700;text-align:right}
+.mister .to-n{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .to-rol{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  padding:2px 6px;border-radius:999px;border:1px solid rgba(190,214,255,.24);
+  background:rgba(10,20,54,.5);color:var(--ink-dim);
+}
+.mister .to-fila.cab .to-rol{border:0;background:none;padding:0;color:var(--ink-mute);font-weight:600}
+.mister .to-rol.r0{color:var(--steel-lit)}
+.mister .to-rol.r2{color:#7fe0a0}
+.mister .to-rol:hover{border-color:var(--edge)}
+.mister .to-col{
+  font-family:'Barlow Condensed',sans-serif;font-size:10.5px;letter-spacing:.04em;
+  text-transform:uppercase;text-align:right;white-space:nowrap;
+}
+.mister .to-col.c0{color:#7fe0a0}
+.mister .to-col.c1{color:var(--ink-dim)}
+.mister .to-col.c2{color:var(--amber)}
+.mister .to-col.c3{color:#ff8a8a}
+
+/* la rejilla de zonas del balón, sobre el campo y en el panel */
+.mister .zonas-rej{position:absolute;inset:0;z-index:4;pointer-events:none}
+.mister .zonas-rej .zn{
+  position:absolute;padding:0;border:1px dashed rgba(230,245,230,.16);
+  background:transparent;cursor:pointer;pointer-events:auto;transition:background .15s;
+}
+.mister .zonas-rej .zn:hover{background:rgba(255,255,255,.13)}
+.mister .zonas-rej .zn.on{background:rgba(127,159,255,.24);border:1px solid var(--edge)}
+.mister .zonas-caja{
+  position:relative;aspect-ratio:3/2;border-radius:var(--r-s);
+  background:linear-gradient(180deg,#166f2c,#0d4f21);
+  border:1px solid rgba(220,240,220,.35);
+}
+.mister .zonas-caja .zonas-rej{position:absolute}
+.mister .zonas-caja .zn{border-color:rgba(230,245,230,.22)}
+.mister .tac-campo{overflow:hidden}
+.mister .view[data-view="tactica"] .screenbody{overflow:hidden}
+/* Los siete ajustes, en línea: etiqueta a la izquierda y opciones a la derecha.
+   Apilados se comían el panel entero y obligaban a encogerlo todo. */
+.mister .view[data-view="tactica"] .ajuste{
+  display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:4px 8px;
+}
+.mister .view[data-view="tactica"] .ajuste .sr-k{font-size:10px;letter-spacing:.04em}
+.mister .view[data-view="tactica"] .ajuste .chips{flex-wrap:wrap;gap:3px}
+.mister .view[data-view="tactica"] .ajuste .chip{padding:2px 7px;font-size:10px}
+.mister .view[data-view="tactica"] .grp{gap:4px}
+/* la rejilla de mano: pequeña, que es un mando y no el campo */
+.mister .zonas-caja{max-width:186px;margin:0 auto}
+.mister .aviso.mini{font-size:10px;line-height:1.3;margin:2px 0 0}
+.mister .view[data-view="tactica"] .tac-mandos .btn-tac{padding:5px 9px}
+
+/* ═══════════ TÁCTICA v3: el campo es la pantalla ═══════════ */
+.mister .tac-campo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.mister .tac-campo .pitch{max-width:none;aspect-ratio:auto}
+.mister .tac-pie{
+  display:flex;align-items:baseline;gap:10px;margin:0;flex:none;
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-mute);
+}
+.mister .tac-pie b{color:var(--ink);font-weight:700}
+.mister .tac-pie em{font-style:normal;color:#7fe0a0}
+.mister .tac-pie em.mal{color:#ff9a9a}
+.mister .chip.ancho{width:100%;text-align:center}
+.mister .tac-mandos .botonera{display:grid;grid-template-columns:1fr 1fr;gap:var(--u)}
+
+/* la lista de la derecha: los once, sin cortar */
+.mister .tac-once{display:flex;flex-direction:column;gap:2px;min-height:0}
+.mister .to-fila{grid-template-columns:22px minmax(0,1fr) 42px 34px;gap:6px;padding:2px 6px;font-size:12px}
+.mister .to-d{
+  display:grid;place-items:center;width:19px;height:19px;border-radius:50%;
+  background:rgba(10,20,54,.6);color:var(--ink-dim);font-weight:700;font-size:10.5px;
+  box-shadow:0 0 0 1.5px rgba(127,224,160,.75);
+}
+.mister .to-d.c1{box-shadow:0 0 0 1.5px rgba(190,214,255,.5)}
+.mister .to-d.c2{box-shadow:0 0 0 1.5px rgba(200,150,30,.9)}
+.mister .to-d.c3{box-shadow:0 0 0 2px rgba(255,90,90,.95)}
+.mister .to-fila.cab .to-d{background:none;box-shadow:none;width:auto;height:auto;color:var(--ink-mute)}
+.mister .to-rol{padding:1px 5px;font-size:9.5px}
+
+/* flechas de movimiento: de dónde defiende a dónde ataca */
+.mister .mov-capa{position:absolute;inset:0;z-index:3;pointer-events:none;width:100%;height:100%}
+.mister .mov-capa .mov{
+  stroke:rgba(255,224,138,.55);stroke-width:.5;stroke-dasharray:1.6 1.2;vector-effect:non-scaling-stroke;
+}
+.mister .mov-capa .mov.sel{stroke:#ffe08a;stroke-width:1}
+/* Con el campo grande, los muñecos también: si no, se pierden en el verde. */
+.mister .tac-campo .pitch .pp{width:96px}
+.mister .tac-campo .pitch .pp-dot{width:34px;height:34px;font-size:15px}
+.mister .tac-campo .pitch .pp-name{font-size:12px;letter-spacing:.03em;
+  padding:1px 6px;border-radius:999px;background:rgba(6,26,14,.55)}
+
+/* ═══════════ QUIÉN VA ENCIMA EN EL CAMPO ═══════════
+   La rejilla de zonas se pintaba por encima de los muñecos y se comía los clics:
+   no se podía ni arrastrar a un jugador ni elegirlo. Manda el jugador. */
+.mister .zonas-rej{z-index:1}
+.mister .tac-campo .pitch .pp{z-index:5}
+.mister .tac-campo .pitch .balon{z-index:3}
+.mister .tac-campo .pitch .pp-dot{cursor:grab}
+.mister .tac-campo .pitch .pp:active .pp-dot{cursor:grabbing}
+.mister .tac-campo .pitch .pp.sel .pp-dot{outline:3px solid var(--edge);outline-offset:2px}
+.mister .grp.cambio{margin-top:6px;border-top:1px solid rgba(190,214,255,.18);padding-top:6px}
+
+/* ═══════════ UN JUGADOR SE PRESENTA SIEMPRE IGUAL ═══════════
+   Dorsal, bandera, nombre y demarcación con el color de su línea. Lo pinta
+   MisterUtil.jugadorHTML y lo usan todas las listas: si cambia, cambia en todas. */
+.mister .jg{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
+.mister .jg-d{
+  flex:none;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;
+  background:rgba(10,20,54,.6);border:1px solid rgba(190,214,255,.22);
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10.5px;color:var(--ink-dim);
+}
+.mister .jg-b{flex:none;display:block;width:17px;line-height:0}
+.mister .jg-n{
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mister .jg-m{
+  margin-left:auto;flex:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums;
+}
+.mister .jg .pos-badge{flex:none}
+/* los botones que ya no llevan rejilla propia: mandan sus hijos */
+.mister .suplente{display:flex;align-items:center}
+.mister .candidato{display:flex;align-items:center;gap:6px}
+.mister .candidato .ca-v{margin-left:auto}
+
+/* el nombre de pila, debajo del apodo en la ficha */
+.mister .fi-nombre-pila{
+  display:block;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.04em;color:var(--gleam);margin:1px 0 0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* la fila del once, con su banderita */
+.mister .to-n{display:flex;align-items:center;gap:6px;min-width:0}
+
+/* ═══════════ ENFERMERÍA ═══════════
+   De una baja, lo que hace falta para el once son los PARTIDOS que se pierde. */
+.mister .enfermeria{display:flex;flex-direction:column;gap:3px;min-height:0}
+.mister .enf-fila{
+  display:grid;grid-template-columns:minmax(0,1fr) 108px 84px 96px 104px;
+  gap:8px;align-items:center;padding:5px 9px;border-radius:var(--r-s);
+  background:rgba(30,52,104,.45);border:1px solid rgba(150,180,240,.14);
+  font-family:'Barlow Condensed',sans-serif;font-size:12.5px;
+}
+.mister .enf-fila.lesion{border-left:3px solid #c81e1e}
+.mister .enf-fila.sancion{border-left:3px solid #e04040}
+.mister .enf-fila.cab{
+  background:none;border:0;border-bottom:1px solid rgba(190,214,255,.18);border-radius:0;
+  color:var(--ink-mute);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+}
+.mister .enf-t{display:flex;align-items:center;gap:6px;color:var(--ink-dim)}
+.mister .enf-v{color:var(--ink-dim);text-align:right}
+.mister .enf-v.fuerte{color:var(--ink);font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL QUIOSCO — el periódico de la jornada
+   Única superficie del despacho que no es metal: una hoja de papel crema sobre
+   la consola. El contraste es a propósito, para que se lea como un objeto que
+   tienes encima de la mesa y no como otra placa más de la interfaz.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mister .prensa-body{grid-template-columns:172px minmax(0,1fr)}
+
+.mister .diario{
+  --papel:#ece3cf; --papel-lo:#dcd0b3; --tinta:#20190f; --tinta-2:#5a4f3d;
+  height:calc(100% - 46px);min-height:0;overflow:hidden;
+  padding:14px 18px 12px;border-radius:var(--r-m);
+  background:
+    repeating-linear-gradient(0deg,rgba(120,100,70,.035) 0 2px,transparent 2px 4px),
+    linear-gradient(176deg,#f3ecda 0%,var(--papel) 45%,var(--papel-lo) 100%);
+  color:var(--tinta);
+  border:1px solid #8a7c60;
+  box-shadow:0 14px 30px rgba(5,8,30,.5),inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+/* cabecera: nombre centrado entre dos rótulos, con doble filete debajo */
+.mister .dia-cab{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;column-gap:12px;
+  border-bottom:3px double var(--tinta);padding-bottom:6px;margin-bottom:12px;
+}
+.mister .dia-nombre{
+  margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;
+  font-size:40px;line-height:.95;letter-spacing:.02em;text-transform:uppercase;color:var(--tinta);
+}
+.mister .dia-lado{
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-2);
+}
+.mister .dia-lado--r{text-align:right}
+.mister .dia-fecha{
+  grid-column:1/-1;margin:2px 0 0;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2);
+}
+.mister .dia-vacio{font-family:'Barlow Condensed',sans-serif;text-align:center;color:var(--tinta-2);padding:30px 0}
+
+/* piezas */
+.mister .dia-cols{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  margin-top:12px;padding-top:10px;border-top:1px solid rgba(32,25,15,.32);
+}
+.mister .dia-cols .dp + .dp{border-left:0}
+.mister .dp-ante{display:flex;justify-content:space-between;gap:8px;margin:0 0 3px;
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase}
+.mister .dp-cajon{color:#8d2a1b}
+.mister .dp-secc{color:var(--tinta-2);font-weight:600}
+.mister .dp-tit{
+  margin:0 0 5px;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:15px;line-height:1.08;text-transform:uppercase;letter-spacing:.005em;color:var(--tinta);
+}
+.mister .dp-cuerpo{margin:0;font-family:Georgia,'Times New Roman',serif;font-size:12px;line-height:1.42;color:var(--tinta-2)}
+.mister .dp-foto{margin:0 0 7px}
+.mister .dp-foto img{
+  display:block;width:100%;height:96px;object-fit:cover;
+  /* fotos de época: el virado las asienta en la página impresa */
+  filter:grayscale(1) contrast(1.06) sepia(.2);
+  border:1px solid rgba(32,25,15,.55);
+}
+
+/* apertura: a lo ancho, foto a la izquierda y titular grande */
+.mister .dp--apertura{display:grid;grid-template-columns:minmax(180px,38%) 1fr;gap:16px;align-items:start}
+.mister .dp--apertura .dp-foto{margin:0}
+.mister .dp--apertura .dp-foto img{height:172px}
+.mister .dp--apertura .dp-tit{font-size:27px;line-height:1.02;margin-bottom:7px}
+.mister .dp--apertura .dp-cuerpo{font-size:13.5px;line-height:1.45}
+.mister .dp--apertura .dp-ante{font-size:11px}
+
+/* crédito de la foto en la torre (obligatorio en las CC BY / CC BY-SA) */
+.mister .dp-credito{
+  display:flex;flex-direction:column;gap:1px;margin:0;padding:5px 10px;border-radius:var(--r-s);
+  background:linear-gradient(180deg,rgba(84,116,166,.24),rgba(24,42,84,.3));
+  border:1px solid rgba(150,180,240,.16);
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;line-height:1.25;
+}
+.mister .dp-credito b{color:var(--ink)}
+.mister .dp-credito span{color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;font-size:9.5px}
+.mister .prensa-body .filt i{opacity:.5;margin:0 4px}
+
+/* ═══════════ DESPACHO: LOS BOTONES, ABAJO Y EN HORIZONTAL ═══════════
+   Estaban en dos torres laterales que se comían los costados. Ahora van todos
+   en una barra baja de dos alturas como mucho; el pie de foto conserva su
+   franja debajo. Del equipo solo quedan Alineación y Táctica: Plantilla y
+   Lesiones son pestañas de la propia Alineación. */
+.mister .view[data-view="despacho"] .body{
+  display:flex;flex-direction:column;gap:10px;margin-top:10px;min-height:0;
+}
+.mister .view[data-view="despacho"] .core{flex:1;min-height:0}
+.mister .secbar{
+  display:flex;flex-wrap:wrap;gap:7px;flex:none;
+  padding-top:8px;border-top:1px solid rgba(190,214,255,.16);
+}
+.mister .secbar .sec{flex:1 1 200px;max-width:none;width:auto;position:relative}
+.mister .secbar .sec .pip{position:absolute;top:5px;right:6px}
+.mister .secbar .pip{align-self:flex-start}
+
+/* ── LA GACETA · DEPORTES: el suplemento ───────────────────────────────────
+   Misma hoja, pero con el papel un punto más cálido (el suplemento deportivo
+   se imprimía aparte y en papel más barato) y el marcador tratado como dato:
+   grande, condensado y a la derecha del antetítulo. */
+.mister .diario--dep{
+  --papel:#eadfc4; --papel-lo:#d9caa4;
+  background:
+    repeating-linear-gradient(0deg,rgba(120,100,70,.05) 0 2px,transparent 2px 4px),
+    linear-gradient(176deg,#f2e8d0 0%,var(--papel) 45%,var(--papel-lo) 100%);
+}
+.mister .dia-supl{
+  display:inline-block;margin-left:10px;padding:1px 9px 2px;vertical-align:6px;
+  font-size:15px;font-style:normal;letter-spacing:.18em;
+  background:#8d2a1b;color:#f4ecd8;border-radius:2px;
+}
+.mister .dia-lema{
+  margin:0 0 8px;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2);
+}
+
+/* pieza del suplemento: sin foto, el marcador manda */
+.mister .dpd .dp-tit{font-size:16px}
+.mister .dpd--apertura{
+  padding:10px 12px;border-radius:var(--r-s);
+  background:rgba(141,42,27,.07);border:1px solid rgba(141,42,27,.28);
+}
+.mister .dpd--apertura .dp-tit{font-size:25px;line-height:1.04}
+.mister .dpd--apertura .dp-cuerpo{font-size:13.5px}
+.mister .dpd--apertura .dpd-marcador{font-size:15px}
+.mister .dpd-marcador{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.04em;text-transform:none;color:#8d2a1b;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;max-width:60%;
+}
+.mister .dia-cols--dep{grid-template-columns:repeat(2,1fr);gap:12px 22px}
+.mister .dia-cols--dep .dpd{
+  padding-bottom:8px;border-bottom:1px solid rgba(32,25,15,.18);
+}
+/* la barra tiene que quedar PEGADA ABAJO: el despacho llena la pantalla y el
+   núcleo (la foto y los cromos) se come el hueco que sobra */
+.mister .view[data-view="despacho"]{display:flex;flex-direction:column;min-height:0}
+.mister .view[data-view="despacho"].is-active{display:flex}
+.mister .view[data-view="despacho"] .body{flex:1;min-height:0;justify-content:flex-end}
+.mister .secbar .sec{flex:1 1 236px}
+
+/* ═══════════ DESPACHO: UNA SOLA TORRE, A LA IZQUIERDA ═══════════
+   Las placas de siempre, pero todas juntas en un lado en vez de partidas en dos
+   columnas que dejaban el centro estrangulado. */
+.mister .view[data-view="despacho"] .body{
+  display:grid;grid-template-columns:232px minmax(0,1fr);gap:20px;
+  flex:1;min-height:0;align-items:start;margin-top:10px;
+}
+.mister .view[data-view="despacho"] .tower{width:auto;align-content:start}
+.mister .view[data-view="despacho"] .grp + .grp{margin-top:14px}
+.mister .view[data-view="despacho"] .core{flex:none;min-height:0;height:100%}
+.mister .secbar{display:none}
+/* Once placas en una columna se apretaban y la última se salía por abajo:
+   se compactan y la torre se ajusta al hueco real (lo termina el JS). */
+.mister .view[data-view="despacho"] .body{grid-template-columns:262px minmax(0,1fr)}
+.mister .view[data-view="despacho"] .tower{gap:3px}
+.mister .view[data-view="despacho"] .grp{gap:3px}
+.mister .view[data-view="despacho"] .grp + .grp{margin-top:9px}
+.mister .view[data-view="despacho"] .grp-h{margin:0 0 1px}
+.mister .view[data-view="despacho"] .sec{padding:3px 8px 3px 4px}
+.mister .view[data-view="despacho"] .thumb{width:28px;height:24px}
+.mister .view[data-view="despacho"] .sec .n{font-size:13px;line-height:1.15}
+.mister .view[data-view="despacho"] .sec .d{font-size:10.5px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .view[data-view="despacho"] .txt{min-width:0}
+
+/* retrato del protagonista en el suplemento: recorte vertical de ficha */
+.mister .dpd-foto{margin:0 10px 4px 0;float:left;width:64px}
+.mister .dpd-foto img{
+  display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
+  filter:grayscale(1) contrast(1.06) sepia(.18);border:1px solid rgba(32,25,15,.55);
+}
+.mister .dpd-foto figcaption{
+  margin-top:2px;font-family:'Barlow Condensed',sans-serif;font-size:8.5px;line-height:1.1;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--tinta-2);
+}
+.mister .dpd--apertura{display:grid;grid-template-columns:104px 1fr;gap:14px;align-items:start}
+.mister .dpd--apertura .dpd-foto{float:none;width:100%;margin:0}
+.mister .dpd--apertura .dpd-foto figcaption{font-size:9.5px}
+
+/* ═══════════ RESULTADOS Y CALENDARIO ═══════════ */
+.mister .view[data-view="calendario"] .screenbody{grid-template-columns:236px minmax(0,1fr) 268px}
+.mister .cal-lista{display:flex;flex-direction:column;gap:2px;min-height:0;overflow:hidden}
+.mister .cal-fila{
+  display:grid;grid-template-columns:64px 96px 46px minmax(0,1fr) 54px 62px;
+  gap:8px;align-items:center;padding:3px 9px;border-radius:var(--r-s);
+  background:rgba(30,52,104,.45);border:1px solid rgba(150,180,240,.14);
+  border-left:3px solid transparent;
+  font-family:'Barlow Condensed',sans-serif;font-size:12.5px;
+}
+.mister .cal-fila.res-G{border-left-color:#2f9e57}
+.mister .cal-fila.res-E{border-left-color:var(--chrome)}
+.mister .cal-fila.res-P{border-left-color:#c81e1e}
+.mister .cal-fila.pendiente{opacity:.62;border-left-color:rgba(190,214,255,.35);border-style:dashed}
+.mister .cal-fila.copa{background:rgba(44,38,96,.5)}
+.mister .cal-f, .mister .cal-c, .mister .cal-donde{color:var(--ink-mute);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.mister .cal-riv{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .cal-m{text-align:center;font-variant-numeric:tabular-nums}
+.mister .cal-m b{font-size:14px;font-weight:700}
+.mister .cal-r{text-align:right;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .res-G .cal-r{color:#7fe0a0}
+.mister .res-P .cal-r{color:#ff9a9a}
+
+.mister .clasi{display:flex;flex-direction:column;gap:1px}
+.mister .clasi-fila{
+  display:grid;grid-template-columns:22px minmax(0,1fr) 26px 30px;gap:6px;align-items:center;
+  padding:2px 7px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:12px;
+  border-left:3px solid transparent;
+}
+.mister .clasi-fila.europa{border-left-color:#2f9e57}
+.mister .clasi-fila.descenso{border-left-color:#c81e1e}
+.mister .clasi-fila.yo{background:rgba(52,84,150,.7);font-weight:700}
+.mister .cl-p{color:var(--ink-mute);text-align:right}
+.mister .cl-e{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .cl-j{color:var(--ink-mute);text-align:right;font-size:10.5px}
+.mister .cl-pt{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ═══════════ CLASIFICACIÓN: los veinte, con escudo y todos sus números ═══════ */
+.mister .view[data-view="calendario"] .screenbody{grid-template-columns:224px minmax(0,1fr) 292px}
+.mister .clasi-centro{min-width:0;min-height:0}
+.mister .clasi-caja{display:flex;flex-direction:column;gap:2px}
+.mister .clasi-fila{
+  display:grid;grid-template-columns:24px 22px minmax(0,1fr) repeat(7,34px) 40px;
+  gap:6px;align-items:center;padding:3px 8px;border-radius:var(--r-s);
+  background:rgba(30,52,104,.45);border:1px solid rgba(150,180,240,.14);
+  border-left:3px solid transparent;
+  font-family:'Barlow Condensed',sans-serif;font-size:12.5px;
+}
+.mister .clasi-fila.cab{
+  background:none;border:0;border-bottom:1px solid rgba(190,214,255,.18);border-radius:0;
+  color:var(--ink-mute);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+}
+.mister .clasi-fila.champions{border-left-color:#5c7ec6}
+.mister .clasi-fila.europa{border-left-color:#2f9e57}
+.mister .clasi-fila.descenso{border-left-color:#c81e1e}
+.mister .clasi-fila.yo{background:rgba(52,84,150,.72);font-weight:700}
+.mister .cl-p{color:var(--ink-mute);text-align:right}
+.mister .cl-esc{display:grid;place-items:center}
+.mister .esc{width:18px;height:18px;object-fit:contain;display:block}
+.mister .esc.gr{width:26px;height:26px}
+.mister .esc.vacio{width:18px;height:18px;border-radius:3px;background:rgba(190,214,255,.12)}
+.mister .cl-e{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .cl-n{text-align:right;color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.mister .cl-n.mas{color:#7fe0a0}
+.mister .cl-n.menos{color:#ff9a9a}
+.mister .cl-pt{text-align:right;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+
+/* ═══════════ CRUCES DE COPA, con el trofeo en medio ═══════════ */
+.mister .bracket{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;min-height:0}
+.mister .br-lado{display:flex;flex-direction:column;gap:8px}
+.mister .br-lado.fantasma{opacity:.32}
+.mister .br-cruce{
+  position:relative;padding:6px 9px;border-radius:var(--r-m);
+  background:linear-gradient(180deg,rgba(40,64,120,.7),rgba(18,28,66,.8));
+  border:1px solid rgba(150,180,240,.2);border-left:3px solid var(--chrome);
+  font-family:'Barlow Condensed',sans-serif;
+}
+.mister .br-cruce.paso{border-left-color:#2f9e57}
+.mister .br-cruce.fuera{border-left-color:#c81e1e}
+.mister .br-cruce.hueco{border-style:dashed;background:none;color:var(--ink-mute)}
+.mister .br-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.mister .br-ronda{font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute)}
+.mister .br-glob{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.mister .br-rival{display:flex;align-items:center;gap:8px;margin:3px 0 4px}
+.mister .br-n{font-weight:700;font-size:15px}
+.mister .br-p{display:grid;grid-template-columns:64px 44px 1fr;gap:6px;font-size:11.5px;color:var(--ink-dim)}
+.mister .br-p .br-m{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.mister .br-p.res-G .br-m{color:#7fe0a0}
+.mister .br-p.res-P .br-m{color:#ff9a9a}
+.mister .br-sello{
+  position:absolute;top:6px;right:9px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:700;color:var(--ink-mute);display:none;
+}
+.mister .br-trofeo{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 6px}
+.mister .br-copa{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(5,8,30,.7))}
+.mister .br-fin{
+  margin:0;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);text-align:center;
+}
+
+/* la columna de partidos del club, ahora con escudo */
+.mister .cal-fila{grid-template-columns:60px 20px minmax(0,1fr) 44px 46px}
+.mister .cal-esc{display:grid;place-items:center}
+/* Las fotos ya vienen todas en 16:9 (scratchpad/normaliza_fondos.py), así que
+   no hace falta ampliarlas para cubrir: el zoom lento se queda en un susurro
+   y nadie vuelve a salir en plano detalle. */
+.mister .photo{transform:scale(1);object-position:center center!important}
+.mister .photo.on{transform:scale(1.035)}
+
+/* ═══════════ CLASIFICACIÓN v2: media pantalla arriba, partidos abajo ═══════ */
+.mister .view[data-view="calendario"] .screenbody{
+  grid-template-columns:224px minmax(0,1fr);
+  grid-template-rows:minmax(0,52%) minmax(0,48%);
+  gap:10px;
+}
+.mister .view[data-view="calendario"] .tower.wide{grid-row:1 / span 2}
+.mister .clasi-centro{min-width:0;min-height:0;overflow:hidden}
+.mister .clasi-fila{
+  grid-template-columns:30px 30px minmax(0,1fr) repeat(6,40px) repeat(2,46px) 74px 52px;
+  gap:8px;padding:5px 10px;font-size:14px;
+}
+.mister .clasi-fila.cab{font-size:10px}
+.mister .cl-e{font-weight:600;font-size:15px}
+.mister .cl-esc .esc{width:24px;height:24px}
+.mister .cl-n{font-size:13px}
+.mister .cl-pt{font-size:17px}
+.mister .cl-racha{display:flex;align-items:center;gap:3px;justify-content:flex-end}
+.mister .clasi-fila.cab .cl-racha{justify-content:flex-end;font-size:10px}
+.mister .cl-racha .rr{width:9px;height:9px;border-radius:2px;display:block}
+.mister .cl-racha .rr.G{background:#2f9e57}
+.mister .cl-racha .rr.E{background:var(--chrome)}
+.mister .cl-racha .rr.P{background:#c81e1e}
+
+/* los partidos, con los dos escudos y el marcador en medio */
+.mister .cal-fila{
+  grid-template-columns:66px 92px minmax(0,1fr) 74px minmax(0,1fr) 74px;
+  gap:10px;padding:4px 10px;font-size:13px;
+}
+.mister .cal-eq{display:flex;align-items:center;gap:8px;min-width:0}
+.mister .cal-eq.local{justify-content:flex-end;text-align:right}
+.mister .cal-eq .esc{width:22px;height:22px}
+.mister .cal-nom{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mister .cal-eq.mio .cal-nom{font-weight:700;color:#fff}
+.mister .cal-m{
+  text-align:center;font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+  background:rgba(10,20,54,.55);border-radius:var(--r-s);padding:1px 0;
+}
+.mister .res-G .cal-m{color:#7fe0a0}
+.mister .res-P .cal-m{color:#ff9a9a}
+/* catorce columnas, catorce carriles: al faltar uno el último dato se caía a
+   una segunda línea y las filas medían el doble */
+.mister .clasi-fila{
+  grid-template-columns:30px 30px minmax(0,1fr) repeat(7,40px) repeat(2,46px) 74px 52px;
+}
+.mister .clasi-centro, .mister .cal-lista{overflow-y:auto;min-height:0}
+.mister .view[data-view="calendario"] .screenbody{align-items:stretch}
+/* diez equipos a la vista y el resto con scroll, que es lo que se pidió */
+.mister .view[data-view="calendario"] .screenbody{grid-template-rows:minmax(0,60%) minmax(0,40%)}
+/* La tabla no se estira a todo lo ancho: con 1400 px libres el nombre se
+   quedaba 800 y los números parecían huérfanos al fondo. Ancho de lectura y
+   columnas más anchas, que es lo que se pidió: todo un poco más grande. */
+.mister .clasi-caja{max-width:1120px;margin:0 auto;width:100%}
+.mister .clasi-fila{
+  grid-template-columns:34px 32px minmax(0,1fr) repeat(7,48px) repeat(2,54px) 96px 60px;
+  gap:8px;padding:4px 12px;
+}
+.mister .cl-n{font-size:14px}
+.mister .cl-pt{font-size:18px}
+.mister .cl-e{font-size:15.5px}
+.mister .cl-esc .esc{width:26px;height:26px}
+.mister .cl-racha .rr{width:11px;height:11px}
+/* los partidos, también centrados y con aire */
+.mister .cal-lista{align-items:center}
+.mister .cal-fila{max-width:1120px;width:100%;margin:0 auto}
+.mister .clasi-fila{padding:3px 12px}
+.mister .clasi-caja{gap:3px}
+
+/* ═══════════ CABECERA v2: los escudos mandan ═══════════
+   El tuyo a la izquierda del todo y el del rival a la derecha del todo, grandes
+   y sin placa detrás. En medio, el emblema de la competición con la fecha justo
+   debajo (antes andaba en un globo suelto en la esquina). */
+.mister .head{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:8px}
+.mister .head-esc{display:flex;align-items:center;justify-content:center;flex:none;padding:0 4px}
+.mister .head-esc .crest{
+  width:118px;height:118px;margin:-26px 0;object-fit:contain;
+  filter:drop-shadow(0 5px 12px rgba(5,8,30,.9));
+}
+.mister .head-esc.rival{justify-content:flex-end}
+.mister .teamcard{padding:6px 12px}
+.mister .teamcard.rival{padding:6px 12px;justify-content:flex-end;text-align:right}
+.mister .teamcard.rival .tc-txt{align-items:flex-end}
+.mister .head-comp{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  flex:none;padding:0 10px;
+}
+.mister .head-comp .nm-comp{
+  width:60px;height:60px;margin:-8px 0 2px;border-radius:10px;
+  filter:drop-shadow(0 3px 7px rgba(5,8,30,.85));
+}
+.mister .head-comp .today-date{font-size:16px;line-height:1.05;text-align:center}
+.mister .head-comp .today-week{font-size:9px;text-align:center;letter-spacing:.1em}
+/* Los escudos grandes engordaban la cabecera y le robaban nueve píxeles a las
+   pantallas: se dejan igual de protagonistas pero asomando más por fuera. */
+.mister .head-esc .crest{width:126px;height:126px;margin:-32px 0}
+.mister .head-comp .nm-comp{margin:-10px 0 1px}
+
+/* segunda pagina del suplemento: personajes arriba y parrilla de breves debajo */
+.mister .dia-breves{margin-top:10px;padding-top:8px;border-top:1px solid rgba(32,25,15,.35)}
+.mister .dia-breves ul{list-style:none;margin:0;padding:0;columns:2;column-gap:22px}
+.mister .dia-breves li{
+  display:flex;gap:10px;align-items:baseline;padding:2px 0;break-inside:avoid;
+  border-bottom:1px dotted rgba(32,25,15,.25);
+}
+.mister .db-marcador{
+  flex:0 0 42%;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10.5px;
+  color:#8d2a1b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mister .db-txt{
+  flex:1 1 auto;font-family:'Barlow Condensed',sans-serif;font-size:10.5px;line-height:1.2;
+  text-transform:uppercase;color:var(--tinta-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* el pie con el nombre necesita aire: se separa de la foto con un filete */
+.mister .dpd-foto{width:74px}
+.mister .dpd-foto figcaption{
+  margin-top:4px;padding-top:3px;border-top:1px solid rgba(32,25,15,.35);
+  font-size:9.5px;color:var(--tinta);
+}
+
+/* los tres personajes van en fila, que debajo entra la parrilla de breves */
+.mister .dia-cols--gente{grid-template-columns:repeat(3,1fr);gap:14px}
+.mister .dia-cols--gente .dpd .dp-tit{font-size:13.5px}
+.mister .dia-cols--gente .dpd .dp-cuerpo{font-size:11.5px}
+
+/* La primera pagina del suplemento llevaba 49 px de mas: la apertura adelgaza y
+   las cuatro piezas de abajo aprietan un punto. Todo tiene que caber en el marco. */
+.mister .diario--dep .dpd--apertura{grid-template-columns:92px 1fr;gap:12px;padding:8px 10px}
+.mister .diario--dep .dpd--apertura .dp-tit{font-size:22px}
+.mister .diario--dep .dpd--apertura .dp-cuerpo{font-size:12.5px}
+.mister .diario--dep .dia-cols--dep{gap:8px 20px;margin-top:10px;padding-top:8px}
+.mister .diario--dep .dia-cols--dep .dpd{padding-bottom:5px}
+.mister .diario--dep .dia-cols--dep .dp-tit{font-size:13.5px}
+.mister .diario--dep .dia-cols--dep .dp-cuerpo{font-size:11.5px}
+.mister .diario--dep .dpd--apertura .dp-cuerpo{font-size:12px;line-height:1.4}
+.mister .diario--dep .dia-cols--dep .dp-cuerpo{line-height:1.35}
+.mister .diario--dep .dia-lema{margin-bottom:6px}
+.mister .diario--dep .dia-cab{padding-bottom:5px;margin-bottom:9px}
+/* Las entradillas de las piezas cortas se recortan a dos lineas: asi la pagina
+   mide siempre lo mismo, gane quien gane y por muchos goles que sean. */
+.mister .diario--dep .dia-cols--dep .dp-cuerpo{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+/* La apertura tampoco puede crecer: dos lineas de titular y tres de entradilla,
+   pase lo que pase en la jornada. */
+.mister .diario--dep .dpd--apertura .dp-tit{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.mister .diario--dep .dpd--apertura .dp-cuerpo{
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.mister .diario--dep .dpd--apertura{grid-template-columns:84px 1fr}
+.mister .diario--dep{padding:12px 16px 10px}
+.mister .diario--dep .dia-cols--dep{gap:6px 20px;margin-top:8px;padding-top:6px}
+
+/* ═══════════ CABECERA v3: una barra, el emblema encima ═══════════ */
+.mister .head{display:block;position:relative;padding-top:2px;overflow:visible}
+.mister .head-barra{
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:0;
+  border-radius:var(--r-m);padding:7px 14px;min-height:64px;
+  background:linear-gradient(to bottom,
+    rgba(150,182,240,.5) 0%, rgba(96,132,196,.4) 49%,
+    rgba(32,54,104,.52) 51%, rgba(18,32,74,.6) 100%);
+  border-top:1px solid rgba(170,200,255,.5);border-bottom:1px solid rgba(8,12,34,.9);
+  box-shadow:0 4px 14px rgba(6,8,26,.55), var(--bevel);
+  -webkit-backdrop-filter:blur(8px) saturate(1.1);backdrop-filter:blur(8px) saturate(1.1);
+}
+.mister .hb-lado{display:flex;align-items:center;gap:14px;min-width:0;padding-right:120px}
+.mister .hb-lado.rival{justify-content:flex-end;text-align:right;padding:0 0 0 120px}
+.mister .hb-lado.rival .tc-txt{align-items:flex-end}
+.mister .hb-esc{flex:none;display:grid;place-items:center;width:86px;height:86px;margin:-14px 0}
+.mister .hb-esc .crest, .mister .hb-esc svg.crest{
+  width:100%;height:100%;max-width:86px;max-height:86px;object-fit:contain;
+  filter:drop-shadow(0 4px 9px rgba(5,8,30,.9));
+}
+/* el emblema, montado en el centro de la barra y con placa propia */
+.mister .head-comp{
+  position:absolute;left:50%;top:-4px;transform:translateX(-50%);z-index:6;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+  padding:5px 16px 4px;border-radius:0 0 var(--r-m) var(--r-m);
+  background:linear-gradient(180deg,rgba(30,52,104,.94),rgba(12,20,52,.96));
+  border:1px solid rgba(170,200,255,.35);border-top:0;
+  box-shadow:0 6px 16px rgba(5,8,30,.7);
+}
+.mister .head-comp .nm-comp{width:52px;height:52px;margin:0 0 2px;border-radius:9px}
+.mister .head-comp .today-date{font-size:15px;line-height:1;text-align:center}
+.mister .head-comp .today-week{font-size:8.5px;text-align:center;letter-spacing:.12em;line-height:1.3}
+
+/* ── LA GACETA SE LEE BAJANDO ──────────────────────────────────────────────
+   El resto de pantallas caben en el marco, pero un periódico no: aquí sí hay
+   scroll, dentro de la hoja, con la cabecera fija arriba como el mástil de un
+   diario. El resto de la interfaz sigue sin moverse. */
+.mister .view[data-view="prensa"] .diario{
+  overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:rgba(141,42,27,.5) transparent;
+}
+.mister .view[data-view="prensa"] .diario::-webkit-scrollbar{width:9px}
+.mister .view[data-view="prensa"] .diario::-webkit-scrollbar-track{background:rgba(32,25,15,.08)}
+.mister .view[data-view="prensa"] .diario::-webkit-scrollbar-thumb{
+  background:rgba(141,42,27,.45);border-radius:5px;
+  border:2px solid rgba(236,227,207,.9);
+}
+.mister .view[data-view="prensa"] .dia-cab{
+  position:sticky;top:-14px;z-index:2;margin-top:-14px;padding-top:14px;
+  background:linear-gradient(180deg,var(--papel) 0%,var(--papel) 78%,rgba(236,227,207,0) 100%);
+}
+
+/* Con scroll ya no hace falta recortar nada: los titulares y las entradillas se
+   leen enteros y los pies de foto tienen su sitio. */
+.mister .diario--dep .dia-cols--dep .dp-cuerpo, .mister .diario--dep .dpd--apertura .dp-tit, .mister .diario--dep .dpd--apertura .dp-cuerpo{
+  display:block;-webkit-line-clamp:none;overflow:visible;
+}
+.mister .diario--dep .dpd--apertura{grid-template-columns:120px 1fr;gap:16px;padding:12px 14px}
+.mister .diario--dep .dpd--apertura .dp-tit{font-size:25px}
+.mister .diario--dep .dia-cols--dep{gap:14px 22px;margin-top:14px;padding-top:12px}
+.mister .dia-lema--sep{
+  margin-top:18px;padding-top:12px;border-top:3px double var(--tinta);
+}
+.mister .dpd-foto{width:86px}
+.mister .dpd-foto figcaption{font-size:10px;line-height:1.2}
+/* El cuerpo de la vista se ciñe al marco para que el scroll ocurra DENTRO de la
+   hoja y no empuje la consola hacia abajo. */
+.mister .view[data-view="prensa"] .screenbody{height:calc(100% - 46px);min-height:0}
+.mister .view[data-view="prensa"] .diario{height:100%;min-height:0}
+.mister .view[data-view="prensa"] .tower{align-content:start}
+
+/* ═══════════ TELETIPO DE CURIOSIDADES ═══════════
+   Como la barra de noticias de la tele: el texto entero desfila sin parar. Se
+   pinta dos veces seguidas y la animación se detiene justo en la mitad, así el
+   salto al principio no se nota. */
+.mister .ticker{overflow:hidden}
+.mister .ticker-txt{display:block;overflow:hidden;white-space:nowrap;min-width:0}
+.mister .tk-run{display:inline-flex;white-space:nowrap;animation:teletipo linear infinite;will-change:transform}
+.mister .tk-run > span{padding-right:0}
+@keyframes teletipo{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mister .ticker:hover .tk-run{animation-play-state:paused}
+/* con movimiento reducido el JS pasa las frases de una en una */
+
+/* ═══════════ CLASIFICACIÓN v3: partida en vertical ═══════════
+   Tabla a un lado, resultados al otro. Y los resultados pueden ser los tuyos o
+   la jornada de liga entera, con flechas para recorrer las treinta y ocho. */
+.mister .view[data-view="calendario"] .screenbody{
+  grid-template-columns:214px minmax(0,1.05fr) minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
+}
+.mister .view[data-view="calendario"] .tower.wide{grid-row:auto}
+.mister .cal-col{display:flex;flex-direction:column;gap:6px;min-height:0;min-width:0}
+.mister .cal-mandos{display:flex;align-items:center;gap:6px;flex:none;flex-wrap:wrap}
+.mister .cal-nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.mister .cal-fl{
+  width:26px;height:24px;border-radius:var(--r-s);cursor:pointer;font:inherit;font-size:15px;
+  color:var(--ink);border:1px solid rgba(190,214,255,.3);
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel));
+}
+.mister .cal-fl:hover{border-color:var(--edge)}
+.mister .cal-jn{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);min-width:86px;text-align:center;
+}
+/* las filas, ahora en una columna más estrecha */
+.mister .cal-fila{grid-template-columns:56px minmax(0,1fr) 62px minmax(0,1fr);gap:8px;font-size:12.5px;max-width:none}
+.mister .cal-fila .cal-c{display:none}
+.mister .cal-fila.propio{background:rgba(52,84,150,.7)}
+.mister .cal-fila.gana-local .cal-eq.local .cal-nom{font-weight:700;color:#fff}
+.mister .cal-fila.gana-visita .cal-eq:not(.local) .cal-nom{font-weight:700;color:#fff}
+.mister .cal-eq .esc{width:20px;height:20px}
+.mister .clasi-caja{max-width:none}
+/* catorce columnas también aquí, pero apretadas: la tabla vive ahora en media
+   pantalla y no en toda */
+.mister .clasi-fila{
+  grid-template-columns:26px 24px minmax(0,1fr) repeat(7,30px) repeat(2,32px) 56px 36px;
+  gap:5px;padding:3px 8px;font-size:13px;
+}
+.mister .cl-esc .esc{width:20px;height:20px}
+.mister .cl-racha .rr{width:8px;height:8px}
+.mister .clasi-fila.cab{font-size:9px}
+.mister .cl-e{font-size:14px}
+.mister .cl-pt{font-size:16px}
+.mister .cal-jn.futura{color:var(--amber)}

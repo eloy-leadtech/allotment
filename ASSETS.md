@@ -28,3 +28,18 @@ vía es sustituir estos recursos por **arte original pixelado** (estilo retro, o
 ## Recursos propios / libres
 Cualquier sprite, sonido o fuente **nuevo** debe ser original o de licencia libre compatible, y se
 documenta aquí con su origen y licencia.
+
+## Piel "Mister" del despacho (`public/ui/mister/`, `ui/mister/sprite.svg`)
+Portados 1:1 de la maqueta del laboratorio (`pcfutbol-analysis/media/ui-ref/`), aprobada por el
+propietario como UI definitiva del despacho:
+
+- **`sprite.svg`** (12 iconos de sección): **ilustración original** hecha para la maqueta. Libre.
+- **`logos/*.png`** (laliga, copa, uefa, champions, lfp_1993, seriea, bundesliga, ligue1, manchester):
+  logotipos de competición. Mismo criterio que escudos de la saga (decisión 2026-07-30, riesgo asumido).
+- **`fondos/*.jpg`** (66 fotos históricas de fútbol, ya procesadas: oscurecidas y viradas a azul) +
+  **`fondos.json`** (pie y encuadre por foto). Según los créditos de la maqueta son en su mayoría de
+  **Unsplash y Wikimedia Commons** (dominio público o Creative Commons); el crédito de cada una va en
+  `fondos.json` y se muestra en pantalla ("La historia"). **Aviso:** 2 de los 66 pies están marcados
+  "COPYRIGHT, pedir permiso" (Iniesta 2010 y la falta de Roberto Carlos); conviene sustituirlos o
+  recabar permiso si se publica. Son fondos ambientales intercambiables.
+- **`facts_es.json`**: curiosidades de equipos para el teletipo. Texto propio (hechos), no copiado.

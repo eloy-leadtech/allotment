@@ -1,248 +1,312 @@
-import { isSeasonOver, teamName, isWinterWindowOpen, selectPressQuestion } from '@game';
+import { useRef, useState } from 'react';
+import {
+  teamName,
+  currentStandings,
+  selectPressQuestion,
+  stadiumAforo,
+  formatEuros,
+  isSeasonOver,
+  isWinterWindowOpen,
+} from '@game';
 import { useGameStore } from '@ui/store/gameStore';
-import type { Screen } from '@app/navigation';
-import { RetroButton } from '@ui/components/RetroButton';
+import { Crest } from '@ui/components/Crest';
+import { MisterSprite, MisterIcon } from '@ui/mister/MisterSprite';
+import { RivalTicker } from '@ui/mister/RivalTicker';
+import { useStadiumCanvas } from '@ui/mister/useStadiumCanvas';
+import { usePhotoCarousel } from '@ui/mister/usePhotoCarousel';
+import { useRivalFacts } from '@ui/mister/facts';
+import { buildFixtures, type FxEntry } from '@ui/mister/fixtures';
+import { TOWER } from '@ui/mister/sections';
 
 /**
- * The DESPACHO (office) hub, rebuilt as a faithful replica of PC Fútbol 7's main
- * menu: the real 640×480 screen bitmap (`scr_032.png`) is shown as the background
- * and we overlay (a) 12 clickable hotspots over the pre-drawn icons and (b) our
- * live data (club, competition, matchday) on the empty plates, plus the 9 bottom
- * tabs. Coordinates are expressed against the original 640×480 canvas so the whole
- * thing scales while keeping its 4:3 proportion.
+ * El DESPACHO: port 1:1 de la maqueta "Mister" (`ui-ref/despacho-local.html`),
+ * alimentado por el store en vez de los datos de muestra. Este Slice 1 arma el
+ * SHELL: consola (fondo de estadio + fotos que rotan + grano), cabecera (club,
+ * puesto/pts/saldo, rival y jornada), barra de próximos partidos, teletipo del
+ * rival y la torre de secciones a la izquierda. Cada sección navega a su pantalla
+ * existente; su contenido se mudará dentro del despacho en slices posteriores.
  */
-
-/** A rectangle on the original 640×480 canvas. */
-interface Rect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
-const CANVAS_W = 640;
-const CANVAS_H = 480;
-
-/** Turn a canvas-space rectangle into a percentage-based absolute style. */
-function place({ x, y, w, h }: Rect): React.CSSProperties {
-  return {
-    left: `${(x / CANVAS_W) * 100}%`,
-    top: `${(y / CANVAS_H) * 100}%`,
-    width: `${(w / CANVAS_W) * 100}%`,
-    height: `${(h / CANVAS_H) * 100}%`,
-  };
-}
-
-interface Hotspot {
-  rect: Rect;
-  label: string;
-  /** Destination screen, or null for sections not yet built as their own screen. */
-  to: Screen | null;
-}
-
-// The two icon columns of scr_032: left = management (blue/warm), right = sporting
-// (green). Each icon is ~55×30 px, grouped 3+3 with a vertical gap in the middle.
-// These are read off scr_032 by eye and are the values most worth a human's review.
-const ICON_W = 55;
-const ROW_H = 30;
-const LEFT_X = 123;
-const RIGHT_X = 551;
-const GROUP_A = [136, 168, 199]; // top three rows (y)
-const GROUP_B = [260, 292, 323]; // bottom three rows (y)
-const ICON_ROWS = [...GROUP_A, ...GROUP_B];
-
-const LEFT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Resultados', to: 'standings' },
-  { label: 'Calendario', to: 'standings' },
-  { label: 'Finanzas', to: 'sponsors' },
-  { label: 'Prensa', to: 'press' },
-  { label: 'Directiva', to: 'directiva' },
-  { label: 'Fichajes', to: 'market' },
-];
-
-const RIGHT_ICONS: Array<{ label: string; to: Screen | null }> = [
-  { label: 'Alineación', to: 'squad' },
-  { label: 'Táctica', to: 'tactics' },
-  { label: 'Ojeador', to: 'ojeo' },
-  { label: 'Vídeo', to: 'comparativa' },
-  { label: 'Entrenamiento', to: 'training' },
-  { label: 'Estadio', to: 'stadium' },
-];
-
-/**
- * Sections that have no pre-drawn icon on scr_032 but are full screens of the
- * game. They ride on a secondary strip under the tab bar so nothing built for
- * the office is unreachable; labels never repeat an icon or tab label.
- */
-const EXTRA_SECTIONS: Array<{ label: string; to: Screen }> = [
-  { label: 'Cantera', to: 'youth' },
-  { label: 'Promesas', to: 'prospects' },
-  { label: 'Cuerpo técnico', to: 'staff' },
-  { label: 'Patrocinio', to: 'sponsors' },
-  { label: 'Estadísticas', to: 'stats' },
-  { label: 'Palmarés', to: 'palmares' },
-  { label: 'Hemeroteca', to: 'hemeroteca' },
-  { label: 'Compara', to: 'comparativa' },
-];
-
-function buildIconHotspots(x: number, defs: Array<{ label: string; to: Screen | null }>): Hotspot[] {
-  return defs.map((def, i) => ({
-    rect: { x, y: ICON_ROWS[i] ?? 0, w: ICON_W, h: ROW_H },
-    label: def.label,
-    to: def.to,
-  }));
-}
-
 export function Despacho() {
   const season = useGameStore((s) => s.season);
   const career = useGameStore((s) => s.career);
+  const goTo = useGameStore((s) => s.goTo);
   const hasEuropa = useGameStore((s) => s.career?.europa != null);
-  const playNextMatchday = useGameStore((s) => s.playNextMatchday);
   const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const lastCallUp = useGameStore((s) => s.lastCallUp);
-  const goTo = useGameStore((s) => s.goTo);
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const photoARef = useRef<HTMLImageElement>(null);
+  const photoBRef = useRef<HTMLImageElement>(null);
+  useStadiumCanvas(canvasRef);
+  const credit = usePhotoCarousel(photoARef, photoBRef);
+  const facts = useRivalFacts();
+
+  const human = season?.humanTeamId ?? '';
+  const fixtures = season ? buildFixtures(season, career) : [];
+  const [selectedComp, setSelectedComp] = useState<FxEntry['key']>('liga');
 
   if (!season) {
     return (
-      <main className="screen">
+      <main className="mister mister--empty">
         <p>No hay temporada en curso.</p>
-        <RetroButton onClick={() => goTo('title')}>Menú</RetroButton>
+        <button type="button" className="sec" onClick={() => goTo('title')}>
+          Menú
+        </button>
       </main>
     );
   }
 
-  const clubName = teamName(season, season.humanTeamId);
-  const over = isSeasonOver(season);
-  const playedMatchday = Math.min(season.currentMatchday, season.totalMatchdays);
-  const bg = `${import.meta.env.BASE_URL}ui/pcf7/scr_032.png`;
-
-  // Mid-season the winter window blocks play until it is closed (the store also
-  // enforces it); the press waits for you after some matchdays.
-  const winterOpen = career ? isWinterWindowOpen(career) : false;
-  const pressPending = career ? selectPressQuestion(career) != null : false;
-
-  const leftHotspots = buildIconHotspots(LEFT_X, LEFT_ICONS);
-  const rightHotspots = buildIconHotspots(RIGHT_X, RIGHT_ICONS);
-
-  // The nearest existing screen for a section not yet built stays on the office.
-  const openSection = (to: Screen | null): void => {
-    if (to) goTo(to);
+  const base = import.meta.env.BASE_URL;
+  const logoUrl = (slug: string): string => `${base}ui/mister/logos/${slug}.png`;
+  const crestUrl = (teamId: string): string => `${base}crests/${teamId}.png`;
+  const hideOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
+    e.currentTarget.style.visibility = 'hidden';
   };
 
-  // The 9 bottom tabs = the persistent global switcher. "Liga" is the active one.
-  const tabs: Array<{ label: string; onClick: () => void; active?: boolean; disabled?: boolean }> = [
-    { label: 'Liga', onClick: () => undefined, active: true },
-    { label: 'Clasificación', onClick: () => goTo('standings') },
-    { label: 'Copa', onClick: () => goTo('copa') },
-    { label: 'Europa', onClick: () => goTo('europa'), disabled: !hasEuropa },
-    { label: 'Mercado', onClick: () => goTo('market') },
-    { label: 'Plantilla', onClick: () => goTo('squad') },
-    { label: 'Táctica', onClick: () => goTo('tactics') },
-    { label: 'Guardar', onClick: () => goTo('slots') },
-    { label: 'Menú', onClick: () => goTo('title') },
-  ];
+  const clubName = teamName(season, human);
+  const standings = currentStandings(season);
+  const humanRow = standings.find((r) => r.teamId === human);
+  const pos = humanRow ? standings.indexOf(humanRow) + 1 : 0;
+  const pts = humanRow?.points ?? 0;
+  const saldo = career ? formatEuros(career.budget) : '—';
+  const total = season.totalMatchdays;
+  const played = Math.min(Math.max(season.currentMatchday - 1, 0), total);
+  const aforo = career ? stadiumAforo(career.stadium) : 0;
+  const squadSize = season.teams.find((t) => t.id === human)?.players.length ?? 0;
+  const formation = career?.tactics?.formation ?? '4-4-2';
+  const pressPending = career ? selectPressQuestion(career) != null : false;
+  const over = isSeasonOver(season);
+  const winterOpen = career ? isWinterWindowOpen(career) : false;
+  const callUpCount = lastCallUp?.players.length ?? 0;
+
+  const liga = fixtures.find((e) => e.key === 'liga');
+  const selected = fixtures.find((e) => e.key === selectedComp) ?? fixtures[0];
+  const tickerSlug = selected?.rivalId ?? '';
+  const tickerName = selected?.rivalName ?? '';
+
+  /** Real sublabel + pip for a tower section (honest values only; others blank). */
+  const towerDetail = (label: string): { text: string; pip?: 'q' } | null => {
+    switch (label) {
+      case 'Clasificación':
+        return pos > 0 ? { text: `${pos}.º · ${pts} pts` } : null;
+      case 'Táctica':
+        return { text: formation };
+      case 'Finanzas':
+        return { text: saldo };
+      case 'Estadio':
+        return { text: `Aforo ${aforo.toLocaleString('es-ES')}` };
+      case 'Alineación':
+        return { text: `${squadSize} fichas` };
+      case 'Prensa':
+        return pressPending ? { text: 'Declaraciones', pip: 'q' } : null;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <main className="screen screen--despacho">
-      <div
-        className="despacho7"
-        style={{ backgroundImage: `url(${bg})`, aspectRatio: `${CANVAS_W} / ${CANVAS_H}` }}
-      >
-        {/* Live data over the empty plates */}
-        <div className="despacho7__plate despacho7__plate--club" style={place({ x: 155, y: 8, w: 148, h: 30 })}>
-          {clubName}
+    <main className="mister">
+      <MisterSprite />
+      <div className="wrap">
+        <div className="console">
+          <canvas className="bg" ref={canvasRef} aria-hidden="true" />
+          <div className="photos" aria-hidden="true">
+            <img className="photo" ref={photoARef} alt="" />
+            <img className="photo" ref={photoBRef} alt="" />
+          </div>
+          <div className="grain" aria-hidden="true" />
+
+          <div className="screen">
+            {/* ── cabecera ── */}
+            <header className="head">
+              <div className="head-barra">
+                <div className="hb-lado">
+                  <span className="hb-esc">
+                    <Crest teamId={human} size={81} />
+                  </span>
+                  <span className="tc-txt">
+                    <span className="tc-name">{clubName}</span>
+                    <span className="tc-sub">
+                      <b>{pos > 0 ? `${pos}.º` : '—'}</b> en Liga<i>·</i>
+                      <b>{pts} pts</b>
+                      <i>·</i>Saldo <b>{saldo}</b>
+                    </span>
+                  </span>
+                </div>
+
+                <div className="hb-lado rival">
+                  <span className="tc-txt">
+                    <span className="tc-lbl">Próximo partido</span>
+                    <span className="tc-name">{liga?.rivalName || '—'}</span>
+                    <span className="tc-sub">
+                      {liga?.status ? (
+                        <em>{liga.status}</em>
+                      ) : (
+                        <>
+                          Liga · {liga?.roundLabel}
+                          <i>·</i>
+                          <em>{liga?.detail}</em>
+                        </>
+                      )}
+                    </span>
+                  </span>
+                  <span className="hb-esc">
+                    {liga?.rivalId ? <Crest teamId={liga.rivalId} size={81} /> : null}
+                  </span>
+                </div>
+              </div>
+
+              <div className="head-comp">
+                <img className="nm-comp" src={logoUrl('laliga')} alt="Liga" onError={hideOnError} />
+                <span className="today-date">{season.temporada}</span>
+                <span className="today-week">
+                  Jugadas {played} de {total}
+                </span>
+              </div>
+            </header>
+
+            {/* ── teletipo del rival ── */}
+            <RivalTicker slug={tickerSlug} name={tickerName} facts={facts} />
+
+            {/* ── vistas conmutables (Slice 1: solo el despacho) ── */}
+            <div className="views">
+              <section className="view is-active" data-view="despacho">
+                {/* próximos partidos = selector de competición */}
+                <div className="fixtures" role="tablist" aria-label="Próximo partido en cada competición">
+                  {fixtures.map((e) => (
+                    <button
+                      key={e.key}
+                      type="button"
+                      className="fx"
+                      role="tab"
+                      aria-selected={e.key === selectedComp}
+                      onClick={() => setSelectedComp(e.key)}
+                    >
+                      <span className="fx-main">
+                        <span className="fx-body">
+                          {e.rivalId ? (
+                            <img className="fx-crest" src={crestUrl(e.rivalId)} alt="" onError={hideOnError} />
+                          ) : null}
+                          <span className="fx-rival">{e.rivalName || 'Liga'}</span>
+                        </span>
+                        <span className="fx-meta">
+                          <span className="fx-round">{e.roundLabel}</span>
+                          {e.status ? (
+                            <>
+                              <i>·</i>
+                              <b>{e.status}</b>
+                            </>
+                          ) : null}
+                          {e.detail ? (
+                            <>
+                              <i>·</i>
+                              <em>{e.detail}</em>
+                            </>
+                          ) : null}
+                        </span>
+                      </span>
+                      <span className="fx-side">
+                        <img className="fx-logo" src={logoUrl(e.logo)} alt="" onError={hideOnError} />
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* cuerpo del despacho: torre de secciones + centro (foto) */}
+                <div className="body">
+                  <div className="tower" id="towerL">
+                    {TOWER.map((group) => (
+                      <div className="grp" key={group.heading}>
+                        <p className="grp-h">{group.heading}</p>
+                        {group.items.map((item) => {
+                          const detail = towerDetail(item.label);
+                          return (
+                            <button
+                              key={item.label}
+                              type="button"
+                              className="sec"
+                              onClick={() => goTo(item.to)}
+                            >
+                              <span className="thumb">
+                                <MisterIcon name={item.icon} />
+                              </span>
+                              <span className="txt">
+                                <span className="n">{item.label}</span>
+                                {detail ? <span className="d">{detail.text}</span> : null}
+                              </span>
+                              {detail?.pip ? <span className="pip q" /> : null}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="core">
+                    <div className="office-play">
+                      {winterOpen ? (
+                        <button type="button" className="bigbtn primary" onClick={openWinterMarket}>
+                          ❄ Mercado de invierno
+                        </button>
+                      ) : over ? (
+                        <button type="button" className="bigbtn primary" onClick={() => goTo('seasonEnd')}>
+                          Fin de temporada ▸
+                        </button>
+                      ) : (
+                        <button type="button" className="bigbtn primary" onClick={() => goTo('prematch')}>
+                          ▶ Jugar jornada
+                        </button>
+                      )}
+
+                      {pressPending || callUpCount > 0 ? (
+                        <div className="office-notices">
+                          {pressPending ? (
+                            <div className="goal">🎙️ La prensa espera tus declaraciones.</div>
+                          ) : null}
+                          {callUpCount > 0 ? (
+                            <div className="goal good">
+                              ✈️ {callUpCount} {callUpCount === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del
+                              parón con fatiga extra.
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : null}
+
+                      <div className="office-actions">
+                        <button type="button" className="office-link" onClick={() => goTo('slots')}>
+                          Guardar
+                        </button>
+                        {career?.copa ? (
+                          <button type="button" className="office-link" onClick={() => goTo('copa')}>
+                            Copa
+                          </button>
+                        ) : null}
+                        {hasEuropa ? (
+                          <button type="button" className="office-link" onClick={() => goTo('europa')}>
+                            Europa
+                          </button>
+                        ) : null}
+                        <button type="button" className="office-link" onClick={() => goTo('title')}>
+                          Menú
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {/* pie "La historia" del fondo actual */}
+            <p className="pcredit">
+              {credit ? (
+                <>
+                  <span className="pc-tag">La historia</span>
+                  <span className="pc-titulo">{credit.cap}</span>
+                  {credit.autor ? <span className="pc-src">{credit.autor}</span> : null}
+                </>
+              ) : null}
+            </p>
+          </div>
         </div>
-        <div className="despacho7__plate despacho7__plate--comp" style={place({ x: 382, y: 8, w: 154, h: 30 })}>
-          LIGA · {season.temporada}
-        </div>
-        <div className="despacho7__plate despacho7__plate--data" style={place({ x: 382, y: 56, w: 154, h: 26 })}>
-          {over ? 'Temporada terminada' : `Jornada ${playedMatchday}/${season.totalMatchdays}`}
-        </div>
-
-        {/* 12 icon hotspots */}
-        {[...leftHotspots, ...rightHotspots].map((h) => (
-          <button
-            key={h.label}
-            type="button"
-            className={`despacho7__hotspot${h.to ? '' : ' despacho7__hotspot--soon'}`}
-            style={place(h.rect)}
-            title={h.to ? h.label : `${h.label} (próximamente)`}
-            aria-label={h.label}
-            onClick={() => openSection(h.to)}
-          />
-        ))}
-
-        {/* Central trophy zone = play/continue the matchday */}
-        <button
-          type="button"
-          className="despacho7__hotspot despacho7__hotspot--play"
-          style={place({ x: 285, y: 150, w: 100, h: 95 })}
-          title={over ? 'Fin de temporada' : 'Jugar jornada'}
-          aria-label={over ? 'Fin de temporada' : 'Jugar jornada'}
-          onClick={() => goTo(over ? 'seasonEnd' : 'prematch')}
-        />
-        {!over ? (
-          <button
-            type="button"
-            className="despacho7__hotspot despacho7__sim"
-            style={place({ x: 285, y: 250, w: 100, h: 22 })}
-            title="Simular jornada"
-            aria-label="Simular jornada"
-            onClick={playNextMatchday}
-          >
-            Simular
-          </button>
-        ) : null}
-
-        {/* 9 bottom tabs (regleta de solapas) */}
-        <div className="despacho7__tabs" style={place({ x: 2, y: 404, w: 636, h: 70 })}>
-          {tabs.map((t) => (
-            <button
-              key={t.label}
-              type="button"
-              className={`despacho7__tab${t.active ? ' despacho7__tab--active' : ''}`}
-              onClick={t.onClick}
-              disabled={t.disabled}
-              aria-current={t.active ? 'page' : undefined}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Avisos que exigen tu atención antes de seguir jugando. */}
-      {winterOpen ? (
-        <p className="despacho7__notice">
-          ❄️ Ventana de fichajes de invierno abierta.{' '}
-          <button type="button" className="pcf7flatbtn pcf7flatbtn--primary" onClick={openWinterMarket}>
-            Ir al mercado de invierno →
-          </button>
-        </p>
-      ) : null}
-      {pressPending ? (
-        <p className="despacho7__notice">
-          🎙️ La prensa espera tus declaraciones.{' '}
-          <button type="button" className="pcf7flatbtn" onClick={() => goTo('press')}>
-            Comparecer →
-          </button>
-        </p>
-      ) : null}
-      {lastCallUp && lastCallUp.players.length > 0 ? (
-        <p className="despacho7__notice">
-          ✈️ {lastCallUp.players.length}{' '}
-          {lastCallUp.players.length === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del parón de
-          selecciones con fatiga extra.
-        </p>
-      ) : null}
-
-      {/* Secciones sin icono propio en scr_032. */}
-      <div className="despacho7__more">
-        {EXTRA_SECTIONS.map((s) => (
-          <button key={s.label} type="button" className="pcf7flatbtn" onClick={() => goTo(s.to)}>
-            {s.label}
-          </button>
-        ))}
       </div>
     </main>
   );
