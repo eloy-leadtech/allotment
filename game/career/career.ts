@@ -1,6 +1,6 @@
 import { hashSeed, type CompetitionTeam, type MatchPlayer, type Tactics } from '@engine';
 import type { League } from '@data';
-import { newSeasonFromTeams, toMatchPlayer, type SeasonState } from '../season/season';
+import { newSeasonFromTeams, realCalendarFor, toMatchPlayer, type SeasonState } from '../season/season';
 import type { MedicalStaff } from './availability';
 import type { CareerState, CareerTactics, CareerTeam } from './types';
 import { DEFAULT_TRAINING_FOCUS, type TrainingState } from './training';
@@ -104,6 +104,9 @@ export function seasonFromCareer(meta: CareerMeta): SeasonState {
       relegationSpots: meta.relegationSpots,
     },
     seed,
+    // Follow the authentic calendar when one is committed for this league (only
+    // 96/97 for now); any other season falls back to the seeded round-robin.
+    realCalendarFor(meta.leagueId),
   );
   // The human squad's individual wishes (deseos), DERIVED from the season-start
   // situation (contracts/age/media/board). Re-derived identically on load, so it is

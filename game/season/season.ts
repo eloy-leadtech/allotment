@@ -141,9 +141,13 @@ export function newSeasonFromTeams(
 }
 
 /**
- * Start a fresh season for a league, with the human managing `humanTeamId`. Pass
- * `realFixtures` (see `realCalendarFor`) to follow the authentic calendar;
- * omitting it keeps the seeded round-robin, so existing callers are unchanged.
+ * Start a fresh season for a league, with the human managing `humanTeamId`.
+ *
+ * By default the season follows the authentic historical calendar when one is
+ * committed for `league.id` (see `realCalendarFor`), otherwise the seeded
+ * round-robin. Pass `realFixtures` to override: a list forces that calendar, and
+ * an empty list `[]` forces the round-robin (used by tests that exercise the
+ * generated schedule).
  */
 export function newSeason(
   league: League,
@@ -164,7 +168,7 @@ export function newSeason(
       relegationSpots: league.competicion.relegationSpots,
     },
     seed,
-    realFixtures,
+    realFixtures ?? realCalendarFor(league.id),
   );
 }
 

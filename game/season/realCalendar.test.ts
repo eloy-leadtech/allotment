@@ -91,9 +91,16 @@ describe('season on the authentic 96/97 calendar', () => {
   });
 });
 
-describe('round-robin fallback is unchanged when no real calendar is passed', () => {
-  it('still builds a 42-round calendar with no dates or historical scores', () => {
+describe('newSeason default follows the authentic calendar (slice 2 switch-on)', () => {
+  it('uses the real 96/97 calendar when no fixtures are passed', () => {
     const state = newSeason(league, humanTeamId, 2024);
+    // Opening fixture is the real one: Deportivo 1-1 Real Madrid, 31/08/1996.
+    expect(state.fixtures[0]).toMatchObject({ homeId: 'deportivo', awayId: 'real-madrid', date: '1996-08-31' });
+    expect(state.fixtures.some((f) => f.historicalScore !== undefined)).toBe(true);
+  });
+
+  it('an explicit [] forces the generated round-robin (no dates or historical scores)', () => {
+    const state = newSeason(league, humanTeamId, 2024, []);
     expect(state.totalMatchdays).toBe(42);
     expect(state.fixtures).toHaveLength(462);
     expect(state.fixtures.every((f) => f.date === undefined)).toBe(true);

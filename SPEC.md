@@ -112,7 +112,7 @@ El engine define una interfaz `MatchExecutor` con dos implementaciones:
 - **`SimulatedExecutor`**: el simulador de eventos descrito arriba. Determinista por seed.
 - **`Pes6Executor`**: delega en el Puente PES6 (§4.6). NO es determinista (lo juega una persona): su resultado se trata como entrada y se guarda en la partida tal cual.
 
-Ambos devuelven el mismo `MatchReport` normalizado (marcador, goleadores, asistencias si se pueden obtener, tarjetas, lesiones, cambios, minutos jugados). El resto del juego (clasificación, sanciones, moral, economía, prensa) solo consume `MatchReport` y no sabe qué ejecutor se usó. Los partidos que el usuario no juega se simulan siempre con `SimulatedExecutor`.
+Ambos devuelven el mismo `MatchReport` normalizado (marcador, goleadores, asistencias si se pueden obtener, tarjetas, lesiones, cambios, minutos jugados). El resto del juego (clasificación, sanciones, moral, economía, prensa) solo consume `MatchReport` y no sabe qué ejecutor se usó. Los partidos que el usuario no juega se resuelven según el calendario de la temporada: con **calendario histórico real** (datos auténticos en `/data`, p. ej. 96/97), los partidos ajenos usan su **resultado histórico real** —la liga sigue la historia de verdad salvo en los partidos en que interviene el club del usuario—; cuando no hay calendario real para esa temporada, se simulan con `SimulatedExecutor`. El partido del propio usuario, si no lo juega en PES6, se simula con `SimulatedExecutor`.
 
 ### 4.5 UX móvil retro
 - Pantallas completas tipo menú clásico, tipografía pixelada legible (mín. 14px equivalente)

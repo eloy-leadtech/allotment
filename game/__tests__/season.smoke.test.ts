@@ -1,10 +1,12 @@
 /**
  * QA-01 — headless full-season smoke test.
  *
- * The safety net for "siempre jugable": it simulates a whole Liga 96/97 season
- * from the real database and asserts the invariants that keep the game correct
- * and deterministic. If the goal-average band fails, tune engine/match/config.ts
- * (never weaken this test).
+ * The safety net for "siempre jugable": it SIMULATES a whole Liga 96/97 season and
+ * asserts the invariants that keep the engine correct and deterministic. It forces
+ * the round-robin calendar (the `[]` arg) so every match is simulated — the real
+ * 96/97 calendar replays history for non-human matches (events-less), which is
+ * covered by game/season/realCalendar.test.ts instead. If the goal-average band
+ * fails, tune engine/match/config.ts (never weaken this test).
  */
 import { describe, it, expect } from 'vitest';
 import { loadPrimera9697 } from '@data';
@@ -16,7 +18,8 @@ if (!firstTeam) throw new Error('league has no teams');
 const humanTeamId = firstTeam.id;
 
 function playFullSeason(seed: number): SeasonState {
-  let state = newSeason(league, humanTeamId, seed);
+  // `[]` forces the generated round-robin so the whole league is simulated.
+  let state = newSeason(league, humanTeamId, seed, []);
   let guard = 0;
   while (!isSeasonOver(state)) {
     state = advanceMatchday(state).state;
