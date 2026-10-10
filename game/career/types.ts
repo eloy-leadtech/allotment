@@ -28,6 +28,8 @@ export interface CareerTactics {
 export interface CareerTeam {
   id: string;
   nombre: string;
+  /** Full official club name, if known; display-only, carried through for `teamFullName`. */
+  nombreCompleto?: string;
   colores?: TeamColors;
   players: Player[];
 }

@@ -13,6 +13,7 @@
     {
       "id": "athletic-b",
       "nombre": "Athletic B",
+      "nombreCompleto": "Bilbao Athletic",
       "jugadores": [
         {
           "id": "athletic-b-jon-ander-lambea-aranguiz-na",
@@ -657,6 +658,7 @@
     {
       "id": "badajoz",
       "nombre": "Badajoz",
+      "nombreCompleto": "Club Deportivo Badajoz",
       "jugadores": [
         {
           "id": "badajoz-antonio-duran-duran-na",
@@ -1214,6 +1216,7 @@
     {
       "id": "barcelona-b",
       "nombre": "Barcelona B",
+      "nombreCompleto": "Futbol Club Barcelona B",
       "jugadores": [
         {
           "id": "barcelona-b-javier-roca-mateo-na",
@@ -1800,6 +1803,7 @@
     {
       "id": "eibar",
       "nombre": "Eibar",
+      "nombreCompleto": "Sociedad Deportiva Eibar",
       "jugadores": [
         {
           "id": "eibar-javier-yubero-solamilla-na",
@@ -2386,6 +2390,7 @@
     {
       "id": "extremadura",
       "nombre": "Extremadura",
+      "nombreCompleto": "Club de Fútbol Extremadura",
       "jugadores": [
         {
           "id": "extremadura-eduardo-abadal-almendros-na",
@@ -3001,6 +3006,7 @@
     {
       "id": "getafe",
       "nombre": "Getafe",
+      "nombreCompleto": "Getafe Club de Fútbol",
       "jugadores": [
         {
           "id": "getafe-rafael-feria-garcia-de-quiros-na",
@@ -3645,6 +3651,7 @@
     {
       "id": "hercules",
       "nombre": "Hercules",
+      "nombreCompleto": "Hércules Club de Fútbol",
       "jugadores": [
         {
           "id": "hercules-miguel-mari-sanchez-na",
@@ -4289,6 +4296,7 @@
     {
       "id": "leganes",
       "nombre": "Leganes",
+      "nombreCompleto": "Club Deportivo Leganés",
       "jugadores": [
         {
           "id": "leganes-eduardo-villoria-coronel-na",
@@ -4904,6 +4912,7 @@
     {
       "id": "lleida",
       "nombre": "Lleida",
+      "nombreCompleto": "Unió Esportiva Lleida",
       "jugadores": [
         {
           "id": "lleida-raul-ojeda-achiaga-na",
@@ -5519,6 +5528,7 @@
     {
       "id": "mallorca",
       "nombre": "Mallorca",
+      "nombreCompleto": "Real Club Deportivo Mallorca",
       "jugadores": [
         {
           "id": "mallorca-bartolome-pascual-rosello-na",
@@ -6163,6 +6173,7 @@
     {
       "id": "marbella",
       "nombre": "Marbella",
+      "nombreCompleto": "Club Atlético de Marbella",
       "jugadores": [
         {
           "id": "marbella-luis-raudona-camuna-na",
@@ -6778,6 +6789,7 @@
     {
       "id": "merida",
       "nombre": "Merida",
+      "nombreCompleto": "Club Polideportivo Mérida",
       "jugadores": [
         {
           "id": "merida-alfonso-martinez-zambrano-tete-na",
@@ -7422,6 +7434,7 @@
     {
       "id": "orense",
       "nombre": "Orense",
+      "nombreCompleto": "Club Deportivo Ourense",
       "jugadores": [
         {
           "id": "orense-jose-antonio-rodriguez-querella-1974",
@@ -8080,6 +8093,7 @@
     {
       "id": "osasuna",
       "nombre": "Osasuna",
+      "nombreCompleto": "Club Atlético Osasuna",
       "jugadores": [
         {
           "id": "osasuna-jesus-unanua-becerril-na",
@@ -8724,6 +8738,7 @@
     {
       "id": "palamos",
       "nombre": "Palamos",
+      "nombreCompleto": "Palamós Club de Futbol",
       "jugadores": [
         {
           "id": "palamos-palamos-01-na",
@@ -9342,6 +9357,7 @@
     {
       "id": "rayo",
       "nombre": "Rayo",
+      "nombreCompleto": "Rayo Vallecano de Madrid",
       "jugadores": [
         {
           "id": "rayo-benigno-lema-mejuto-na",
@@ -9986,6 +10002,7 @@
     {
       "id": "real-madrid-b",
       "nombre": "Real Madrid B",
+      "nombreCompleto": "Real Madrid Club de Fútbol B",
       "jugadores": [
         {
           "id": "real-madrid-b-pedro-velasco-moron-na",
@@ -10630,6 +10647,7 @@
     {
       "id": "salamanca",
       "nombre": "Salamanca",
+      "nombreCompleto": "Unión Deportiva Salamanca",
       "jugadores": [
         {
           "id": "salamanca-jose-ignacio-aizpurua-alzaga-na",
@@ -11216,6 +11234,7 @@
     {
       "id": "toledo",
       "nombre": "Toledo",
+      "nombreCompleto": "Club Deportivo Toledo",
       "jugadores": [
         {
           "id": "toledo-pablo-ancos-de-blas-na",
@@ -11860,6 +11879,7 @@
     {
       "id": "villarreal",
       "nombre": "Villarreal",
+      "nombreCompleto": "Villarreal Club de Fútbol",
       "jugadores": [
         {
           "id": "villarreal-javier-sanchez-broto-na",

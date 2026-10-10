@@ -13,6 +13,7 @@
     {
       "id": "logrones",
       "nombre": "Logroñés",
+      "nombreCompleto": "Club Deportivo Logroñés",
       "jugadores": [
         {
           "id": "logrones-francisco-pinillos-fernandez-na",
@@ -773,6 +774,7 @@
     {
       "id": "lleida",
       "nombre": "Lleida",
+      "nombreCompleto": "Unió Esportiva Lleida",
       "jugadores": [
         {
           "id": "lleida-emilio-jose-isierte-aguilar-na",
@@ -1388,6 +1390,7 @@
     {
       "id": "osasuna",
       "nombre": "Osasuna",
+      "nombreCompleto": "Club Atlético Osasuna",
       "jugadores": [
         {
           "id": "osasuna-jesus-unanua-becerril-na",
@@ -2090,6 +2093,7 @@
     {
       "id": "toledo",
       "nombre": "Toledo",
+      "nombreCompleto": "Club Deportivo Toledo",
       "jugadores": [
         {
           "id": "toledo-jacinto-villalvilla-bustos-na",
@@ -2879,6 +2883,7 @@
     {
       "id": "mallorca",
       "nombre": "Mallorca",
+      "nombreCompleto": "Real Club Deportivo Mallorca",
       "jugadores": [
         {
           "id": "mallorca-bartolome-pascual-rosello-na",
@@ -3581,6 +3586,7 @@
     {
       "id": "real-madrid-b",
       "nombre": "Real Madrid B",
+      "nombreCompleto": "Real Madrid Club de Fútbol B",
       "jugadores": [
         {
           "id": "real-madrid-b-pedro-contreras-gonzalez-na",
@@ -4283,6 +4289,7 @@
     {
       "id": "hercules",
       "nombre": "Hércules",
+      "nombreCompleto": "Hércules Club de Fútbol",
       "jugadores": [
         {
           "id": "hercules-francisco-abellan-camara-na",
@@ -4927,6 +4934,7 @@
     {
       "id": "barcelona-b",
       "nombre": "Barcelona B",
+      "nombreCompleto": "Futbol Club Barcelona B",
       "jugadores": [
         {
           "id": "barcelona-b-francesc-arnau-grabulosa-na",
@@ -5513,6 +5521,7 @@
     {
       "id": "eibar",
       "nombre": "Eibar",
+      "nombreCompleto": "Sociedad Deportiva Eibar",
       "jugadores": [
         {
           "id": "eibar-javier-yubero-solamilla-na",
@@ -6070,6 +6079,7 @@
     {
       "id": "badajoz",
       "nombre": "Badajoz",
+      "nombreCompleto": "Club Deportivo Badajoz",
       "jugadores": [
         {
           "id": "badajoz-angel-andres-lozano-zorita-na",
@@ -6598,6 +6608,7 @@
     {
       "id": "marbella",
       "nombre": "Marbella",
+      "nombreCompleto": "Club Atlético de Marbella",
       "jugadores": [
         {
           "id": "marbella-jose-luis-gonzalez-vazquez-na",
@@ -7213,6 +7224,7 @@
     {
       "id": "athletic-b",
       "nombre": "Athletic B",
+      "nombreCompleto": "Bilbao Athletic",
       "jugadores": [
         {
           "id": "athletic-b-imanol-etxeberria-egana-na",
@@ -7973,6 +7985,7 @@
     {
       "id": "leganes",
       "nombre": "Leganés",
+      "nombreCompleto": "Club Deportivo Leganés",
       "jugadores": [
         {
           "id": "leganes-javier-aguilera-gumpert-na",
@@ -8588,6 +8601,7 @@
     {
       "id": "villarreal",
       "nombre": "Villarreal",
+      "nombreCompleto": "Villarreal Club de Fútbol",
       "jugadores": [
         {
           "id": "villarreal-javier-sanchez-broto-na",
@@ -9232,6 +9246,7 @@
     {
       "id": "getafe",
       "nombre": "Getafe",
+      "nombreCompleto": "Getafe Club de Fútbol",
       "jugadores": [
         {
           "id": "getafe-pedro-sanchez-caballero-na",
@@ -9934,6 +9949,7 @@
     {
       "id": "extremadura",
       "nombre": "Extremadura",
+      "nombreCompleto": "Club de Fútbol Extremadura",
       "jugadores": [
         {
           "id": "extremadura-francisco-rodriguez-amador-na",
@@ -10549,6 +10565,7 @@
     {
       "id": "alaves",
       "nombre": "Alavés",
+      "nombreCompleto": "Deportivo Alavés",
       "jugadores": [
         {
           "id": "alaves-alfonso-subero-calvo-tito-na",
@@ -11164,6 +11181,7 @@
     {
       "id": "sestao",
       "nombre": "Sestao",
+      "nombreCompleto": "Sestao Sport Club",
       "jugadores": [
         {
           "id": "sestao-gorka-sangroniz-barcena-na",
@@ -11837,6 +11855,7 @@
     {
       "id": "almeria",
       "nombre": "Almería",
+      "nombreCompleto": "Almería Club de Fútbol",
       "jugadores": [
         {
           "id": "almeria-julio-jose-iglesias-rouget-na",
@@ -12452,6 +12471,7 @@
     {
       "id": "ecija",
       "nombre": "Écija",
+      "nombreCompleto": "Écija Balompié",
       "jugadores": [
         {
           "id": "ecija-juan-barbero-fernandez-na",

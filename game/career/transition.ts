@@ -50,6 +50,7 @@ function worldTeams(nextWorld: League): CareerTeam[] {
   return nextWorld.equipos.map((t) => ({
     id: t.id,
     nombre: t.nombre,
+    ...(t.nombreCompleto ? { nombreCompleto: t.nombreCompleto } : {}),
     colores: t.colores,
     players: t.jugadores,
   }));
@@ -429,6 +430,7 @@ export function applyDivisionChange(
   const humanTeam = career.teams.find((t) => t.id === career.humanTeamId);
   const current = humanTeam?.players ?? [];
   const humanNombre = humanTeam?.nombre ?? career.humanTeamId;
+  const humanNombreCompleto = humanTeam?.nombreCompleto;
 
   // The whole squad moves with you, aged one season; retirees drop out. It is
   // your squad, so this season's training focus shapes how it evolves. Retirees
@@ -465,7 +467,12 @@ export function applyDivisionChange(
     return { ...team, players: team.players.filter((p) => !humanKeys.has(personKey(p))) };
   });
   if (!humanPresent) {
-    rebuiltTeams.push({ id: career.humanTeamId, nombre: humanNombre, players: advance.players });
+    rebuiltTeams.push({
+      id: career.humanTeamId,
+      nombre: humanNombre,
+      ...(humanNombreCompleto ? { nombreCompleto: humanNombreCompleto } : {}),
+      players: advance.players,
+    });
   }
 
   // Loanees return (aged, deal restored) even across a division change; players

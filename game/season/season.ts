@@ -86,7 +86,12 @@ export function toMatchPlayer(p: Player): MatchPlayer {
 }
 
 export function toCompetitionTeam(team: Team): CompetitionTeam {
-  return { id: team.id, nombre: team.nombre, players: team.jugadores.map(toMatchPlayer) };
+  return {
+    id: team.id,
+    nombre: team.nombre,
+    ...(team.nombreCompleto ? { nombreCompleto: team.nombreCompleto } : {}),
+    players: team.jugadores.map(toMatchPlayer),
+  };
 }
 
 /** Metadata a season needs beyond its teams and seed. */
@@ -277,7 +282,17 @@ export function currentStandings(state: SeasonState): StandingRow[] {
   );
 }
 
-/** Resolve a team id to its display name. */
+/** Resolve a team id to its (short) display name. */
 export function teamName(state: SeasonState, teamId: string): string {
   return state.teams.find((t) => t.id === teamId)?.nombre ?? teamId;
+}
+
+/**
+ * Resolve a team id to its full official name (e.g. "Real Betis Balompié"),
+ * falling back to the short `nombre` when no full name is known, and finally to
+ * the id. Use it for prominent headings; `teamName` stays for tables/lists.
+ */
+export function teamFullName(state: SeasonState, teamId: string): string {
+  const team = state.teams.find((t) => t.id === teamId);
+  return team?.nombreCompleto ?? team?.nombre ?? teamId;
 }

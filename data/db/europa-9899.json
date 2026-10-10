@@ -13,6 +13,7 @@
     {
       "id": "milan",
       "nombre": "Milan",
+      "nombreCompleto": "Associazione Calcio Milan",
       "jugadores": [
         {
           "id": "milan-1-n-gotty",
@@ -934,6 +935,7 @@
     {
       "id": "juventus",
       "nombre": "Juventus",
+      "nombreCompleto": "Juventus Football Club",
       "jugadores": [
         {
           "id": "juventus-1-esnaider",
@@ -1782,6 +1784,7 @@
     {
       "id": "lazio",
       "nombre": "Lazio",
+      "nombreCompleto": "Società Sportiva Lazio",
       "jugadores": [
         {
           "id": "lazio-1-de-la-pena",
@@ -2601,6 +2604,7 @@
     {
       "id": "parma",
       "nombre": "Parma",
+      "nombreCompleto": "Parma Associazione Calcio",
       "jugadores": [
         {
           "id": "parma-1-stanic",
@@ -3507,6 +3511,7 @@
     {
       "id": "roma",
       "nombre": "Roma",
+      "nombreCompleto": "Associazione Sportiva Roma",
       "jugadores": [
         {
           "id": "roma-1-konsel",
@@ -4352,6 +4357,7 @@
     {
       "id": "inter",
       "nombre": "Inter",
+      "nombreCompleto": "Football Club Internazionale Milano",
       "jugadores": [
         {
           "id": "inter-1-zamorano",
@@ -5267,6 +5273,7 @@
     {
       "id": "fiorentina",
       "nombre": "Fiorentina",
+      "nombreCompleto": "Associazione Calcio Fiorentina",
       "jugadores": [
         {
           "id": "fiorentina-1-amor",
@@ -6010,6 +6017,7 @@
     {
       "id": "manchester-united",
       "nombre": "Manchester United",
+      "nombreCompleto": "Manchester United Football Club",
       "jugadores": [
         {
           "id": "manchester-united-1-berg",
@@ -6744,6 +6752,7 @@
     {
       "id": "liverpool",
       "nombre": "Liverpool",
+      "nombreCompleto": "Liverpool Football Club",
       "jugadores": [
         {
           "id": "liverpool-1-riedle",
@@ -7638,6 +7647,7 @@
     {
       "id": "leeds-united",
       "nombre": "Leeds United",
+      "nombreCompleto": "Leeds United Football Club",
       "jugadores": [
         {
           "id": "leeds-united-1-robertson",
@@ -8531,6 +8541,7 @@
     {
       "id": "newcastle-united",
       "nombre": "Newcastle United",
+      "nombreCompleto": "Newcastle United Football Club",
       "jugadores": [
         {
           "id": "newcastle-united-1-georgiadis",
@@ -9436,6 +9447,7 @@
     {
       "id": "arsenal",
       "nombre": "Arsenal",
+      "nombreCompleto": "Arsenal Football Club",
       "jugadores": [
         {
           "id": "arsenal-1-overmars",
@@ -10295,6 +10307,7 @@
     {
       "id": "chelsea",
       "nombre": "Chelsea",
+      "nombreCompleto": "Chelsea Football Club",
       "jugadores": [
         {
           "id": "chelsea-1-ferrer",
@@ -11054,6 +11067,7 @@
     {
       "id": "borussia-dortmund",
       "nombre": "Borussia Dortmund",
+      "nombreCompleto": "Ballspielverein Borussia 09 Dortmund",
       "jugadores": [
         {
           "id": "borussia-dortmund-1-kohler",
@@ -11874,6 +11888,7 @@
     {
       "id": "werder-bremen",
       "nombre": "Werder Bremen",
+      "nombreCompleto": "Sportverein Werder Bremen",
       "jugadores": [
         {
           "id": "werder-bremen-1-maximov",
@@ -12540,6 +12555,7 @@
     {
       "id": "bayern-munich",
       "nombre": "Bayern Munich",
+      "nombreCompleto": "Fußball-Club Bayern München",
       "jugadores": [
         {
           "id": "bayern-munich-1-effenberg",
@@ -13244,6 +13260,7 @@
     {
       "id": "bayer-leverkusen",
       "nombre": "Bayer Leverkusen",
+      "nombreCompleto": "Bayer 04 Leverkusen",
       "jugadores": [
         {
           "id": "bayer-leverkusen-1-frydek",
@@ -13971,6 +13988,7 @@
     {
       "id": "paris-saint-germain",
       "nombre": "Paris Saint-Germain",
+      "nombreCompleto": "Paris Saint-Germain Football Club",
       "jugadores": [
         {
           "id": "paris-saint-germain-1-lama",
@@ -14595,6 +14613,7 @@
     {
       "id": "monaco",
       "nombre": "Monaco",
+      "nombreCompleto": "Association Sportive de Monaco Football Club",
       "jugadores": [
         {
           "id": "monaco-1-n-doram",
@@ -15220,6 +15239,7 @@
     {
       "id": "olympique-lyonnais",
       "nombre": "Olympique Lyonnais",
+      "nombreCompleto": "Olympique Lyonnais",
       "jugadores": [
         {
           "id": "olympique-lyonnais-1-bak",
@@ -15834,6 +15854,7 @@
     {
       "id": "girondins-burdeos",
       "nombre": "Girondins Burdeos",
+      "nombreCompleto": "Football Club des Girondins de Bordeaux",
       "jugadores": [
         {
           "id": "girondins-burdeos-1-torres-mestre",
@@ -16518,6 +16539,7 @@
     {
       "id": "olympique-marsella",
       "nombre": "Olympique Marsella",
+      "nombreCompleto": "Olympique de Marseille",
       "jugadores": [
         {
           "id": "olympique-marsella-1-blanc-l",
@@ -17112,6 +17134,7 @@
     {
       "id": "oporto",
       "nombre": "Oporto",
+      "nombreCompleto": "Futebol Clube do Porto",
       "jugadores": [
         {
           "id": "oporto-1-vitor-baia",
@@ -17931,6 +17954,7 @@
     {
       "id": "sporting-lisboa",
       "nombre": "Sporting Lisboa",
+      "nombreCompleto": "Sporting Clube de Portugal",
       "jugadores": [
         {
           "id": "sporting-lisboa-1-rui-jorge",
@@ -18537,6 +18561,7 @@
     {
       "id": "benfica",
       "nombre": "Benfica",
+      "nombreCompleto": "Sport Lisboa e Benfica",
       "jugadores": [
         {
           "id": "benfica-1-preud-homme",
@@ -19276,6 +19301,7 @@
     {
       "id": "ajax",
       "nombre": "Ajax",
+      "nombreCompleto": "Amsterdamsche Football Club Ajax",
       "jugadores": [
         {
           "id": "ajax-1-van-der-sar",
@@ -19934,6 +19960,7 @@
     {
       "id": "feyenoord",
       "nombre": "Feyenoord",
+      "nombreCompleto": "Feyenoord Rotterdam",
       "jugadores": [
         {
           "id": "feyenoord-1-fraser",
@@ -20658,6 +20685,7 @@
     {
       "id": "psv-eindhoven",
       "nombre": "PSV Eindhoven",
+      "nombreCompleto": "Philips Sport Vereniging",
       "jugadores": [
         {
           "id": "psv-eindhoven-1-stinga",
@@ -21399,6 +21427,7 @@
     {
       "id": "glasgow-rangers",
       "nombre": "Glasgow Rangers",
+      "nombreCompleto": "Rangers Football Club",
       "jugadores": [
         {
           "id": "glasgow-rangers-1-hendry",
@@ -22165,6 +22194,7 @@
     {
       "id": "celtic",
       "nombre": "Celtic",
+      "nombreCompleto": "Celtic Football Club",
       "jugadores": [
         {
           "id": "celtic-1-bratbakk",
@@ -22864,6 +22894,7 @@
     {
       "id": "besiktas",
       "nombre": "Besiktas",
+      "nombreCompleto": "Beşiktaş Jimnastik Kulübü",
       "jugadores": [
         {
           "id": "besiktas-1-ohen",
@@ -23738,6 +23769,7 @@
     {
       "id": "galatasaray",
       "nombre": "Galatasaray",
+      "nombreCompleto": "Galatasaray Spor Kulübü",
       "jugadores": [
         {
           "id": "galatasaray-1-popescu",
@@ -27462,6 +27494,7 @@
     {
       "id": "anderlecht",
       "nombre": "Anderlecht",
+      "nombreCompleto": "Royal Sporting Club Anderlecht",
       "jugadores": [
         {
           "id": "anderlecht-1-zetterberg",

@@ -67,6 +67,8 @@ export function restoreSeason(save: SaveGame, league: League): SeasonState {
 const CareerTeamSchema = z.object({
   id: z.string().min(1),
   nombre: z.string().min(1),
+  /** Full official name; optional so pre-nombreCompleto saves still load (falls back to `nombre`). */
+  nombreCompleto: z.string().min(1).optional(),
   colores: TeamColorsSchema.optional(),
   players: z.array(PlayerSchema),
 });

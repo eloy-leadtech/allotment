@@ -13,6 +13,7 @@
     {
       "id": "barcelona",
       "nombre": "Barcelona",
+      "nombreCompleto": "Futbol Club Barcelona",
       "jugadores": [
         {
           "id": "barcelona-andoni-zubizarreta-urreta-na",
@@ -657,6 +658,7 @@
     {
       "id": "real-madrid",
       "nombre": "Real Madrid",
+      "nombreCompleto": "Real Madrid Club de Fútbol",
       "jugadores": [
         {
           "id": "real-madrid-francisco-buyo-sanchez-na",
@@ -1301,6 +1303,7 @@
     {
       "id": "deportivo",
       "nombre": "Deportivo",
+      "nombreCompleto": "Real Club Deportivo de La Coruña",
       "jugadores": [
         {
           "id": "deportivo-francisco-liano-fernandez-na",
@@ -1945,6 +1948,7 @@
     {
       "id": "valencia",
       "nombre": "Valencia",
+      "nombreCompleto": "Valencia Club de Fútbol",
       "jugadores": [
         {
           "id": "valencia-jose-perez-serer-na",
@@ -2589,6 +2593,7 @@
     {
       "id": "tenerife",
       "nombre": "Tenerife",
+      "nombreCompleto": "Club Deportivo Tenerife",
       "jugadores": [
         {
           "id": "tenerife-juan-antonio-pizzi-torroja-na",
@@ -3233,6 +3238,7 @@
     {
       "id": "atletico-de-madrid",
       "nombre": "Atlético de Madrid",
+      "nombreCompleto": "Club Atlético de Madrid",
       "jugadores": [
         {
           "id": "atletico-de-madrid-ricardo-lopez-felipe-na",
@@ -3877,6 +3883,7 @@
     {
       "id": "sevilla",
       "nombre": "Sevilla",
+      "nombreCompleto": "Sevilla Fútbol Club",
       "jugadores": [
         {
           "id": "sevilla-juan-carlos-unzue-labiano-na",
@@ -4521,6 +4528,7 @@
     {
       "id": "athletic-de-bilbao",
       "nombre": "Athletic de Bilbao",
+      "nombreCompleto": "Athletic Club",
       "jugadores": [
         {
           "id": "athletic-de-bilbao-genar-andrinua-kortabarria-na",
@@ -5165,6 +5173,7 @@
     {
       "id": "real-zaragoza",
       "nombre": "Real Zaragoza",
+      "nombreCompleto": "Real Zaragoza",
       "jugadores": [
         {
           "id": "real-zaragoza-andoni-cedrun-ibarra-na",
@@ -5751,6 +5760,7 @@
     {
       "id": "atletico-osasuna",
       "nombre": "Atlético Osasuna",
+      "nombreCompleto": "Club Atlético Osasuna",
       "jugadores": [
         {
           "id": "atletico-osasuna-ramon-de-quintana-dalmau-na",
@@ -6395,6 +6405,7 @@
     {
       "id": "celta-de-vigo",
       "nombre": "Celta de Vigo",
+      "nombreCompleto": "Real Club Celta de Vigo",
       "jugadores": [
         {
           "id": "celta-de-vigo-jose-santiago-canizares-ruiz-na",
@@ -7039,6 +7050,7 @@
     {
       "id": "sporting-de-gijon",
       "nombre": "Sporting de Gijón",
+      "nombreCompleto": "Real Sporting de Gijón",
       "jugadores": [
         {
           "id": "sporting-de-gijon-abelardo-fernandez-antuna-na",
@@ -7683,6 +7695,7 @@
     {
       "id": "real-sociedad",
       "nombre": "Real Sociedad",
+      "nombreCompleto": "Real Sociedad de Fútbol",
       "jugadores": [
         {
           "id": "real-sociedad-jose-maria-lumbreras-panos-na",
@@ -8269,6 +8282,7 @@
     {
       "id": "rayo-vallecano",
       "nombre": "Rayo Vallecano",
+      "nombreCompleto": "Rayo Vallecano de Madrid",
       "jugadores": [
         {
           "id": "rayo-vallecano-wilfred-agbonavbare-na",
@@ -8913,6 +8927,7 @@
     {
       "id": "real-oviedo",
       "nombre": "Real Oviedo",
+      "nombreCompleto": "Real Oviedo",
       "jugadores": [
         {
           "id": "real-oviedo-rafael-gonzalez-robles-rafa-na",
@@ -9557,6 +9572,7 @@
     {
       "id": "albacete",
       "nombre": "Albacete",
+      "nombreCompleto": "Albacete Balompié",
       "jugadores": [
         {
           "id": "albacete-juan-carlos-balaguer-zamora-na",
@@ -10201,6 +10217,7 @@
     {
       "id": "real-valladolid",
       "nombre": "Real Valladolid",
+      "nombreCompleto": "Real Valladolid Club de Fútbol",
       "jugadores": [
         {
           "id": "real-valladolid-cesar-martin-villar-na",
@@ -10845,6 +10862,7 @@
     {
       "id": "racing-de-santander",
       "nombre": "Racing de Santander",
+      "nombreCompleto": "Real Racing Club de Santander",
       "jugadores": [
         {
           "id": "racing-de-santander-jose-manuel-ceballos-vega-na",
@@ -11489,6 +11507,7 @@
     {
       "id": "logrones",
       "nombre": "Logroñés",
+      "nombreCompleto": "Club Deportivo Logroñés",
       "jugadores": [
         {
           "id": "logrones-francisco-pinillos-fernandez-na",
@@ -12133,6 +12152,7 @@
     {
       "id": "lleida",
       "nombre": "Lleida",
+      "nombreCompleto": "Unió Esportiva Lleida",
       "jugadores": [
         {
           "id": "lleida-emilio-jose-isierte-aguilar-na",

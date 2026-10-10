@@ -13,6 +13,7 @@
     {
       "id": "albacete",
       "nombre": "Albacete",
+      "nombreCompleto": "Albacete Balompié",
       "jugadores": [
         {
           "id": "albacete-joaquin-enrique-valerio-olivera-1973",
@@ -744,6 +745,7 @@
     {
       "id": "lleida",
       "nombre": "Lleida",
+      "nombreCompleto": "Unió Esportiva Lleida",
       "jugadores": [
         {
           "id": "lleida-jose-maria-buljubasich-1971",
@@ -1473,6 +1475,7 @@
     {
       "id": "osasuna",
       "nombre": "Osasuna",
+      "nombreCompleto": "Club Atlético Osasuna",
       "jugadores": [
         {
           "id": "osasuna-javier-lopez-vallejo-1975",
@@ -2258,6 +2261,7 @@
     {
       "id": "toledo",
       "nombre": "Toledo",
+      "nombreCompleto": "Club Deportivo Toledo",
       "jugadores": [
         {
           "id": "toledo-jacinto-villalvilla-bustos-1963",
@@ -2954,6 +2958,7 @@
     {
       "id": "mallorca",
       "nombre": "Mallorca",
+      "nombreCompleto": "Real Club Deportivo Mallorca",
       "jugadores": [
         {
           "id": "mallorca-xabier-mancisidor-macazada-1970",
@@ -3597,6 +3602,7 @@
     {
       "id": "real-madrid-b",
       "nombre": "Real Madrid B",
+      "nombreCompleto": "Real Madrid Club de Fútbol B",
       "jugadores": [
         {
           "id": "real-madrid-b-nicolas-carlos-cambiasso-deleau-1978",
@@ -4327,6 +4333,7 @@
     {
       "id": "barcelona-b",
       "nombre": "Barcelona B",
+      "nombreCompleto": "Futbol Club Barcelona B",
       "jugadores": [
         {
           "id": "barcelona-b-francesc-arnau-grabulosa-1975",
@@ -5247,6 +5254,7 @@
     {
       "id": "merida",
       "nombre": "Mérida",
+      "nombreCompleto": "Club Polideportivo Mérida",
       "jugadores": [
         {
           "id": "merida-juan-carlos-balaguer-zamora-1966",
@@ -6006,6 +6014,7 @@
     {
       "id": "eibar",
       "nombre": "Eibar",
+      "nombreCompleto": "Sociedad Deportiva Eibar",
       "jugadores": [
         {
           "id": "eibar-jose-ignacio-garmendia-mendizabal-1960",
@@ -6672,6 +6681,7 @@
     {
       "id": "badajoz",
       "nombre": "Badajoz",
+      "nombreCompleto": "Club Deportivo Badajoz",
       "jugadores": [
         {
           "id": "badajoz-juan-pablo-i-manzano-martinez-1968",
@@ -7377,6 +7387,7 @@
     {
       "id": "leganes",
       "nombre": "Leganés",
+      "nombreCompleto": "Club Deportivo Leganés",
       "jugadores": [
         {
           "id": "leganes-manuel-rubio-velasco-1975",
@@ -8143,6 +8154,7 @@
     {
       "id": "ourense",
       "nombre": "Ourense",
+      "nombreCompleto": "Club Deportivo Ourense",
       "jugadores": [
         {
           "id": "ourense-ramon-ruiz-fernandez-1973",
@@ -8801,6 +8813,7 @@
     {
       "id": "almeria",
       "nombre": "Almería",
+      "nombreCompleto": "Almería Club de Fútbol",
       "jugadores": [
         {
           "id": "almeria-julio-jose-iglesias-rouget-na",
@@ -9416,6 +9429,7 @@
     {
       "id": "at-madrid-b",
       "nombre": "At. Madrid B",
+      "nombreCompleto": "Club Atlético de Madrid B",
       "jugadores": [
         {
           "id": "at-madrid-b-luis-garcia-tevenet-1974",
@@ -10323,6 +10337,7 @@
     {
       "id": "alaves",
       "nombre": "Alavés",
+      "nombreCompleto": "Deportivo Alavés",
       "jugadores": [
         {
           "id": "alaves-alfonso-subero-calvo-tito-na",
@@ -10938,6 +10953,7 @@
     {
       "id": "ecija",
       "nombre": "Écija",
+      "nombreCompleto": "Écija Balompié",
       "jugadores": [
         {
           "id": "ecija-juan-barbero-fernandez-na",
@@ -11582,6 +11598,7 @@
     {
       "id": "las-palmas",
       "nombre": "Las Palmas",
+      "nombreCompleto": "Unión Deportiva Las Palmas",
       "jugadores": [
         {
           "id": "las-palmas-juan-garrido-canales-1966",
@@ -12390,6 +12407,7 @@
     {
       "id": "levante",
       "nombre": "Levante",
+      "nombreCompleto": "Levante Unión Deportiva",
       "jugadores": [
         {
           "id": "levante-albert-tomas-sobrepera-1970",
@@ -13126,6 +13144,7 @@
     {
       "id": "salamanca",
       "nombre": "Salamanca",
+      "nombreCompleto": "Unión Deportiva Salamanca",
       "jugadores": [
         {
           "id": "salamanca-julio-llorente-gento-1966",
@@ -13866,6 +13885,7 @@
     {
       "id": "villarreal",
       "nombre": "Villarreal",
+      "nombreCompleto": "Villarreal Club de Fútbol",
       "jugadores": [
         {
           "id": "villarreal-javier-sanchez-broto-na",

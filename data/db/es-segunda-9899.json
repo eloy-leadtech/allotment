@@ -13,6 +13,7 @@
     {
       "id": "sevilla",
       "nombre": "Sevilla",
+      "nombreCompleto": "Sevilla Fútbol Club",
       "jugadores": [
         {
           "id": "sevilla-fernando-martinez-perales-nando-1967",
@@ -955,6 +956,7 @@
     {
       "id": "albacete",
       "nombre": "Albacete",
+      "nombreCompleto": "Albacete Balompié",
       "jugadores": [
         {
           "id": "albacete-carlos-david-cano-marin-1969",
@@ -1987,6 +1989,7 @@
     {
       "id": "sporting",
       "nombre": "Sporting",
+      "nombreCompleto": "Real Sporting de Gijón",
       "jugadores": [
         {
           "id": "sporting-ramon-suarez-del-valle-monchu-1968",
@@ -3018,6 +3021,7 @@
     {
       "id": "logrones",
       "nombre": "Logroñés",
+      "nombreCompleto": "Club Deportivo Logroñés",
       "jugadores": [
         {
           "id": "logrones-salvador-gonzalez-marco-voro-1963",
@@ -3858,6 +3862,7 @@
     {
       "id": "compostela",
       "nombre": "Compostela",
+      "nombreCompleto": "Sociedad Deportiva Compostela",
       "jugadores": [
         {
           "id": "compostela-dmitri-radchenko-1970",
@@ -4758,6 +4763,7 @@
     {
       "id": "rayo",
       "nombre": "Rayo",
+      "nombreCompleto": "Rayo Vallecano de Madrid",
       "jugadores": [
         {
           "id": "rayo-julen-lopetegui-agote-1966",
@@ -5601,6 +5607,7 @@
     {
       "id": "lleida",
       "nombre": "Lleida",
+      "nombreCompleto": "Unió Esportiva Lleida",
       "jugadores": [
         {
           "id": "lleida-antonio-calderon-burgos-1967",
@@ -6409,6 +6416,7 @@
     {
       "id": "osasuna",
       "nombre": "Osasuna",
+      "nombreCompleto": "Club Atlético Osasuna",
       "jugadores": [
         {
           "id": "osasuna-jon-andoni-goikoetxea-lasa-1965",
@@ -7345,6 +7353,7 @@
     {
       "id": "toledo",
       "nombre": "Toledo",
+      "nombreCompleto": "Club Deportivo Toledo",
       "jugadores": [
         {
           "id": "toledo-jose-aurelio-gay-lopez-1965",
@@ -8248,6 +8257,7 @@
     {
       "id": "hercules",
       "nombre": "Hércules",
+      "nombreCompleto": "Hércules Club de Fútbol",
       "jugadores": [
         {
           "id": "hercules-jose-francisco-belman-gonzalez-1971",
@@ -9159,6 +9169,7 @@
     {
       "id": "barcelona-b",
       "nombre": "Barcelona B",
+      "nombreCompleto": "Futbol Club Barcelona B",
       "jugadores": [
         {
           "id": "barcelona-b-francesc-arnau-grabulosa-1975",
@@ -10037,6 +10048,7 @@
     {
       "id": "merida",
       "nombre": "Mérida",
+      "nombreCompleto": "Club Polideportivo Mérida",
       "jugadores": [
         {
           "id": "merida-adolfo-aldana-torres-1966",
@@ -10877,6 +10889,7 @@
     {
       "id": "eibar",
       "nombre": "Eibar",
+      "nombreCompleto": "Sociedad Deportiva Eibar",
       "jugadores": [
         {
           "id": "eibar-aitor-iruarrizaga-amarica-1968",
@@ -11784,6 +11797,7 @@
     {
       "id": "badajoz",
       "nombre": "Badajoz",
+      "nombreCompleto": "Club Deportivo Badajoz",
       "jugadores": [
         {
           "id": "badajoz-francisco-javier-perez-villarroya-1966",
@@ -12788,6 +12802,7 @@
     {
       "id": "leganes",
       "nombre": "Leganés",
+      "nombreCompleto": "Club Deportivo Leganés",
       "jugadores": [
         {
           "id": "leganes-raul-arribas-torre-1968",
@@ -13601,6 +13616,7 @@
     {
       "id": "ourense",
       "nombre": "Ourense",
+      "nombreCompleto": "Club Deportivo Ourense",
       "jugadores": [
         {
           "id": "ourense-enrique-estebaranz-lopez-1965",
@@ -14483,6 +14499,7 @@
     {
       "id": "las-palmas",
       "nombre": "Las Palmas",
+      "nombreCompleto": "Unión Deportiva Las Palmas",
       "jugadores": [
         {
           "id": "las-palmas-juan-garrido-canales-1966",
@@ -15291,6 +15308,7 @@
     {
       "id": "numancia",
       "nombre": "Numancia",
+      "nombreCompleto": "Club Deportivo Numancia de Soria",
       "jugadores": [
         {
           "id": "numancia-jose-ignacio-hurtado-lopez-inaki-1972",
@@ -16109,6 +16127,7 @@
     {
       "id": "recreativo",
       "nombre": "Recreativo",
+      "nombreCompleto": "Real Club Recreativo de Huelva",
       "jugadores": [
         {
           "id": "recreativo-alberto-jimenez-monteagudo-1971",
@@ -16919,6 +16938,7 @@
     {
       "id": "mallorca-b",
       "nombre": "Mallorca B",
+      "nombreCompleto": "Real Club Deportivo Mallorca B",
       "jugadores": [
         {
           "id": "mallorca-b-raul-valbuena-cano-1975",
@@ -17755,6 +17775,7 @@
     {
       "id": "malaga",
       "nombre": "Málaga",
+      "nombreCompleto": "Málaga Club de Fútbol",
       "jugadores": [
         {
           "id": "malaga-carlos-al-sierra-fumero-sandro-1974",
@@ -18633,6 +18654,7 @@
     {
       "id": "at-madrid-b",
       "nombre": "At. Madrid B",
+      "nombreCompleto": "Club Atlético de Madrid B",
       "jugadores": [
         {
           "id": "at-madrid-b-luis-garcia-tevenet-1974",

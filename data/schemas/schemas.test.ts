@@ -54,6 +54,27 @@ describe('TeamSchema', () => {
   it('rejects a team with no players', () => {
     expect(() => TeamSchema.parse({ id: 'bar', nombre: 'Barcelona', jugadores: [] })).toThrow();
   });
+
+  it('accepts an optional full official name', () => {
+    const team = {
+      id: 'betis',
+      nombre: 'Betis',
+      nombreCompleto: 'Real Betis Balompié',
+      jugadores: [validPlayer],
+    };
+    expect(TeamSchema.parse(team)).toEqual(team);
+  });
+
+  it('allows omitting nombreCompleto (it is optional)', () => {
+    const parsed = TeamSchema.parse({ id: 'bar', nombre: 'Barcelona', jugadores: [validPlayer] });
+    expect(parsed.nombreCompleto).toBeUndefined();
+  });
+
+  it('rejects an empty nombreCompleto', () => {
+    expect(() =>
+      TeamSchema.parse({ id: 'bar', nombre: 'Barcelona', nombreCompleto: '', jugadores: [validPlayer] }),
+    ).toThrow();
+  });
 });
 
 describe('CompetitionSchema', () => {

@@ -13,6 +13,7 @@
     {
       "id": "barcelona",
       "nombre": "Barcelona",
+      "nombreCompleto": "Futbol Club Barcelona",
       "jugadores": [
         {
           "id": "barcelona-carles-busquets-barroso-na",
@@ -715,6 +716,7 @@
     {
       "id": "deportivo",
       "nombre": "Deportivo",
+      "nombreCompleto": "Real Club Deportivo de La Coruña",
       "jugadores": [
         {
           "id": "deportivo-francisco-liano-fernandez-na",
@@ -1301,6 +1303,7 @@
     {
       "id": "zaragoza",
       "nombre": "Zaragoza",
+      "nombreCompleto": "Real Zaragoza",
       "jugadores": [
         {
           "id": "zaragoza-juan-miguel-garcia-ingles-juanmi-na",
@@ -1858,6 +1861,7 @@
     {
       "id": "real-madrid",
       "nombre": "Real Madrid",
+      "nombreCompleto": "Real Madrid Club de Fútbol",
       "jugadores": [
         {
           "id": "real-madrid-francisco-buyo-sanchez-na",
@@ -2473,6 +2477,7 @@
     {
       "id": "athletic",
       "nombre": "Athletic",
+      "nombreCompleto": "Athletic Club",
       "jugadores": [
         {
           "id": "athletic-juan-jose-valencia-de-la-serna-na",
@@ -3088,6 +3093,7 @@
     {
       "id": "sevilla",
       "nombre": "Sevilla",
+      "nombreCompleto": "Sevilla Fútbol Club",
       "jugadores": [
         {
           "id": "sevilla-juan-carlos-unzue-labiano-na",
@@ -3703,6 +3709,7 @@
     {
       "id": "valencia",
       "nombre": "Valencia",
+      "nombreCompleto": "Valencia Club de Fútbol",
       "jugadores": [
         {
           "id": "valencia-andoni-zubizarreta-urreta-na",
@@ -4318,6 +4325,7 @@
     {
       "id": "racing",
       "nombre": "Racing",
+      "nombreCompleto": "Real Racing Club de Santander",
       "jugadores": [
         {
           "id": "racing-jose-manuel-ceballos-vega-na",
@@ -4904,6 +4912,7 @@
     {
       "id": "oviedo",
       "nombre": "Oviedo",
+      "nombreCompleto": "Real Oviedo",
       "jugadores": [
         {
           "id": "oviedo-juan-luis-mora-palacios-na",
@@ -5490,6 +5499,7 @@
     {
       "id": "tenerife",
       "nombre": "Tenerife",
+      "nombreCompleto": "Club Deportivo Tenerife",
       "jugadores": [
         {
           "id": "tenerife-marcelo-leonardo-ojeda-na",
@@ -6105,6 +6115,7 @@
     {
       "id": "real-sociedad",
       "nombre": "Real Sociedad",
+      "nombreCompleto": "Real Sociedad de Fútbol",
       "jugadores": [
         {
           "id": "real-sociedad-roberto-olabe-aranzabal-na",
@@ -6633,6 +6644,7 @@
     {
       "id": "at-madrid",
       "nombre": "At. Madrid",
+      "nombreCompleto": "Club Atlético de Madrid",
       "jugadores": [
         {
           "id": "at-madrid-jose-francisco-molina-gimenez-na",
@@ -7190,6 +7202,7 @@
     {
       "id": "albacete",
       "nombre": "Albacete",
+      "nombreCompleto": "Albacete Balompié",
       "jugadores": [
         {
           "id": "albacete-fernando-marcos-santiago-na",
@@ -7863,6 +7876,7 @@
     {
       "id": "sporting",
       "nombre": "Sporting",
+      "nombreCompleto": "Real Sporting de Gijón",
       "jugadores": [
         {
           "id": "sporting-ramon-ruiz-fernandez-na",
@@ -8507,6 +8521,7 @@
     {
       "id": "celta",
       "nombre": "Celta",
+      "nombreCompleto": "Real Club Celta de Vigo",
       "jugadores": [
         {
           "id": "celta-antoni-prats-servera-na",
@@ -9122,6 +9137,7 @@
     {
       "id": "valladolid",
       "nombre": "Valladolid",
+      "nombreCompleto": "Real Valladolid Club de Fútbol",
       "jugadores": [
         {
           "id": "valladolid-cesar-sanchez-dominguez-na",
@@ -9824,6 +9840,7 @@
     {
       "id": "espanyol",
       "nombre": "Espanyol",
+      "nombreCompleto": "Reial Club Deportiu Espanyol de Barcelona",
       "jugadores": [
         {
           "id": "espanyol-antonio-jimenez-sistachs-toni-na",
@@ -10439,6 +10456,7 @@
     {
       "id": "betis",
       "nombre": "Betis",
+      "nombreCompleto": "Real Betis Balompié",
       "jugadores": [
         {
           "id": "betis-pedro-luis-jaro-reguero-na",
@@ -11112,6 +11130,7 @@
     {
       "id": "compostela",
       "nombre": "Compostela",
+      "nombreCompleto": "Sociedad Deportiva Compostela",
       "jugadores": [
         {
           "id": "compostela-fernando-peralta-carrasco-na",
@@ -11727,6 +11746,7 @@
     {
       "id": "rayo",
       "nombre": "Rayo",
+      "nombreCompleto": "Rayo Vallecano de Madrid",
       "jugadores": [
         {
           "id": "rayo-wilfred-agbonavbare-na",
@@ -12371,6 +12391,7 @@
     {
       "id": "merida",
       "nombre": "Mérida",
+      "nombreCompleto": "Club Polideportivo Mérida",
       "jugadores": [
         {
           "id": "merida-aitor-iruarrizaga-amarica-na",
@@ -13044,6 +13065,7 @@
     {
       "id": "salamanca",
       "nombre": "Salamanca",
+      "nombreCompleto": "Unión Deportiva Salamanca",
       "jugadores": [
         {
           "id": "salamanca-jose-ignacio-aizpurua-alzaga-na",
