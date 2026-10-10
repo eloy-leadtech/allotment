@@ -1,63 +1,106 @@
 /*
- * Capa propia (NO de la maqueta) para los controles de PARTIDA que el motor
- * necesita y que la maqueta estática no cableaba: jugar la jornada, guardar,
- * menú, mercado de invierno y acceso a copa/europa. Van en el centro del
- * despacho (sobre la foto) con la piel Mister (tokens de `.mister`). Separada de
- * `mister.css` (generada, no editable) para dejar claro qué es port y qué es
- * añadido funcional nuestro. Las secciones de la torre siguen siendo el hub 1:1.
- */
-/*
  * Neutraliza la fuga del skin viejo (global.css / pcf7-calco.css) dentro del
  * subárbol Mister. Ambas pieles comparten unos pocos nombres de clase
  * (conjunto COMPLETO: screen, ticker, crest, pos-badge, trophy, attr-track,
  * attr-fill); el scope `.mister …` gana en especificidad para lo que la maqueta
  * declara, pero las PROPIEDADES que la maqueta deja por defecto se las comía la
- * regla global. La crítica es `.screen`, que global limita a 720px y vuelve
- * flex: eso encajonaba todo el despacho a la izquierda. Se restaura el bloque a
- * pantalla completa que espera la maqueta. Se carga DESPUÉS de mister.css.
+ * regla global. Se carga DESPUÉS de mister.css. Aquí también van los controles
+ * de PARTIDA que la maqueta estática no cableaba (dock pequeño, a un lado).
  */
+
+/* `.screen`: global lo limita a 720px y lo vuelve flex column -> encajonaba el
+   despacho. Se restaura el bloque a pantalla completa que espera la maqueta. */
 .mister .screen {
   max-width: none;
   margin: 0;
   display: block;
   min-height: 0;
 }
+/* `.ticker`: global fuerza `flex-direction:column` (apilaba la etiqueta sobre el
+   texto -> barra alta) y un borde inferior. La maqueta lo quiere en fila fina. */
 .mister .ticker {
   list-style: none;
+  flex-direction: row;
+  border-bottom: none;
 }
 
-.mister .office-play {
-  align-self: center;
-  width: min(300px, 100%);
+/* ── Controles de partida: dock pequeño anclado abajo a la derecha, sobre la
+      foto. Provisional (la maqueta no los tenía); se moverán al "Partido"
+      dentro del despacho en un slice posterior. ── */
+.mister .office-dock {
+  position: absolute;
+  right: 16px;
+  bottom: 30px;
+  z-index: 7;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  text-align: center;
-}
-.mister .office-notices {
-  display: flex;
-  flex-direction: column;
+  align-items: flex-end;
   gap: 6px;
-  margin-top: 4px;
+  max-width: 48%;
 }
-.mister .office-actions {
+.mister .office-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.mister .office-note {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  background: rgba(10, 15, 44, 0.72);
+  border: 1px solid rgba(127, 159, 255, 0.18);
+  border-radius: var(--r-s);
+  padding: 3px 9px;
+  text-align: right;
+}
+.mister .office-note.good {
+  color: #9fe6b8;
+}
+.mister .office-go {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(180deg, #e04a4a, var(--red) 60%, #8d1414);
+  border: 1px solid rgba(255, 170, 170, 0.4);
+  border-radius: var(--r-m);
+  padding: 8px 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(6, 8, 26, 0.55);
+  transition: filter 0.14s, transform 0.14s;
+}
+.mister .office-go:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.mister .office-go:focus-visible {
+  outline: 2px solid var(--edge);
+  outline-offset: 2px;
+}
+.mister .office-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  justify-content: center;
-  margin-top: 12px;
+  gap: 5px;
+  justify-content: flex-end;
 }
 .mister .office-link {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  background: linear-gradient(180deg, rgba(84, 116, 170, 0.6), rgba(24, 42, 84, 0.72));
+  background: linear-gradient(180deg, rgba(84, 116, 170, 0.62), rgba(24, 42, 84, 0.74));
   border: 1px solid rgba(127, 159, 255, 0.26);
   border-radius: var(--r-s);
-  padding: 6px 13px;
+  padding: 4px 11px;
   cursor: pointer;
   transition: color 0.14s, border-color 0.14s, transform 0.14s;
 }

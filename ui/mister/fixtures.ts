@@ -60,7 +60,7 @@ export function buildFixtures(season: SeasonState, career: CareerState | null): 
     const rivalId = fx.homeId === human ? fx.awayId : fx.homeId;
     entries.push({
       key: 'liga',
-      logo: 'laliga',
+      logo: 'lfp_1993',
       rivalId,
       rivalName: teamName(season, rivalId),
       roundLabel: `Jornada ${fx.round}`,

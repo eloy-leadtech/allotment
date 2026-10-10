@@ -35,6 +35,10 @@ export function RivalTicker({ slug, name, facts }: { slug: string; name: string;
         </span>
       );
     }
+  } else if (name) {
+    // No facts for this rival yet (the asset only covers a subset of clubs):
+    // show a neutral line so the bar never looks empty.
+    body = 'Tu próximo rival en la Liga.';
   }
 
   return (

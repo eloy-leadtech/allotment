@@ -157,7 +157,7 @@ export function Despacho() {
               </div>
 
               <div className="head-comp">
-                <img className="nm-comp" src={logoUrl('laliga')} alt="Liga" onError={hideOnError} />
+                <img className="nm-comp" src={logoUrl('lfp_1993')} alt="Liga" onError={hideOnError} />
                 <span className="today-date">{season.temporada}</span>
                 <span className="today-week">
                   Jugadas {played} de {total}
@@ -172,7 +172,12 @@ export function Despacho() {
             <div className="views">
               <section className="view is-active" data-view="despacho">
                 {/* próximos partidos = selector de competición */}
-                <div className="fixtures" role="tablist" aria-label="Próximo partido en cada competición">
+                <div
+                  className="fixtures"
+                  role="tablist"
+                  aria-label="Próximo partido en cada competición"
+                  style={{ gridTemplateColumns: `repeat(${Math.max(fixtures.length, 1)}, 1fr)` }}
+                >
                   {fixtures.map((e) => (
                     <button
                       key={e.key}
@@ -241,55 +246,50 @@ export function Despacho() {
                       </div>
                     ))}
                   </div>
-                  <div className="core">
-                    <div className="office-play">
-                      {winterOpen ? (
-                        <button type="button" className="bigbtn primary" onClick={openWinterMarket}>
-                          ❄ Mercado de invierno
-                        </button>
-                      ) : over ? (
-                        <button type="button" className="bigbtn primary" onClick={() => goTo('seasonEnd')}>
-                          Fin de temporada ▸
-                        </button>
-                      ) : (
-                        <button type="button" className="bigbtn primary" onClick={() => goTo('prematch')}>
-                          ▶ Jugar jornada
-                        </button>
-                      )}
+                  <div className="core" />
+                </div>
 
-                      {pressPending || callUpCount > 0 ? (
-                        <div className="office-notices">
-                          {pressPending ? (
-                            <div className="goal">🎙️ La prensa espera tus declaraciones.</div>
-                          ) : null}
-                          {callUpCount > 0 ? (
-                            <div className="goal good">
-                              ✈️ {callUpCount} {callUpCount === 1 ? 'jugador vuelve' : 'jugadores vuelven'} del
-                              parón con fatiga extra.
-                            </div>
-                          ) : null}
-                        </div>
+                {/* Controles de partida: dock pequeño a un lado (provisional; la
+                    maqueta no los tenía y el centro debe lucir la foto). */}
+                <div className="office-dock">
+                  {pressPending || callUpCount > 0 ? (
+                    <div className="office-notes">
+                      {pressPending ? <span className="office-note">🎙️ La prensa espera</span> : null}
+                      {callUpCount > 0 ? (
+                        <span className="office-note good">✈️ {callUpCount} del parón</span>
                       ) : null}
-
-                      <div className="office-actions">
-                        <button type="button" className="office-link" onClick={() => goTo('slots')}>
-                          Guardar
-                        </button>
-                        {career?.copa ? (
-                          <button type="button" className="office-link" onClick={() => goTo('copa')}>
-                            Copa
-                          </button>
-                        ) : null}
-                        {hasEuropa ? (
-                          <button type="button" className="office-link" onClick={() => goTo('europa')}>
-                            Europa
-                          </button>
-                        ) : null}
-                        <button type="button" className="office-link" onClick={() => goTo('title')}>
-                          Menú
-                        </button>
-                      </div>
                     </div>
+                  ) : null}
+                  {winterOpen ? (
+                    <button type="button" className="office-go" onClick={openWinterMarket}>
+                      ❄ Mercado de invierno
+                    </button>
+                  ) : over ? (
+                    <button type="button" className="office-go" onClick={() => goTo('seasonEnd')}>
+                      Fin de temporada ▸
+                    </button>
+                  ) : (
+                    <button type="button" className="office-go" onClick={() => goTo('prematch')}>
+                      ▶ Jugar jornada
+                    </button>
+                  )}
+                  <div className="office-links">
+                    <button type="button" className="office-link" onClick={() => goTo('slots')}>
+                      Guardar
+                    </button>
+                    {career?.copa ? (
+                      <button type="button" className="office-link" onClick={() => goTo('copa')}>
+                        Copa
+                      </button>
+                    ) : null}
+                    {hasEuropa ? (
+                      <button type="button" className="office-link" onClick={() => goTo('europa')}>
+                        Europa
+                      </button>
+                    ) : null}
+                    <button type="button" className="office-link" onClick={() => goTo('title')}>
+                      Menú
+                    </button>
                   </div>
                 </div>
               </section>
