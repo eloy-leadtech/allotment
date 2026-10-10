@@ -10,7 +10,7 @@
       "season": "2020-21",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 360,
+      "jugadores": 352,
       "file": "aut-1-2020-21.json"
     },
     {
@@ -22,7 +22,7 @@
       "season": "2021-22",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 378,
+      "jugadores": 367,
       "file": "aut-1-2021-22.json"
     },
     {
@@ -34,7 +34,7 @@
       "season": "2022-23",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 378,
+      "jugadores": 363,
       "file": "aut-1-2022-23.json"
     },
     {
@@ -46,7 +46,7 @@
       "season": "2023-24",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 356,
+      "jugadores": 348,
       "file": "aut-1-2023-24.json"
     },
     {
@@ -58,7 +58,7 @@
       "season": "2024-25",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 397,
+      "jugadores": 390,
       "file": "aut-1-2024-25.json"
     },
     {
@@ -70,7 +70,7 @@
       "season": "2025-26",
       "nombre": "Primera División (AUT)",
       "equipos": 12,
-      "jugadores": 391,
+      "jugadores": 371,
       "file": "aut-1-2025-26.json"
     },
     {
@@ -118,7 +118,7 @@
       "season": "1988-89",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 366,
+      "jugadores": 364,
       "file": "bel-1-1988-89.json"
     },
     {
@@ -130,7 +130,7 @@
       "season": "1989-90",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 381,
+      "jugadores": 375,
       "file": "bel-1-1989-90.json"
     },
     {
@@ -142,7 +142,7 @@
       "season": "1990-91",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 398,
+      "jugadores": 389,
       "file": "bel-1-1990-91.json"
     },
     {
@@ -154,7 +154,7 @@
       "season": "1991-92",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 384,
+      "jugadores": 380,
       "file": "bel-1-1991-92.json"
     },
     {
@@ -166,7 +166,7 @@
       "season": "1992-93",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 393,
+      "jugadores": 391,
       "file": "bel-1-1992-93.json"
     },
     {
@@ -178,7 +178,7 @@
       "season": "1993-94",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 397,
+      "jugadores": 389,
       "file": "bel-1-1993-94.json"
     },
     {
@@ -190,7 +190,7 @@
       "season": "1994-95",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 391,
+      "jugadores": 390,
       "file": "bel-1-1994-95.json"
     },
     {
@@ -202,7 +202,7 @@
       "season": "1995-96",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 397,
+      "jugadores": 395,
       "file": "bel-1-1995-96.json"
     },
     {
@@ -226,7 +226,7 @@
       "season": "1997-98",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 457,
+      "jugadores": 447,
       "file": "bel-1-1997-98.json"
     },
     {
@@ -238,7 +238,7 @@
       "season": "1998-99",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 434,
+      "jugadores": 428,
       "file": "bel-1-1998-99.json"
     },
     {
@@ -250,7 +250,7 @@
       "season": "1999-00",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 456,
+      "jugadores": 449,
       "file": "bel-1-1999-00.json"
     },
     {
@@ -262,7 +262,7 @@
       "season": "2000-01",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 485,
+      "jugadores": 477,
       "file": "bel-1-2000-01.json"
     },
     {
@@ -274,7 +274,7 @@
       "season": "2001-02",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 491,
+      "jugadores": 479,
       "file": "bel-1-2001-02.json"
     },
     {
@@ -286,7 +286,7 @@
       "season": "2002-03",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 503,
+      "jugadores": 489,
       "file": "bel-1-2002-03.json"
     },
     {
@@ -298,7 +298,7 @@
       "season": "2003-04",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 502,
+      "jugadores": 491,
       "file": "bel-1-2003-04.json"
     },
     {
@@ -310,7 +310,7 @@
       "season": "2004-05",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 524,
+      "jugadores": 506,
       "file": "bel-1-2004-05.json"
     },
     {
@@ -322,7 +322,7 @@
       "season": "2005-06",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 507,
+      "jugadores": 488,
       "file": "bel-1-2005-06.json"
     },
     {
@@ -334,7 +334,7 @@
       "season": "2006-07",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 519,
+      "jugadores": 501,
       "file": "bel-1-2006-07.json"
     },
     {
@@ -346,7 +346,7 @@
       "season": "2007-08",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 520,
+      "jugadores": 491,
       "file": "bel-1-2007-08.json"
     },
     {
@@ -358,7 +358,7 @@
       "season": "2008-09",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 513,
+      "jugadores": 486,
       "file": "bel-1-2008-09.json"
     },
     {
@@ -370,7 +370,7 @@
       "season": "2009-10",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 429,
+      "jugadores": 409,
       "file": "bel-1-2009-10.json"
     },
     {
@@ -382,7 +382,7 @@
       "season": "2010-11",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 498,
+      "jugadores": 478,
       "file": "bel-1-2010-11.json"
     },
     {
@@ -394,7 +394,7 @@
       "season": "2011-12",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 502,
+      "jugadores": 482,
       "file": "bel-1-2011-12.json"
     },
     {
@@ -406,7 +406,7 @@
       "season": "2012-13",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 516,
+      "jugadores": 489,
       "file": "bel-1-2012-13.json"
     },
     {
@@ -418,7 +418,7 @@
       "season": "2013-14",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 491,
+      "jugadores": 468,
       "file": "bel-1-2013-14.json"
     },
     {
@@ -430,7 +430,7 @@
       "season": "2014-15",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 507,
+      "jugadores": 493,
       "file": "bel-1-2014-15.json"
     },
     {
@@ -442,7 +442,7 @@
       "season": "2015-16",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 535,
+      "jugadores": 503,
       "file": "bel-1-2015-16.json"
     },
     {
@@ -454,7 +454,7 @@
       "season": "2016-17",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 535,
+      "jugadores": 507,
       "file": "bel-1-2016-17.json"
     },
     {
@@ -466,7 +466,7 @@
       "season": "2017-18",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 544,
+      "jugadores": 514,
       "file": "bel-1-2017-18.json"
     },
     {
@@ -478,7 +478,7 @@
       "season": "2018-19",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 534,
+      "jugadores": 510,
       "file": "bel-1-2018-19.json"
     },
     {
@@ -490,7 +490,7 @@
       "season": "2019-20",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 546,
+      "jugadores": 521,
       "file": "bel-1-2019-20.json"
     },
     {
@@ -502,7 +502,7 @@
       "season": "2020-21",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 638,
+      "jugadores": 610,
       "file": "bel-1-2020-21.json"
     },
     {
@@ -514,7 +514,7 @@
       "season": "2021-22",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 629,
+      "jugadores": 600,
       "file": "bel-1-2021-22.json"
     },
     {
@@ -526,7 +526,7 @@
       "season": "2022-23",
       "nombre": "Primera División (BEL)",
       "equipos": 18,
-      "jugadores": 619,
+      "jugadores": 603,
       "file": "bel-1-2022-23.json"
     },
     {
@@ -538,7 +538,7 @@
       "season": "2023-24",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 565,
+      "jugadores": 543,
       "file": "bel-1-2023-24.json"
     },
     {
@@ -550,7 +550,7 @@
       "season": "2024-25",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 597,
+      "jugadores": 577,
       "file": "bel-1-2024-25.json"
     },
     {
@@ -562,7 +562,7 @@
       "season": "2025-26",
       "nombre": "Primera División (BEL)",
       "equipos": 16,
-      "jugadores": 588,
+      "jugadores": 564,
       "file": "bel-1-2025-26.json"
     },
     {
@@ -574,7 +574,7 @@
       "season": "1960-61",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 585,
+      "jugadores": 575,
       "file": "eng-1-1960-61.json"
     },
     {
@@ -586,7 +586,7 @@
       "season": "1961-62",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 554,
+      "jugadores": 542,
       "file": "eng-1-1961-62.json"
     },
     {
@@ -598,7 +598,7 @@
       "season": "1962-63",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 530,
+      "jugadores": 526,
       "file": "eng-1-1962-63.json"
     },
     {
@@ -610,7 +610,7 @@
       "season": "1963-64",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 555,
+      "jugadores": 541,
       "file": "eng-1-1963-64.json"
     },
     {
@@ -622,7 +622,7 @@
       "season": "1964-65",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 556,
+      "jugadores": 542,
       "file": "eng-1-1964-65.json"
     },
     {
@@ -634,7 +634,7 @@
       "season": "1965-66",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 539,
+      "jugadores": 531,
       "file": "eng-1-1965-66.json"
     },
     {
@@ -646,7 +646,7 @@
       "season": "1966-67",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 558,
+      "jugadores": 542,
       "file": "eng-1-1966-67.json"
     },
     {
@@ -658,7 +658,7 @@
       "season": "1967-68",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 558,
+      "jugadores": 530,
       "file": "eng-1-1967-68.json"
     },
     {
@@ -670,7 +670,7 @@
       "season": "1968-69",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 552,
+      "jugadores": 540,
       "file": "eng-1-1968-69.json"
     },
     {
@@ -682,7 +682,7 @@
       "season": "1969-70",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 561,
+      "jugadores": 546,
       "file": "eng-1-1969-70.json"
     },
     {
@@ -694,7 +694,7 @@
       "season": "1970-71",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 535,
+      "jugadores": 530,
       "file": "eng-1-1970-71.json"
     },
     {
@@ -706,7 +706,7 @@
       "season": "1971-72",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 550,
+      "jugadores": 537,
       "file": "eng-1-1971-72.json"
     },
     {
@@ -718,7 +718,7 @@
       "season": "1972-73",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 563,
+      "jugadores": 547,
       "file": "eng-1-1972-73.json"
     },
     {
@@ -730,7 +730,7 @@
       "season": "1973-74",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 563,
+      "jugadores": 551,
       "file": "eng-1-1973-74.json"
     },
     {
@@ -742,7 +742,7 @@
       "season": "1974-75",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 545,
+      "jugadores": 533,
       "file": "eng-1-1974-75.json"
     },
     {
@@ -754,7 +754,7 @@
       "season": "1975-76",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 543,
+      "jugadores": 533,
       "file": "eng-1-1975-76.json"
     },
     {
@@ -766,7 +766,7 @@
       "season": "1976-77",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 533,
+      "jugadores": 508,
       "file": "eng-1-1976-77.json"
     },
     {
@@ -778,7 +778,7 @@
       "season": "1977-78",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 558,
+      "jugadores": 540,
       "file": "eng-1-1977-78.json"
     },
     {
@@ -790,7 +790,7 @@
       "season": "1978-79",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 559,
+      "jugadores": 544,
       "file": "eng-1-1978-79.json"
     },
     {
@@ -802,7 +802,7 @@
       "season": "1979-80",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 576,
+      "jugadores": 561,
       "file": "eng-1-1979-80.json"
     },
     {
@@ -814,7 +814,7 @@
       "season": "1980-81",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 573,
+      "jugadores": 559,
       "file": "eng-1-1980-81.json"
     },
     {
@@ -826,7 +826,7 @@
       "season": "1981-82",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 571,
+      "jugadores": 552,
       "file": "eng-1-1981-82.json"
     },
     {
@@ -838,7 +838,7 @@
       "season": "1982-83",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 558,
+      "jugadores": 538,
       "file": "eng-1-1982-83.json"
     },
     {
@@ -850,7 +850,7 @@
       "season": "1983-84",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 563,
+      "jugadores": 547,
       "file": "eng-1-1983-84.json"
     },
     {
@@ -862,7 +862,7 @@
       "season": "1984-85",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 568,
+      "jugadores": 548,
       "file": "eng-1-1984-85.json"
     },
     {
@@ -874,7 +874,7 @@
       "season": "1985-86",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 591,
+      "jugadores": 568,
       "file": "eng-1-1985-86.json"
     },
     {
@@ -886,7 +886,7 @@
       "season": "1986-87",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 620,
+      "jugadores": 599,
       "file": "eng-1-1986-87.json"
     },
     {
@@ -898,7 +898,7 @@
       "season": "1987-88",
       "nombre": "Primera División (ENG)",
       "equipos": 21,
-      "jugadores": 580,
+      "jugadores": 565,
       "file": "eng-1-1987-88.json"
     },
     {
@@ -910,7 +910,7 @@
       "season": "1988-89",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 542,
+      "jugadores": 527,
       "file": "eng-1-1988-89.json"
     },
     {
@@ -922,7 +922,7 @@
       "season": "1989-90",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 563,
+      "jugadores": 544,
       "file": "eng-1-1989-90.json"
     },
     {
@@ -934,7 +934,7 @@
       "season": "1990-91",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 599,
+      "jugadores": 588,
       "file": "eng-1-1990-91.json"
     },
     {
@@ -946,7 +946,7 @@
       "season": "1991-92",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 701,
+      "jugadores": 658,
       "file": "eng-1-1991-92.json"
     },
     {
@@ -958,7 +958,7 @@
       "season": "1992-93",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 697,
+      "jugadores": 676,
       "file": "eng-1-1992-93.json"
     },
     {
@@ -970,7 +970,7 @@
       "season": "1993-94",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 723,
+      "jugadores": 691,
       "file": "eng-1-1993-94.json"
     },
     {
@@ -982,7 +982,7 @@
       "season": "1994-95",
       "nombre": "Primera División (ENG)",
       "equipos": 22,
-      "jugadores": 733,
+      "jugadores": 695,
       "file": "eng-1-1994-95.json"
     },
     {
@@ -994,7 +994,7 @@
       "season": "1995-96",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 679,
+      "jugadores": 649,
       "file": "eng-1-1995-96.json"
     },
     {
@@ -1006,7 +1006,7 @@
       "season": "1996-97",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 637,
+      "jugadores": 625,
       "file": "eng-1-1996-97.json"
     },
     {
@@ -1018,7 +1018,7 @@
       "season": "1997-98",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 715,
+      "jugadores": 686,
       "file": "eng-1-1997-98.json"
     },
     {
@@ -1030,7 +1030,7 @@
       "season": "1998-99",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 738,
+      "jugadores": 705,
       "file": "eng-1-1998-99.json"
     },
     {
@@ -1042,7 +1042,7 @@
       "season": "1999-00",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 643,
       "file": "eng-1-1999-00.json"
     },
     {
@@ -1054,7 +1054,7 @@
       "season": "2000-01",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 625,
       "file": "eng-1-2000-01.json"
     },
     {
@@ -1066,7 +1066,7 @@
       "season": "2001-02",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 638,
+      "jugadores": 617,
       "file": "eng-1-2001-02.json"
     },
     {
@@ -1078,7 +1078,7 @@
       "season": "2002-03",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 641,
+      "jugadores": 625,
       "file": "eng-1-2002-03.json"
     },
     {
@@ -1090,7 +1090,7 @@
       "season": "2003-04",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 617,
+      "jugadores": 587,
       "file": "eng-1-2003-04.json"
     },
     {
@@ -1102,7 +1102,7 @@
       "season": "2004-05",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 613,
+      "jugadores": 586,
       "file": "eng-1-2004-05.json"
     },
     {
@@ -1114,7 +1114,7 @@
       "season": "2005-06",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 617,
+      "jugadores": 578,
       "file": "eng-1-2005-06.json"
     },
     {
@@ -1126,7 +1126,7 @@
       "season": "2006-07",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 643,
+      "jugadores": 606,
       "file": "eng-1-2006-07.json"
     },
     {
@@ -1138,7 +1138,7 @@
       "season": "2007-08",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 648,
+      "jugadores": 605,
       "file": "eng-1-2007-08.json"
     },
     {
@@ -1150,7 +1150,7 @@
       "season": "2008-09",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 748,
+      "jugadores": 686,
       "file": "eng-1-2008-09.json"
     },
     {
@@ -1162,7 +1162,7 @@
       "season": "2009-10",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 747,
+      "jugadores": 700,
       "file": "eng-1-2009-10.json"
     },
     {
@@ -1174,7 +1174,7 @@
       "season": "2010-11",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 747,
+      "jugadores": 701,
       "file": "eng-1-2010-11.json"
     },
     {
@@ -1186,7 +1186,7 @@
       "season": "2011-12",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 735,
+      "jugadores": 686,
       "file": "eng-1-2011-12.json"
     },
     {
@@ -1198,7 +1198,7 @@
       "season": "2012-13",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 722,
+      "jugadores": 677,
       "file": "eng-1-2012-13.json"
     },
     {
@@ -1210,7 +1210,7 @@
       "season": "2013-14",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 717,
+      "jugadores": 672,
       "file": "eng-1-2013-14.json"
     },
     {
@@ -1222,7 +1222,7 @@
       "season": "2014-15",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 700,
+      "jugadores": 664,
       "file": "eng-1-2014-15.json"
     },
     {
@@ -1234,7 +1234,7 @@
       "season": "2015-16",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 756,
+      "jugadores": 715,
       "file": "eng-1-2015-16.json"
     },
     {
@@ -1246,7 +1246,7 @@
       "season": "2016-17",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 713,
+      "jugadores": 676,
       "file": "eng-1-2016-17.json"
     },
     {
@@ -1258,7 +1258,7 @@
       "season": "2017-18",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 694,
+      "jugadores": 651,
       "file": "eng-1-2017-18.json"
     },
     {
@@ -1270,7 +1270,7 @@
       "season": "2018-19",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 644,
+      "jugadores": 618,
       "file": "eng-1-2018-19.json"
     },
     {
@@ -1282,7 +1282,7 @@
       "season": "2019-20",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 673,
+      "jugadores": 646,
       "file": "eng-1-2019-20.json"
     },
     {
@@ -1294,7 +1294,7 @@
       "season": "2020-21",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 722,
+      "jugadores": 685,
       "file": "eng-1-2020-21.json"
     },
     {
@@ -1306,7 +1306,7 @@
       "season": "2021-22",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 735,
+      "jugadores": 691,
       "file": "eng-1-2021-22.json"
     },
     {
@@ -1318,7 +1318,7 @@
       "season": "2022-23",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 760,
+      "jugadores": 711,
       "file": "eng-1-2022-23.json"
     },
     {
@@ -1330,7 +1330,7 @@
       "season": "2023-24",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 793,
+      "jugadores": 742,
       "file": "eng-1-2023-24.json"
     },
     {
@@ -1342,7 +1342,7 @@
       "season": "2024-25",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 759,
+      "jugadores": 708,
       "file": "eng-1-2024-25.json"
     },
     {
@@ -1354,7 +1354,7 @@
       "season": "2025-26",
       "nombre": "Primera División (ENG)",
       "equipos": 20,
-      "jugadores": 744,
+      "jugadores": 692,
       "file": "eng-1-2025-26.json"
     },
     {
@@ -1378,7 +1378,7 @@
       "season": "1929-30",
       "nombre": "Primera División",
       "equipos": 10,
-      "jugadores": 231,
+      "jugadores": 230,
       "file": "esp-1-1929-30.json"
     },
     {
@@ -1402,7 +1402,7 @@
       "season": "1931-32",
       "nombre": "Primera División",
       "equipos": 10,
-      "jugadores": 214,
+      "jugadores": 212,
       "file": "esp-1-1931-32.json"
     },
     {
@@ -1438,7 +1438,7 @@
       "season": "1934-35",
       "nombre": "Primera División",
       "equipos": 12,
-      "jugadores": 264,
+      "jugadores": 263,
       "file": "esp-1-1934-35.json"
     },
     {
@@ -1450,7 +1450,7 @@
       "season": "1935-36",
       "nombre": "Primera División",
       "equipos": 12,
-      "jugadores": 280,
+      "jugadores": 278,
       "file": "esp-1-1935-36.json"
     },
     {
@@ -1462,7 +1462,7 @@
       "season": "1939-40",
       "nombre": "Primera División",
       "equipos": 12,
-      "jugadores": 281,
+      "jugadores": 280,
       "file": "esp-1-1939-40.json"
     },
     {
@@ -1474,7 +1474,7 @@
       "season": "1940-41",
       "nombre": "Primera División",
       "equipos": 12,
-      "jugadores": 287,
+      "jugadores": 282,
       "file": "esp-1-1940-41.json"
     },
     {
@@ -1486,7 +1486,7 @@
       "season": "1941-42",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 348,
+      "jugadores": 342,
       "file": "esp-1-1941-42.json"
     },
     {
@@ -1498,7 +1498,7 @@
       "season": "1942-43",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 347,
+      "jugadores": 345,
       "file": "esp-1-1942-43.json"
     },
     {
@@ -1510,7 +1510,7 @@
       "season": "1943-44",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 358,
+      "jugadores": 356,
       "file": "esp-1-1943-44.json"
     },
     {
@@ -1522,7 +1522,7 @@
       "season": "1944-45",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 364,
+      "jugadores": 358,
       "file": "esp-1-1944-45.json"
     },
     {
@@ -1534,7 +1534,7 @@
       "season": "1945-46",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 359,
+      "jugadores": 357,
       "file": "esp-1-1945-46.json"
     },
     {
@@ -1546,7 +1546,7 @@
       "season": "1946-47",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 327,
+      "jugadores": 325,
       "file": "esp-1-1946-47.json"
     },
     {
@@ -1558,7 +1558,7 @@
       "season": "1947-48",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 340,
+      "jugadores": 337,
       "file": "esp-1-1947-48.json"
     },
     {
@@ -1570,7 +1570,7 @@
       "season": "1948-49",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 316,
+      "jugadores": 313,
       "file": "esp-1-1948-49.json"
     },
     {
@@ -1582,7 +1582,7 @@
       "season": "1949-50",
       "nombre": "Primera División",
       "equipos": 14,
-      "jugadores": 347,
+      "jugadores": 339,
       "file": "esp-1-1949-50.json"
     },
     {
@@ -1594,7 +1594,7 @@
       "season": "1950-51",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 401,
+      "jugadores": 392,
       "file": "esp-1-1950-51.json"
     },
     {
@@ -1606,7 +1606,7 @@
       "season": "1951-52",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 394,
+      "jugadores": 387,
       "file": "esp-1-1951-52.json"
     },
     {
@@ -1618,7 +1618,7 @@
       "season": "1952-53",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 402,
+      "jugadores": 392,
       "file": "esp-1-1952-53.json"
     },
     {
@@ -1630,7 +1630,7 @@
       "season": "1953-54",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 435,
+      "jugadores": 427,
       "file": "esp-1-1953-54.json"
     },
     {
@@ -1642,7 +1642,7 @@
       "season": "1954-55",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 460,
+      "jugadores": 455,
       "file": "esp-1-1954-55.json"
     },
     {
@@ -1654,7 +1654,7 @@
       "season": "1955-56",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 436,
+      "jugadores": 430,
       "file": "esp-1-1955-56.json"
     },
     {
@@ -1666,7 +1666,7 @@
       "season": "1956-57",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 424,
+      "jugadores": 411,
       "file": "esp-1-1956-57.json"
     },
     {
@@ -1678,7 +1678,7 @@
       "season": "1957-58",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 403,
+      "jugadores": 401,
       "file": "esp-1-1957-58.json"
     },
     {
@@ -1690,7 +1690,7 @@
       "season": "1958-59",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 402,
+      "jugadores": 399,
       "file": "esp-1-1958-59.json"
     },
     {
@@ -1702,7 +1702,7 @@
       "season": "1959-60",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 429,
+      "jugadores": 423,
       "file": "esp-1-1959-60.json"
     },
     {
@@ -1714,7 +1714,7 @@
       "season": "1960-61",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 419,
+      "jugadores": 415,
       "file": "esp-1-1960-61.json"
     },
     {
@@ -1726,7 +1726,7 @@
       "season": "1961-62",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 421,
+      "jugadores": 410,
       "file": "esp-1-1961-62.json"
     },
     {
@@ -1738,7 +1738,7 @@
       "season": "1962-63",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 418,
+      "jugadores": 411,
       "file": "esp-1-1962-63.json"
     },
     {
@@ -1750,7 +1750,7 @@
       "season": "1963-64",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 430,
+      "jugadores": 414,
       "file": "esp-1-1963-64.json"
     },
     {
@@ -1762,7 +1762,7 @@
       "season": "1964-65",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 400,
+      "jugadores": 399,
       "file": "esp-1-1964-65.json"
     },
     {
@@ -1774,7 +1774,7 @@
       "season": "1965-66",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 415,
+      "jugadores": 408,
       "file": "esp-1-1965-66.json"
     },
     {
@@ -1786,7 +1786,7 @@
       "season": "1966-67",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 397,
+      "jugadores": 392,
       "file": "esp-1-1966-67.json"
     },
     {
@@ -1798,7 +1798,7 @@
       "season": "1967-68",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 403,
+      "jugadores": 397,
       "file": "esp-1-1967-68.json"
     },
     {
@@ -1810,7 +1810,7 @@
       "season": "1968-69",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 395,
+      "jugadores": 389,
       "file": "esp-1-1968-69.json"
     },
     {
@@ -1822,7 +1822,7 @@
       "season": "1969-70",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 420,
+      "jugadores": 410,
       "file": "esp-1-1969-70.json"
     },
     {
@@ -1834,7 +1834,7 @@
       "season": "1970-71",
       "nombre": "Primera División",
       "equipos": 16,
-      "jugadores": 422,
+      "jugadores": 412,
       "file": "esp-1-1970-71.json"
     },
     {
@@ -1846,7 +1846,7 @@
       "season": "1971-72",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 464,
+      "jugadores": 461,
       "file": "esp-1-1971-72.json"
     },
     {
@@ -1858,7 +1858,7 @@
       "season": "1972-73",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 462,
+      "jugadores": 457,
       "file": "esp-1-1972-73.json"
     },
     {
@@ -1870,7 +1870,7 @@
       "season": "1973-74",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 484,
+      "jugadores": 479,
       "file": "esp-1-1973-74.json"
     },
     {
@@ -1882,7 +1882,7 @@
       "season": "1974-75",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 459,
+      "jugadores": 456,
       "file": "esp-1-1974-75.json"
     },
     {
@@ -1894,7 +1894,7 @@
       "season": "1975-76",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 473,
+      "jugadores": 467,
       "file": "esp-1-1975-76.json"
     },
     {
@@ -1906,7 +1906,7 @@
       "season": "1976-77",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 467,
+      "jugadores": 465,
       "file": "esp-1-1976-77.json"
     },
     {
@@ -1918,7 +1918,7 @@
       "season": "1977-78",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 458,
+      "jugadores": 453,
       "file": "esp-1-1977-78.json"
     },
     {
@@ -1930,7 +1930,7 @@
       "season": "1978-79",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 472,
+      "jugadores": 468,
       "file": "esp-1-1978-79.json"
     },
     {
@@ -1942,7 +1942,7 @@
       "season": "1979-80",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 487,
+      "jugadores": 480,
       "file": "esp-1-1979-80.json"
     },
     {
@@ -1954,7 +1954,7 @@
       "season": "1980-81",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 474,
+      "jugadores": 472,
       "file": "esp-1-1980-81.json"
     },
     {
@@ -1966,7 +1966,7 @@
       "season": "1981-82",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 504,
+      "jugadores": 498,
       "file": "esp-1-1981-82.json"
     },
     {
@@ -1978,7 +1978,7 @@
       "season": "1982-83",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 477,
+      "jugadores": 475,
       "file": "esp-1-1982-83.json"
     },
     {
@@ -1990,7 +1990,7 @@
       "season": "1983-84",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 472,
+      "jugadores": 471,
       "file": "esp-1-1983-84.json"
     },
     {
@@ -2014,7 +2014,7 @@
       "season": "1985-86",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 480,
+      "jugadores": 476,
       "file": "esp-1-1985-86.json"
     },
     {
@@ -2026,7 +2026,7 @@
       "season": "1986-87",
       "nombre": "Primera División",
       "equipos": 18,
-      "jugadores": 492,
+      "jugadores": 489,
       "file": "esp-1-1986-87.json"
     },
     {
@@ -2038,7 +2038,7 @@
       "season": "1987-88",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 525,
+      "jugadores": 516,
       "file": "esp-1-1987-88.json"
     },
     {
@@ -2050,7 +2050,7 @@
       "season": "1988-89",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 547,
+      "jugadores": 543,
       "file": "esp-1-1988-89.json"
     },
     {
@@ -2062,7 +2062,7 @@
       "season": "1989-90",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 533,
+      "jugadores": 528,
       "file": "esp-1-1989-90.json"
     },
     {
@@ -2074,7 +2074,7 @@
       "season": "1990-91",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 557,
+      "jugadores": 553,
       "file": "esp-1-1990-91.json"
     },
     {
@@ -2086,7 +2086,7 @@
       "season": "1991-92",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 537,
+      "jugadores": 528,
       "file": "esp-1-1991-92.json"
     },
     {
@@ -2098,7 +2098,7 @@
       "season": "1992-93",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 535,
+      "jugadores": 521,
       "file": "esp-1-1992-93.json"
     },
     {
@@ -2110,7 +2110,7 @@
       "season": "1993-94",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 544,
+      "jugadores": 539,
       "file": "esp-1-1993-94.json"
     },
     {
@@ -2122,7 +2122,7 @@
       "season": "1994-95",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 549,
+      "jugadores": 538,
       "file": "esp-1-1994-95.json"
     },
     {
@@ -2134,7 +2134,7 @@
       "season": "1995-96",
       "nombre": "Primera División",
       "equipos": 22,
-      "jugadores": 621,
+      "jugadores": 607,
       "file": "esp-1-1995-96.json"
     },
     {
@@ -2146,7 +2146,7 @@
       "season": "1996-97",
       "nombre": "Primera División",
       "equipos": 22,
-      "jugadores": 640,
+      "jugadores": 628,
       "file": "esp-1-1996-97.json"
     },
     {
@@ -2158,7 +2158,7 @@
       "season": "1997-98",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 595,
+      "jugadores": 583,
       "file": "esp-1-1997-98.json"
     },
     {
@@ -2170,7 +2170,7 @@
       "season": "1998-99",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 605,
+      "jugadores": 588,
       "file": "esp-1-1998-99.json"
     },
     {
@@ -2182,7 +2182,7 @@
       "season": "1999-00",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 634,
+      "jugadores": 623,
       "file": "esp-1-1999-00.json"
     },
     {
@@ -2194,7 +2194,7 @@
       "season": "2000-01",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 634,
+      "jugadores": 623,
       "file": "esp-1-2000-01.json"
     },
     {
@@ -2206,7 +2206,7 @@
       "season": "2001-02",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 621,
+      "jugadores": 609,
       "file": "esp-1-2001-02.json"
     },
     {
@@ -2218,7 +2218,7 @@
       "season": "2002-03",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 624,
+      "jugadores": 617,
       "file": "esp-1-2002-03.json"
     },
     {
@@ -2230,7 +2230,7 @@
       "season": "2003-04",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 644,
+      "jugadores": 630,
       "file": "esp-1-2003-04.json"
     },
     {
@@ -2242,7 +2242,7 @@
       "season": "2004-05",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 648,
+      "jugadores": 626,
       "file": "esp-1-2004-05.json"
     },
     {
@@ -2254,7 +2254,7 @@
       "season": "2005-06",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 634,
       "file": "esp-1-2005-06.json"
     },
     {
@@ -2266,7 +2266,7 @@
       "season": "2006-07",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 636,
+      "jugadores": 621,
       "file": "esp-1-2006-07.json"
     },
     {
@@ -2278,7 +2278,7 @@
       "season": "2007-08",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 626,
+      "jugadores": 609,
       "file": "esp-1-2007-08.json"
     },
     {
@@ -2290,7 +2290,7 @@
       "season": "2008-09",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 629,
+      "jugadores": 619,
       "file": "esp-1-2008-09.json"
     },
     {
@@ -2302,7 +2302,7 @@
       "season": "2009-10",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 638,
+      "jugadores": 619,
       "file": "esp-1-2009-10.json"
     },
     {
@@ -2314,7 +2314,7 @@
       "season": "2010-11",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 645,
+      "jugadores": 621,
       "file": "esp-1-2010-11.json"
     },
     {
@@ -2326,7 +2326,7 @@
       "season": "2011-12",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 657,
+      "jugadores": 619,
       "file": "esp-1-2011-12.json"
     },
     {
@@ -2338,7 +2338,7 @@
       "season": "2012-13",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 650,
+      "jugadores": 613,
       "file": "esp-1-2012-13.json"
     },
     {
@@ -2350,7 +2350,7 @@
       "season": "2013-14",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 644,
+      "jugadores": 613,
       "file": "esp-1-2013-14.json"
     },
     {
@@ -2362,7 +2362,7 @@
       "season": "2014-15",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 635,
+      "jugadores": 607,
       "file": "esp-1-2014-15.json"
     },
     {
@@ -2374,7 +2374,7 @@
       "season": "2015-16",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 647,
+      "jugadores": 602,
       "file": "esp-1-2015-16.json"
     },
     {
@@ -2386,7 +2386,7 @@
       "season": "2016-17",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 652,
+      "jugadores": 599,
       "file": "esp-1-2016-17.json"
     },
     {
@@ -2398,7 +2398,7 @@
       "season": "2017-18",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 677,
+      "jugadores": 630,
       "file": "esp-1-2017-18.json"
     },
     {
@@ -2410,7 +2410,7 @@
       "season": "2018-19",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 665,
+      "jugadores": 625,
       "file": "esp-1-2018-19.json"
     },
     {
@@ -2422,7 +2422,7 @@
       "season": "2019-20",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 711,
+      "jugadores": 671,
       "file": "esp-1-2019-20.json"
     },
     {
@@ -2434,7 +2434,7 @@
       "season": "2020-21",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 740,
+      "jugadores": 701,
       "file": "esp-1-2020-21.json"
     },
     {
@@ -2446,7 +2446,7 @@
       "season": "2021-22",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 791,
+      "jugadores": 749,
       "file": "esp-1-2021-22.json"
     },
     {
@@ -2458,7 +2458,7 @@
       "season": "2022-23",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 757,
+      "jugadores": 711,
       "file": "esp-1-2022-23.json"
     },
     {
@@ -2470,7 +2470,7 @@
       "season": "2023-24",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 772,
+      "jugadores": 712,
       "file": "esp-1-2023-24.json"
     },
     {
@@ -2482,7 +2482,7 @@
       "season": "2024-25",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 784,
+      "jugadores": 745,
       "file": "esp-1-2024-25.json"
     },
     {
@@ -2494,7 +2494,7 @@
       "season": "2025-26",
       "nombre": "Primera División",
       "equipos": 20,
-      "jugadores": 790,
+      "jugadores": 748,
       "file": "esp-1-2025-26.json"
     },
     {
@@ -2506,7 +2506,7 @@
       "season": "1929-30",
       "nombre": "Segunda División",
       "equipos": 10,
-      "jugadores": 183,
+      "jugadores": 181,
       "file": "esp-2-1929-30.json"
     },
     {
@@ -2518,7 +2518,7 @@
       "season": "1930-31",
       "nombre": "Segunda División",
       "equipos": 10,
-      "jugadores": 190,
+      "jugadores": 188,
       "file": "esp-2-1930-31.json"
     },
     {
@@ -2530,7 +2530,7 @@
       "season": "1931-32",
       "nombre": "Segunda División",
       "equipos": 10,
-      "jugadores": 188,
+      "jugadores": 187,
       "file": "esp-2-1931-32.json"
     },
     {
@@ -2542,7 +2542,7 @@
       "season": "1932-33",
       "nombre": "Segunda División",
       "equipos": 10,
-      "jugadores": 199,
+      "jugadores": 198,
       "file": "esp-2-1932-33.json"
     },
     {
@@ -2554,7 +2554,7 @@
       "season": "1933-34",
       "nombre": "Segunda División",
       "equipos": 10,
-      "jugadores": 204,
+      "jugadores": 203,
       "file": "esp-2-1933-34.json"
     },
     {
@@ -2566,7 +2566,7 @@
       "season": "1943-44",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 307,
+      "jugadores": 284,
       "file": "esp-2-1943-44.json"
     },
     {
@@ -2578,7 +2578,7 @@
       "season": "1944-45",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 299,
+      "jugadores": 288,
       "file": "esp-2-1944-45.json"
     },
     {
@@ -2590,7 +2590,7 @@
       "season": "1945-46",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 293,
+      "jugadores": 280,
       "file": "esp-2-1945-46.json"
     },
     {
@@ -2602,7 +2602,7 @@
       "season": "1946-47",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 284,
+      "jugadores": 277,
       "file": "esp-2-1946-47.json"
     },
     {
@@ -2614,7 +2614,7 @@
       "season": "1947-48",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 298,
+      "jugadores": 279,
       "file": "esp-2-1947-48.json"
     },
     {
@@ -2626,7 +2626,7 @@
       "season": "1948-49",
       "nombre": "Segunda División",
       "equipos": 14,
-      "jugadores": 290,
+      "jugadores": 285,
       "file": "esp-2-1948-49.json"
     },
     {
@@ -2638,7 +2638,7 @@
       "season": "1968-69",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 493,
+      "jugadores": 475,
       "file": "esp-2-1968-69.json"
     },
     {
@@ -2650,7 +2650,7 @@
       "season": "1969-70",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 519,
+      "jugadores": 492,
       "file": "esp-2-1969-70.json"
     },
     {
@@ -2662,7 +2662,7 @@
       "season": "1970-71",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 529,
+      "jugadores": 499,
       "file": "esp-2-1970-71.json"
     },
     {
@@ -2674,7 +2674,7 @@
       "season": "1971-72",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 530,
+      "jugadores": 506,
       "file": "esp-2-1971-72.json"
     },
     {
@@ -2686,7 +2686,7 @@
       "season": "1972-73",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 544,
+      "jugadores": 517,
       "file": "esp-2-1972-73.json"
     },
     {
@@ -2698,7 +2698,7 @@
       "season": "1973-74",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 542,
+      "jugadores": 517,
       "file": "esp-2-1973-74.json"
     },
     {
@@ -2710,7 +2710,7 @@
       "season": "1974-75",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 529,
+      "jugadores": 502,
       "file": "esp-2-1974-75.json"
     },
     {
@@ -2722,7 +2722,7 @@
       "season": "1975-76",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 531,
+      "jugadores": 512,
       "file": "esp-2-1975-76.json"
     },
     {
@@ -2734,7 +2734,7 @@
       "season": "1976-77",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 512,
+      "jugadores": 491,
       "file": "esp-2-1976-77.json"
     },
     {
@@ -2746,7 +2746,7 @@
       "season": "1977-78",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 493,
+      "jugadores": 483,
       "file": "esp-2-1977-78.json"
     },
     {
@@ -2758,7 +2758,7 @@
       "season": "1978-79",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 524,
+      "jugadores": 504,
       "file": "esp-2-1978-79.json"
     },
     {
@@ -2770,7 +2770,7 @@
       "season": "1979-80",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 565,
+      "jugadores": 541,
       "file": "esp-2-1979-80.json"
     },
     {
@@ -2782,7 +2782,7 @@
       "season": "1980-81",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 538,
+      "jugadores": 517,
       "file": "esp-2-1980-81.json"
     },
     {
@@ -2794,7 +2794,7 @@
       "season": "1981-82",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 576,
+      "jugadores": 547,
       "file": "esp-2-1981-82.json"
     },
     {
@@ -2806,7 +2806,7 @@
       "season": "1982-83",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 547,
+      "jugadores": 527,
       "file": "esp-2-1982-83.json"
     },
     {
@@ -2818,7 +2818,7 @@
       "season": "1983-84",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 537,
+      "jugadores": 507,
       "file": "esp-2-1983-84.json"
     },
     {
@@ -2830,7 +2830,7 @@
       "season": "1984-85",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 622,
       "file": "esp-2-1984-85.json"
     },
     {
@@ -2842,7 +2842,7 @@
       "season": "1985-86",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 499,
+      "jugadores": 460,
       "file": "esp-2-1985-86.json"
     },
     {
@@ -2854,7 +2854,7 @@
       "season": "1986-87",
       "nombre": "Segunda División",
       "equipos": 18,
-      "jugadores": 466,
+      "jugadores": 431,
       "file": "esp-2-1986-87.json"
     },
     {
@@ -2866,7 +2866,7 @@
       "season": "1987-88",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 500,
+      "jugadores": 476,
       "file": "esp-2-1987-88.json"
     },
     {
@@ -2878,7 +2878,7 @@
       "season": "1988-89",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 507,
+      "jugadores": 480,
       "file": "esp-2-1988-89.json"
     },
     {
@@ -2890,7 +2890,7 @@
       "season": "1989-90",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 533,
+      "jugadores": 507,
       "file": "esp-2-1989-90.json"
     },
     {
@@ -2902,7 +2902,7 @@
       "season": "1990-91",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 527,
+      "jugadores": 506,
       "file": "esp-2-1990-91.json"
     },
     {
@@ -2914,7 +2914,7 @@
       "season": "1991-92",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 530,
+      "jugadores": 500,
       "file": "esp-2-1991-92.json"
     },
     {
@@ -2926,7 +2926,7 @@
       "season": "1992-93",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 515,
+      "jugadores": 489,
       "file": "esp-2-1992-93.json"
     },
     {
@@ -2938,7 +2938,7 @@
       "season": "1993-94",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 515,
+      "jugadores": 477,
       "file": "esp-2-1993-94.json"
     },
     {
@@ -2950,7 +2950,7 @@
       "season": "1994-95",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 506,
+      "jugadores": 474,
       "file": "esp-2-1994-95.json"
     },
     {
@@ -2962,7 +2962,7 @@
       "season": "1995-96",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 547,
+      "jugadores": 491,
       "file": "esp-2-1995-96.json"
     },
     {
@@ -2974,7 +2974,7 @@
       "season": "1996-97",
       "nombre": "Segunda División",
       "equipos": 20,
-      "jugadores": 593,
+      "jugadores": 546,
       "file": "esp-2-1996-97.json"
     },
     {
@@ -2986,7 +2986,7 @@
       "season": "1997-98",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 663,
+      "jugadores": 607,
       "file": "esp-2-1997-98.json"
     },
     {
@@ -2998,7 +2998,7 @@
       "season": "1998-99",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 685,
+      "jugadores": 623,
       "file": "esp-2-1998-99.json"
     },
     {
@@ -3010,7 +3010,7 @@
       "season": "1999-00",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 701,
+      "jugadores": 650,
       "file": "esp-2-1999-00.json"
     },
     {
@@ -3022,7 +3022,7 @@
       "season": "2000-01",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 688,
+      "jugadores": 640,
       "file": "esp-2-2000-01.json"
     },
     {
@@ -3034,7 +3034,7 @@
       "season": "2001-02",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 673,
+      "jugadores": 636,
       "file": "esp-2-2001-02.json"
     },
     {
@@ -3046,7 +3046,7 @@
       "season": "2002-03",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 672,
+      "jugadores": 629,
       "file": "esp-2-2002-03.json"
     },
     {
@@ -3058,7 +3058,7 @@
       "season": "2003-04",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 693,
+      "jugadores": 638,
       "file": "esp-2-2003-04.json"
     },
     {
@@ -3070,7 +3070,7 @@
       "season": "2004-05",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 685,
+      "jugadores": 637,
       "file": "esp-2-2004-05.json"
     },
     {
@@ -3082,7 +3082,7 @@
       "season": "2005-06",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 681,
+      "jugadores": 621,
       "file": "esp-2-2005-06.json"
     },
     {
@@ -3094,7 +3094,7 @@
       "season": "2006-07",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 707,
+      "jugadores": 664,
       "file": "esp-2-2006-07.json"
     },
     {
@@ -3106,7 +3106,7 @@
       "season": "2007-08",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 718,
+      "jugadores": 662,
       "file": "esp-2-2007-08.json"
     },
     {
@@ -3118,7 +3118,7 @@
       "season": "2008-09",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 697,
+      "jugadores": 659,
       "file": "esp-2-2008-09.json"
     },
     {
@@ -3130,7 +3130,7 @@
       "season": "2009-10",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 702,
+      "jugadores": 665,
       "file": "esp-2-2009-10.json"
     },
     {
@@ -3142,7 +3142,7 @@
       "season": "2010-11",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 703,
+      "jugadores": 637,
       "file": "esp-2-2010-11.json"
     },
     {
@@ -3154,7 +3154,7 @@
       "season": "2011-12",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 699,
+      "jugadores": 652,
       "file": "esp-2-2011-12.json"
     },
     {
@@ -3166,7 +3166,7 @@
       "season": "2012-13",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 712,
+      "jugadores": 648,
       "file": "esp-2-2012-13.json"
     },
     {
@@ -3178,7 +3178,7 @@
       "season": "2013-14",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 689,
+      "jugadores": 630,
       "file": "esp-2-2013-14.json"
     },
     {
@@ -3190,7 +3190,7 @@
       "season": "2014-15",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 688,
+      "jugadores": 640,
       "file": "esp-2-2014-15.json"
     },
     {
@@ -3202,7 +3202,7 @@
       "season": "2015-16",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 698,
+      "jugadores": 645,
       "file": "esp-2-2015-16.json"
     },
     {
@@ -3214,7 +3214,7 @@
       "season": "2016-17",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 728,
+      "jugadores": 664,
       "file": "esp-2-2016-17.json"
     },
     {
@@ -3226,7 +3226,7 @@
       "season": "2017-18",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 747,
+      "jugadores": 675,
       "file": "esp-2-2017-18.json"
     },
     {
@@ -3238,7 +3238,7 @@
       "season": "2018-19",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 773,
+      "jugadores": 686,
       "file": "esp-2-2018-19.json"
     },
     {
@@ -3250,7 +3250,7 @@
       "season": "2019-20",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 822,
+      "jugadores": 727,
       "file": "esp-2-2019-20.json"
     },
     {
@@ -3262,7 +3262,7 @@
       "season": "2020-21",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 822,
+      "jugadores": 756,
       "file": "esp-2-2020-21.json"
     },
     {
@@ -3274,7 +3274,7 @@
       "season": "2021-22",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 828,
+      "jugadores": 731,
       "file": "esp-2-2021-22.json"
     },
     {
@@ -3286,7 +3286,7 @@
       "season": "2022-23",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 812,
+      "jugadores": 722,
       "file": "esp-2-2022-23.json"
     },
     {
@@ -3298,7 +3298,7 @@
       "season": "2023-24",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 815,
+      "jugadores": 727,
       "file": "esp-2-2023-24.json"
     },
     {
@@ -3310,7 +3310,7 @@
       "season": "2024-25",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 839,
+      "jugadores": 759,
       "file": "esp-2-2024-25.json"
     },
     {
@@ -3322,7 +3322,7 @@
       "season": "2025-26",
       "nombre": "Segunda División",
       "equipos": 22,
-      "jugadores": 869,
+      "jugadores": 785,
       "file": "esp-2-2025-26.json"
     },
     {
@@ -3334,7 +3334,7 @@
       "season": "1975-76",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 421,
+      "jugadores": 417,
       "file": "fra-1-1975-76.json"
     },
     {
@@ -3346,7 +3346,7 @@
       "season": "1976-77",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 436,
+      "jugadores": 431,
       "file": "fra-1-1976-77.json"
     },
     {
@@ -3358,7 +3358,7 @@
       "season": "1977-78",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 451,
+      "jugadores": 446,
       "file": "fra-1-1977-78.json"
     },
     {
@@ -3370,7 +3370,7 @@
       "season": "1978-79",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 453,
+      "jugadores": 441,
       "file": "fra-1-1978-79.json"
     },
     {
@@ -3418,7 +3418,7 @@
       "season": "1982-83",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 415,
+      "jugadores": 414,
       "file": "fra-1-1982-83.json"
     },
     {
@@ -3430,7 +3430,7 @@
       "season": "1983-84",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 411,
+      "jugadores": 410,
       "file": "fra-1-1983-84.json"
     },
     {
@@ -3442,7 +3442,7 @@
       "season": "1984-85",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 421,
+      "jugadores": 420,
       "file": "fra-1-1984-85.json"
     },
     {
@@ -3454,7 +3454,7 @@
       "season": "1985-86",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 418,
+      "jugadores": 415,
       "file": "fra-1-1985-86.json"
     },
     {
@@ -3466,7 +3466,7 @@
       "season": "1986-87",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 435,
+      "jugadores": 431,
       "file": "fra-1-1986-87.json"
     },
     {
@@ -3478,7 +3478,7 @@
       "season": "1987-88",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 450,
+      "jugadores": 443,
       "file": "fra-1-1987-88.json"
     },
     {
@@ -3490,7 +3490,7 @@
       "season": "1988-89",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 459,
+      "jugadores": 447,
       "file": "fra-1-1988-89.json"
     },
     {
@@ -3502,7 +3502,7 @@
       "season": "1989-90",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 444,
+      "jugadores": 434,
       "file": "fra-1-1989-90.json"
     },
     {
@@ -3514,7 +3514,7 @@
       "season": "1990-91",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 447,
+      "jugadores": 441,
       "file": "fra-1-1990-91.json"
     },
     {
@@ -3526,7 +3526,7 @@
       "season": "1991-92",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 447,
+      "jugadores": 444,
       "file": "fra-1-1991-92.json"
     },
     {
@@ -3538,7 +3538,7 @@
       "season": "1992-93",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 448,
+      "jugadores": 444,
       "file": "fra-1-1992-93.json"
     },
     {
@@ -3550,7 +3550,7 @@
       "season": "1993-94",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 468,
+      "jugadores": 459,
       "file": "fra-1-1993-94.json"
     },
     {
@@ -3562,7 +3562,7 @@
       "season": "1994-95",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 481,
+      "jugadores": 475,
       "file": "fra-1-1994-95.json"
     },
     {
@@ -3574,7 +3574,7 @@
       "season": "1995-96",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 517,
+      "jugadores": 510,
       "file": "fra-1-1995-96.json"
     },
     {
@@ -3586,7 +3586,7 @@
       "season": "1996-97",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 530,
+      "jugadores": 513,
       "file": "fra-1-1996-97.json"
     },
     {
@@ -3598,7 +3598,7 @@
       "season": "1997-98",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 536,
+      "jugadores": 502,
       "file": "fra-1-1997-98.json"
     },
     {
@@ -3610,7 +3610,7 @@
       "season": "1998-99",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 542,
+      "jugadores": 511,
       "file": "fra-1-1998-99.json"
     },
     {
@@ -3622,7 +3622,7 @@
       "season": "1999-00",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 551,
+      "jugadores": 526,
       "file": "fra-1-1999-00.json"
     },
     {
@@ -3634,7 +3634,7 @@
       "season": "2000-01",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 522,
       "file": "fra-1-2000-01.json"
     },
     {
@@ -3646,7 +3646,7 @@
       "season": "2001-02",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 609,
+      "jugadores": 554,
       "file": "fra-1-2001-02.json"
     },
     {
@@ -3658,7 +3658,7 @@
       "season": "2002-03",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 629,
+      "jugadores": 602,
       "file": "fra-1-2002-03.json"
     },
     {
@@ -3670,7 +3670,7 @@
       "season": "2003-04",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 622,
+      "jugadores": 587,
       "file": "fra-1-2003-04.json"
     },
     {
@@ -3682,7 +3682,7 @@
       "season": "2004-05",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 613,
+      "jugadores": 589,
       "file": "fra-1-2004-05.json"
     },
     {
@@ -3694,7 +3694,7 @@
       "season": "2005-06",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 646,
+      "jugadores": 613,
       "file": "fra-1-2005-06.json"
     },
     {
@@ -3706,7 +3706,7 @@
       "season": "2006-07",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 643,
+      "jugadores": 601,
       "file": "fra-1-2006-07.json"
     },
     {
@@ -3718,7 +3718,7 @@
       "season": "2007-08",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 644,
+      "jugadores": 605,
       "file": "fra-1-2007-08.json"
     },
     {
@@ -3730,7 +3730,7 @@
       "season": "2008-09",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 632,
+      "jugadores": 609,
       "file": "fra-1-2008-09.json"
     },
     {
@@ -3742,7 +3742,7 @@
       "season": "2009-10",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 636,
+      "jugadores": 610,
       "file": "fra-1-2009-10.json"
     },
     {
@@ -3754,7 +3754,7 @@
       "season": "2010-11",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 616,
       "file": "fra-1-2010-11.json"
     },
     {
@@ -3766,7 +3766,7 @@
       "season": "2011-12",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 665,
+      "jugadores": 623,
       "file": "fra-1-2011-12.json"
     },
     {
@@ -3778,7 +3778,7 @@
       "season": "2012-13",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 675,
+      "jugadores": 632,
       "file": "fra-1-2012-13.json"
     },
     {
@@ -3790,7 +3790,7 @@
       "season": "2013-14",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 647,
+      "jugadores": 609,
       "file": "fra-1-2013-14.json"
     },
     {
@@ -3802,7 +3802,7 @@
       "season": "2014-15",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 634,
+      "jugadores": 607,
       "file": "fra-1-2014-15.json"
     },
     {
@@ -3814,7 +3814,7 @@
       "season": "2015-16",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 684,
+      "jugadores": 629,
       "file": "fra-1-2015-16.json"
     },
     {
@@ -3826,7 +3826,7 @@
       "season": "2016-17",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 692,
+      "jugadores": 637,
       "file": "fra-1-2016-17.json"
     },
     {
@@ -3838,7 +3838,7 @@
       "season": "2017-18",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 647,
+      "jugadores": 590,
       "file": "fra-1-2017-18.json"
     },
     {
@@ -3850,7 +3850,7 @@
       "season": "2018-19",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 699,
+      "jugadores": 637,
       "file": "fra-1-2018-19.json"
     },
     {
@@ -3862,7 +3862,7 @@
       "season": "2019-20",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 660,
+      "jugadores": 609,
       "file": "fra-1-2019-20.json"
     },
     {
@@ -3874,7 +3874,7 @@
       "season": "2020-21",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 716,
+      "jugadores": 646,
       "file": "fra-1-2020-21.json"
     },
     {
@@ -3886,7 +3886,7 @@
       "season": "2021-22",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 756,
+      "jugadores": 686,
       "file": "fra-1-2021-22.json"
     },
     {
@@ -3898,7 +3898,7 @@
       "season": "2022-23",
       "nombre": "Primera División (FRA)",
       "equipos": 20,
-      "jugadores": 740,
+      "jugadores": 642,
       "file": "fra-1-2022-23.json"
     },
     {
@@ -3910,7 +3910,7 @@
       "season": "2023-24",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 682,
+      "jugadores": 595,
       "file": "fra-1-2023-24.json"
     },
     {
@@ -3922,7 +3922,7 @@
       "season": "2024-25",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 692,
+      "jugadores": 604,
       "file": "fra-1-2024-25.json"
     },
     {
@@ -3934,7 +3934,7 @@
       "season": "2025-26",
       "nombre": "Primera División (FRA)",
       "equipos": 18,
-      "jugadores": 698,
+      "jugadores": 609,
       "file": "fra-1-2025-26.json"
     },
     {
@@ -4054,7 +4054,7 @@
       "season": "1972-73",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 394,
+      "jugadores": 391,
       "file": "ger-1-1972-73.json"
     },
     {
@@ -4066,7 +4066,7 @@
       "season": "1973-74",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 379,
+      "jugadores": 378,
       "file": "ger-1-1973-74.json"
     },
     {
@@ -4078,7 +4078,7 @@
       "season": "1974-75",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 378,
+      "jugadores": 375,
       "file": "ger-1-1974-75.json"
     },
     {
@@ -4090,7 +4090,7 @@
       "season": "1975-76",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 379,
+      "jugadores": 378,
       "file": "ger-1-1975-76.json"
     },
     {
@@ -4102,7 +4102,7 @@
       "season": "1976-77",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 392,
+      "jugadores": 389,
       "file": "ger-1-1976-77.json"
     },
     {
@@ -4114,7 +4114,7 @@
       "season": "1977-78",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 375,
+      "jugadores": 372,
       "file": "ger-1-1977-78.json"
     },
     {
@@ -4126,7 +4126,7 @@
       "season": "1978-79",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 375,
+      "jugadores": 370,
       "file": "ger-1-1978-79.json"
     },
     {
@@ -4138,7 +4138,7 @@
       "season": "1979-80",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 391,
+      "jugadores": 385,
       "file": "ger-1-1979-80.json"
     },
     {
@@ -4150,7 +4150,7 @@
       "season": "1980-81",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 396,
+      "jugadores": 390,
       "file": "ger-1-1980-81.json"
     },
     {
@@ -4162,7 +4162,7 @@
       "season": "1981-82",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 389,
+      "jugadores": 385,
       "file": "ger-1-1981-82.json"
     },
     {
@@ -4174,7 +4174,7 @@
       "season": "1982-83",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 382,
+      "jugadores": 377,
       "file": "ger-1-1982-83.json"
     },
     {
@@ -4186,7 +4186,7 @@
       "season": "1983-84",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 407,
+      "jugadores": 405,
       "file": "ger-1-1983-84.json"
     },
     {
@@ -4198,7 +4198,7 @@
       "season": "1984-85",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 390,
+      "jugadores": 387,
       "file": "ger-1-1984-85.json"
     },
     {
@@ -4210,7 +4210,7 @@
       "season": "1985-86",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 415,
+      "jugadores": 409,
       "file": "ger-1-1985-86.json"
     },
     {
@@ -4222,7 +4222,7 @@
       "season": "1986-87",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 412,
+      "jugadores": 410,
       "file": "ger-1-1986-87.json"
     },
     {
@@ -4234,7 +4234,7 @@
       "season": "1987-88",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 428,
+      "jugadores": 418,
       "file": "ger-1-1987-88.json"
     },
     {
@@ -4246,7 +4246,7 @@
       "season": "1988-89",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 418,
+      "jugadores": 410,
       "file": "ger-1-1988-89.json"
     },
     {
@@ -4258,7 +4258,7 @@
       "season": "1989-90",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 444,
+      "jugadores": 441,
       "file": "ger-1-1989-90.json"
     },
     {
@@ -4270,7 +4270,7 @@
       "season": "1990-91",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 437,
+      "jugadores": 432,
       "file": "ger-1-1990-91.json"
     },
     {
@@ -4282,7 +4282,7 @@
       "season": "1991-92",
       "nombre": "Primera División (GER)",
       "equipos": 20,
-      "jugadores": 492,
+      "jugadores": 487,
       "file": "ger-1-1991-92.json"
     },
     {
@@ -4294,7 +4294,7 @@
       "season": "1992-93",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 445,
+      "jugadores": 442,
       "file": "ger-1-1992-93.json"
     },
     {
@@ -4306,7 +4306,7 @@
       "season": "1993-94",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 493,
+      "jugadores": 482,
       "file": "ger-1-1993-94.json"
     },
     {
@@ -4318,7 +4318,7 @@
       "season": "1994-95",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 493,
+      "jugadores": 487,
       "file": "ger-1-1994-95.json"
     },
     {
@@ -4330,7 +4330,7 @@
       "season": "1995-96",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 512,
+      "jugadores": 501,
       "file": "ger-1-1995-96.json"
     },
     {
@@ -4342,7 +4342,7 @@
       "season": "1996-97",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 543,
+      "jugadores": 529,
       "file": "ger-1-1996-97.json"
     },
     {
@@ -4354,7 +4354,7 @@
       "season": "1997-98",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 527,
+      "jugadores": 521,
       "file": "ger-1-1997-98.json"
     },
     {
@@ -4366,7 +4366,7 @@
       "season": "1998-99",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 553,
+      "jugadores": 543,
       "file": "ger-1-1998-99.json"
     },
     {
@@ -4378,7 +4378,7 @@
       "season": "1999-00",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 542,
+      "jugadores": 524,
       "file": "ger-1-1999-00.json"
     },
     {
@@ -4390,7 +4390,7 @@
       "season": "2000-01",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 553,
       "file": "ger-1-2000-01.json"
     },
     {
@@ -4402,7 +4402,7 @@
       "season": "2001-02",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 553,
+      "jugadores": 548,
       "file": "ger-1-2001-02.json"
     },
     {
@@ -4414,7 +4414,7 @@
       "season": "2002-03",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 547,
+      "jugadores": 541,
       "file": "ger-1-2002-03.json"
     },
     {
@@ -4426,7 +4426,7 @@
       "season": "2003-04",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 550,
+      "jugadores": 537,
       "file": "ger-1-2003-04.json"
     },
     {
@@ -4438,7 +4438,7 @@
       "season": "2004-05",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 551,
+      "jugadores": 545,
       "file": "ger-1-2004-05.json"
     },
     {
@@ -4450,7 +4450,7 @@
       "season": "2005-06",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 551,
       "file": "ger-1-2005-06.json"
     },
     {
@@ -4462,7 +4462,7 @@
       "season": "2006-07",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 543,
+      "jugadores": 535,
       "file": "ger-1-2006-07.json"
     },
     {
@@ -4474,7 +4474,7 @@
       "season": "2007-08",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 563,
+      "jugadores": 547,
       "file": "ger-1-2007-08.json"
     },
     {
@@ -4486,7 +4486,7 @@
       "season": "2008-09",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 579,
+      "jugadores": 560,
       "file": "ger-1-2008-09.json"
     },
     {
@@ -4498,7 +4498,7 @@
       "season": "2009-10",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 588,
+      "jugadores": 569,
       "file": "ger-1-2009-10.json"
     },
     {
@@ -4510,7 +4510,7 @@
       "season": "2010-11",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 544,
       "file": "ger-1-2010-11.json"
     },
     {
@@ -4522,7 +4522,7 @@
       "season": "2011-12",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 585,
+      "jugadores": 566,
       "file": "ger-1-2011-12.json"
     },
     {
@@ -4534,7 +4534,7 @@
       "season": "2012-13",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 577,
+      "jugadores": 564,
       "file": "ger-1-2012-13.json"
     },
     {
@@ -4546,7 +4546,7 @@
       "season": "2013-14",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 572,
+      "jugadores": 555,
       "file": "ger-1-2013-14.json"
     },
     {
@@ -4558,7 +4558,7 @@
       "season": "2014-15",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 549,
+      "jugadores": 533,
       "file": "ger-1-2014-15.json"
     },
     {
@@ -4570,7 +4570,7 @@
       "season": "2015-16",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 595,
+      "jugadores": 572,
       "file": "ger-1-2015-16.json"
     },
     {
@@ -4582,7 +4582,7 @@
       "season": "2016-17",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 600,
+      "jugadores": 580,
       "file": "ger-1-2016-17.json"
     },
     {
@@ -4594,7 +4594,7 @@
       "season": "2017-18",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 618,
+      "jugadores": 600,
       "file": "ger-1-2017-18.json"
     },
     {
@@ -4606,7 +4606,7 @@
       "season": "2018-19",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 596,
+      "jugadores": 582,
       "file": "ger-1-2018-19.json"
     },
     {
@@ -4618,7 +4618,7 @@
       "season": "2019-20",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 649,
+      "jugadores": 620,
       "file": "ger-1-2019-20.json"
     },
     {
@@ -4630,7 +4630,7 @@
       "season": "2020-21",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 614,
+      "jugadores": 588,
       "file": "ger-1-2020-21.json"
     },
     {
@@ -4642,7 +4642,7 @@
       "season": "2021-22",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 631,
+      "jugadores": 605,
       "file": "ger-1-2021-22.json"
     },
     {
@@ -4654,7 +4654,7 @@
       "season": "2022-23",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 630,
+      "jugadores": 605,
       "file": "ger-1-2022-23.json"
     },
     {
@@ -4666,7 +4666,7 @@
       "season": "2023-24",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 618,
+      "jugadores": 598,
       "file": "ger-1-2023-24.json"
     },
     {
@@ -4678,7 +4678,7 @@
       "season": "2024-25",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 640,
+      "jugadores": 613,
       "file": "ger-1-2024-25.json"
     },
     {
@@ -4690,7 +4690,7 @@
       "season": "2025-26",
       "nombre": "Primera División (GER)",
       "equipos": 18,
-      "jugadores": 643,
+      "jugadores": 624,
       "file": "ger-1-2025-26.json"
     },
     {
@@ -4702,7 +4702,7 @@
       "season": "1975-76",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 330,
+      "jugadores": 326,
       "file": "hol-1-1975-76.json"
     },
     {
@@ -4714,7 +4714,7 @@
       "season": "1976-77",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 330,
+      "jugadores": 328,
       "file": "hol-1-1976-77.json"
     },
     {
@@ -4726,7 +4726,7 @@
       "season": "1977-78",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 337,
+      "jugadores": 331,
       "file": "hol-1-1977-78.json"
     },
     {
@@ -4738,7 +4738,7 @@
       "season": "1978-79",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 361,
+      "jugadores": 355,
       "file": "hol-1-1978-79.json"
     },
     {
@@ -4750,7 +4750,7 @@
       "season": "1979-80",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 358,
+      "jugadores": 353,
       "file": "hol-1-1979-80.json"
     },
     {
@@ -4762,7 +4762,7 @@
       "season": "1980-81",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 363,
+      "jugadores": 359,
       "file": "hol-1-1980-81.json"
     },
     {
@@ -4774,7 +4774,7 @@
       "season": "1981-82",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 355,
+      "jugadores": 349,
       "file": "hol-1-1981-82.json"
     },
     {
@@ -4786,7 +4786,7 @@
       "season": "1982-83",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 348,
+      "jugadores": 341,
       "file": "hol-1-1982-83.json"
     },
     {
@@ -4798,7 +4798,7 @@
       "season": "1983-84",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 367,
+      "jugadores": 361,
       "file": "hol-1-1983-84.json"
     },
     {
@@ -4810,7 +4810,7 @@
       "season": "1984-85",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 363,
+      "jugadores": 358,
       "file": "hol-1-1984-85.json"
     },
     {
@@ -4822,7 +4822,7 @@
       "season": "1985-86",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 356,
+      "jugadores": 353,
       "file": "hol-1-1985-86.json"
     },
     {
@@ -4834,7 +4834,7 @@
       "season": "1986-87",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 361,
+      "jugadores": 354,
       "file": "hol-1-1986-87.json"
     },
     {
@@ -4846,7 +4846,7 @@
       "season": "1987-88",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 376,
+      "jugadores": 363,
       "file": "hol-1-1987-88.json"
     },
     {
@@ -4858,7 +4858,7 @@
       "season": "1988-89",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 403,
+      "jugadores": 390,
       "file": "hol-1-1988-89.json"
     },
     {
@@ -4870,7 +4870,7 @@
       "season": "1989-90",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 395,
+      "jugadores": 383,
       "file": "hol-1-1989-90.json"
     },
     {
@@ -4882,7 +4882,7 @@
       "season": "1990-91",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 388,
+      "jugadores": 379,
       "file": "hol-1-1990-91.json"
     },
     {
@@ -4894,7 +4894,7 @@
       "season": "1991-92",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 390,
+      "jugadores": 381,
       "file": "hol-1-1991-92.json"
     },
     {
@@ -4906,7 +4906,7 @@
       "season": "1992-93",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 418,
+      "jugadores": 408,
       "file": "hol-1-1992-93.json"
     },
     {
@@ -4918,7 +4918,7 @@
       "season": "1993-94",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 392,
+      "jugadores": 386,
       "file": "hol-1-1993-94.json"
     },
     {
@@ -4930,7 +4930,7 @@
       "season": "1994-95",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 398,
+      "jugadores": 382,
       "file": "hol-1-1994-95.json"
     },
     {
@@ -4942,7 +4942,7 @@
       "season": "1995-96",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 424,
+      "jugadores": 404,
       "file": "hol-1-1995-96.json"
     },
     {
@@ -4954,7 +4954,7 @@
       "season": "1996-97",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 442,
+      "jugadores": 422,
       "file": "hol-1-1996-97.json"
     },
     {
@@ -4966,7 +4966,7 @@
       "season": "1997-98",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 467,
+      "jugadores": 444,
       "file": "hol-1-1997-98.json"
     },
     {
@@ -4978,7 +4978,7 @@
       "season": "1998-99",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 465,
+      "jugadores": 441,
       "file": "hol-1-1998-99.json"
     },
     {
@@ -4990,7 +4990,7 @@
       "season": "1999-00",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 477,
+      "jugadores": 448,
       "file": "hol-1-1999-00.json"
     },
     {
@@ -5002,7 +5002,7 @@
       "season": "2000-01",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 501,
+      "jugadores": 480,
       "file": "hol-1-2000-01.json"
     },
     {
@@ -5014,7 +5014,7 @@
       "season": "2001-02",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 506,
+      "jugadores": 492,
       "file": "hol-1-2001-02.json"
     },
     {
@@ -5026,7 +5026,7 @@
       "season": "2002-03",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 496,
+      "jugadores": 476,
       "file": "hol-1-2002-03.json"
     },
     {
@@ -5038,7 +5038,7 @@
       "season": "2003-04",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 489,
+      "jugadores": 469,
       "file": "hol-1-2003-04.json"
     },
     {
@@ -5050,7 +5050,7 @@
       "season": "2004-05",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 502,
+      "jugadores": 472,
       "file": "hol-1-2004-05.json"
     },
     {
@@ -5062,7 +5062,7 @@
       "season": "2005-06",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 518,
+      "jugadores": 471,
       "file": "hol-1-2005-06.json"
     },
     {
@@ -5074,7 +5074,7 @@
       "season": "2006-07",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 517,
       "file": "hol-1-2006-07.json"
     },
     {
@@ -5086,7 +5086,7 @@
       "season": "2007-08",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 544,
+      "jugadores": 514,
       "file": "hol-1-2007-08.json"
     },
     {
@@ -5098,7 +5098,7 @@
       "season": "2008-09",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 561,
+      "jugadores": 531,
       "file": "hol-1-2008-09.json"
     },
     {
@@ -5110,7 +5110,7 @@
       "season": "2009-10",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 546,
+      "jugadores": 533,
       "file": "hol-1-2009-10.json"
     },
     {
@@ -5122,7 +5122,7 @@
       "season": "2010-11",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 594,
+      "jugadores": 552,
       "file": "hol-1-2010-11.json"
     },
     {
@@ -5134,7 +5134,7 @@
       "season": "2011-12",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 591,
+      "jugadores": 555,
       "file": "hol-1-2011-12.json"
     },
     {
@@ -5146,7 +5146,7 @@
       "season": "2012-13",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 603,
+      "jugadores": 565,
       "file": "hol-1-2012-13.json"
     },
     {
@@ -5158,7 +5158,7 @@
       "season": "2013-14",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 575,
+      "jugadores": 548,
       "file": "hol-1-2013-14.json"
     },
     {
@@ -5170,7 +5170,7 @@
       "season": "2014-15",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 581,
+      "jugadores": 548,
       "file": "hol-1-2014-15.json"
     },
     {
@@ -5182,7 +5182,7 @@
       "season": "2015-16",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 589,
+      "jugadores": 556,
       "file": "hol-1-2015-16.json"
     },
     {
@@ -5194,7 +5194,7 @@
       "season": "2016-17",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 616,
+      "jugadores": 579,
       "file": "hol-1-2016-17.json"
     },
     {
@@ -5206,7 +5206,7 @@
       "season": "2017-18",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 590,
+      "jugadores": 559,
       "file": "hol-1-2017-18.json"
     },
     {
@@ -5218,7 +5218,7 @@
       "season": "2018-19",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 624,
+      "jugadores": 586,
       "file": "hol-1-2018-19.json"
     },
     {
@@ -5230,7 +5230,7 @@
       "season": "2019-20",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 637,
+      "jugadores": 583,
       "file": "hol-1-2019-20.json"
     },
     {
@@ -5242,7 +5242,7 @@
       "season": "2020-21",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 646,
+      "jugadores": 595,
       "file": "hol-1-2020-21.json"
     },
     {
@@ -5254,7 +5254,7 @@
       "season": "2021-22",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 670,
+      "jugadores": 612,
       "file": "hol-1-2021-22.json"
     },
     {
@@ -5266,7 +5266,7 @@
       "season": "2022-23",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 643,
+      "jugadores": 593,
       "file": "hol-1-2022-23.json"
     },
     {
@@ -5278,7 +5278,7 @@
       "season": "2023-24",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 653,
+      "jugadores": 602,
       "file": "hol-1-2023-24.json"
     },
     {
@@ -5290,7 +5290,7 @@
       "season": "2024-25",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 662,
+      "jugadores": 610,
       "file": "hol-1-2024-25.json"
     },
     {
@@ -5302,7 +5302,7 @@
       "season": "2025-26",
       "nombre": "Primera División (HOL)",
       "equipos": 18,
-      "jugadores": 695,
+      "jugadores": 628,
       "file": "hol-1-2025-26.json"
     },
     {
@@ -5314,7 +5314,7 @@
       "season": "1929-30",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 369,
+      "jugadores": 368,
       "file": "ita-1-1929-30.json"
     },
     {
@@ -5326,7 +5326,7 @@
       "season": "1930-31",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 370,
+      "jugadores": 368,
       "file": "ita-1-1930-31.json"
     },
     {
@@ -5350,7 +5350,7 @@
       "season": "1932-33",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 374,
+      "jugadores": 370,
       "file": "ita-1-1932-33.json"
     },
     {
@@ -5362,7 +5362,7 @@
       "season": "1933-34",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 382,
+      "jugadores": 376,
       "file": "ita-1-1933-34.json"
     },
     {
@@ -5374,7 +5374,7 @@
       "season": "1934-35",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 323,
+      "jugadores": 320,
       "file": "ita-1-1934-35.json"
     },
     {
@@ -5386,7 +5386,7 @@
       "season": "1935-36",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 332,
+      "jugadores": 327,
       "file": "ita-1-1935-36.json"
     },
     {
@@ -5398,7 +5398,7 @@
       "season": "1936-37",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 332,
+      "jugadores": 330,
       "file": "ita-1-1936-37.json"
     },
     {
@@ -5410,7 +5410,7 @@
       "season": "1937-38",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 338,
+      "jugadores": 332,
       "file": "ita-1-1937-38.json"
     },
     {
@@ -5446,7 +5446,7 @@
       "season": "1940-41",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 323,
+      "jugadores": 322,
       "file": "ita-1-1940-41.json"
     },
     {
@@ -5506,7 +5506,7 @@
       "season": "1948-49",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 425,
+      "jugadores": 422,
       "file": "ita-1-1948-49.json"
     },
     {
@@ -5518,7 +5518,7 @@
       "season": "1949-50",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 403,
+      "jugadores": 401,
       "file": "ita-1-1949-50.json"
     },
     {
@@ -5554,7 +5554,7 @@
       "season": "1952-53",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 357,
+      "jugadores": 356,
       "file": "ita-1-1952-53.json"
     },
     {
@@ -5590,7 +5590,7 @@
       "season": "1955-56",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 359,
+      "jugadores": 358,
       "file": "ita-1-1955-56.json"
     },
     {
@@ -5602,7 +5602,7 @@
       "season": "1956-57",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 372,
+      "jugadores": 371,
       "file": "ita-1-1956-57.json"
     },
     {
@@ -5638,7 +5638,7 @@
       "season": "1959-60",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 386,
+      "jugadores": 381,
       "file": "ita-1-1959-60.json"
     },
     {
@@ -5650,7 +5650,7 @@
       "season": "1960-61",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 386,
+      "jugadores": 376,
       "file": "ita-1-1960-61.json"
     },
     {
@@ -5662,7 +5662,7 @@
       "season": "1961-62",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 382,
+      "jugadores": 377,
       "file": "ita-1-1961-62.json"
     },
     {
@@ -5674,7 +5674,7 @@
       "season": "1962-63",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 382,
+      "jugadores": 376,
       "file": "ita-1-1962-63.json"
     },
     {
@@ -5722,7 +5722,7 @@
       "season": "1966-67",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 376,
+      "jugadores": 372,
       "file": "ita-1-1966-67.json"
     },
     {
@@ -5734,7 +5734,7 @@
       "season": "1967-68",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 335,
+      "jugadores": 334,
       "file": "ita-1-1967-68.json"
     },
     {
@@ -5746,7 +5746,7 @@
       "season": "1968-69",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 333,
+      "jugadores": 330,
       "file": "ita-1-1968-69.json"
     },
     {
@@ -5758,7 +5758,7 @@
       "season": "1969-70",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 345,
+      "jugadores": 344,
       "file": "ita-1-1969-70.json"
     },
     {
@@ -5782,7 +5782,7 @@
       "season": "1971-72",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 325,
+      "jugadores": 323,
       "file": "ita-1-1971-72.json"
     },
     {
@@ -5830,7 +5830,7 @@
       "season": "1975-76",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 333,
+      "jugadores": 331,
       "file": "ita-1-1975-76.json"
     },
     {
@@ -5866,7 +5866,7 @@
       "season": "1978-79",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 339,
+      "jugadores": 338,
       "file": "ita-1-1978-79.json"
     },
     {
@@ -5890,7 +5890,7 @@
       "season": "1980-81",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 356,
+      "jugadores": 354,
       "file": "ita-1-1980-81.json"
     },
     {
@@ -5914,7 +5914,7 @@
       "season": "1982-83",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 361,
+      "jugadores": 357,
       "file": "ita-1-1982-83.json"
     },
     {
@@ -5926,7 +5926,7 @@
       "season": "1983-84",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 359,
+      "jugadores": 357,
       "file": "ita-1-1983-84.json"
     },
     {
@@ -5962,7 +5962,7 @@
       "season": "1986-87",
       "nombre": "Primera División (ITA)",
       "equipos": 16,
-      "jugadores": 366,
+      "jugadores": 363,
       "file": "ita-1-1986-87.json"
     },
     {
@@ -5986,7 +5986,7 @@
       "season": "1988-89",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 422,
+      "jugadores": 419,
       "file": "ita-1-1988-89.json"
     },
     {
@@ -5998,7 +5998,7 @@
       "season": "1989-90",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 431,
+      "jugadores": 430,
       "file": "ita-1-1989-90.json"
     },
     {
@@ -6010,7 +6010,7 @@
       "season": "1990-91",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 436,
+      "jugadores": 434,
       "file": "ita-1-1990-91.json"
     },
     {
@@ -6022,7 +6022,7 @@
       "season": "1991-92",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 429,
+      "jugadores": 427,
       "file": "ita-1-1991-92.json"
     },
     {
@@ -6034,7 +6034,7 @@
       "season": "1992-93",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 453,
+      "jugadores": 445,
       "file": "ita-1-1992-93.json"
     },
     {
@@ -6046,7 +6046,7 @@
       "season": "1993-94",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 458,
+      "jugadores": 449,
       "file": "ita-1-1993-94.json"
     },
     {
@@ -6058,7 +6058,7 @@
       "season": "1994-95",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 481,
+      "jugadores": 463,
       "file": "ita-1-1994-95.json"
     },
     {
@@ -6070,7 +6070,7 @@
       "season": "1995-96",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 458,
+      "jugadores": 445,
       "file": "ita-1-1995-96.json"
     },
     {
@@ -6082,7 +6082,7 @@
       "season": "1996-97",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 527,
+      "jugadores": 498,
       "file": "ita-1-1996-97.json"
     },
     {
@@ -6094,7 +6094,7 @@
       "season": "1997-98",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 553,
+      "jugadores": 517,
       "file": "ita-1-1997-98.json"
     },
     {
@@ -6106,7 +6106,7 @@
       "season": "1998-99",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 569,
+      "jugadores": 534,
       "file": "ita-1-1998-99.json"
     },
     {
@@ -6118,7 +6118,7 @@
       "season": "1999-00",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 584,
+      "jugadores": 549,
       "file": "ita-1-1999-00.json"
     },
     {
@@ -6130,7 +6130,7 @@
       "season": "2000-01",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 608,
+      "jugadores": 578,
       "file": "ita-1-2000-01.json"
     },
     {
@@ -6142,7 +6142,7 @@
       "season": "2001-02",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 601,
+      "jugadores": 571,
       "file": "ita-1-2001-02.json"
     },
     {
@@ -6154,7 +6154,7 @@
       "season": "2002-03",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 585,
+      "jugadores": 552,
       "file": "ita-1-2002-03.json"
     },
     {
@@ -6166,7 +6166,7 @@
       "season": "2003-04",
       "nombre": "Primera División (ITA)",
       "equipos": 18,
-      "jugadores": 616,
+      "jugadores": 581,
       "file": "ita-1-2003-04.json"
     },
     {
@@ -6178,7 +6178,7 @@
       "season": "2004-05",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 655,
+      "jugadores": 625,
       "file": "ita-1-2004-05.json"
     },
     {
@@ -6190,7 +6190,7 @@
       "season": "2005-06",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 661,
+      "jugadores": 625,
       "file": "ita-1-2005-06.json"
     },
     {
@@ -6202,7 +6202,7 @@
       "season": "2006-07",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 672,
+      "jugadores": 638,
       "file": "ita-1-2006-07.json"
     },
     {
@@ -6214,7 +6214,7 @@
       "season": "2007-08",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 645,
+      "jugadores": 617,
       "file": "ita-1-2007-08.json"
     },
     {
@@ -6226,7 +6226,7 @@
       "season": "2008-09",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 675,
+      "jugadores": 646,
       "file": "ita-1-2008-09.json"
     },
     {
@@ -6238,7 +6238,7 @@
       "season": "2009-10",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 688,
+      "jugadores": 640,
       "file": "ita-1-2009-10.json"
     },
     {
@@ -6250,7 +6250,7 @@
       "season": "2010-11",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 701,
+      "jugadores": 641,
       "file": "ita-1-2010-11.json"
     },
     {
@@ -6262,7 +6262,7 @@
       "season": "2011-12",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 712,
+      "jugadores": 654,
       "file": "ita-1-2011-12.json"
     },
     {
@@ -6274,7 +6274,7 @@
       "season": "2012-13",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 808,
+      "jugadores": 725,
       "file": "ita-1-2012-13.json"
     },
     {
@@ -6286,7 +6286,7 @@
       "season": "2013-14",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 797,
+      "jugadores": 723,
       "file": "ita-1-2013-14.json"
     },
     {
@@ -6298,7 +6298,7 @@
       "season": "2014-15",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 780,
+      "jugadores": 713,
       "file": "ita-1-2014-15.json"
     },
     {
@@ -6310,7 +6310,7 @@
       "season": "2015-16",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 775,
+      "jugadores": 703,
       "file": "ita-1-2015-16.json"
     },
     {
@@ -6322,7 +6322,7 @@
       "season": "2016-17",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 821,
+      "jugadores": 757,
       "file": "ita-1-2016-17.json"
     },
     {
@@ -6334,7 +6334,7 @@
       "season": "2017-18",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 731,
+      "jugadores": 680,
       "file": "ita-1-2017-18.json"
     },
     {
@@ -6346,7 +6346,7 @@
       "season": "2018-19",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 760,
+      "jugadores": 705,
       "file": "ita-1-2018-19.json"
     },
     {
@@ -6358,7 +6358,7 @@
       "season": "2019-20",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 786,
+      "jugadores": 709,
       "file": "ita-1-2019-20.json"
     },
     {
@@ -6370,7 +6370,7 @@
       "season": "2020-21",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 828,
+      "jugadores": 767,
       "file": "ita-1-2020-21.json"
     },
     {
@@ -6382,7 +6382,7 @@
       "season": "2021-22",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 837,
+      "jugadores": 754,
       "file": "ita-1-2021-22.json"
     },
     {
@@ -6394,7 +6394,7 @@
       "season": "2022-23",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 778,
+      "jugadores": 710,
       "file": "ita-1-2022-23.json"
     },
     {
@@ -6406,7 +6406,7 @@
       "season": "2023-24",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 820,
+      "jugadores": 753,
       "file": "ita-1-2023-24.json"
     },
     {
@@ -6418,7 +6418,7 @@
       "season": "2024-25",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 848,
+      "jugadores": 750,
       "file": "ita-1-2024-25.json"
     },
     {
@@ -6430,7 +6430,7 @@
       "season": "2025-26",
       "nombre": "Primera División (ITA)",
       "equipos": 20,
-      "jugadores": 822,
+      "jugadores": 750,
       "file": "ita-1-2025-26.json"
     },
     {
@@ -6442,7 +6442,7 @@
       "season": "1980-81",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 357,
+      "jugadores": 356,
       "file": "por-1-1980-81.json"
     },
     {
@@ -6502,7 +6502,7 @@
       "season": "1985-86",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 363,
+      "jugadores": 362,
       "file": "por-1-1985-86.json"
     },
     {
@@ -6514,7 +6514,7 @@
       "season": "1986-87",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 389,
+      "jugadores": 385,
       "file": "por-1-1986-87.json"
     },
     {
@@ -6526,7 +6526,7 @@
       "season": "1987-88",
       "nombre": "Primera División (POR)",
       "equipos": 20,
-      "jugadores": 484,
+      "jugadores": 482,
       "file": "por-1-1987-88.json"
     },
     {
@@ -6538,7 +6538,7 @@
       "season": "1988-89",
       "nombre": "Primera División (POR)",
       "equipos": 20,
-      "jugadores": 495,
+      "jugadores": 493,
       "file": "por-1-1988-89.json"
     },
     {
@@ -6550,7 +6550,7 @@
       "season": "1989-90",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 434,
+      "jugadores": 433,
       "file": "por-1-1989-90.json"
     },
     {
@@ -6562,7 +6562,7 @@
       "season": "1990-91",
       "nombre": "Primera División (POR)",
       "equipos": 20,
-      "jugadores": 487,
+      "jugadores": 485,
       "file": "por-1-1990-91.json"
     },
     {
@@ -6574,7 +6574,7 @@
       "season": "1991-92",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 418,
+      "jugadores": 414,
       "file": "por-1-1991-92.json"
     },
     {
@@ -6586,7 +6586,7 @@
       "season": "1992-93",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 429,
+      "jugadores": 428,
       "file": "por-1-1992-93.json"
     },
     {
@@ -6598,7 +6598,7 @@
       "season": "1993-94",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 461,
+      "jugadores": 443,
       "file": "por-1-1993-94.json"
     },
     {
@@ -6610,7 +6610,7 @@
       "season": "1994-95",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 477,
+      "jugadores": 465,
       "file": "por-1-1994-95.json"
     },
     {
@@ -6622,7 +6622,7 @@
       "season": "1995-96",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 494,
+      "jugadores": 482,
       "file": "por-1-1995-96.json"
     },
     {
@@ -6634,7 +6634,7 @@
       "season": "1996-97",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 494,
+      "jugadores": 475,
       "file": "por-1-1996-97.json"
     },
     {
@@ -6646,7 +6646,7 @@
       "season": "1997-98",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 499,
+      "jugadores": 478,
       "file": "por-1-1997-98.json"
     },
     {
@@ -6658,7 +6658,7 @@
       "season": "1998-99",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 500,
+      "jugadores": 473,
       "file": "por-1-1998-99.json"
     },
     {
@@ -6670,7 +6670,7 @@
       "season": "1999-00",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 521,
+      "jugadores": 497,
       "file": "por-1-1999-00.json"
     },
     {
@@ -6682,7 +6682,7 @@
       "season": "2000-01",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 526,
+      "jugadores": 513,
       "file": "por-1-2000-01.json"
     },
     {
@@ -6694,7 +6694,7 @@
       "season": "2001-02",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 539,
+      "jugadores": 516,
       "file": "por-1-2001-02.json"
     },
     {
@@ -6706,7 +6706,7 @@
       "season": "2002-03",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 545,
+      "jugadores": 525,
       "file": "por-1-2002-03.json"
     },
     {
@@ -6718,7 +6718,7 @@
       "season": "2003-04",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 540,
+      "jugadores": 524,
       "file": "por-1-2003-04.json"
     },
     {
@@ -6730,7 +6730,7 @@
       "season": "2004-05",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 526,
+      "jugadores": 503,
       "file": "por-1-2004-05.json"
     },
     {
@@ -6742,7 +6742,7 @@
       "season": "2005-06",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 551,
+      "jugadores": 511,
       "file": "por-1-2005-06.json"
     },
     {
@@ -6754,7 +6754,7 @@
       "season": "2006-07",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 487,
+      "jugadores": 466,
       "file": "por-1-2006-07.json"
     },
     {
@@ -6766,7 +6766,7 @@
       "season": "2007-08",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 487,
+      "jugadores": 466,
       "file": "por-1-2007-08.json"
     },
     {
@@ -6778,7 +6778,7 @@
       "season": "2008-09",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 490,
+      "jugadores": 476,
       "file": "por-1-2008-09.json"
     },
     {
@@ -6790,7 +6790,7 @@
       "season": "2009-10",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 514,
+      "jugadores": 489,
       "file": "por-1-2009-10.json"
     },
     {
@@ -6802,7 +6802,7 @@
       "season": "2010-11",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 500,
+      "jugadores": 479,
       "file": "por-1-2010-11.json"
     },
     {
@@ -6814,7 +6814,7 @@
       "season": "2011-12",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 522,
+      "jugadores": 492,
       "file": "por-1-2011-12.json"
     },
     {
@@ -6826,7 +6826,7 @@
       "season": "2012-13",
       "nombre": "Primera División (POR)",
       "equipos": 16,
-      "jugadores": 520,
+      "jugadores": 493,
       "file": "por-1-2012-13.json"
     },
     {
@@ -6838,7 +6838,7 @@
       "season": "2013-14",
       "nombre": "Primera División (POR)",
       "equipos": 13,
-      "jugadores": 416,
+      "jugadores": 395,
       "file": "por-1-2013-14.json"
     },
     {
@@ -6850,7 +6850,7 @@
       "season": "2014-15",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 571,
+      "jugadores": 543,
       "file": "por-1-2014-15.json"
     },
     {
@@ -6862,7 +6862,7 @@
       "season": "2015-16",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 602,
+      "jugadores": 564,
       "file": "por-1-2015-16.json"
     },
     {
@@ -6874,7 +6874,7 @@
       "season": "2016-17",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 601,
+      "jugadores": 545,
       "file": "por-1-2016-17.json"
     },
     {
@@ -6886,7 +6886,7 @@
       "season": "2017-18",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 570,
+      "jugadores": 533,
       "file": "por-1-2017-18.json"
     },
     {
@@ -6898,7 +6898,7 @@
       "season": "2018-19",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 628,
+      "jugadores": 594,
       "file": "por-1-2018-19.json"
     },
     {
@@ -6910,7 +6910,7 @@
       "season": "2019-20",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 648,
+      "jugadores": 610,
       "file": "por-1-2019-20.json"
     },
     {
@@ -6922,7 +6922,7 @@
       "season": "2020-21",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 657,
+      "jugadores": 620,
       "file": "por-1-2020-21.json"
     },
     {
@@ -6934,7 +6934,7 @@
       "season": "2021-22",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 659,
+      "jugadores": 616,
       "file": "por-1-2021-22.json"
     },
     {
@@ -6946,7 +6946,7 @@
       "season": "2022-23",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 657,
+      "jugadores": 618,
       "file": "por-1-2022-23.json"
     },
     {
@@ -6958,7 +6958,7 @@
       "season": "2023-24",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 635,
+      "jugadores": 601,
       "file": "por-1-2023-24.json"
     },
     {
@@ -6970,7 +6970,7 @@
       "season": "2024-25",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 687,
+      "jugadores": 635,
       "file": "por-1-2024-25.json"
     },
     {
@@ -6982,7 +6982,7 @@
       "season": "2025-26",
       "nombre": "Primera División (POR)",
       "equipos": 18,
-      "jugadores": 693,
+      "jugadores": 644,
       "file": "por-1-2025-26.json"
     },
     {
@@ -7006,7 +7006,7 @@
       "season": "1985-86",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 284,
+      "jugadores": 282,
       "file": "rda-1-1985-86.json"
     },
     {
@@ -7018,7 +7018,7 @@
       "season": "1986-87",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 286,
+      "jugadores": 283,
       "file": "rda-1-1986-87.json"
     },
     {
@@ -7030,7 +7030,7 @@
       "season": "1987-88",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 298,
+      "jugadores": 297,
       "file": "rda-1-1987-88.json"
     },
     {
@@ -7042,7 +7042,7 @@
       "season": "1988-89",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 300,
+      "jugadores": 299,
       "file": "rda-1-1988-89.json"
     },
     {
@@ -7054,7 +7054,7 @@
       "season": "1989-90",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 295,
+      "jugadores": 294,
       "file": "rda-1-1989-90.json"
     },
     {
@@ -7066,7 +7066,7 @@
       "season": "1990-91",
       "nombre": "Primera División (RDA)",
       "equipos": 14,
-      "jugadores": 292,
+      "jugadores": 285,
       "file": "rda-1-1990-91.json"
     },
     {
@@ -7078,7 +7078,7 @@
       "season": "1993-94",
       "nombre": "Primera División (RUS)",
       "equipos": 18,
-      "jugadores": 387,
+      "jugadores": 378,
       "file": "rus-1-1993-94.json"
     },
     {
@@ -7090,7 +7090,7 @@
       "season": "1994-95",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 363,
+      "jugadores": 356,
       "file": "rus-1-1994-95.json"
     },
     {
@@ -7102,7 +7102,7 @@
       "season": "1995-96",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 365,
+      "jugadores": 359,
       "file": "rus-1-1995-96.json"
     },
     {
@@ -7114,7 +7114,7 @@
       "season": "1996-97",
       "nombre": "Primera División (RUS)",
       "equipos": 18,
-      "jugadores": 427,
+      "jugadores": 416,
       "file": "rus-1-1996-97.json"
     },
     {
@@ -7126,7 +7126,7 @@
       "season": "1997-98",
       "nombre": "Primera División (RUS)",
       "equipos": 18,
-      "jugadores": 464,
+      "jugadores": 443,
       "file": "rus-1-1997-98.json"
     },
     {
@@ -7138,7 +7138,7 @@
       "season": "1998-99",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 383,
+      "jugadores": 374,
       "file": "rus-1-1998-99.json"
     },
     {
@@ -7150,7 +7150,7 @@
       "season": "1999-00",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 403,
+      "jugadores": 394,
       "file": "rus-1-1999-00.json"
     },
     {
@@ -7162,7 +7162,7 @@
       "season": "2000-01",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 415,
+      "jugadores": 391,
       "file": "rus-1-2000-01.json"
     },
     {
@@ -7174,7 +7174,7 @@
       "season": "2001-02",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 438,
+      "jugadores": 414,
       "file": "rus-1-2001-02.json"
     },
     {
@@ -7186,7 +7186,7 @@
       "season": "2002-03",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 420,
+      "jugadores": 408,
       "file": "rus-1-2002-03.json"
     },
     {
@@ -7198,7 +7198,7 @@
       "season": "2003-04",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 451,
+      "jugadores": 431,
       "file": "rus-1-2003-04.json"
     },
     {
@@ -7210,7 +7210,7 @@
       "season": "2004-05",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 458,
+      "jugadores": 444,
       "file": "rus-1-2004-05.json"
     },
     {
@@ -7222,7 +7222,7 @@
       "season": "2005-06",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 483,
+      "jugadores": 448,
       "file": "rus-1-2005-06.json"
     },
     {
@@ -7234,7 +7234,7 @@
       "season": "2006-07",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 474,
+      "jugadores": 460,
       "file": "rus-1-2006-07.json"
     },
     {
@@ -7246,7 +7246,7 @@
       "season": "2007-08",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 454,
+      "jugadores": 438,
       "file": "rus-1-2007-08.json"
     },
     {
@@ -7258,7 +7258,7 @@
       "season": "2008-09",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 456,
+      "jugadores": 431,
       "file": "rus-1-2008-09.json"
     },
     {
@@ -7270,7 +7270,7 @@
       "season": "2009-10",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 467,
+      "jugadores": 443,
       "file": "rus-1-2009-10.json"
     },
     {
@@ -7282,7 +7282,7 @@
       "season": "2010-11",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 491,
+      "jugadores": 464,
       "file": "rus-1-2010-11.json"
     },
     {
@@ -7294,7 +7294,7 @@
       "season": "2011-12",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 555,
+      "jugadores": 531,
       "file": "rus-1-2011-12.json"
     },
     {
@@ -7306,7 +7306,7 @@
       "season": "2012-13",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 556,
+      "jugadores": 521,
       "file": "rus-1-2012-13.json"
     },
     {
@@ -7318,7 +7318,7 @@
       "season": "2013-14",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 593,
+      "jugadores": 541,
       "file": "rus-1-2013-14.json"
     },
     {
@@ -7330,7 +7330,7 @@
       "season": "2014-15",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 535,
+      "jugadores": 515,
       "file": "rus-1-2014-15.json"
     },
     {
@@ -7342,7 +7342,7 @@
       "season": "2015-16",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 534,
+      "jugadores": 506,
       "file": "rus-1-2015-16.json"
     },
     {
@@ -7354,7 +7354,7 @@
       "season": "2016-17",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 579,
+      "jugadores": 536,
       "file": "rus-1-2016-17.json"
     },
     {
@@ -7366,7 +7366,7 @@
       "season": "2017-18",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 566,
+      "jugadores": 525,
       "file": "rus-1-2017-18.json"
     },
     {
@@ -7378,7 +7378,7 @@
       "season": "2018-19",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 543,
+      "jugadores": 510,
       "file": "rus-1-2018-19.json"
     },
     {
@@ -7390,7 +7390,7 @@
       "season": "2019-20",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 609,
+      "jugadores": 571,
       "file": "rus-1-2019-20.json"
     },
     {
@@ -7402,7 +7402,7 @@
       "season": "2020-21",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 604,
+      "jugadores": 552,
       "file": "rus-1-2020-21.json"
     },
     {
@@ -7414,7 +7414,7 @@
       "season": "2021-22",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 590,
+      "jugadores": 553,
       "file": "rus-1-2021-22.json"
     },
     {
@@ -7426,7 +7426,7 @@
       "season": "2022-23",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 585,
+      "jugadores": 556,
       "file": "rus-1-2022-23.json"
     },
     {
@@ -7438,7 +7438,7 @@
       "season": "2023-24",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 573,
+      "jugadores": 545,
       "file": "rus-1-2023-24.json"
     },
     {
@@ -7450,7 +7450,7 @@
       "season": "2024-25",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 573,
+      "jugadores": 556,
       "file": "rus-1-2024-25.json"
     },
     {
@@ -7462,7 +7462,7 @@
       "season": "2025-26",
       "nombre": "Primera División (RUS)",
       "equipos": 16,
-      "jugadores": 590,
+      "jugadores": 560,
       "file": "rus-1-2025-26.json"
     },
     {
@@ -7474,7 +7474,7 @@
       "season": "2005-06",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 350,
+      "jugadores": 340,
       "file": "sco-1-2005-06.json"
     },
     {
@@ -7486,7 +7486,7 @@
       "season": "2006-07",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 355,
+      "jugadores": 342,
       "file": "sco-1-2006-07.json"
     },
     {
@@ -7498,7 +7498,7 @@
       "season": "2007-08",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 364,
+      "jugadores": 353,
       "file": "sco-1-2007-08.json"
     },
     {
@@ -7510,7 +7510,7 @@
       "season": "2008-09",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 330,
+      "jugadores": 323,
       "file": "sco-1-2008-09.json"
     },
     {
@@ -7522,7 +7522,7 @@
       "season": "2009-10",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 366,
+      "jugadores": 361,
       "file": "sco-1-2009-10.json"
     },
     {
@@ -7534,7 +7534,7 @@
       "season": "2010-11",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 416,
+      "jugadores": 404,
       "file": "sco-1-2010-11.json"
     },
     {
@@ -7546,7 +7546,7 @@
       "season": "2011-12",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 419,
+      "jugadores": 413,
       "file": "sco-1-2011-12.json"
     },
     {
@@ -7558,7 +7558,7 @@
       "season": "2012-13",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 405,
+      "jugadores": 399,
       "file": "sco-1-2012-13.json"
     },
     {
@@ -7570,7 +7570,7 @@
       "season": "2013-14",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 380,
+      "jugadores": 372,
       "file": "sco-1-2013-14.json"
     },
     {
@@ -7582,7 +7582,7 @@
       "season": "2014-15",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 411,
+      "jugadores": 402,
       "file": "sco-1-2014-15.json"
     },
     {
@@ -7594,7 +7594,7 @@
       "season": "2015-16",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 418,
+      "jugadores": 406,
       "file": "sco-1-2015-16.json"
     },
     {
@@ -7606,7 +7606,7 @@
       "season": "2016-17",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 421,
+      "jugadores": 414,
       "file": "sco-1-2016-17.json"
     },
     {
@@ -7618,7 +7618,7 @@
       "season": "2017-18",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 422,
+      "jugadores": 405,
       "file": "sco-1-2017-18.json"
     },
     {
@@ -7630,7 +7630,7 @@
       "season": "2018-19",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 458,
+      "jugadores": 444,
       "file": "sco-1-2018-19.json"
     },
     {
@@ -7642,7 +7642,7 @@
       "season": "2019-20",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 405,
+      "jugadores": 391,
       "file": "sco-1-2019-20.json"
     },
     {
@@ -7654,7 +7654,7 @@
       "season": "2020-21",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 437,
+      "jugadores": 419,
       "file": "sco-1-2020-21.json"
     },
     {
@@ -7666,7 +7666,7 @@
       "season": "2021-22",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 460,
+      "jugadores": 450,
       "file": "sco-1-2021-22.json"
     },
     {
@@ -7678,7 +7678,7 @@
       "season": "2022-23",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 424,
+      "jugadores": 417,
       "file": "sco-1-2022-23.json"
     },
     {
@@ -7690,7 +7690,7 @@
       "season": "2023-24",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 435,
+      "jugadores": 424,
       "file": "sco-1-2023-24.json"
     },
     {
@@ -7702,7 +7702,7 @@
       "season": "2024-25",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 435,
+      "jugadores": 430,
       "file": "sco-1-2024-25.json"
     },
     {
@@ -7714,7 +7714,7 @@
       "season": "2025-26",
       "nombre": "Primera División (SCO)",
       "equipos": 12,
-      "jugadores": 488,
+      "jugadores": 479,
       "file": "sco-1-2025-26.json"
     },
     {
@@ -7726,7 +7726,7 @@
       "season": "2010-11",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 313,
+      "jugadores": 306,
       "file": "sui-1-2010-11.json"
     },
     {
@@ -7738,7 +7738,7 @@
       "season": "2011-12",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 333,
+      "jugadores": 313,
       "file": "sui-1-2011-12.json"
     },
     {
@@ -7750,7 +7750,7 @@
       "season": "2012-13",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 318,
+      "jugadores": 310,
       "file": "sui-1-2012-13.json"
     },
     {
@@ -7762,7 +7762,7 @@
       "season": "2013-14",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 317,
+      "jugadores": 303,
       "file": "sui-1-2013-14.json"
     },
     {
@@ -7774,7 +7774,7 @@
       "season": "2014-15",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 304,
+      "jugadores": 295,
       "file": "sui-1-2014-15.json"
     },
     {
@@ -7786,7 +7786,7 @@
       "season": "2015-16",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 327,
+      "jugadores": 310,
       "file": "sui-1-2015-16.json"
     },
     {
@@ -7798,7 +7798,7 @@
       "season": "2016-17",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 313,
+      "jugadores": 302,
       "file": "sui-1-2016-17.json"
     },
     {
@@ -7810,7 +7810,7 @@
       "season": "2017-18",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 343,
+      "jugadores": 321,
       "file": "sui-1-2017-18.json"
     },
     {
@@ -7822,7 +7822,7 @@
       "season": "2018-19",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 330,
+      "jugadores": 322,
       "file": "sui-1-2018-19.json"
     },
     {
@@ -7834,7 +7834,7 @@
       "season": "2019-20",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 368,
+      "jugadores": 364,
       "file": "sui-1-2019-20.json"
     },
     {
@@ -7846,7 +7846,7 @@
       "season": "2020-21",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 332,
+      "jugadores": 328,
       "file": "sui-1-2020-21.json"
     },
     {
@@ -7858,7 +7858,7 @@
       "season": "2021-22",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 366,
+      "jugadores": 353,
       "file": "sui-1-2021-22.json"
     },
     {
@@ -7870,7 +7870,7 @@
       "season": "2022-23",
       "nombre": "Primera División (SUI)",
       "equipos": 10,
-      "jugadores": 356,
+      "jugadores": 349,
       "file": "sui-1-2022-23.json"
     },
     {
@@ -7882,7 +7882,7 @@
       "season": "2023-24",
       "nombre": "Primera División (SUI)",
       "equipos": 12,
-      "jugadores": 435,
+      "jugadores": 418,
       "file": "sui-1-2023-24.json"
     },
     {
@@ -7894,7 +7894,7 @@
       "season": "2024-25",
       "nombre": "Primera División (SUI)",
       "equipos": 12,
-      "jugadores": 436,
+      "jugadores": 424,
       "file": "sui-1-2024-25.json"
     },
     {
@@ -7906,7 +7906,7 @@
       "season": "2025-26",
       "nombre": "Primera División (SUI)",
       "equipos": 12,
-      "jugadores": 457,
+      "jugadores": 440,
       "file": "sui-1-2025-26.json"
     },
     {
@@ -7918,7 +7918,7 @@
       "season": "1993-94",
       "nombre": "Primera División (TUR)",
       "equipos": 16,
-      "jugadores": 340,
+      "jugadores": 336,
       "file": "tur-1-1993-94.json"
     },
     {
@@ -7930,7 +7930,7 @@
       "season": "1994-95",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 394,
+      "jugadores": 382,
       "file": "tur-1-1994-95.json"
     },
     {
@@ -7942,7 +7942,7 @@
       "season": "1995-96",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 402,
+      "jugadores": 389,
       "file": "tur-1-1995-96.json"
     },
     {
@@ -7954,7 +7954,7 @@
       "season": "1996-97",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 419,
+      "jugadores": 403,
       "file": "tur-1-1996-97.json"
     },
     {
@@ -7966,7 +7966,7 @@
       "season": "1997-98",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 465,
+      "jugadores": 441,
       "file": "tur-1-1997-98.json"
     },
     {
@@ -7978,7 +7978,7 @@
       "season": "1998-99",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 462,
+      "jugadores": 434,
       "file": "tur-1-1998-99.json"
     },
     {
@@ -7990,7 +7990,7 @@
       "season": "1999-00",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 495,
+      "jugadores": 461,
       "file": "tur-1-1999-00.json"
     },
     {
@@ -8002,7 +8002,7 @@
       "season": "2000-01",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 508,
+      "jugadores": 482,
       "file": "tur-1-2000-01.json"
     },
     {
@@ -8014,7 +8014,7 @@
       "season": "2001-02",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 513,
+      "jugadores": 484,
       "file": "tur-1-2001-02.json"
     },
     {
@@ -8026,7 +8026,7 @@
       "season": "2002-03",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 527,
+      "jugadores": 504,
       "file": "tur-1-2002-03.json"
     },
     {
@@ -8038,7 +8038,7 @@
       "season": "2003-04",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 531,
+      "jugadores": 488,
       "file": "tur-1-2003-04.json"
     },
     {
@@ -8050,7 +8050,7 @@
       "season": "2004-05",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 545,
+      "jugadores": 498,
       "file": "tur-1-2004-05.json"
     },
     {
@@ -8062,7 +8062,7 @@
       "season": "2005-06",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 595,
+      "jugadores": 543,
       "file": "tur-1-2005-06.json"
     },
     {
@@ -8074,7 +8074,7 @@
       "season": "2006-07",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 565,
+      "jugadores": 524,
       "file": "tur-1-2006-07.json"
     },
     {
@@ -8086,7 +8086,7 @@
       "season": "2007-08",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 605,
+      "jugadores": 562,
       "file": "tur-1-2007-08.json"
     },
     {
@@ -8098,7 +8098,7 @@
       "season": "2008-09",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 584,
+      "jugadores": 553,
       "file": "tur-1-2008-09.json"
     },
     {
@@ -8110,7 +8110,7 @@
       "season": "2009-10",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 601,
+      "jugadores": 558,
       "file": "tur-1-2009-10.json"
     },
     {
@@ -8122,7 +8122,7 @@
       "season": "2010-11",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 622,
+      "jugadores": 585,
       "file": "tur-1-2010-11.json"
     },
     {
@@ -8134,7 +8134,7 @@
       "season": "2011-12",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 588,
+      "jugadores": 543,
       "file": "tur-1-2011-12.json"
     },
     {
@@ -8146,7 +8146,7 @@
       "season": "2012-13",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 587,
+      "jugadores": 553,
       "file": "tur-1-2012-13.json"
     },
     {
@@ -8158,7 +8158,7 @@
       "season": "2013-14",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 607,
+      "jugadores": 567,
       "file": "tur-1-2013-14.json"
     },
     {
@@ -8170,7 +8170,7 @@
       "season": "2014-15",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 570,
+      "jugadores": 539,
       "file": "tur-1-2014-15.json"
     },
     {
@@ -8182,7 +8182,7 @@
       "season": "2015-16",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 601,
+      "jugadores": 568,
       "file": "tur-1-2015-16.json"
     },
     {
@@ -8194,7 +8194,7 @@
       "season": "2016-17",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 565,
+      "jugadores": 536,
       "file": "tur-1-2016-17.json"
     },
     {
@@ -8206,7 +8206,7 @@
       "season": "2017-18",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 612,
+      "jugadores": 574,
       "file": "tur-1-2017-18.json"
     },
     {
@@ -8218,7 +8218,7 @@
       "season": "2018-19",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 629,
+      "jugadores": 584,
       "file": "tur-1-2018-19.json"
     },
     {
@@ -8230,7 +8230,7 @@
       "season": "2019-20",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 667,
+      "jugadores": 630,
       "file": "tur-1-2019-20.json"
     },
     {
@@ -8242,7 +8242,7 @@
       "season": "2020-21",
       "nombre": "Primera División (TUR)",
       "equipos": 21,
-      "jugadores": 824,
+      "jugadores": 770,
       "file": "tur-1-2020-21.json"
     },
     {
@@ -8254,7 +8254,7 @@
       "season": "2021-22",
       "nombre": "Primera División (TUR)",
       "equipos": 20,
-      "jugadores": 772,
+      "jugadores": 720,
       "file": "tur-1-2021-22.json"
     },
     {
@@ -8266,7 +8266,7 @@
       "season": "2022-23",
       "nombre": "Primera División (TUR)",
       "equipos": 19,
-      "jugadores": 746,
+      "jugadores": 691,
       "file": "tur-1-2022-23.json"
     },
     {
@@ -8278,7 +8278,7 @@
       "season": "2023-24",
       "nombre": "Primera División (TUR)",
       "equipos": 20,
-      "jugadores": 807,
+      "jugadores": 748,
       "file": "tur-1-2023-24.json"
     },
     {
@@ -8290,7 +8290,7 @@
       "season": "2024-25",
       "nombre": "Primera División (TUR)",
       "equipos": 19,
-      "jugadores": 717,
+      "jugadores": 690,
       "file": "tur-1-2024-25.json"
     },
     {
@@ -8302,7 +8302,7 @@
       "season": "2025-26",
       "nombre": "Primera División (TUR)",
       "equipos": 18,
-      "jugadores": 717,
+      "jugadores": 654,
       "file": "tur-1-2025-26.json"
     }
   ]
