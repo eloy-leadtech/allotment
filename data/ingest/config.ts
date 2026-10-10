@@ -164,6 +164,50 @@ export const EUROPA_SOURCES: ReadonlyArray<{ source: string; id: string; tempora
   },
 ];
 
+// --- Calendario histórico real ---------------------------------------------
+
+/**
+ * Authentic match data (bdfutbol) for the Primera 96/97 calendar, in the analysis
+ * workspace. 462 matches with jornada, date (DD/MM/YYYY), club names and real
+ * score — the source of the committed `calendario-es-primera-9697.json` (dates +
+ * pairings + real results). See issue #125.
+ */
+export const CALENDAR_SOURCE_9697 =
+  'C:/dev/pcfutbol-analysis/data/bdfutbol/partidos/ESP_1996-97_div1.json';
+
+/** Output, committed to the repo and consumed by `getCalendarByLeagueId`. */
+export const CALENDAR_OUTPUT_9697 = 'data/db/calendario-es-primera-9697.json';
+
+/**
+ * bdfutbol club name → our league team id (the ids in `es-primera-9697.json`).
+ * Exhaustive for the 22 Primera 96/97 clubs; the ingest fails loudly if the
+ * source carries a name not listed here, so a data drift can never pass silently.
+ */
+export const CALENDAR_TEAM_ID_9697: Readonly<Record<string, string>> = {
+  'Athletic Club': 'athletic',
+  'Atlético de Madrid': 'at-madrid',
+  Barcelona: 'barcelona',
+  Betis: 'betis',
+  'Celta de Vigo': 'celta',
+  Compostela: 'compostela',
+  'Deportivo de La Coruña': 'deportivo',
+  Espanyol: 'espanyol',
+  Extremadura: 'extremadura',
+  Hércules: 'hercules',
+  Logroñés: 'logrones',
+  Oviedo: 'oviedo',
+  'Racing de Santander': 'racing',
+  'Rayo Vallecano': 'rayo',
+  'Real Madrid': 'real-madrid',
+  'Real Sociedad': 'real-sociedad',
+  Sevilla: 'sevilla',
+  'Sporting de Gijón': 'sporting',
+  Tenerife: 'tenerife',
+  Valencia: 'valencia',
+  Valladolid: 'valladolid',
+  Zaragoza: 'zaragoza',
+};
+
 // --- Segunda División ------------------------------------------------------
 
 /**

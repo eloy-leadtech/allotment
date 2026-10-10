@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { runLeagueSeason, buildCalendar } from './league';
+import { runLeagueSeason, buildCalendar, replayFixture } from './league';
 import type { CompetitionTeam } from './types';
+import type { Fixture } from '../calendar';
 import type { Line, MatchPlayer } from '../match';
 
 function makeCompTeam(id: string, level: number): CompetitionTeam {
@@ -60,5 +61,23 @@ describe('runLeagueSeason', () => {
     const c1 = buildCalendar(['a', 'b', 'c', 'd'], 1);
     const c2 = buildCalendar(['a', 'b', 'c', 'd'], 2);
     expect(JSON.stringify(c1)).not.toBe(JSON.stringify(c2));
+  });
+});
+
+describe('replayFixture', () => {
+  it('returns the historical score with no reconstructed events', () => {
+    const fixture: Fixture = {
+      round: 1,
+      homeId: 'a',
+      awayId: 'b',
+      date: '1996-08-31',
+      historicalScore: { homeGoals: 3, awayGoals: 1 },
+    };
+    const result = replayFixture(fixture);
+    expect(result).toEqual({ homeId: 'a', awayId: 'b', homeGoals: 3, awayGoals: 1, events: [] });
+  });
+
+  it('throws when the fixture has no historical score to replay', () => {
+    expect(() => replayFixture({ round: 1, homeId: 'a', awayId: 'b' })).toThrow();
   });
 });
