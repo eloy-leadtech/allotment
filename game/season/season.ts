@@ -1,6 +1,8 @@
 import {
   buildCalendar,
+  buildCalendarFromFixtures,
   simulateFixture,
+  replayFixture,
   computeStandings,
   NEUTRAL_FORM,
   NEUTRAL_MORALE,
@@ -9,10 +11,11 @@ import {
   type Fixture,
   type MatchPlayer,
   type MatchResult,
+  type RealMatchInput,
   type Scoreline,
   type StandingRow,
 } from '@engine';
-import type { League, Player, Team } from '@data';
+import { getCalendarByLeagueId, type League, type Player, type Team, type SeasonCalendar } from '@data';
 import {
   applyMatchdayAvailability,
   isAvailable,
@@ -102,16 +105,24 @@ export interface SeasonMeta {
  * Build a fresh season from already-mapped competition teams. Shared by the
  * single-season entry point (`newSeason`) and the career layer (which owns full
  * player data and derives its competition teams itself).
+ *
+ * When `realFixtures` is given, the season follows the authentic historical
+ * calendar (pairings + dates + real scores); otherwise it falls back to the
+ * seeded round-robin. Omitting it keeps the previous behaviour byte-for-byte.
  */
 export function newSeasonFromTeams(
   teams: CompetitionTeam[],
   meta: SeasonMeta,
   seed: number,
+  realFixtures?: readonly RealMatchInput[],
 ): SeasonState {
   if (!teams.some((t) => t.id === meta.humanTeamId)) {
     throw new Error(`Human team ${meta.humanTeamId} is not in the league`);
   }
-  const fixtures = buildCalendar(teams.map((t) => t.id), seed);
+  const fixtures =
+    realFixtures && realFixtures.length > 0
+      ? buildCalendarFromFixtures(realFixtures)
+      : buildCalendar(teams.map((t) => t.id), seed);
   const totalMatchdays = fixtures.reduce((max, f) => Math.max(max, f.round), 0);
   return {
     leagueId: meta.leagueId,
@@ -129,8 +140,17 @@ export function newSeasonFromTeams(
   };
 }
 
-/** Start a fresh season for a league, with the human managing `humanTeamId`. */
-export function newSeason(league: League, humanTeamId: string, seed: number): SeasonState {
+/**
+ * Start a fresh season for a league, with the human managing `humanTeamId`. Pass
+ * `realFixtures` (see `realCalendarFor`) to follow the authentic calendar;
+ * omitting it keeps the seeded round-robin, so existing callers are unchanged.
+ */
+export function newSeason(
+  league: League,
+  humanTeamId: string,
+  seed: number,
+  realFixtures?: readonly RealMatchInput[],
+): SeasonState {
   if (league.competicion.kind !== 'league') {
     throw new Error('newSeason currently supports league competitions only');
   }
@@ -144,7 +164,31 @@ export function newSeason(league: League, humanTeamId: string, seed: number): Se
       relegationSpots: league.competicion.relegationSpots,
     },
     seed,
+    realFixtures,
   );
+}
+
+/** Map a committed season calendar into the engine's real-fixture input. */
+function toRealFixtures(cal: SeasonCalendar): RealMatchInput[] {
+  return cal.partidos.map((p) => ({
+    round: p.jornada,
+    homeId: p.homeId,
+    awayId: p.awayId,
+    date: p.fechaISO,
+    homeGoals: p.homeGoals,
+    awayGoals: p.awayGoals,
+  }));
+}
+
+/**
+ * The authentic calendar for a league id as engine fixture input, or `undefined`
+ * when none is committed (the caller then gets the round-robin fallback). This is
+ * the seam the new-game/career wiring will use:
+ * `newSeason(league, humanTeamId, seed, realCalendarFor(league.id))`.
+ */
+export function realCalendarFor(leagueId: string): RealMatchInput[] | undefined {
+  const cal = getCalendarByLeagueId(leagueId);
+  return cal ? toRealFixtures(cal) : undefined;
 }
 
 export function isSeasonOver(state: SeasonState): boolean {
@@ -214,7 +258,16 @@ export function advanceMatchday(state: SeasonState): {
     }
     const homeXI = fieldableTeam(home, state.availability, matchday);
     const awayXI = fieldableTeam(away, state.availability, matchday);
-    const result = simulateFixture(homeXI, awayXI, state.seed, fixture);
+    // Real-calendar seasons replay the authentic score for every match that does
+    // NOT involve the human club (the table then tracks real history); the human's
+    // own match is still simulated by seed. Round-robin fixtures carry no
+    // `historicalScore`, so they always simulate — identical to the old behaviour.
+    const isHumanMatch =
+      fixture.homeId === state.humanTeamId || fixture.awayId === state.humanTeamId;
+    const result =
+      !isHumanMatch && fixture.historicalScore
+        ? replayFixture(fixture)
+        : simulateFixture(homeXI, awayXI, state.seed, fixture);
     played.push(result);
     if (fixture.homeId === state.humanTeamId) {
       humanXI = homeXI;

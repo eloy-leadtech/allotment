@@ -40,6 +40,28 @@ export function simulateFixture(
   return simulateMatch({ home, away, seed: fixtureSeed(leagueSeed, fixture) });
 }
 
+/**
+ * Replay a fixture's authentic historical result instead of simulating it. Used
+ * for matches not involving the human club in a real-calendar season, so the
+ * table tracks real history. The scoreline is the only known fact, so no events
+ * are reconstructed (no scorers/cards); a fixture with no `historicalScore` is a
+ * programming error (the caller must check first).
+ */
+export function replayFixture(fixture: Fixture): MatchResult {
+  if (!fixture.historicalScore) {
+    throw new Error(
+      `Fixture ${fixture.homeId} vs ${fixture.awayId} has no historical score to replay`,
+    );
+  }
+  return {
+    homeId: fixture.homeId,
+    awayId: fixture.awayId,
+    homeGoals: fixture.historicalScore.homeGoals,
+    awayGoals: fixture.historicalScore.awayGoals,
+    events: [],
+  };
+}
+
 function toScoreline(r: MatchResult): Scoreline {
   return { homeId: r.homeId, awayId: r.awayId, homeGoals: r.homeGoals, awayGoals: r.awayGoals };
 }

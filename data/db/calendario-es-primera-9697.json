@@ -1,0 +1,3703 @@
+{
+  "leagueId": "es-primera-9697",
+  "temporada": "96/97",
+  "fuente": "bdfutbol.com (ESP_1996-97_div1) vía laboratorio de ingeniería inversa",
+  "partidos": [
+    {
+      "jornada": 1,
+      "fechaISO": "1996-08-31",
+      "homeId": "deportivo",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "at-madrid",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "betis",
+      "awayId": "athletic",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "hercules",
+      "awayId": "extremadura",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "oviedo",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "racing",
+      "awayId": "valencia",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "rayo",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "real-sociedad",
+      "awayId": "sevilla",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "tenerife",
+      "awayId": "compostela",
+      "homeGoals": 6,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-01",
+      "homeId": "zaragoza",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 1,
+      "fechaISO": "1996-09-02",
+      "homeId": "espanyol",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-07",
+      "homeId": "barcelona",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-07",
+      "homeId": "compostela",
+      "awayId": "at-madrid",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-07",
+      "homeId": "logrones",
+      "awayId": "tenerife",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-07",
+      "homeId": "valencia",
+      "awayId": "real-sociedad",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "athletic",
+      "awayId": "rayo",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "celta",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "real-madrid",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "sevilla",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "sporting",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-08",
+      "homeId": "valladolid",
+      "awayId": "oviedo",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 2,
+      "fechaISO": "1996-09-09",
+      "homeId": "extremadura",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-14",
+      "homeId": "zaragoza",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "at-madrid",
+      "awayId": "deportivo",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "compostela",
+      "awayId": "logrones",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "espanyol",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "hercules",
+      "awayId": "celta",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "oviedo",
+      "awayId": "athletic",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "racing",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "rayo",
+      "awayId": "extremadura",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "real-sociedad",
+      "awayId": "sporting",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-15",
+      "homeId": "tenerife",
+      "awayId": "sevilla",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 3,
+      "fechaISO": "1996-09-16",
+      "homeId": "betis",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-21",
+      "homeId": "athletic",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-21",
+      "homeId": "logrones",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-21",
+      "homeId": "valencia",
+      "awayId": "tenerife",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-21",
+      "homeId": "valladolid",
+      "awayId": "racing",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "barcelona",
+      "awayId": "real-sociedad",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "celta",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "deportivo",
+      "awayId": "hercules",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "extremadura",
+      "awayId": "oviedo",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "real-madrid",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-22",
+      "homeId": "sporting",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 4,
+      "fechaISO": "1996-09-23",
+      "homeId": "sevilla",
+      "awayId": "compostela",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-28",
+      "homeId": "betis",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-28",
+      "homeId": "espanyol",
+      "awayId": "extremadura",
+      "homeGoals": 5,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-28",
+      "homeId": "racing",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-28",
+      "homeId": "real-sociedad",
+      "awayId": "valladolid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "compostela",
+      "awayId": "valencia",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "logrones",
+      "awayId": "sevilla",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "oviedo",
+      "awayId": "real-madrid",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "rayo",
+      "awayId": "celta",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "tenerife",
+      "awayId": "sporting",
+      "homeGoals": 6,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-29",
+      "homeId": "zaragoza",
+      "awayId": "barcelona",
+      "homeGoals": 3,
+      "awayGoals": 5
+    },
+    {
+      "jornada": 5,
+      "fechaISO": "1996-09-30",
+      "homeId": "at-madrid",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-01",
+      "homeId": "real-madrid",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "athletic",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "barcelona",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "celta",
+      "awayId": "oviedo",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "deportivo",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "extremadura",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "hercules",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "sporting",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "valencia",
+      "awayId": "logrones",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-02",
+      "homeId": "valladolid",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 6,
+      "fechaISO": "1996-10-03",
+      "homeId": "sevilla",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "at-madrid",
+      "awayId": "betis",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "compostela",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 5
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "espanyol",
+      "awayId": "celta",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "sevilla",
+      "awayId": "valencia",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "tenerife",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-12",
+      "homeId": "zaragoza",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-13",
+      "homeId": "logrones",
+      "awayId": "sporting",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-13",
+      "homeId": "oviedo",
+      "awayId": "deportivo",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-13",
+      "homeId": "racing",
+      "awayId": "real-madrid",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-13",
+      "homeId": "rayo",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 7,
+      "fechaISO": "1996-10-13",
+      "homeId": "real-sociedad",
+      "awayId": "extremadura",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "athletic",
+      "awayId": "tenerife",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "deportivo",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "extremadura",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "hercules",
+      "awayId": "oviedo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "real-madrid",
+      "awayId": "real-sociedad",
+      "homeGoals": 6,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-19",
+      "homeId": "valladolid",
+      "awayId": "compostela",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-20",
+      "homeId": "barcelona",
+      "awayId": "logrones",
+      "homeGoals": 8,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-20",
+      "homeId": "betis",
+      "awayId": "rayo",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-20",
+      "homeId": "celta",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-20",
+      "homeId": "valencia",
+      "awayId": "at-madrid",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 8,
+      "fechaISO": "1996-10-21",
+      "homeId": "sporting",
+      "awayId": "sevilla",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-22",
+      "homeId": "zaragoza",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "at-madrid",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "compostela",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "espanyol",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "logrones",
+      "awayId": "valladolid",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "oviedo",
+      "awayId": "betis",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "racing",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "real-sociedad",
+      "awayId": "celta",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "sevilla",
+      "awayId": "barcelona",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "tenerife",
+      "awayId": "extremadura",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 9,
+      "fechaISO": "1996-10-23",
+      "homeId": "valencia",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-26",
+      "homeId": "barcelona",
+      "awayId": "valencia",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-26",
+      "homeId": "betis",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-26",
+      "homeId": "real-madrid",
+      "awayId": "tenerife",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-26",
+      "homeId": "sporting",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "athletic",
+      "awayId": "logrones",
+      "homeGoals": 6,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "celta",
+      "awayId": "zaragoza",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "deportivo",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "extremadura",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "hercules",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-27",
+      "homeId": "rayo",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 10,
+      "fechaISO": "1996-10-28",
+      "homeId": "valladolid",
+      "awayId": "sevilla",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-02",
+      "homeId": "racing",
+      "awayId": "betis",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "at-madrid",
+      "awayId": "oviedo",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "compostela",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "espanyol",
+      "awayId": "rayo",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "logrones",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "real-sociedad",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "sevilla",
+      "awayId": "athletic",
+      "homeGoals": 4,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "tenerife",
+      "awayId": "celta",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "valencia",
+      "awayId": "valladolid",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-03",
+      "homeId": "zaragoza",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 11,
+      "fechaISO": "1996-11-04",
+      "homeId": "sporting",
+      "awayId": "barcelona",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-09",
+      "homeId": "barcelona",
+      "awayId": "at-madrid",
+      "homeGoals": 3,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "athletic",
+      "awayId": "valencia",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "betis",
+      "awayId": "real-sociedad",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "celta",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "deportivo",
+      "awayId": "tenerife",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "extremadura",
+      "awayId": "sevilla",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "hercules",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "oviedo",
+      "awayId": "espanyol",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "rayo",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-10",
+      "homeId": "real-madrid",
+      "awayId": "logrones",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 12,
+      "fechaISO": "1996-11-11",
+      "homeId": "valladolid",
+      "awayId": "sporting",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-16",
+      "homeId": "at-madrid",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-16",
+      "homeId": "compostela",
+      "awayId": "deportivo",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-16",
+      "homeId": "tenerife",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-16",
+      "homeId": "valencia",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "logrones",
+      "awayId": "celta",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "racing",
+      "awayId": "oviedo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "real-sociedad",
+      "awayId": "rayo",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "sevilla",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "sporting",
+      "awayId": "athletic",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-17",
+      "homeId": "zaragoza",
+      "awayId": "betis",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 13,
+      "fechaISO": "1996-11-18",
+      "homeId": "barcelona",
+      "awayId": "valladolid",
+      "homeGoals": 6,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-23",
+      "homeId": "athletic",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-23",
+      "homeId": "extremadura",
+      "awayId": "sporting",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "betis",
+      "awayId": "tenerife",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "celta",
+      "awayId": "sevilla",
+      "homeGoals": 4,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "deportivo",
+      "awayId": "logrones",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "espanyol",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "hercules",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "oviedo",
+      "awayId": "real-sociedad",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "rayo",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-24",
+      "homeId": "real-madrid",
+      "awayId": "valencia",
+      "homeGoals": 4,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 14,
+      "fechaISO": "1996-11-25",
+      "homeId": "valladolid",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-11-30",
+      "homeId": "at-madrid",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-11-30",
+      "homeId": "sporting",
+      "awayId": "real-madrid",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-11-30",
+      "homeId": "tenerife",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-11-30",
+      "homeId": "valencia",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "compostela",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "logrones",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "real-sociedad",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "sevilla",
+      "awayId": "deportivo",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "valladolid",
+      "awayId": "athletic",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-01",
+      "homeId": "zaragoza",
+      "awayId": "oviedo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 15,
+      "fechaISO": "1996-12-02",
+      "homeId": "barcelona",
+      "awayId": "extremadura",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-07",
+      "homeId": "real-madrid",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "athletic",
+      "awayId": "at-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "betis",
+      "awayId": "logrones",
+      "homeGoals": 5,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "celta",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "deportivo",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "espanyol",
+      "awayId": "zaragoza",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "extremadura",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "oviedo",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "racing",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-08",
+      "homeId": "rayo",
+      "awayId": "compostela",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 16,
+      "fechaISO": "1996-12-09",
+      "homeId": "hercules",
+      "awayId": "sevilla",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-21",
+      "homeId": "valladolid",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "at-madrid",
+      "awayId": "real-sociedad",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "athletic",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "barcelona",
+      "awayId": "celta",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "compostela",
+      "awayId": "oviedo",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "logrones",
+      "awayId": "rayo",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "sevilla",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "sporting",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "tenerife",
+      "awayId": "espanyol",
+      "homeGoals": 5,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-22",
+      "homeId": "zaragoza",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 17,
+      "fechaISO": "1996-12-23",
+      "homeId": "valencia",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-04",
+      "homeId": "celta",
+      "awayId": "valladolid",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-04",
+      "homeId": "deportivo",
+      "awayId": "barcelona",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "espanyol",
+      "awayId": "compostela",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "extremadura",
+      "awayId": "at-madrid",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "hercules",
+      "awayId": "sporting",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "oviedo",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "racing",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "real-madrid",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-05",
+      "homeId": "real-sociedad",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-01-06",
+      "homeId": "betis",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 18,
+      "fechaISO": "1997-03-05",
+      "homeId": "rayo",
+      "awayId": "sevilla",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-11",
+      "homeId": "tenerife",
+      "awayId": "real-sociedad",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "at-madrid",
+      "awayId": "zaragoza",
+      "homeGoals": 5,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "athletic",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "compostela",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "extremadura",
+      "awayId": "real-madrid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "logrones",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "sevilla",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "valencia",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-12",
+      "homeId": "valladolid",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-01-13",
+      "homeId": "barcelona",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 19,
+      "fechaISO": "1997-03-06",
+      "homeId": "sporting",
+      "awayId": "betis",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-18",
+      "homeId": "at-madrid",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "betis",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "celta",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "deportivo",
+      "awayId": "athletic",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "hercules",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "oviedo",
+      "awayId": "valencia",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "racing",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "rayo",
+      "awayId": "sporting",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "real-sociedad",
+      "awayId": "compostela",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-19",
+      "homeId": "zaragoza",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 20,
+      "fechaISO": "1997-01-20",
+      "homeId": "espanyol",
+      "awayId": "sevilla",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-25",
+      "homeId": "extremadura",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-25",
+      "homeId": "valencia",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "athletic",
+      "awayId": "hercules",
+      "homeGoals": 5,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "barcelona",
+      "awayId": "rayo",
+      "homeGoals": 6,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "compostela",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "logrones",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "real-madrid",
+      "awayId": "celta",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "sevilla",
+      "awayId": "racing",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-26",
+      "homeId": "sporting",
+      "awayId": "oviedo",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-01-27",
+      "homeId": "valladolid",
+      "awayId": "betis",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 21,
+      "fechaISO": "1997-05-15",
+      "homeId": "tenerife",
+      "awayId": "at-madrid",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-01",
+      "homeId": "celta",
+      "awayId": "at-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "athletic",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "barcelona",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "compostela",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "logrones",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "real-madrid",
+      "awayId": "deportivo",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "sevilla",
+      "awayId": "real-sociedad",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "sporting",
+      "awayId": "espanyol",
+      "homeGoals": 4,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "valencia",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-02",
+      "homeId": "valladolid",
+      "awayId": "rayo",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 22,
+      "fechaISO": "1997-02-03",
+      "homeId": "extremadura",
+      "awayId": "hercules",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-08",
+      "homeId": "real-sociedad",
+      "awayId": "valencia",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "at-madrid",
+      "awayId": "compostela",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "betis",
+      "awayId": "extremadura",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "deportivo",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "espanyol",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "hercules",
+      "awayId": "real-madrid",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "oviedo",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "racing",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "rayo",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "tenerife",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 23,
+      "fechaISO": "1997-02-09",
+      "homeId": "zaragoza",
+      "awayId": "sevilla",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-15",
+      "homeId": "real-madrid",
+      "awayId": "betis",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-15",
+      "homeId": "sevilla",
+      "awayId": "tenerife",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-15",
+      "homeId": "valencia",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "athletic",
+      "awayId": "oviedo",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "barcelona",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "celta",
+      "awayId": "hercules",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "deportivo",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "extremadura",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "logrones",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "sporting",
+      "awayId": "real-sociedad",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 24,
+      "fechaISO": "1997-02-16",
+      "homeId": "valladolid",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-18",
+      "homeId": "compostela",
+      "awayId": "sevilla",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "at-madrid",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "betis",
+      "awayId": "celta",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "espanyol",
+      "awayId": "athletic",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "hercules",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "oviedo",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "racing",
+      "awayId": "valladolid",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "rayo",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "tenerife",
+      "awayId": "valencia",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-19",
+      "homeId": "zaragoza",
+      "awayId": "sporting",
+      "homeGoals": 5,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 25,
+      "fechaISO": "1997-02-20",
+      "homeId": "real-sociedad",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-22",
+      "homeId": "hercules",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "athletic",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "barcelona",
+      "awayId": "zaragoza",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "celta",
+      "awayId": "rayo",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "deportivo",
+      "awayId": "betis",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "extremadura",
+      "awayId": "espanyol",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "real-madrid",
+      "awayId": "oviedo",
+      "homeGoals": 6,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "sevilla",
+      "awayId": "logrones",
+      "homeGoals": 1,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "sporting",
+      "awayId": "tenerife",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-23",
+      "homeId": "valladolid",
+      "awayId": "real-sociedad",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 26,
+      "fechaISO": "1997-02-24",
+      "homeId": "valencia",
+      "awayId": "compostela",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-01",
+      "homeId": "at-madrid",
+      "awayId": "sevilla",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-01",
+      "homeId": "logrones",
+      "awayId": "valencia",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-01",
+      "homeId": "rayo",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-01",
+      "homeId": "tenerife",
+      "awayId": "barcelona",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "betis",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "compostela",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "oviedo",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "racing",
+      "awayId": "extremadura",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "real-sociedad",
+      "awayId": "athletic",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-02",
+      "homeId": "zaragoza",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 27,
+      "fechaISO": "1997-03-03",
+      "homeId": "espanyol",
+      "awayId": "real-madrid",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-08",
+      "homeId": "valencia",
+      "awayId": "sevilla",
+      "homeGoals": 4,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "athletic",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "barcelona",
+      "awayId": "compostela",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "betis",
+      "awayId": "at-madrid",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "celta",
+      "awayId": "espanyol",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "deportivo",
+      "awayId": "oviedo",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "extremadura",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "hercules",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "sporting",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-09",
+      "homeId": "valladolid",
+      "awayId": "tenerife",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 28,
+      "fechaISO": "1997-03-10",
+      "homeId": "real-madrid",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-14",
+      "homeId": "tenerife",
+      "awayId": "athletic",
+      "homeGoals": 3,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-15",
+      "homeId": "at-madrid",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-15",
+      "homeId": "espanyol",
+      "awayId": "deportivo",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "compostela",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "logrones",
+      "awayId": "barcelona",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "oviedo",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "racing",
+      "awayId": "celta",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "rayo",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "sevilla",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-16",
+      "homeId": "zaragoza",
+      "awayId": "extremadura",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 29,
+      "fechaISO": "1997-03-17",
+      "homeId": "real-sociedad",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-22",
+      "homeId": "betis",
+      "awayId": "oviedo",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-22",
+      "homeId": "celta",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "athletic",
+      "awayId": "compostela",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "barcelona",
+      "awayId": "sevilla",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "deportivo",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "extremadura",
+      "awayId": "tenerife",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "hercules",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "rayo",
+      "awayId": "at-madrid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "real-madrid",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-23",
+      "homeId": "valladolid",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 30,
+      "fechaISO": "1997-03-24",
+      "homeId": "sporting",
+      "awayId": "valencia",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-29",
+      "homeId": "real-sociedad",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "compostela",
+      "awayId": "extremadura",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "espanyol",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "logrones",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "oviedo",
+      "awayId": "rayo",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "racing",
+      "awayId": "hercules",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "sevilla",
+      "awayId": "valladolid",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "tenerife",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "valencia",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-30",
+      "homeId": "zaragoza",
+      "awayId": "celta",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 31,
+      "fechaISO": "1997-03-31",
+      "homeId": "at-madrid",
+      "awayId": "sporting",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-05",
+      "homeId": "celta",
+      "awayId": "tenerife",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-05",
+      "homeId": "oviedo",
+      "awayId": "at-madrid",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "athletic",
+      "awayId": "sevilla",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "barcelona",
+      "awayId": "sporting",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "betis",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "deportivo",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "extremadura",
+      "awayId": "logrones",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "hercules",
+      "awayId": "real-sociedad",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "rayo",
+      "awayId": "espanyol",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-06",
+      "homeId": "valladolid",
+      "awayId": "valencia",
+      "homeGoals": 4,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 32,
+      "fechaISO": "1997-04-07",
+      "homeId": "real-madrid",
+      "awayId": "compostela",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-12",
+      "homeId": "sevilla",
+      "awayId": "extremadura",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-12",
+      "homeId": "tenerife",
+      "awayId": "deportivo",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-12",
+      "homeId": "valencia",
+      "awayId": "athletic",
+      "homeGoals": 5,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "at-madrid",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 5
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "compostela",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "logrones",
+      "awayId": "real-madrid",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "racing",
+      "awayId": "rayo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "real-sociedad",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "sporting",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-13",
+      "homeId": "zaragoza",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 33,
+      "fechaISO": "1997-04-14",
+      "homeId": "espanyol",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-15",
+      "homeId": "extremadura",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "athletic",
+      "awayId": "sporting",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "betis",
+      "awayId": "zaragoza",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "celta",
+      "awayId": "logrones",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "deportivo",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "hercules",
+      "awayId": "tenerife",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "rayo",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "real-madrid",
+      "awayId": "sevilla",
+      "homeGoals": 4,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-16",
+      "homeId": "valladolid",
+      "awayId": "barcelona",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-17",
+      "homeId": "espanyol",
+      "awayId": "at-madrid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 34,
+      "fechaISO": "1997-04-17",
+      "homeId": "oviedo",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 5
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-19",
+      "homeId": "tenerife",
+      "awayId": "betis",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "at-madrid",
+      "awayId": "valladolid",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "barcelona",
+      "awayId": "athletic",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "compostela",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "logrones",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "racing",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "real-sociedad",
+      "awayId": "oviedo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "sevilla",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "sporting",
+      "awayId": "extremadura",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-20",
+      "homeId": "zaragoza",
+      "awayId": "rayo",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 35,
+      "fechaISO": "1997-04-21",
+      "homeId": "valencia",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-03",
+      "homeId": "deportivo",
+      "awayId": "sevilla",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "athletic",
+      "awayId": "valladolid",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "betis",
+      "awayId": "compostela",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "celta",
+      "awayId": "valencia",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "espanyol",
+      "awayId": "real-sociedad",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "hercules",
+      "awayId": "logrones",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "oviedo",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "racing",
+      "awayId": "at-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "rayo",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-04",
+      "homeId": "real-madrid",
+      "awayId": "sporting",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 36,
+      "fechaISO": "1997-05-05",
+      "homeId": "extremadura",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-10",
+      "homeId": "barcelona",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-10",
+      "homeId": "valladolid",
+      "awayId": "extremadura",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "at-madrid",
+      "awayId": "athletic",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "compostela",
+      "awayId": "rayo",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "logrones",
+      "awayId": "betis",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "real-sociedad",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "sevilla",
+      "awayId": "hercules",
+      "homeGoals": 5,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "sporting",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "tenerife",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-11",
+      "homeId": "zaragoza",
+      "awayId": "espanyol",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 37,
+      "fechaISO": "1997-05-12",
+      "homeId": "valencia",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-17",
+      "homeId": "betis",
+      "awayId": "sevilla",
+      "homeGoals": 3,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "deportivo",
+      "awayId": "sporting",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "espanyol",
+      "awayId": "tenerife",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "extremadura",
+      "awayId": "athletic",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "hercules",
+      "awayId": "valencia",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "oviedo",
+      "awayId": "compostela",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "racing",
+      "awayId": "zaragoza",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "rayo",
+      "awayId": "logrones",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "real-madrid",
+      "awayId": "valladolid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-18",
+      "homeId": "real-sociedad",
+      "awayId": "at-madrid",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 38,
+      "fechaISO": "1997-05-19",
+      "homeId": "celta",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-24",
+      "homeId": "barcelona",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "at-madrid",
+      "awayId": "extremadura",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "athletic",
+      "awayId": "real-madrid",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "compostela",
+      "awayId": "espanyol",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "logrones",
+      "awayId": "oviedo",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "sevilla",
+      "awayId": "rayo",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "sporting",
+      "awayId": "hercules",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "tenerife",
+      "awayId": "racing",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "valladolid",
+      "awayId": "celta",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-25",
+      "homeId": "zaragoza",
+      "awayId": "real-sociedad",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 39,
+      "fechaISO": "1997-05-26",
+      "homeId": "valencia",
+      "awayId": "betis",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-05-31",
+      "homeId": "betis",
+      "awayId": "sporting",
+      "homeGoals": 0,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-05-31",
+      "homeId": "rayo",
+      "awayId": "valencia",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "celta",
+      "awayId": "athletic",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "deportivo",
+      "awayId": "valladolid",
+      "homeGoals": 0,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "espanyol",
+      "awayId": "logrones",
+      "homeGoals": 5,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "hercules",
+      "awayId": "barcelona",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "oviedo",
+      "awayId": "sevilla",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "racing",
+      "awayId": "compostela",
+      "homeGoals": 2,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-01",
+      "homeId": "real-madrid",
+      "awayId": "extremadura",
+      "homeGoals": 5,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-02",
+      "homeId": "real-sociedad",
+      "awayId": "tenerife",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 40,
+      "fechaISO": "1997-06-02",
+      "homeId": "zaragoza",
+      "awayId": "at-madrid",
+      "homeGoals": 2,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-14",
+      "homeId": "real-madrid",
+      "awayId": "at-madrid",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "barcelona",
+      "awayId": "betis",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "compostela",
+      "awayId": "real-sociedad",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "extremadura",
+      "awayId": "celta",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "logrones",
+      "awayId": "racing",
+      "homeGoals": 1,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "sevilla",
+      "awayId": "espanyol",
+      "homeGoals": 3,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "sporting",
+      "awayId": "rayo",
+      "homeGoals": 3,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "tenerife",
+      "awayId": "zaragoza",
+      "homeGoals": 3,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "valencia",
+      "awayId": "oviedo",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-15",
+      "homeId": "valladolid",
+      "awayId": "hercules",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 41,
+      "fechaISO": "1997-06-16",
+      "homeId": "athletic",
+      "awayId": "deportivo",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-21",
+      "homeId": "betis",
+      "awayId": "valladolid",
+      "homeGoals": 2,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-21",
+      "homeId": "espanyol",
+      "awayId": "valencia",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "celta",
+      "awayId": "real-madrid",
+      "homeGoals": 4,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "deportivo",
+      "awayId": "extremadura",
+      "homeGoals": 1,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "hercules",
+      "awayId": "athletic",
+      "homeGoals": 3,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "oviedo",
+      "awayId": "sporting",
+      "homeGoals": 0,
+      "awayGoals": 0
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "racing",
+      "awayId": "sevilla",
+      "homeGoals": 1,
+      "awayGoals": 4
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "rayo",
+      "awayId": "barcelona",
+      "homeGoals": 1,
+      "awayGoals": 2
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "real-sociedad",
+      "awayId": "logrones",
+      "homeGoals": 2,
+      "awayGoals": 1
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-22",
+      "homeId": "zaragoza",
+      "awayId": "compostela",
+      "homeGoals": 1,
+      "awayGoals": 3
+    },
+    {
+      "jornada": 42,
+      "fechaISO": "1997-06-23",
+      "homeId": "at-madrid",
+      "awayId": "tenerife",
+      "homeGoals": 0,
+      "awayGoals": 3
+    }
+  ]
+}
