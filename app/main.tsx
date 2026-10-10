@@ -16,6 +16,10 @@ import '@fontsource/barlow-condensed/latin-500.css';
 import '@fontsource/barlow-condensed/latin-600.css';
 import '@fontsource/barlow-condensed/latin-700.css';
 import '../ui/theme/global.css';
+// Piel "Mister" del despacho, portada 1:1 de la maqueta del laboratorio y
+// scopeada bajo `.mister` para convivir con global.css (ver ui/theme/mister.css).
+import '../ui/theme/mister.css';
+import '../ui/theme/mister-shell.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

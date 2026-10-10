@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Despacho } from './Despacho';
 import { useGameStore } from '@ui/store/gameStore';
@@ -10,58 +10,59 @@ function startGame(): void {
   useGameStore.getState().startCareer('barcelona');
 }
 
-describe('Despacho (PCF7 office hub)', () => {
+describe('Despacho (Mister office shell)', () => {
   beforeEach(startGame);
 
-  it('shows the club and competition live data over the plates', () => {
+  it('shows the club identity and live header data', () => {
     render(<Despacho />);
     expect(screen.getByText('Barcelona')).toBeInTheDocument();
-    expect(screen.getByText(/LIGA · 96\/97/)).toBeInTheDocument();
-    expect(screen.getByText(/Jornada 1\/\d+/)).toBeInTheDocument();
+    // puesto/pts/saldo on the club side of the header bar.
+    expect(screen.getByText(/en Liga/)).toBeInTheDocument();
+    expect(screen.getByText(/Saldo/)).toBeInTheDocument();
+    // competition slot shows the season and matchdays played.
+    expect(screen.getByText('96/97')).toBeInTheDocument();
+    expect(screen.getByText(/Jugadas \d+ de \d+/)).toBeInTheDocument();
   });
 
-  it('renders the 12 icon hotspots plus the play zone with accessible labels', () => {
+  it('shows the rival curiosities ticker tag', () => {
     render(<Despacho />);
-    // Labels unique to the icon column (not shared with a bottom tab).
+    expect(screen.getByText(/¿Sabías que/)).toBeInTheDocument();
+  });
+
+  it('renders the next league fixture in the próximos-partidos bar', () => {
+    render(<Despacho />);
+    // The league card (and header) carry the matchday label of the upcoming fixture.
+    expect(screen.getAllByText(/Jornada \d+/).length).toBeGreaterThan(0);
+  });
+
+  it('renders the tower sections and navigates when one is clicked', () => {
+    render(<Despacho />);
     for (const label of [
-      'Resultados',
-      'Calendario',
-      'Finanzas',
-      'Prensa',
+      'Alineación',
+      'Táctica',
+      'Clasificación',
       'Directiva',
       'Fichajes',
-      'Alineación',
-      'Ojeador',
-      'Vídeo',
-      'Entrenamiento',
+      'Personal',
+      'Finanzas',
       'Estadio',
+      'Prensa',
     ]) {
-      expect(screen.getByRole('button', { name: label })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: new RegExp(label) })).toBeInTheDocument();
     }
-    // "Táctica" appears both as an icon hotspot and as a bottom tab.
-    expect(screen.getAllByRole('button', { name: 'Táctica' })).toHaveLength(2);
-    expect(screen.getByRole('button', { name: 'Jugar jornada' })).toBeInTheDocument();
-  });
-
-  it('navigates to an existing section when its icon is clicked', () => {
-    render(<Despacho />);
-    screen.getByRole('button', { name: 'Alineación' }).click();
+    screen.getByRole('button', { name: /Alineación/ }).click();
     expect(useGameStore.getState().screen).toBe('squad');
   });
 
-  it('advances the matchday from the office (Simular) keeping the hub on screen', () => {
+  it('plays the matchday from the office (→ prematch)', () => {
     render(<Despacho />);
-    expect(useGameStore.getState().season?.currentMatchday).toBe(1);
-    screen.getByRole('button', { name: 'Simular jornada' }).click();
-    expect(useGameStore.getState().season?.currentMatchday).toBe(2);
+    screen.getByRole('button', { name: /Jugar jornada/ }).click();
+    expect(useGameStore.getState().screen).toBe('prematch');
   });
 
-  it('marks Liga as the active bottom tab', () => {
+  it('keeps save reachable from the office', () => {
     render(<Despacho />);
-    const liga = screen.getByRole('button', { name: 'Liga' });
-    expect(liga).toHaveAttribute('aria-current', 'page');
-    // The 9-tab strip is present.
-    const tabStrip = liga.parentElement!;
-    expect(within(tabStrip).getAllByRole('button')).toHaveLength(9);
+    screen.getByRole('button', { name: 'Guardar' }).click();
+    expect(useGameStore.getState().screen).toBe('slots');
   });
 });
