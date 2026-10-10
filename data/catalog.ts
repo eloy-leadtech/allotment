@@ -8,6 +8,12 @@
  * Locally, `CATALOG_BASE` is served by the Vite dev plugin from the folder in
  * `VITE_DATA_DIR` (see vite.config.ts). Hosting can be repointed later without
  * touching this module.
+ *
+ * The bundled manifest and trivia match the "v2" season data (per-season
+ * ratings validated against the real PC Fútbol editions; one squad per person
+ * per season, except 155 players kept in a second squad so that thin squads
+ * stay playable): point `VITE_DATA_DIR` at
+ * `pcfutbol-analysis/data/bdfutbol/game_v2`.
  */
 import manifest from './catalog/catalog.json';
 import triviaData from './catalog/trivia.json';

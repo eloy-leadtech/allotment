@@ -31,6 +31,16 @@ describe('catálogo histórico (manifest)', () => {
     }
   });
 
+  it('es el manifiesto de la nota por temporada v2: una persona = una plantilla por temporada', () => {
+    // La v1 sumaba 354.776 jugadores-temporada porque contaba dos veces a quien pasó por dos clubes en un curso;
+    // la v2 deja a cada persona en el club donde más minutos jugó (340.030, incluidos 155 jugadores que se quedan también
+    // en un equipo de plantilla fina para que el motor pueda alinearlo). Si se regenera el catálogo, actualizar la cifra.
+    const total = catalogLeagues().reduce((s, e) => s + e.jugadores, 0);
+    expect(total).toBe(340030);
+    // ... y ningún equipo del manifiesto es una plantilla de prestados vacía
+    expect(catalogLeagues().every((e) => e.jugadores >= e.equipos)).toBe(true);
+  });
+
   it('filtra por país y división', () => {
     const esp1 = catalogFor('ESP', '1');
     expect(esp1.length).toBeGreaterThan(50);
