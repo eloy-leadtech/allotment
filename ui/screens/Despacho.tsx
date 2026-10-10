@@ -15,6 +15,7 @@ import { RivalTicker } from '@ui/mister/RivalTicker';
 import { useStadiumCanvas } from '@ui/mister/useStadiumCanvas';
 import { usePhotoCarousel } from '@ui/mister/usePhotoCarousel';
 import { useRivalFacts } from '@ui/mister/facts';
+import { useBoardScale } from '@ui/mister/useBoardScale';
 import { buildFixtures, type FxEntry } from '@ui/mister/fixtures';
 import { TOWER } from '@ui/mister/sections';
 
@@ -34,9 +35,11 @@ export function Despacho() {
   const openWinterMarket = useGameStore((s) => s.openWinterMarket);
   const lastCallUp = useGameStore((s) => s.lastCallUp);
 
+  const rootRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const photoARef = useRef<HTMLImageElement>(null);
   const photoBRef = useRef<HTMLImageElement>(null);
+  useBoardScale(rootRef);
   useStadiumCanvas(canvasRef);
   const credit = usePhotoCarousel(photoARef, photoBRef);
   const facts = useRivalFacts();
@@ -105,7 +108,7 @@ export function Despacho() {
   };
 
   return (
-    <main className="mister">
+    <main className="mister" ref={rootRef}>
       <MisterSprite />
       <div className="wrap">
         <div className="console">
